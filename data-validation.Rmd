@@ -1,0 +1,3 @@
+# Data validation
+
+TODO: rework the [vignette](https://nacnudus.github.io/tidyxl/articles/data-validation-rules.html)?

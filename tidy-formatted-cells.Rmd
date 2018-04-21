@@ -1,0 +1,139 @@
+## Meaningfully formatted cells {#tidy-formatted-cells}
+
+If single cells are highlighted, rather than whole rows, then the highlights
+probably indicate something about the column rather than the row.  For example,
+a highlighted cell in a column called "age" of a table of medical patients,
+might mean "the age of this patient is uncertain".
+
+One way to deal with this is to create a new column in the final table for each
+column in the original that has any highlighted cells.  For example, if
+highlighted cells mean "this value is uncertain", and some cells in the `age`
+and `height` columns are highlighted, then you could create two new columns:
+`uncertain_age`, and `uncertain_height`, by following the procedure of
+[meaningfully formatteed rows](tidy-formatted-rows) for each column `age` and
+`height`.
+
+```{r}
+# Step 1: import the table taking only cell values and ignoring the formatting
+x <- read_excel(path, sheet = "annotations")
+
+# Step 2: import one column of the table, taking only the formatting and not the
+# cell values
+
+# `formats` is a pallette of fill colours that can be indexed by the
+# `local_format_id` of a given cell to get the fill colour of that cell
+fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
+
+# Import all the cells, filter out the header row, filter for the first column,
+# and create new columns `something_fill` of the fill colours, by looking up the
+# local_format_id of each cell in the `formats` pallette.
+fills <-
+  xlsx_cells(path, sheet = "annotations") %>%
+  filter(row >= 2, col >= 2) %>% # Omit the header row and name column
+  mutate(fill_colour = fill_colours[local_format_id]) %>%
+  select(row, col, fill_colour) %>%
+  spread(col, fill_colour) %>%
+  select(-row) %>%
+  set_names(paste0(colnames(x)[-1], "_fill"))
+fills
+
+# Step 3: append the `fill` column to the rest of the data
+bind_cols(x, fills)
+```
+
+Here's the same thing, but using only tidyxl and unpivotr
+
+```{r}
+fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
+
+cells <-
+  xlsx_cells(path, sheet = "annotations") %>%
+  mutate(fill_colour = fill_colours[local_format_id]) %>%
+  select(row, col, data_type, character, numeric, fill_colour)
+cells
+
+values <-
+  cells %>%
+  select(-fill_colour) %>%
+  behead("N", header) %>%
+  select(-col) %>%
+  spatter(header)
+values
+
+fills <-
+  cells %>%
+  behead("N", header) %>%
+  mutate(header = paste0(header, "_fill")) %>%
+  select(row, header, fill_colour) %>%
+  spread(header, fill_colour)
+fills
+
+left_join(values, fills, by = "row") %>%
+  select(-row)
+```
+
+Another way would be to make the table what I call "extra-tidy".  If it is tidy,
+then each row is an observation, and each column is a variable.  To make it
+"extra-tidy", you `gather()` the variables so that each row is *one observation
+of one variable*.  This works best when every variable has the same data type,
+otherwise the values will be coerced, probably to a character.
+
+```{r}
+# Tidy
+(x <- read_excel(path, sheet = "annotations"))
+
+# Extra-tidy
+extra_tidy <-
+  x %>%
+  gather(variable, value, -Name) %>%
+  arrange(Name, variable)
+extra_tidy
+```
+
+With an extra-tidy dataset, the formatting can now be appended to the values of
+individual variables, rather than to whole observations.
+
+```{r}
+# Extra-tidy, with row and column numbers of the original variables
+extra_tidy <-
+  read_excel(path, sheet = "annotations") %>%
+  mutate(row = row_number() + 1L) %>%
+  gather(variable, value, -row, -Name) %>%
+  group_by(row) %>%
+  mutate(col = row_number() + 1L) %>%
+  ungroup() %>%
+  select(row, col, Name, variable, value) %>%
+  arrange(row, col)
+extra_tidy
+
+# `formats` is a pallette of fill colours that can be indexed by the
+# `local_format_id` of a given cell to get the fill colour of that cell
+fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
+
+# Import all the cells, filter out the header row, filter for the first column,
+# and create a new column `uncertain` based on the fill colours, by looking up
+# the local_format_id of each cell in the `formats` pallette.
+fills <-
+  xlsx_cells(path, sheet = "annotations") %>%
+  filter(row >= 2, col >= 2) %>% # Omit the header row and name column
+  mutate(fill_colour = fill_colours[local_format_id]) %>%
+  select(row, col, fill_colour)
+fills
+
+# Step 3: append the `fill` column to the rest of the data
+left_join(extra_tidy, fills, by = c("row", "col"))
+```
+
+Here's the same extra-tidy version, but using only tidyxl and unpivotr.
+
+```{r}
+fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
+
+xlsx_cells(path, sheet = "annotations") %>%
+  mutate(fill_colour = fill_colours[local_format_id]) %>%
+  select(row, col, data_type, character, numeric, fill_colour) %>%
+  behead("W", Name) %>%
+  behead("N", variable) %>%
+  select(-data_type, -character, value = numeric)
+```
+

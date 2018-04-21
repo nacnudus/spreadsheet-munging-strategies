@@ -1,0 +1,102 @@
+# Pivot tables {#pivot}
+
+This part introduces pivot tables.  [Tidyxl](https://nacnudus.github.io/tidyxl)
+and [unpivotr](https://nacnudus.github.io/unpivotr) come into their own here,
+and are (as far as I know) the only the only packages to acknowledge the
+intuitive grammar of pivot tables.
+
+Pivot tables are ones with more than one row of column headers, or more than one
+column of row headers, or both (and there can be more complex arrangements).
+Tables in that form take up less space on a page or a screen than 'tidy' tables,
+and are easier for humans to read. But most software can't interpret or traverse
+data in that form; it must first be reshaped into a long, 'tidy' form, with a
+single row of column headers.
+
+It takes a lot of code to reshape a pivot table into a 'tidy' one, and the code
+has to be bespoke for each table. There's no general solution, because it is
+ambiguous whether a given cell is part of a header or part of the data.
+
+There are some ambiguities in 'tidy' tables, too, which is why most functions
+for reading csv files allow you to specify whether the first row of the data is
+a header, and how many rows to skip before the data begins.  Functions often
+guess, but they can never be certain.
+
+Pivot tables, being more complex, are so much more ambiguous that it isn't
+reasonable to import them with a single function.  A better way is to break the
+problem down into steps:
+
+1. Identify which cells are headers, and which are data.
+1. State how the data cells relate to the header cells.
+
+The first step is a matter of traversing the cells, which is *much easier* if
+you load them with the [tidyxl](https://nacnudus.github.io/tidyxl) package, or
+pass the table through `tidy_table()` in the
+[unpivotr](https://nacnudus.github.io/unpivotr) package.  This gives you a table
+of cells and their properties; one row of the table describes one cell of the
+source table or spreadsheet.  The first two properties are the row and column
+position of the cell, which makes it easy to filter for cells in a particular
+region of the spreadsheet.  If the first row of cells is a header row, then you
+can filter for `row == 1`.
+
+Here is an example of a pivot table where the first two rows, and the first two
+columns, are headers.  The other cells contain the data.  First, see how the
+cells are laid out in the source file by importing it with readxl.
+
+```{r}
+original <- read_excel(path, sheet = "pivot-annotations", col_names = FALSE)
+print(original, n = Inf)
+```
+
+Compare that with the long set of cells, one per row, that tidyxl gives.  (Only
+a few properties of each cell are shown, to make it easier to read).
+
+```{r}
+cells <- xlsx_cells(path, sheets = "pivot-annotations")
+select(cells, row, col, data_type, character, numeric) %>%
+  print(cells, n = 20)
+```
+
+A similar result is obtained via `unpivotr::tidy_table()`.
+
+```{r}
+original <- read_excel(path, sheet = "pivot-annotations", col_names = FALSE)
+tidy_table(original) %>%
+  arrange(row, col) %>%
+  print(n = 20)
+```
+
+(One difference is that `read_excel()` has filled in some missing cells with
+blanks, which `tidy_table()` retains.  Another is that `read_excel()` has
+coerced all data types to `character`, whereas `xlsx_cells()` preserved the
+original data types.)
+
+The tidyxl version is easier to traverse, because it describes the position of
+each cell as well as the value.  To filter for the first row of headers:
+
+```{r}
+filter(cells, row == 2, !is_blank) %>%
+  select(row, col, character, numeric)
+```
+
+Or to filter for cells containing data (in this case, we know that only data
+cells are numeric)
+
+```{r}
+filter(cells, data_type == "numeric") %>%
+  select(row, col, numeric)
+```
+
+By identifying the header cells separately from the data cells, and knowing
+exactly where they are on the sheet, we can associated the data cells with the
+relevant headers.
+
+To a human it is intuitive that the cells below and to the right of the header
+`Male` represent males, and that ones to the right of and below the header
+`Postgraduate qualification` represent people with postgraduate qualifications,
+but it isn't so obvious to the computer.  How would the computer know that the
+header `Male` doesn't also relate to the column of cells below and to the left,
+beginning with `2`?
+
+This section shows how you can express the relationships between headers and
+data cells, using the [unpivotr](https://nacnudus.github.io/unpivotr) package.
+

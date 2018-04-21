@@ -19,10 +19,13 @@ work backwards from time to time.
 
 R packages that feature heavily are
 
-* [unpivotr](https://nacnudus.github.io/unpivotr): tools for converting pivot
-  tables into a tidy structure.
-* [tidyxl](https://nacnudus.github.io/tidyxl): tools for converting pivot
-  tables into a tidy structure.
+* [unpivotr](https://nacnudus.github.io/unpivotr): deals with non-tabular data,
+  especially from spreadsheets.
+* [tidyxl](https://nacnudus.github.io/tidyxl): imports non-tabular data from
+  Excel files
+
+---
 
 ![Creative Commons License](images/by-nc-sa.png)
+
 The online version of this book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).

@@ -1,0 +1,40 @@
+# Setup
+
+This section describes how the code in the book is set up.
+
+## Packages
+
+Here are the packages used by the code in this book.  The last two are my own:
+[tidyxl](https://nacnudus.github.io/tidyxl) and
+[unpivotr](https://nacnudus.github.io/unpivotr).
+
+```{r}
+library(tibble)
+library(tidyr)
+library(dplyr)
+library(purrr)
+library(readr)
+library(readxl)
+library(tidyxl)
+library(unpivotr)
+```
+
+You will need to install the development version of unpivotr.
+
+```{r, eval = FALSE}
+# install.packages("devtools") # If you don't already have it
+devtools::install_github("nacnudus/unpivotr")
+```
+
+## Data
+
+The examples draw from a spreadsheet of toy data, included in the
+[unpivotr](https://nacnudus.github.io/unpivotr) package.  It is recommended to
+[download](https://github.com/nacnudus/unpivotr/raw/master/inst/extdata/worked-examples.xlsx)
+the spreadsheet and have open it in a spreadsheet application while you read the
+book.
+
+```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+```
+

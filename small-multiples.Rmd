@@ -1,0 +1,176 @@
+# Small multiples [#small-multiples]
+
+You might have heard the term 'small multiples' in the context of graphs, but it
+also occurs in spreadsheets, when an array of small tables could be combined
+into a single table.
+
+To import an array of small tables, start by writing the code to import one, and
+then apply that to each in turn.
+
+1. Write the code to import one table.
+1. Wrap that code in a function.
+1. Partition the whole spreadsheet so that each table is in one partition.
+1. Map the function over the partitions.
+
+## Small multiples with all headers present for each multiple
+
+The code to import one of these multiples will be simple.
+
+```{r, eval = FALSE}
+# cells %>%
+#   behead("NNW", subject) %>%
+#   behead("N", header) %>%
+#   select(-col, - local_format_id) %>%
+#   spatter(header) %>%
+#   select(-row)
+```
+
+The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
+code to import only that table.
+
+```{r}
+all_cells <-
+  xlsx_cells(path, sheets = "small-multiples") %>%
+  filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric, local_format_id)
+
+table1 <- filter(all_cells, row %in% 1:4, col %in% 1:3)
+
+table1 %>%
+  behead("NNW", subject) %>%
+  behead("N", header) %>%
+  select(-col, - local_format_id) %>%
+  spatter(header) %>%
+  select(-row)
+```
+
+We wrap that code in a function, to be applied to each separate table.
+
+```{r}
+unpivot <- function(cells) {
+  cells %>%
+    behead("NNW", subject) %>%
+    behead("N", header) %>%
+    select(-col, - local_format_id) %>%
+    spatter(header) %>%
+    select(-row)
+}
+```
+
+Now we partition the spreadsheet into the separate tables.  This is done by
+identifying a corner cell in each table.
+
+```{r}
+formats <- xlsx_formats(path)
+italic <- which(formats$local$font$italic)
+
+corners <- filter(all_cells, local_format_id %in% italic)
+partitions <- partition(all_cells, corners)
+partitions
+```
+
+Finally, map the unpivoting function over the partitions, and combine the
+results.
+
+```{r}
+map(partitions$cells, unpivot) %>%
+  bind_rows()
+```
+
+## Same table in several worksheets/files (using the sheet/file name)
+
+Because `tidyxl()` imports cells from multiple sheets into the same data frame,
+tables on separate sheets can be imported by mapping over the different sheets.
+Just name each sheet in the `xlsx_cell()` call, or don't name any to import them
+all.
+
+As far as `tidyxl()` is concerned, the particular sheet (aka 'tab') that a cell
+is on is another coordinate like `row` and `col`, so the full location of a cell
+is its `row`, its `col`, and its `sheet`.
+
+```{r}
+all_cells <-
+  xlsx_cells(path, sheets = c("humanities", "performance")) %>%
+  filter(!is_blank) %>%
+  select(sheet, row, col, data_type, character, numeric)
+all_cells
+```
+
+To prepare the sheets to be mapped over, use `tidyr::nest()`.  The `data` column
+contains the cells of each sheet.
+
+```{r}
+all_cells %>%
+  nest(-sheet)
+```
+
+The function to unpivot each table in this case will be a couple of `behead()`
+statements.  Further clean-up can be saved until the end.
+
+```{r}
+unpivot <- function(cells) {
+  cells %>%
+    behead("N", name) %>%
+    behead("W", subject)
+}
+```
+
+After mapping the unpivot function over each sheet of cells, use
+`tidyr::unnest()` to show every row of data again.
+
+```{r}
+all_cells %>%
+  nest(-sheet) %>%
+  mutate(data = map(data, unpivot)) %>%
+  unnest()
+```
+
+Finally, do the clean-up operations that were saved until now.
+
+```{r}
+all_cells %>%
+  nest(-sheet) %>%
+  mutate(data = map(data, unpivot)) %>%
+  unnest() %>%
+  transmute(field = sheet,
+            name,
+            subject,
+            score = numeric)
+```
+
+## Same table in several worksheets/files but in different positions
+
+This is almost the same as the section "Same table in several worksheets/files
+(using the sheet/file name)".  The only difference is that the function you
+write to unpivot the table must also *find* the table in the first place, and be
+robust to differences in the placement and context of the table on each sheet.
+
+In this example, both tables begin in the same column, but there is an extra row
+of notes above one of the tables.  There are a few ways to tackle this problem.
+Here, we filter for the `Subject` cell, which is either `A3` or `A4`, and then
+extend the selection to include the whole table.
+
+```{r}
+all_cells <-
+  xlsx_cells(path, sheets = c("female", "male")) %>%
+  filter(!is_blank) %>%
+  select(sheet, row, col, data_type, character, numeric)
+all_cells
+
+unpivot <- function(cells) {
+  cells %>%
+    filter(character == "Subject") %>%
+    pull(row) %>%
+    {filter(cells, row >= .)} %>%
+    behead("N", name) %>%
+    behead("W", subject)
+}
+
+all_cells %>%
+  nest(-sheet) %>%
+  mutate(data = map(data, unpivot)) %>%
+  unnest() %>%
+  select(sex = sheet, name, subject, score = numeric)
+```
+
+

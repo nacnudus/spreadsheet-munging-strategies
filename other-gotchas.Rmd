@@ -1,0 +1,90 @@
+#  Other gotchas
+
+This part is a collection of gotchas that don't fit anywhere else.
+
+## Non-text headers e.g. dates
+
+At the time of writing, readxl doesn't convert Excel dates to R dates when they
+are in the header row.
+
+Using tidyxl and unpivotr, you can choose to make a cell of any data type into a
+tidy 'header', and you can reformat it as text before `spatter()` turns it into
+the header of a data frame.  Another way to format headers as part of the
+`behead()` will be shown later.
+
+```{r}
+xlsx_cells(path, sheet = "non-text headers") %>%
+  behead("W", name) %>%
+  behead("N", `academic-year`) %>%
+  mutate(`academic-year` = strftime(`academic-year`, "%Y")) %>%
+  select(row, data_type, `academic-year`, name, numeric) %>%
+  spatter(`academic-year`) %>%
+  select(-row)
+```
+
+When a single set of headers is of mixed data types, e.g. some character and
+some date, `behead()` chooses the correct ones using the `data_type` column,
+before converting them all to text via `format()`.
+
+```{r}
+xlsx_cells(path, sheet = "non-text headers") %>%
+  select(row, col, data_type, character, numeric, date) %>%
+  behead("N", header)
+```
+
+To format a header when a single set of headers are of mixed data types, you
+can specify a function for each data type in the call to `behead()`.
+
+```{r}
+xlsx_cells(path, sheet = "non-text headers") %>%
+  select(row, col, data_type, character, numeric, date) %>%
+  behead("N", header, formatters = list(date = ~ strftime(.x, "%Y"),
+                                        character = toupper))
+```
+
+## Data embedded in comments
+
+Comment strings are availabe in the `comment` column, just like `character`.
+Comments can have formatting, but tidyxl doesn't yet import the formatting.  If
+you need this, please open an
+[issue](https://github.com/nacnudus/tidyxl/issues).  It would probably be
+imported into a `comment_formatted` column, similarly to `character_formatted`.
+
+```{r}
+xlsx_cells(path, sheet = "comments") %>%
+  select(row, col, data_type, character, numeric, comment) %>%
+  behead("N", "header")
+```
+
+Comments apply to single cells, so follow the same procedure as "Already a tidy
+table but with meaningful formatting of single cells".
+
+```{r}
+cells <-
+  xlsx_cells(path, sheet = "comments") %>%
+  select(row, col, data_type, character, numeric, comment)
+cells
+
+values <-
+  cells %>%
+  select(-comment) %>%
+  behead("N", header) %>%
+  select(-col) %>%
+  spatter(header)
+values
+
+comments <-
+  cells %>%
+  behead("N", header) %>%
+  mutate(header = paste0(header, "_comment")) %>%
+  select(row, header, comment) %>%
+  spread(header, comment)
+comments
+
+left_join(values, comments, by = "row") %>%
+  select(-row)
+```
+
+## Named ranges
+
+TODO

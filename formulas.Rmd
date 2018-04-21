@@ -1,0 +1,3 @@
+# Formulas
+
+TODO: rework the [vignette](https://nacnudus.github.io/tidyxl/articles/smells.html)?

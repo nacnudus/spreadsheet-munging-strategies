@@ -1,0 +1,10 @@
+# Tidy tables with gotchas {#tidy}
+
+This part is a gentle introduction, by taking what you already know about
+importing tidy tabular data (with `read.csv()` or the
+[readr](https://readr.tidyverse.org) package), and shows you how to how to do
+the same things with [tidyxl](https://nacnudus.github.io/tidyxl) and
+[unpivotr](https://nacnudus.github.io/unpivotr).
+
+But even tidy tables can have hidden gotchas, such as meaningful formatting and
+sentinel values, so these are covered too.

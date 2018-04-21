@@ -1,0 +1,87 @@
+# Clean, tidy tables {#tidy-clean}
+
+If the tables in the spreadsheet are clean and tidy, then you should use a
+package like [readxl](https://github.com/tidyverse/readxl).  But it's worth
+knowing how to emulate readxl with tidyxl and unpivotr, because some *almost*
+clean tables can be handled using this technique.
+
+Clean and tidy means
+
+* One table per sheet
+* A single row of column headers, or no headers
+* A single data type in each column
+* Only one kind of sentinel value (to be interpreted as `NA`)
+* No meaningful formatting
+* No data buried in formulas
+* No need to refer to named ranges
+
+Here's the full process.
+
+```{r}
+xlsx_cells(path, sheet = "clean") %>%
+  behead("N", header) %>%
+  select(row, data_type, header, character, numeric) %>%
+  spatter(header) %>%
+  select(-row)
+```
+
+`tidyxl::xlsx_cells()` imports the spreadsheet into a data frame, where each row
+of the data frame describes one cell of the spreadsheet.  The columns `row` and
+`col` (and `address`) describe the position of the cell, and the value of the
+cell is in one of the columns `error`, `logical`, `numeric`, `date`,
+`character`, depending on the type of data in the cell.  The column `data_type`
+says which column the value is in.  Other columns describe formatting and
+formulas.
+
+```{r}
+xlsx_cells(path, sheet = "clean") %>%
+  select(row, col, data_type, character, numeric)
+```
+
+`unpivotr::behead()` takes one level of headers from a pivot table and makes it
+part of the data.  Think of it like `tidyr::gather()`, except that it works when
+there is more than one row of headers (or more than one column of row-headers),
+and it only works on tables that have first come through
+`unpivotr::tidy_table()` or `tidyxl::xlsx_cells()`.
+
+```{r}
+xlsx_cells(path, sheet = "clean") %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("N", header)
+```
+
+`unpivotr::spatter()` spreads key-value pairs across multiple columns, like
+`tidyxl::spread()`, except that it handles mixed data types.  It knows which
+column contains the cell value (i.e. the `character` column or the `numeric`
+column), by checking the `data_type` column.  Just like `tidyr::spread()`, it
+can be confused by extraneous data, so it's usually a good idea to drop the
+`col` column first, and to keep the `row` column.
+
+```{r}
+xlsx_cells(path, sheet = "clean") %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("N", header) %>%
+  select(-col) %>%
+  spatter(header) %>%
+  select(-row)
+```
+
+In case the table has no column headers, you can spatter the `col` column
+instead of a nonexistent `header` column.
+
+```{r}
+xlsx_cells(path, sheet = "clean") %>%
+  filter(row >= 2) %>%
+  select(row, col, data_type, character, numeric) %>%
+  spatter(col) %>%
+  select(-row)
+```
+
+Tidyxl and unpivotr are much more complicated than readxl, and that's the point:
+tidyxl and unpivotr give you more power and complexity when you need it.
+
+```{r}
+read_excel(path, sheet = "clean")
+read_excel(path, sheet = "clean", col_names = FALSE, skip = 1)
+```
+
