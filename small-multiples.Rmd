@@ -1,4 +1,4 @@
-# Small multiples [#small-multiples]
+# Small multiples {#small-multiples}
 
 You might have heard the term 'small multiples' in the context of graphs, but it
 also occurs in spreadsheets, when an array of small tables could be combined
