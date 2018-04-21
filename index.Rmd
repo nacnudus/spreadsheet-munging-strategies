@@ -23,3 +23,6 @@ R packages that feature heavily are
   tables into a tidy structure.
 * [tidyxl](https://nacnudus.github.io/tidyxl): tools for converting pivot
   tables into a tidy structure.
+
+![Creative Commons License](images/by-nc-sa.png)
+The online version of this book is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
