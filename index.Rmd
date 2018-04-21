@@ -1,17 +1,25 @@
 ---
-title: "A Book"
-author: "Frida Gomam"
+title: "Spreadsheet Munging Strategies"
+author: "Duncan Garmonsway"
 site: bookdown::bookdown_site
 documentclass: book
 output:
   bookdown::gitbook: default
-  #bookdown::pdf_book: default
+  bookdown::pdf_book: default
 ---
 
-# Hello World
+# Welcome {-}
 
-Hi.
+This is the website for a work-in-progress book about getting data out of
+spreadsheets, nomatter how peculiar.  The book is designed primarily for R users
+who have to extract data from spreadsheets and who are already familiar with
+the [tidyverse](https://www.tidyverse.org).  It has a cookbook structure, and
+can be used as a reference, but readers who begin in the middle might have to
+work backwards from time to time.
 
-Bye.
+R packages that feature heavily are
 
-<!-- If you need PDF output, uncomment bookdown::pdf_book above in YAML. You will need a LaTeX installation, e.g., https://yihui.name/tinytex/ -->
+* [unpivotr](https://nacnudus.github.io/unpivotr): tools for converting pivot
+  tables into a tidy structure.
+* [tidyxl](https://nacnudus.github.io/tidyxl): tools for converting pivot
+  tables into a tidy structure.
