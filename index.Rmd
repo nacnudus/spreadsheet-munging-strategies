@@ -10,12 +10,12 @@ output:
 
 # Welcome {-}
 
-This is the website for a work-in-progress book about getting data out of
-spreadsheets, nomatter how peculiar.  The book is designed primarily for R users
-who have to extract data from spreadsheets and who are already familiar with
-the [tidyverse](https://www.tidyverse.org).  It has a cookbook structure, and
-can be used as a reference, but readers who begin in the middle might have to
-work backwards from time to time.
+This is a work-in-progress book about getting data out of spreadsheets, nomatter
+how peculiar.  The book is designed primarily for R users who have to extract
+data from spreadsheets and who are already familiar with the
+[tidyverse](https://www.tidyverse.org).  It has a cookbook structure, and can be
+used as a reference, but readers who begin in the middle might have to work
+backwards from time to time.
 
 R packages that feature heavily are
 
@@ -23,6 +23,8 @@ R packages that feature heavily are
   especially from spreadsheets.
 * [tidyxl](https://nacnudus.github.io/tidyxl): imports non-tabular data from
   Excel files
+
+Please help me to improve this book by [opening a GitHub issue]() or [tweeting]().
 
 ---
 

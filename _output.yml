@@ -2,3 +2,8 @@ bookdown::gitbook:
   config:
     toc:
       collapse: none
+    download: [pdf, epub, mobi]
+    edit: https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/%s
+    sharing:
+      github: yes
+      facebook: no
