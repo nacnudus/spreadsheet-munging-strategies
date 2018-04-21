@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
+<link rel="prev" href="formulas.html">
 
-<link rel="next" href="setup.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,40 +196,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Spreadsheet Munging Strategies</h1>
-<h4 class="author"><em>Duncan Garmonsway</em></h4>
+<div id="other-gotchas" class="section level1">
+<h1><span class="header-section-number">9</span> Other gotchas</h1>
+<p>This part is a collection of gotchas that don’t fit anywhere else.</p>
+<div id="non-text-headers-e.g.dates" class="section level2">
+<h2><span class="header-section-number">9.1</span> Non-text headers e.g. dates</h2>
+<p>At the time of writing, readxl doesn’t convert Excel dates to R dates when they
+are in the header row.</p>
+<p>Using tidyxl and unpivotr, you can choose to make a cell of any data type into a
+tidy ‘header’, and you can reformat it as text before <code>spatter()</code> turns it into
+the header of a data frame. Another way to format headers as part of the
+<code>behead()</code> will be shown later.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, name) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, data_type, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, name, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   name     `2017` `2018`
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Matilda      4.     2.
+## 2 Nicholas     3.     1.</code></pre>
+<p>When a single set of headers is of mixed data types, e.g. some character and
+some date, <code>behead()</code> chooses the correct ones using the <code>data_type</code> column,
+before converting them all to text via <code>format()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##     row   col data_type character numeric date                header    
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;     
+## 1     2     1 character Matilda       NA  NA                  Name      
+## 2     2     2 numeric   &lt;NA&gt;           2. NA                  2018-01-01
+## 3     2     3 numeric   &lt;NA&gt;           4. NA                  2017-01-01
+## 4     3     1 character Nicholas      NA  NA                  Name      
+## 5     3     2 numeric   &lt;NA&gt;           1. NA                  2018-01-01
+## 6     3     3 numeric   &lt;NA&gt;           3. NA                  2017-01-01</code></pre>
+<p>To format a header when a single set of headers are of mixed data types, you
+can specify a function for each data type in the call to <code>behead()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">date =</span> <span class="op">~</span><span class="st"> </span><span class="kw">strftime</span>(.x, <span class="st">&quot;%Y&quot;</span>),
+                                        <span class="dt">character =</span> toupper))</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##     row   col data_type character numeric date                header
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt; 
+## 1     2     1 character Matilda       NA  NA                  NAME  
+## 2     2     2 numeric   &lt;NA&gt;           2. NA                  2018  
+## 3     2     3 numeric   &lt;NA&gt;           4. NA                  2017  
+## 4     3     1 character Nicholas      NA  NA                  NAME  
+## 5     3     2 numeric   &lt;NA&gt;           1. NA                  2018  
+## 6     3     3 numeric   &lt;NA&gt;           3. NA                  2017</code></pre>
 </div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome</h1>
-<p>This is the website for a work-in-progress book about getting data out of
-spreadsheets, nomatter how peculiar. The book is designed primarily for R users
-who have to extract data from spreadsheets and who are already familiar with
-the <a href="https://www.tidyverse.org">tidyverse</a>. It has a cookbook structure, and
-can be used as a reference, but readers who begin in the middle might have to
-work backwards from time to time.</p>
-<p>R packages that feature heavily are</p>
-<ul>
-<li><a href="https://nacnudus.github.io/unpivotr">unpivotr</a>: deals with non-tabular data,
-especially from spreadsheets.</li>
-<li><a href="https://nacnudus.github.io/tidyxl">tidyxl</a>: imports non-tabular data from
-Excel files</li>
-</ul>
-<hr />
-<div class="figure">
-<img src="images/by-nc-sa.png" alt="Creative Commons License" />
-<p class="caption">Creative Commons License</p>
+<div id="data-embedded-in-comments" class="section level2">
+<h2><span class="header-section-number">9.2</span> Data embedded in comments</h2>
+<p>Comment strings are availabe in the <code>comment</code> column, just like <code>character</code>.
+Comments can have formatting, but tidyxl doesn’t yet import the formatting. If
+you need this, please open an
+<a href="https://github.com/nacnudus/tidyxl/issues">issue</a>. It would probably be
+imported into a <code>comment_formatted</code> column, similarly to <code>character_formatted</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>)</code></pre>
+<pre><code>## # A tibble: 4 x 7
+##     row   col data_type character numeric comment       header
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; 
+## 1     2     1 character Paul          NA  Absent Term 1 Name  
+## 2     2     2 numeric   &lt;NA&gt;           9. Predicted     Score 
+## 3     3     1 character Matilda       NA  &lt;NA&gt;          Name  
+## 4     3     2 numeric   &lt;NA&gt;          10. &lt;NA&gt;          Score</code></pre>
+<p>Comments apply to single cells, so follow the same procedure as “Already a tidy
+table but with meaningful formatting of single cells”.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment)
+cells</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##     row   col data_type character numeric comment      
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        
+## 1     1     1 character Name          NA  &lt;NA&gt;         
+## 2     1     2 character Score         NA  &lt;NA&gt;         
+## 3     2     1 character Paul          NA  Absent Term 1
+## 4     2     2 numeric   &lt;NA&gt;           9. Predicted    
+## 5     3     1 character Matilda       NA  &lt;NA&gt;         
+## 6     3     2 numeric   &lt;NA&gt;          10. &lt;NA&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">values &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>comment) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(header)
+values</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##     row Name    Score
+##   &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
+## 1     2 Paul       9.
+## 2     3 Matilda   10.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">comments &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_comment&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, header, comment) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(header, comment)
+comments</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##     row Name_comment  Score_comment
+##   &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;        
+## 1     2 Absent Term 1 Predicted    
+## 2     3 &lt;NA&gt;          &lt;NA&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(values, comments, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
+<pre><code>## # A tibble: 2 x 4
+##   Name    Score Name_comment  Score_comment
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        
+## 1 Paul       9. Absent Term 1 Predicted    
+## 2 Matilda   10. &lt;NA&gt;          &lt;NA&gt;</code></pre>
 </div>
-<p>The online version of this book is licensed under the <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+<div id="named-ranges" class="section level2">
+<h2><span class="header-section-number">9.3</span> Named ranges</h2>
+<p>TODO</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="formulas.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="setup.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
