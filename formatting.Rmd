@@ -17,6 +17,8 @@ but in fact it is straightforward to find out a cell's formatting.
 This example shows how to look up whether a cell is bold.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 cells <-
   xlsx_cells(path, sheet = "formatting") %>%
   select(row, col, character, style_format, local_format_id)
@@ -70,6 +72,7 @@ Here's an example of looking up both the local bold formatting and the
 style-level bold formatting of a cell.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 cells <-
   xlsx_cells(path, sheet = "formatting") %>%
   select(row, col, character, style_format, local_format_id) %>%
@@ -103,6 +106,7 @@ which you already have.  If you think you need it, feel free to open an
 This example shows how to look up the most common formats.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 cells <-
   xlsx_cells(path, sheet = "formatting") %>%
   select(row, col, character, style_format, local_format_id, height, width)
@@ -160,6 +164,7 @@ There is one of these data frames for each cell, and they are kept in a
 list-column called `character_formatted`.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "in-cell formatting") %>%
   select(address, character_formatted)
 ```
@@ -184,6 +189,7 @@ The following table of products and their
 production readiness combines three pieces of information in a single cell.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "in-cell formatting") %>%
   filter(address != "A1") %>%
   rectify()
@@ -234,6 +240,7 @@ left_join(cells, strikethrough, by = "row") %>%
 This is pernicious.  What was Paula's score, in the table below?
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 read_excel(path, sheet = "superscript symbols")
 ```
 

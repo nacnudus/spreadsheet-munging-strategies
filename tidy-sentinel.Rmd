@@ -33,6 +33,7 @@ section "Already a tidy table but with meaningful formatting of single cells".
 
 ```{r}
 # Tidy
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 x <- read_excel(path, sheet = "sentinels")
 x
 

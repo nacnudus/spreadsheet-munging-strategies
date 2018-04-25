@@ -212,7 +212,9 @@ but in fact it is straightforward to find out a cell’s formatting.</p>
 <div id="an-example-formatting-lookup" class="section level2">
 <h2><span class="header-section-number">6.1</span> An example formatting lookup</h2>
 <p>This example shows how to look up whether a cell is bold.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)
 cells</code></pre>
@@ -647,7 +649,8 @@ it’s easy to switch from checking a cell’s style-level formatting to its loc
 formatting.</p>
 <p>Here’s an example of looking up both the local bold formatting and the
 style-level bold formatting of a cell.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
@@ -708,7 +711,8 @@ which you already have. If you think you need it, feel free to open an
 <div id="common-formats" class="section level2">
 <h2><span class="header-section-number">6.2</span> Common formats</h2>
 <p>This example shows how to look up the most common formats.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)
 
@@ -782,7 +786,8 @@ provided as a data frame with the following columns.</p>
 </ul>
 <p>There is one of these data frames for each cell, and they are kept in a
 list-column called <code>character_formatted</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(address, character_formatted)</code></pre>
 <pre><code>## # A tibble: 9 x 2
 ##   address character_formatted
@@ -825,7 +830,8 @@ that nevertheless occurred in real life.</p>
 <h2><span class="header-section-number">6.4</span> Multiple pieces of information in a single cell, with meaningful formatting</h2>
 <p>The following table of products and their
 production readiness combines three pieces of information in a single cell.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rectify</span>()</code></pre>
 <pre><code>## # A tibble: 4 x 3
@@ -876,7 +882,8 @@ strikethrough &lt;-
 <div id="superscript-symbols" class="section level2">
 <h2><span class="header-section-number">6.5</span> Superscript symbols</h2>
 <p>This is pernicious. What was Paula’s score, in the table below?</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   Name    Score
 ##   &lt;chr&gt;   &lt;chr&gt;

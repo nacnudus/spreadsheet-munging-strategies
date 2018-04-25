@@ -29,6 +29,7 @@ The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
 code to import only that table.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "small-multiples") %>%
   filter(!is_blank) %>%
@@ -89,6 +90,7 @@ is on is another coordinate like `row` and `col`, so the full location of a cell
 is its `row`, its `col`, and its `sheet`.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = c("humanities", "performance")) %>%
   filter(!is_blank) %>%
@@ -151,6 +153,7 @@ Here, we filter for the `Subject` cell, which is either `A3` or `A4`, and then
 extend the selection to include the whole table.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = c("female", "male")) %>%
   filter(!is_blank) %>%

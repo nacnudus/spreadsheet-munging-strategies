@@ -19,6 +19,7 @@ and converting back to a data frame, but this almost always results in all the
 data types being converted.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 read_excel(path, sheet = "transposed", col_names = FALSE) %>%
   t() %>%
   `colnames<-`(.[1, ]) %>%
@@ -54,6 +55,7 @@ can do the following.
   argument of `readxl::read_excel()` to ignore those rows.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 readxl::read_excel(path,
                    sheet = "notes",
                    skip = 2,

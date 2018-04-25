@@ -14,6 +14,7 @@ and `"Male"` applies to the next two.  The second row of headers has a header in
 every column.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
@@ -67,6 +68,7 @@ headers directly to the left of the data cells, and `"WNW"` for headers
 left-and-above the data cells.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(!is_blank) %>%
@@ -96,6 +98,7 @@ and the formatting.
 1. Join the data to the formatting by the `row` and `col`.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(!is_blank) %>%

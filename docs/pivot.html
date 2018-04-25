@@ -234,7 +234,8 @@ can filter for <code>row == 1</code>.</p>
 <p>Here is an example of a pivot table where the first two rows, and the first two
 columns, are headers. The other cells contain the data. First, see how the
 cells are laid out in the source file by importing it with readxl.</p>
-<pre class="sourceCode r"><code class="sourceCode r">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)
 <span class="kw">print</span>(original, <span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre>
 <pre><code>## # A tibble: 6 x 6
 ##   X__1        X__2     X__3    X__4   X__5     X__6 
@@ -364,7 +365,8 @@ row-headers), and it only works on tables that have first come through
 headers is left-aligned, so <code>&quot;Female&quot;</code> applies to the first two columns of data,
 and <code>&quot;Male&quot;</code> applies to the next two. The second row of headers has a header in
 every column.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)
@@ -398,22 +400,22 @@ of the header cells – it’s usually the <code>character</code> column.</p>
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
 ##  1     3     4 character Matilda       NA  Female
 ##  2     3     5 character Olivia        NA  Female
-##  3     4     4 numeric   &lt;NA&gt;           1. Female
-##  4     4     5 numeric   &lt;NA&gt;           2. Female
-##  5     5     4 numeric   &lt;NA&gt;           3. Female
-##  6     5     5 numeric   &lt;NA&gt;           4. Female
-##  7     6     4 numeric   &lt;NA&gt;           5. Female
-##  8     6     5 numeric   &lt;NA&gt;           6. Female
-##  9     7     4 numeric   &lt;NA&gt;           7. Female
-## 10     7     5 numeric   &lt;NA&gt;           8. Female
-## 11     3     6 character Nicholas      NA  Male  
-## 12     3     7 character Paul          NA  Male  
-## 13     4     6 numeric   &lt;NA&gt;           3. Male  
-## 14     4     7 numeric   &lt;NA&gt;           0. Male  
-## 15     5     6 numeric   &lt;NA&gt;           5. Male  
-## 16     5     7 numeric   &lt;NA&gt;           1. Male  
-## 17     6     6 numeric   &lt;NA&gt;           9. Male  
-## 18     6     7 numeric   &lt;NA&gt;           2. Male  
+##  3     3     6 character Nicholas      NA  Male  
+##  4     3     7 character Paul          NA  Male  
+##  5     4     4 numeric   &lt;NA&gt;           1. Female
+##  6     4     5 numeric   &lt;NA&gt;           2. Female
+##  7     4     6 numeric   &lt;NA&gt;           3. Male  
+##  8     4     7 numeric   &lt;NA&gt;           0. Male  
+##  9     5     4 numeric   &lt;NA&gt;           3. Female
+## 10     5     5 numeric   &lt;NA&gt;           4. Female
+## 11     5     6 numeric   &lt;NA&gt;           5. Male  
+## 12     5     7 numeric   &lt;NA&gt;           1. Male  
+## 13     6     4 numeric   &lt;NA&gt;           5. Female
+## 14     6     5 numeric   &lt;NA&gt;           6. Female
+## 15     6     6 numeric   &lt;NA&gt;           9. Male  
+## 16     6     7 numeric   &lt;NA&gt;           2. Male  
+## 17     7     4 numeric   &lt;NA&gt;           7. Female
+## 18     7     5 numeric   &lt;NA&gt;           8. Female
 ## 19     7     6 numeric   &lt;NA&gt;          12. Male  
 ## 20     7     7 numeric   &lt;NA&gt;           3. Male</code></pre>
 <p>That did half the job. The value 2 in row 4 column 5 is indeed a score of a
@@ -430,18 +432,18 @@ names of people.</p>
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
 ##  1     4     4 numeric   &lt;NA&gt;           1. Female Matilda 
 ##  2     4     5 numeric   &lt;NA&gt;           2. Female Olivia  
-##  3     5     4 numeric   &lt;NA&gt;           3. Female Matilda 
-##  4     5     5 numeric   &lt;NA&gt;           4. Female Olivia  
-##  5     6     4 numeric   &lt;NA&gt;           5. Female Matilda 
-##  6     6     5 numeric   &lt;NA&gt;           6. Female Olivia  
-##  7     7     4 numeric   &lt;NA&gt;           7. Female Matilda 
-##  8     7     5 numeric   &lt;NA&gt;           8. Female Olivia  
-##  9     4     6 numeric   &lt;NA&gt;           3. Male   Nicholas
-## 10     4     7 numeric   &lt;NA&gt;           0. Male   Paul    
-## 11     5     6 numeric   &lt;NA&gt;           5. Male   Nicholas
-## 12     5     7 numeric   &lt;NA&gt;           1. Male   Paul    
-## 13     6     6 numeric   &lt;NA&gt;           9. Male   Nicholas
-## 14     6     7 numeric   &lt;NA&gt;           2. Male   Paul    
+##  3     4     6 numeric   &lt;NA&gt;           3. Male   Nicholas
+##  4     4     7 numeric   &lt;NA&gt;           0. Male   Paul    
+##  5     5     4 numeric   &lt;NA&gt;           3. Female Matilda 
+##  6     5     5 numeric   &lt;NA&gt;           4. Female Olivia  
+##  7     5     6 numeric   &lt;NA&gt;           5. Male   Nicholas
+##  8     5     7 numeric   &lt;NA&gt;           1. Male   Paul    
+##  9     6     4 numeric   &lt;NA&gt;           5. Female Matilda 
+## 10     6     5 numeric   &lt;NA&gt;           6. Female Olivia  
+## 11     6     6 numeric   &lt;NA&gt;           9. Male   Nicholas
+## 12     6     7 numeric   &lt;NA&gt;           2. Male   Paul    
+## 13     7     4 numeric   &lt;NA&gt;           7. Female Matilda 
+## 14     7     5 numeric   &lt;NA&gt;           8. Female Olivia  
 ## 15     7     6 numeric   &lt;NA&gt;          12. Male   Nicholas
 ## 16     7     7 numeric   &lt;NA&gt;           3. Male   Paul</code></pre>
 <p>A final step is a normal clean-up. We drop the <code>row</code>, <code>col</code> and <code>character</code>
@@ -456,18 +458,18 @@ represents.</p>
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
 ##  1    1. Female Matilda 
 ##  2    2. Female Olivia  
-##  3    3. Female Matilda 
-##  4    4. Female Olivia  
-##  5    5. Female Matilda 
-##  6    6. Female Olivia  
-##  7    7. Female Matilda 
-##  8    8. Female Olivia  
-##  9    3. Male   Nicholas
-## 10    0. Male   Paul    
-## 11    5. Male   Nicholas
-## 12    1. Male   Paul    
-## 13    9. Male   Nicholas
-## 14    2. Male   Paul    
+##  3    3. Male   Nicholas
+##  4    0. Male   Paul    
+##  5    3. Female Matilda 
+##  6    4. Female Olivia  
+##  7    5. Male   Nicholas
+##  8    1. Male   Paul    
+##  9    5. Female Matilda 
+## 10    6. Female Olivia  
+## 11    9. Male   Nicholas
+## 12    2. Male   Paul    
+## 13    7. Female Matilda 
+## 14    8. Female Olivia  
 ## 15   12. Male   Nicholas
 ## 16    3. Male   Paul</code></pre>
 </div>
@@ -476,7 +478,8 @@ represents.</p>
 <p>There are no new techniques are used, just more compass directions: <code>&quot;W&quot;</code> for
 headers directly to the left of the data cells, and <code>&quot;WNW&quot;</code> for headers
 left-and-above the data cells.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -507,18 +510,18 @@ left-and-above the data cells.</p>
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
 ##  1 numeric      1. Female Matilda  Humanities  Classics
 ##  2 numeric      2. Female Olivia   Humanities  Classics
-##  3 numeric      3. Female Matilda  Humanities  History 
-##  4 numeric      4. Female Olivia   Humanities  History 
-##  5 numeric      3. Male   Nicholas Humanities  Classics
-##  6 numeric      0. Male   Paul     Humanities  Classics
+##  3 numeric      3. Male   Nicholas Humanities  Classics
+##  4 numeric      0. Male   Paul     Humanities  Classics
+##  5 numeric      3. Female Matilda  Humanities  History 
+##  6 numeric      4. Female Olivia   Humanities  History 
 ##  7 numeric      5. Male   Nicholas Humanities  History 
 ##  8 numeric      1. Male   Paul     Humanities  History 
 ##  9 numeric      5. Female Matilda  Performance Music   
 ## 10 numeric      6. Female Olivia   Performance Music   
-## 11 numeric      7. Female Matilda  Performance Drama   
-## 12 numeric      8. Female Olivia   Performance Drama   
-## 13 numeric      9. Male   Nicholas Performance Music   
-## 14 numeric      2. Male   Paul     Performance Music   
+## 11 numeric      9. Male   Nicholas Performance Music   
+## 12 numeric      2. Male   Paul     Performance Music   
+## 13 numeric      7. Female Matilda  Performance Drama   
+## 14 numeric      8. Female Olivia   Performance Drama   
 ## 15 numeric     12. Male   Nicholas Performance Drama   
 ## 16 numeric      3. Male   Paul     Performance Drama</code></pre>
 </div>
@@ -535,7 +538,8 @@ and <code>col</code> of each data cell.</li>
 <li>Collect the <code>row</code>, <code>col</code> and formatting of each data cell.</li>
 <li>Join the data to the formatting by the <code>row</code> and <code>col</code>.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -568,18 +572,18 @@ unpivoted</code></pre>
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
 ##  1     4     4 numeric      1. Female Matilda  Humanities  Classics
 ##  2     4     5 numeric      2. Female Olivia   Humanities  Classics
-##  3     5     4 numeric      3. Female Matilda  Humanities  History 
-##  4     5     5 numeric      4. Female Olivia   Humanities  History 
-##  5     4     6 numeric      3. Male   Nicholas Humanities  Classics
-##  6     4     7 numeric      0. Male   Paul     Humanities  Classics
+##  3     4     6 numeric      3. Male   Nicholas Humanities  Classics
+##  4     4     7 numeric      0. Male   Paul     Humanities  Classics
+##  5     5     4 numeric      3. Female Matilda  Humanities  History 
+##  6     5     5 numeric      4. Female Olivia   Humanities  History 
 ##  7     5     6 numeric      5. Male   Nicholas Humanities  History 
 ##  8     5     7 numeric      1. Male   Paul     Humanities  History 
 ##  9     6     4 numeric      5. Female Matilda  Performance Music   
 ## 10     6     5 numeric      6. Female Olivia   Performance Music   
-## 11     7     4 numeric      7. Female Matilda  Performance Drama   
-## 12     7     5 numeric      8. Female Olivia   Performance Drama   
-## 13     6     6 numeric      9. Male   Nicholas Performance Music   
-## 14     6     7 numeric      2. Male   Paul     Performance Music   
+## 11     6     6 numeric      9. Male   Nicholas Performance Music   
+## 12     6     7 numeric      2. Male   Paul     Performance Music   
+## 13     7     4 numeric      7. Female Matilda  Performance Drama   
+## 14     7     5 numeric      8. Female Olivia   Performance Drama   
 ## 15     7     6 numeric     12. Male   Nicholas Performance Drama   
 ## 16     7     7 numeric      3. Male   Paul     Performance Drama</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
@@ -632,18 +636,18 @@ annotations</code></pre>
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      
 ##  1 numeric      1. Female Matilda  Humanities  Classics &lt;NA&gt;       
 ##  2 numeric      2. Female Olivia   Humanities  Classics FFFFFF00   
-##  3 numeric      3. Female Matilda  Humanities  History  FFFFFF00   
-##  4 numeric      4. Female Olivia   Humanities  History  &lt;NA&gt;       
-##  5 numeric      3. Male   Nicholas Humanities  Classics &lt;NA&gt;       
-##  6 numeric      0. Male   Paul     Humanities  Classics &lt;NA&gt;       
+##  3 numeric      3. Male   Nicholas Humanities  Classics &lt;NA&gt;       
+##  4 numeric      0. Male   Paul     Humanities  Classics &lt;NA&gt;       
+##  5 numeric      3. Female Matilda  Humanities  History  FFFFFF00   
+##  6 numeric      4. Female Olivia   Humanities  History  &lt;NA&gt;       
 ##  7 numeric      5. Male   Nicholas Humanities  History  &lt;NA&gt;       
 ##  8 numeric      1. Male   Paul     Humanities  History  &lt;NA&gt;       
 ##  9 numeric      5. Female Matilda  Performance Music    &lt;NA&gt;       
 ## 10 numeric      6. Female Olivia   Performance Music    &lt;NA&gt;       
-## 11 numeric      7. Female Matilda  Performance Drama    &lt;NA&gt;       
-## 12 numeric      8. Female Olivia   Performance Drama    &lt;NA&gt;       
-## 13 numeric      9. Male   Nicholas Performance Music    &lt;NA&gt;       
-## 14 numeric      2. Male   Paul     Performance Music    &lt;NA&gt;       
+## 11 numeric      9. Male   Nicholas Performance Music    &lt;NA&gt;       
+## 12 numeric      2. Male   Paul     Performance Music    &lt;NA&gt;       
+## 13 numeric      7. Female Matilda  Performance Drama    &lt;NA&gt;       
+## 14 numeric      8. Female Olivia   Performance Drama    &lt;NA&gt;       
 ## 15 numeric     12. Male   Nicholas Performance Drama    FFFFFF00   
 ## 16 numeric      3. Male   Paul     Performance Drama    &lt;NA&gt;</code></pre>
 
@@ -663,7 +667,8 @@ header cells.</p>
 <div id="two-clear-rows-of-text-column-headers-left-aligned-2rl" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Two clear rows of text column headers, left-aligned {#2RL}</h3>
 <p>The first stage, identifying header vs data cells, is simply filtering.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -758,18 +763,18 @@ directly north (up), or north and west (up and left), or <code>&quot;NNW&quot;</
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; 
 ##  1     4     4    1. Female
 ##  2     4     5    2. Female
-##  3     5     4    3. Female
-##  4     5     5    4. Female
-##  5     6     4    5. Female
-##  6     6     5    6. Female
-##  7     7     4    7. Female
-##  8     7     5    8. Female
-##  9     4     6    3. Male  
-## 10     4     7    0. Male  
-## 11     5     6    5. Male  
-## 12     5     7    1. Male  
-## 13     6     6    9. Male  
-## 14     6     7    2. Male  
+##  3     4     6    3. Male  
+##  4     4     7    0. Male  
+##  5     5     4    3. Female
+##  6     5     5    4. Female
+##  7     5     6    5. Male  
+##  8     5     7    1. Male  
+##  9     6     4    5. Female
+## 10     6     5    6. Female
+## 11     6     6    9. Male  
+## 12     6     7    2. Male  
+## 13     7     4    7. Female
+## 14     7     5    8. Female
 ## 15     7     6   12. Male  
 ## 16     7     7    3. Male</code></pre>
 <p>Piping everything together, we get a complete, tidy dataset, and can finally
@@ -783,18 +788,18 @@ drop the <code>row</code> and <code>col</code> columns.</p>
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
 ##  1    1. Female Matilda 
 ##  2    2. Female Olivia  
-##  3    3. Female Matilda 
-##  4    4. Female Olivia  
-##  5    5. Female Matilda 
-##  6    6. Female Olivia  
-##  7    7. Female Matilda 
-##  8    8. Female Olivia  
-##  9    3. Male   Nicholas
-## 10    0. Male   Paul    
-## 11    5. Male   Nicholas
-## 12    1. Male   Paul    
-## 13    9. Male   Nicholas
-## 14    2. Male   Paul    
+##  3    3. Male   Nicholas
+##  4    0. Male   Paul    
+##  5    3. Female Matilda 
+##  6    4. Female Olivia  
+##  7    5. Male   Nicholas
+##  8    1. Male   Paul    
+##  9    5. Female Matilda 
+## 10    6. Female Olivia  
+## 11    9. Male   Nicholas
+## 12    2. Male   Paul    
+## 13    7. Female Matilda 
+## 14    8. Female Olivia  
 ## 15   12. Male   Nicholas
 ## 16    3. Male   Paul</code></pre>
 </div>
@@ -809,7 +814,8 @@ west (left), and <code>&quot;WNW&quot;</code> for west and north (left and up).<
 artificial here, but sometimes table are deliberately laid out in transpose
 form: the first column contains the headers, and the data extends in columns
 from left to right instead of from top to bottom.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the column headers in this example</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -903,7 +909,8 @@ data_cells <span class="op">%&gt;%</span>
 <li>Identify which cells are headers, and which are data</li>
 <li>State how the data cells relate to the header cells.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -1003,25 +1010,26 @@ data_cells <span class="op">%&gt;%</span>
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
 ##  1    1. Female Matilda  Humanities  Classics
 ##  2    2. Female Olivia   Humanities  Classics
-##  3    3. Female Matilda  Humanities  History 
-##  4    4. Female Olivia   Humanities  History 
-##  5    3. Male   Nicholas Humanities  Classics
-##  6    0. Male   Paul     Humanities  Classics
+##  3    3. Male   Nicholas Humanities  Classics
+##  4    0. Male   Paul     Humanities  Classics
+##  5    3. Female Matilda  Humanities  History 
+##  6    4. Female Olivia   Humanities  History 
 ##  7    5. Male   Nicholas Humanities  History 
 ##  8    1. Male   Paul     Humanities  History 
 ##  9    5. Female Matilda  Performance Music   
 ## 10    6. Female Olivia   Performance Music   
-## 11    7. Female Matilda  Performance Drama   
-## 12    8. Female Olivia   Performance Drama   
-## 13    9. Male   Nicholas Performance Music   
-## 14    2. Male   Paul     Performance Music   
+## 11    9. Male   Nicholas Performance Music   
+## 12    2. Male   Paul     Performance Music   
+## 13    7. Female Matilda  Performance Drama   
+## 14    8. Female Olivia   Performance Drama   
 ## 15   12. Male   Nicholas Performance Drama   
 ## 16    3. Male   Paul     Performance Drama</code></pre>
 </div>
 <div id="centre-aligned-headers" class="section level3">
 <h3><span class="header-section-number">4.2.4</span> Centre-aligned headers</h3>
 <p>Headers aren’t always aligned to one side of the data cells that they describe.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-centre-aligned&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-centre-aligned&quot;</span>)
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 10 x 10
 ##    `row/col` `2(B)`    `3(C)`   `4(D)` `5(E)` `6(F)` `7(G)` `8(H)` `9(I)` 
@@ -1177,18 +1185,18 @@ data_cells <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">enhead</span>(second_header_col, <span class="st">&quot;W&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col)</code></pre>
 <pre><code>## # A tibble: 56 x 5
-##    score sex    name    field      subject   
-##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;     
-##  1    3. Female Leah    Humanities Classics  
-##  2    1. Female Matilda Humanities Classics  
-##  3    2. Female Olivia  Humanities Classics  
-##  4    8. Female Leah    Humanities History   
-##  5    3. Female Matilda Humanities History   
-##  6    4. Female Olivia  Humanities History   
-##  7    1. Female Leah    Humanities Literature
-##  8    1. Female Matilda Humanities Literature
-##  9    9. Female Olivia  Humanities Literature
-## 10    5. Female Leah    Humanities Philosophy
+##    score sex    name     field      subject 
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;   
+##  1    3. Female Leah     Humanities Classics
+##  2    1. Female Matilda  Humanities Classics
+##  3    2. Female Olivia   Humanities Classics
+##  4    4. Male   Lenny    Humanities Classics
+##  5    3. Male   Max      Humanities Classics
+##  6    3. Male   Nicholas Humanities Classics
+##  7    0. Male   Paul     Humanities Classics
+##  8    8. Female Leah     Humanities History 
+##  9    3. Female Matilda  Humanities History 
+## 10    4. Female Olivia   Humanities History 
 ## # ... with 46 more rows</code></pre>
 </div>
 <div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting-1" class="section level3">
@@ -1204,7 +1212,8 @@ and <code>col</code> of each data cell.</li>
 <li>Collect the <code>row</code>, <code>col</code> and formatting of each data cell.</li>
 <li>Join the data to the formatting by the <code>row</code> and <code>col</code>.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -1341,18 +1350,18 @@ annotations</code></pre>
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      
 ##  1    1. Female Matilda  Humanities  Classics &lt;NA&gt;       
 ##  2    2. Female Olivia   Humanities  Classics FFFFFF00   
-##  3    3. Female Matilda  Humanities  History  FFFFFF00   
-##  4    4. Female Olivia   Humanities  History  &lt;NA&gt;       
-##  5    3. Male   Nicholas Humanities  Classics &lt;NA&gt;       
-##  6    0. Male   Paul     Humanities  Classics &lt;NA&gt;       
+##  3    3. Male   Nicholas Humanities  Classics &lt;NA&gt;       
+##  4    0. Male   Paul     Humanities  Classics &lt;NA&gt;       
+##  5    3. Female Matilda  Humanities  History  FFFFFF00   
+##  6    4. Female Olivia   Humanities  History  &lt;NA&gt;       
 ##  7    5. Male   Nicholas Humanities  History  &lt;NA&gt;       
 ##  8    1. Male   Paul     Humanities  History  &lt;NA&gt;       
 ##  9    5. Female Matilda  Performance Music    &lt;NA&gt;       
 ## 10    6. Female Olivia   Performance Music    &lt;NA&gt;       
-## 11    7. Female Matilda  Performance Drama    &lt;NA&gt;       
-## 12    8. Female Olivia   Performance Drama    &lt;NA&gt;       
-## 13    9. Male   Nicholas Performance Music    &lt;NA&gt;       
-## 14    2. Male   Paul     Performance Music    &lt;NA&gt;       
+## 11    9. Male   Nicholas Performance Music    &lt;NA&gt;       
+## 12    2. Male   Paul     Performance Music    &lt;NA&gt;       
+## 13    7. Female Matilda  Performance Drama    &lt;NA&gt;       
+## 14    8. Female Olivia   Performance Drama    &lt;NA&gt;       
 ## 15   12. Male   Nicholas Performance Drama    FFFFFF00   
 ## 16    3. Male   Paul     Performance Drama    &lt;NA&gt;</code></pre>
 </div>
@@ -1363,7 +1372,8 @@ column of header cells, to filter out ones that have the ‘wrong’ formatting
 (formatting that shows they aren’t really headers). In this example, cells with
 italic or red text aren’t headers, even if they are in amongst header cells.</p>
 <p>First, identify the IDs of formats that have italic or red text.</p>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
 
 italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)
 
@@ -1444,18 +1454,18 @@ data_cells <span class="op">%&gt;%</span>
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        
 ##  1    1. Female Humanities   
 ##  2    2. Female Humanities   
-##  3    3. Female Humanities   
-##  4    4. Female Humanities   
-##  5    3. Male   Humanities   
-##  6    0. Male   Humanities   
+##  3    3. Male   Humanities   
+##  4    0. Male   Humanities   
+##  5    3. Female Humanities   
+##  6    4. Female Humanities   
 ##  7    5. Male   Humanities   
 ##  8    1. Male   Humanities   
 ##  9    5. Female Performance  
 ## 10    6. Female Performance  
-## 11    7. Female Performance  
-## 12    8. Female Performance  
-## 13    9. Male   Performance  
-## 14    2. Male   Performance  
+## 11    9. Male   Performance  
+## 12    2. Male   Performance  
+## 13    7. Female Performance  
+## 14    8. Female Performance  
 ## 15   12. Male   Performance  
 ## 16    3. Male   Performance</code></pre>
 </div>
@@ -1471,7 +1481,8 @@ shown by different amounts of indentation. The indentation is done by
 formatting, rather than by leading spaces or tabs.</p>
 <p>The first step is to find the format IDs of all the different levels of
 indentation.</p>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
 
 indent0 &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
 indent1 &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
@@ -1576,7 +1587,8 @@ data_cells <span class="op">%&gt;%</span>
 it for all the data. In this example, the data cells are easy to distinguish
 from the headers mixed in among them, because only the data cells have the
 <code>numeric</code> data type.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-repeated-headers&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
@@ -1725,7 +1737,8 @@ actually a column header, instead of being presented above the data, is
 presented to the side.)</p>
 <p>The way to handle it is to <em>pretend</em> that it is a row header, and use the
 <code>&quot;WNW&quot;</code> direction as normal.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-header-within-data&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span>

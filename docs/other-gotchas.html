@@ -207,7 +207,8 @@ are in the header row.</p>
 tidy ‘header’, and you can reformat it as text before <code>spatter()</code> turns it into
 the header of a data frame. Another way to format headers as part of the
 <code>behead()</code> will be shown later.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, name) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span>
@@ -257,7 +258,8 @@ Comments can have formatting, but tidyxl doesn’t yet import the formatting. If
 you need this, please open an
 <a href="https://github.com/nacnudus/tidyxl/issues">issue</a>. It would probably be
 imported into a <code>comment_formatted</code> column, similarly to <code>character_formatted</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 4 x 7

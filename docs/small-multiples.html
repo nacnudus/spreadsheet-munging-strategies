@@ -220,7 +220,8 @@ then apply that to each in turn.</p>
 <span class="co">#   select(-row)</span></code></pre>
 <p>The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
 code to import only that table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)
@@ -287,7 +288,8 @@ all.</p>
 <p>As far as <code>tidyxl()</code> is concerned, the particular sheet (aka ‘tab’) that a cell
 is on is another coordinate like <code>row</code> and <code>col</code>, so the full location of a cell
 is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)
@@ -375,7 +377,8 @@ robust to differences in the placement and context of the table on each sheet.</
 of notes above one of the tables. There are a few ways to tackle this problem.
 Here, we filter for the <code>Subject</code> cell, which is either <code>A3</code> or <code>A4</code>, and then
 extend the selection to include the whole table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells &lt;-
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)

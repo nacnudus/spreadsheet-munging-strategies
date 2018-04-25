@@ -13,6 +13,7 @@ the header of a data frame.  Another way to format headers as part of the
 `behead()` will be shown later.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "non-text headers") %>%
   behead("W", name) %>%
   behead("N", `academic-year`) %>%
@@ -51,6 +52,7 @@ you need this, please open an
 imported into a `comment_formatted` column, similarly to `character_formatted`.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "comments") %>%
   select(row, col, data_type, character, numeric, comment) %>%
   behead("N", "header")

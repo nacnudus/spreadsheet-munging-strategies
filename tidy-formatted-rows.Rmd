@@ -32,6 +32,7 @@ this procedure.
 
 ```{r}
 # Step 1: import the table taking only cell values and ignoring the formatting
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 x <- read_excel(path, sheet = "highlights")
 
 # Step 2: import one column of the table, taking only the formatting and not the

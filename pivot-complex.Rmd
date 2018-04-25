@@ -15,6 +15,7 @@ This kind of unpivoting is always done in two stages.
 The first stage, identifying header vs data cells, is simply filtering.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
@@ -91,6 +92,7 @@ form: the first column contains the headers, and the data extends in columns
 from left to right instead of from top to bottom.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(row >= 3, !is_blank) %>% # Ignore the column headers in this example
@@ -138,6 +140,7 @@ This is a combination of the previous two sections.  No new techniques are used.
 1. State how the data cells relate to the header cells.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(!is_blank) %>%
@@ -199,6 +202,7 @@ data_cells %>%
 Headers aren't always aligned to one side of the data cells that they describe.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <- xlsx_cells(path, sheets = "pivot-centre-aligned")
 rectify(all_cells)
 ```
@@ -326,6 +330,7 @@ formatting.
 1. Join the data to the formatting by the `row` and `col`.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
   filter(!is_blank) %>%
@@ -411,6 +416,7 @@ italic or red text aren't headers, even if they are in amongst header cells.
 First, identify the IDs of formats that have italic or red text.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 formats <- xlsx_formats(path)
 
 italic <- which(formats$local$font$italic)
@@ -486,6 +492,7 @@ The first step is to find the format IDs of all the different levels of
 indentation.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 formats <- xlsx_formats(path)
 
 indent0 <- which(formats$local$alignment$indent == 0)
@@ -551,6 +558,7 @@ from the headers mixed in among them, because only the data cells have the
 `numeric` data type.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-repeated-headers") %>%
   filter(!is_blank) %>%
@@ -613,6 +621,7 @@ The way to handle it is to *pretend* that it is a row header, and use the
 `"WNW"` direction as normal.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-header-within-data") %>%
   filter(!is_blank) %>%

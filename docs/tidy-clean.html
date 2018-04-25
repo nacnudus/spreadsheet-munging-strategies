@@ -213,7 +213,8 @@ clean tables can be handled using this technique.</p>
 <li>No need to refer to named ranges</li>
 </ul>
 <p>Here’s the full process.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, data_type, header, character, numeric) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
@@ -231,7 +232,8 @@ cell is in one of the columns <code>error</code>, <code>logical</code>, <code>nu
 <code>character</code>, depending on the type of data in the cell. The column <code>data_type</code>
 says which column the value is in. Other columns describe formatting and
 formulas.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</code></pre>
 <pre><code>## # A tibble: 8 x 5
 ##     row   col data_type character numeric
@@ -325,7 +327,8 @@ observation.</p>
 transposing with <code>t()</code> (which outputs a matrix), placing the headers as names,
 and converting back to a data frame, but this almost always results in all the
 data types being converted.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span>
 <span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(.[<span class="dv">1</span>, ]) <span class="op">%&gt;%</span>
 <span class="st">  </span>.[<span class="op">-</span><span class="dv">1</span>, ] <span class="op">%&gt;%</span>
@@ -365,7 +368,8 @@ argument of <code>readxl::read_excel()</code> to ignore those columns.</li>
 <li>Blank or non-blank cells below the table: use <code>n_max</code>
 argument of <code>readxl::read_excel()</code> to ignore those rows.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r">readxl<span class="op">::</span><span class="kw">read_excel</span>(path,
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+readxl<span class="op">::</span><span class="kw">read_excel</span>(path,
                    <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>,
                    <span class="dt">skip =</span> <span class="dv">2</span>,
                    <span class="dt">n_max =</span> <span class="dv">33</span>,
@@ -478,6 +482,7 @@ shortcut, because we are joining exactly <code>n</code> rows of formatting to <c
 data. The following sections is a more general case that can be used instead of
 this procedure.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
 x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)
 
 <span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span>
@@ -539,6 +544,7 @@ and <code>height</code> columns are highlighted, then you could create two new c
 <a href="tidy-formatted-rows">meaningfully formatted rows</a> for each column <code>age</code> and
 <code>height</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
 x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)
 
 <span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span>
@@ -745,6 +751,7 @@ same time.</p>
 e.g. fill colour into one column, font colour into another, bold/not-bold into a
 another, etc.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
 x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>)
 
 <span class="co"># Step 2: import one kind of formatting of one column of the table</span>
@@ -933,6 +940,7 @@ even into separate <code>TRUE</code>/<code>FALSE</code> columns for each kind of
 whole row, so the first step is to make the dataset <em>extra-tidy</em> as in the
 section “Already a tidy table but with meaningful formatting of single cells”.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Tidy</span>
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
 x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>)
 x</code></pre>
 <pre><code>## # A tibble: 4 x 3

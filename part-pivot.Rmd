@@ -43,6 +43,7 @@ columns, are headers.  The other cells contain the data.  First, see how the
 cells are laid out in the source file by importing it with readxl.
 
 ```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 original <- read_excel(path, sheet = "pivot-annotations", col_names = FALSE)
 print(original, n = Inf)
 ```
