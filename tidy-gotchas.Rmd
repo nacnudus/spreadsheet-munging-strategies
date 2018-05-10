@@ -8,6 +8,8 @@ But even with tidy tables, there can be gotchas.
 
 ### Transposed (headers in the first row, data extends to the right)
 
+![](images/transposed.png)
+
 Most packages for importing data assume that the headers are in the first row,
 and each row of data is an observation.  They usually don't support the
 alternative: headers in the first column, and each column of data is an
@@ -40,6 +42,8 @@ xlsx_cells(path, sheet = "transposed") %>%
 ```
 
 ### Other stuff on the same sheet
+
+![](images/notes.png)
 
 It will be more complicated when the table doesn't begin in cell A1, or if there
 are non-blank cells above, below or either side of the table.

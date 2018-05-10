@@ -1,5 +1,7 @@
 ## Meaningfully formatted cells {#tidy-formatted-cells}
 
+![](images/annotations.png)
+
 If single cells are highlighted, rather than whole rows, then the highlights
 probably indicate something about the column rather than the row.  For example,
 a highlighted cell in a column called "age" of a table of medical patients,

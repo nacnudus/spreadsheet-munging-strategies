@@ -1,5 +1,7 @@
 ## Layered meaningful formatting {#layered-formatting}
 
+![](images/combined-highlights.png)
+
 Sometimes different kinds of formatting relate to clearly different aspects of
 an observation, e.g. yellow highlight for "uncertain data" and red text for
 "product no longer available".  Both yellow highlighting and red text in the
@@ -61,6 +63,10 @@ formats <- distinct(cells, row, fill_colour, font_colour)
 left_join(values, formats, by = "row") %>%
   select(-row)
 ```
+
+## Hierarchies in formatting
+
+![](images/highlight-hierarchy.png)
 
 Different kinds of formatting might also represent different levels of a
 hierarchy, e.g.

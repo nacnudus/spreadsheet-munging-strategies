@@ -14,6 +14,8 @@ then apply that to each in turn.
 
 ## Small multiples with all headers present for each multiple
 
+![](images/small-multiples.png)
+
 The code to import one of these multiples will be simple.
 
 ```{r, eval = FALSE}
@@ -80,6 +82,9 @@ map(partitions$cells, unpivot) %>%
 
 ## Same table in several worksheets/files (using the sheet/file name)
 
+![sheet: humanities](images/humanities.png)
+![sheet: performance](images/performance.png)
+
 Because `tidyxl()` imports cells from multiple sheets into the same data frame,
 tables on separate sheets can be imported by mapping over the different sheets.
 Just name each sheet in the `xlsx_cell()` call, or don't name any to import them
@@ -141,6 +146,9 @@ all_cells %>%
 ```
 
 ## Same table in several worksheets/files but in different positions
+
+![sheet: female](images/female.png)
+![sheet: male](images/male.png)
 
 This is almost the same as the section "Same table in several worksheets/files
 (using the sheet/file name)".  The only difference is that the function you

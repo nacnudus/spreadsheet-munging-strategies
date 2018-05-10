@@ -1,5 +1,7 @@
 ## Sentinel values in non-text columns {#tidy-sentinel}
 
+![](images/sentinels.png)
+
 R packages like [readr](http://readr.tidyverse.org/) recognise `NA` as a
 sentinel value that means "Not Applicable", or "Not Available", or anything you
 want.  It doesn't affect the data type of a column when `NA` is one of the

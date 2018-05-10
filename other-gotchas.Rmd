@@ -4,6 +4,8 @@ This part is a collection of gotchas that don't fit anywhere else.
 
 ## Non-text headers e.g. dates
 
+![](images/non-text-headers.png)
+
 At the time of writing, readxl doesn't convert Excel dates to R dates when they
 are in the header row.
 
@@ -44,6 +46,8 @@ xlsx_cells(path, sheet = "non-text headers") %>%
 ```
 
 ## Data embedded in comments
+
+![](images/comments.png)
 
 Comment strings are availabe in the `comment` column, just like `character`.
 Comments can have formatting, but tidyxl doesn't yet import the formatting.  If

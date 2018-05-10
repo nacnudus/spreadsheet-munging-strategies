@@ -1,5 +1,7 @@
 # Pivot tables {#pivot}
 
+![](images/pivot-annotations.png)
+
 This part introduces pivot tables.  [Tidyxl](https://nacnudus.github.io/tidyxl)
 and [unpivotr](https://nacnudus.github.io/unpivotr) come into their own here,
 and are (as far as I know) the only the only packages to acknowledge the

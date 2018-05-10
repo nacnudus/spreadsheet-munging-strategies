@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -140,7 +140,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-formatted-rows"><i class="fa fa-check"></i><b>3.2</b> Meaningfully formatted rows</a></li>
 <li class="chapter" data-level="3.3" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-formatted-cells"><i class="fa fa-check"></i><b>3.3</b> Meaningfully formatted cells</a></li>
 <li class="chapter" data-level="3.4" data-path="tidy-clean.html"><a href="tidy-clean.html#layered-formatting"><i class="fa fa-check"></i><b>3.4</b> Layered meaningful formatting</a></li>
-<li class="chapter" data-level="3.5" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-sentinel"><i class="fa fa-check"></i><b>3.5</b> Sentinel values in non-text columns</a></li>
+<li class="chapter" data-level="3.5" data-path="tidy-clean.html"><a href="tidy-clean.html#hierarchies-in-formatting"><i class="fa fa-check"></i><b>3.5</b> Hierarchies in formatting</a></li>
+<li class="chapter" data-level="3.6" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-sentinel"><i class="fa fa-check"></i><b>3.6</b> Sentinel values in non-text columns</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>4</b> Pivot tables</a><ul>
 <li class="chapter" data-level="4.1" data-path="pivot.html"><a href="pivot.html#pivot-simple"><i class="fa fa-check"></i><b>4.1</b> Simple unpivoting</a><ul>
@@ -211,51 +212,52 @@ then apply that to each in turn.</p>
 </ol>
 <div id="small-multiples-with-all-headers-present-for-each-multiple" class="section level2">
 <h2><span class="header-section-number">5.1</span> Small multiples with all headers present for each multiple</h2>
+<p><img src="images/small-multiples.png" /></p>
 <p>The code to import one of these multiples will be simple.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cells %&gt;%</span>
-<span class="co">#   behead(&quot;NNW&quot;, subject) %&gt;%</span>
-<span class="co">#   behead(&quot;N&quot;, header) %&gt;%</span>
-<span class="co">#   select(-col, - local_format_id) %&gt;%</span>
-<span class="co">#   spatter(header) %&gt;%</span>
-<span class="co">#   select(-row)</span></code></pre>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1"><span class="co"># cells %&gt;%</span></a>
+<a class="sourceLine" id="cb251-2" data-line-number="2"><span class="co">#   behead(&quot;NNW&quot;, subject) %&gt;%</span></a>
+<a class="sourceLine" id="cb251-3" data-line-number="3"><span class="co">#   behead(&quot;N&quot;, header) %&gt;%</span></a>
+<a class="sourceLine" id="cb251-4" data-line-number="4"><span class="co">#   select(-col, - local_format_id) %&gt;%</span></a>
+<a class="sourceLine" id="cb251-5" data-line-number="5"><span class="co">#   spatter(header) %&gt;%</span></a>
+<a class="sourceLine" id="cb251-6" data-line-number="6"><span class="co">#   select(-row)</span></a></code></pre></div>
 <p>The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
 code to import only that table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)
-
-table1 &lt;-<span class="st"> </span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
-
-table1 <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span><span class="st"> </span>local_format_id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb252-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb252-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)</a>
+<a class="sourceLine" id="cb252-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb252-7" data-line-number="7">table1 &lt;-<span class="st"> </span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb252-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb252-9" data-line-number="9">table1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span><span class="st"> </span>local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   subject  Grade Name    Score
 ##   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1 Classics F     Matilda    1.
-## 2 Classics D     Olivia     2.</code></pre>
+## 1 Classics F     Matilda     1
+## 2 Classics D     Olivia      2</code></pre>
 <p>We wrap that code in a function, to be applied to each separate table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {
-  cells <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span><span class="st"> </span>local_format_id) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)
-}</code></pre>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb254-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-5" data-line-number="5"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span><span class="st"> </span>local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-6" data-line-number="6"><span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-7" data-line-number="7"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb254-8" data-line-number="8">}</a></code></pre></div>
 <p>Now we partition the spreadsheet into the separate tables. This is done by
 identifying a corner cell in each table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)
-
-corners &lt;-<span class="st"> </span><span class="kw">filter</span>(all_cells, local_format_id <span class="op">%in%</span><span class="st"> </span>italic)
-partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)
-partitions</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb255-2" data-line-number="2">italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)</a>
+<a class="sourceLine" id="cb255-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb255-4" data-line-number="4">corners &lt;-<span class="st"> </span><span class="kw">filter</span>(all_cells, local_format_id <span class="op">%in%</span><span class="st"> </span>italic)</a>
+<a class="sourceLine" id="cb255-5" data-line-number="5">partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)</a>
+<a class="sourceLine" id="cb255-6" data-line-number="6">partitions</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   partition cells            
 ##       &lt;int&gt; &lt;list&gt;           
@@ -265,22 +267,24 @@ partitions</code></pre>
 ## 4         4 &lt;tibble [10 × 6]&gt;</code></pre>
 <p>Finally, map the unpivoting function over the partitions, and combine the
 results.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(partitions<span class="op">$</span>cells, unpivot) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" data-line-number="1"><span class="kw">map</span>(partitions<span class="op">$</span>cells, unpivot) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-2" data-line-number="2"><span class="st">  </span><span class="kw">bind_rows</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   subject  Grade Name    Score
 ##   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1 Classics F     Matilda    1.
-## 2 Classics D     Olivia     2.
-## 3 History  D     Matilda    3.
-## 4 History  C     Olivia     4.
-## 5 Music    B     Matilda    5.
-## 6 Music    B     Olivia     6.
-## 7 Drama    A     Matilda    7.
-## 8 Drama    A     Olivia     8.</code></pre>
+## 1 Classics F     Matilda     1
+## 2 Classics D     Olivia      2
+## 3 History  D     Matilda     3
+## 4 History  C     Olivia      4
+## 5 Music    B     Matilda     5
+## 6 Music    B     Olivia      6
+## 7 Drama    A     Matilda     7
+## 8 Drama    A     Olivia      8</code></pre>
 </div>
 <div id="same-table-in-several-worksheetsfiles-using-the-sheetfile-name" class="section level2">
 <h2><span class="header-section-number">5.2</span> Same table in several worksheets/files (using the sheet/file name)</h2>
+<p><img src="images/humanities.png" alt="sheet: humanities" />
+<img src="images/performance.png" alt="sheet: performance" /></p>
 <p>Because <code>tidyxl()</code> imports cells from multiple sheets into the same data frame,
 tables on separate sheets can be imported by mapping over the different sheets.
 Just name each sheet in the <code>xlsx_cell()</code> call, or don’t name any to import them
@@ -288,35 +292,35 @@ all.</p>
 <p>As far as <code>tidyxl()</code> is concerned, the particular sheet (aka ‘tab’) that a cell
 is on is another coordinate like <code>row</code> and <code>col</code>, so the full location of a cell
 is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)
-all_cells</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb259-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb259-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb259-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb259-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb259-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##    sheet         row   col data_type character numeric
 ##    &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
-##  1 humanities      1     2 character Matilda       NA 
-##  2 humanities      1     3 character Nicholas      NA 
-##  3 humanities      2     1 character Classics      NA 
-##  4 humanities      2     2 numeric   &lt;NA&gt;           1.
-##  5 humanities      2     3 numeric   &lt;NA&gt;           3.
-##  6 humanities      3     1 character History       NA 
-##  7 humanities      3     2 numeric   &lt;NA&gt;           3.
-##  8 humanities      3     3 numeric   &lt;NA&gt;           5.
-##  9 performance     1     2 character Matilda       NA 
-## 10 performance     1     3 character Nicholas      NA 
-## 11 performance     2     1 character Music         NA 
-## 12 performance     2     2 numeric   &lt;NA&gt;           5.
-## 13 performance     2     3 numeric   &lt;NA&gt;           9.
-## 14 performance     3     1 character Drama         NA 
-## 15 performance     3     2 numeric   &lt;NA&gt;           7.
-## 16 performance     3     3 numeric   &lt;NA&gt;          12.</code></pre>
+##  1 humanities      1     2 character Matilda        NA
+##  2 humanities      1     3 character Nicholas       NA
+##  3 humanities      2     1 character Classics       NA
+##  4 humanities      2     2 numeric   &lt;NA&gt;            1
+##  5 humanities      2     3 numeric   &lt;NA&gt;            3
+##  6 humanities      3     1 character History        NA
+##  7 humanities      3     2 numeric   &lt;NA&gt;            3
+##  8 humanities      3     3 numeric   &lt;NA&gt;            5
+##  9 performance     1     2 character Matilda        NA
+## 10 performance     1     3 character Nicholas       NA
+## 11 performance     2     1 character Music          NA
+## 12 performance     2     2 numeric   &lt;NA&gt;            5
+## 13 performance     2     3 numeric   &lt;NA&gt;            9
+## 14 performance     3     1 character Drama          NA
+## 15 performance     3     2 numeric   &lt;NA&gt;            7
+## 16 performance     3     3 numeric   &lt;NA&gt;           12</code></pre>
 <p>To prepare the sheets to be mapped over, use <code>tidyr::nest()</code>. The <code>data</code> column
 contains the cells of each sheet.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</code></pre>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb261-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   sheet       data            
 ##   &lt;chr&gt;       &lt;list&gt;          
@@ -324,51 +328,53 @@ contains the cells of each sheet.</p>
 ## 2 performance &lt;tibble [8 × 5]&gt;</code></pre>
 <p>The function to unpivot each table in this case will be a couple of <code>behead()</code>
 statements. Further clean-up can be saved until the end.</p>
-<pre class="sourceCode r"><code class="sourceCode r">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {
-  cells <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)
-}</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb263-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
+<a class="sourceLine" id="cb263-5" data-line-number="5">}</a></code></pre></div>
 <p>After mapping the unpivot function over each sheet of cells, use
 <code>tidyr::unnest()</code> to show every row of data again.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>()</code></pre>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 8
 ##   sheet         row   col data_type character numeric name     subject 
 ##   &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-## 1 humanities      2     2 numeric   &lt;NA&gt;           1. Matilda  Classics
-## 2 humanities      2     3 numeric   &lt;NA&gt;           3. Nicholas Classics
-## 3 humanities      3     2 numeric   &lt;NA&gt;           3. Matilda  History 
-## 4 humanities      3     3 numeric   &lt;NA&gt;           5. Nicholas History 
-## 5 performance     2     2 numeric   &lt;NA&gt;           5. Matilda  Music   
-## 6 performance     2     3 numeric   &lt;NA&gt;           9. Nicholas Music   
-## 7 performance     3     2 numeric   &lt;NA&gt;           7. Matilda  Drama   
-## 8 performance     3     3 numeric   &lt;NA&gt;          12. Nicholas Drama</code></pre>
+## 1 humanities      2     2 numeric   &lt;NA&gt;            1 Matilda  Classics
+## 2 humanities      2     3 numeric   &lt;NA&gt;            3 Nicholas Classics
+## 3 humanities      3     2 numeric   &lt;NA&gt;            3 Matilda  History 
+## 4 humanities      3     3 numeric   &lt;NA&gt;            5 Nicholas History 
+## 5 performance     2     2 numeric   &lt;NA&gt;            5 Matilda  Music   
+## 6 performance     2     3 numeric   &lt;NA&gt;            9 Nicholas Music   
+## 7 performance     3     2 numeric   &lt;NA&gt;            7 Matilda  Drama   
+## 8 performance     3     3 numeric   &lt;NA&gt;           12 Nicholas Drama</code></pre>
 <p>Finally, do the clean-up operations that were saved until now.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,
-            name,
-            subject,
-            <span class="dt">score =</span> numeric)</code></pre>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb266-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb266-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb266-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb266-5" data-line-number="5"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</a>
+<a class="sourceLine" id="cb266-6" data-line-number="6">            name,</a>
+<a class="sourceLine" id="cb266-7" data-line-number="7">            subject,</a>
+<a class="sourceLine" id="cb266-8" data-line-number="8">            <span class="dt">score =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   field       name     subject  score
 ##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1 humanities  Matilda  Classics    1.
-## 2 humanities  Nicholas Classics    3.
-## 3 humanities  Matilda  History     3.
-## 4 humanities  Nicholas History     5.
-## 5 performance Matilda  Music       5.
-## 6 performance Nicholas Music       9.
-## 7 performance Matilda  Drama       7.
-## 8 performance Nicholas Drama      12.</code></pre>
+## 1 humanities  Matilda  Classics     1
+## 2 humanities  Nicholas Classics     3
+## 3 humanities  Matilda  History      3
+## 4 humanities  Nicholas History      5
+## 5 performance Matilda  Music        5
+## 6 performance Nicholas Music        9
+## 7 performance Matilda  Drama        7
+## 8 performance Nicholas Drama       12</code></pre>
 </div>
 <div id="same-table-in-several-worksheetsfiles-but-in-different-positions" class="section level2">
 <h2><span class="header-section-number">5.3</span> Same table in several worksheets/files but in different positions</h2>
+<p><img src="images/female.png" alt="sheet: female" />
+<img src="images/male.png" alt="sheet: male" /></p>
 <p>This is almost the same as the section “Same table in several worksheets/files
 (using the sheet/file name)”. The only difference is that the function you
 write to unpivot the table must also <em>find</em> the table in the first place, and be
@@ -377,51 +383,51 @@ robust to differences in the placement and context of the table on each sheet.</
 of notes above one of the tables. There are a few ways to tackle this problem.
 Here, we filter for the <code>Subject</code> cell, which is either <code>A3</code> or <code>A4</code>, and then
 extend the selection to include the whole table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)
-all_cells</code></pre>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb268-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb268-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb268-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 21 x 6
 ##    sheet    row   col data_type character       numeric
 ##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;
-##  1 female     1     1 character Table of scores     NA 
-##  2 female     3     1 character Subject             NA 
-##  3 female     3     2 character Matilda             NA 
-##  4 female     3     3 character Olivia              NA 
-##  5 female     4     1 character Classics            NA 
-##  6 female     4     2 numeric   &lt;NA&gt;                 1.
-##  7 female     4     3 numeric   &lt;NA&gt;                 2.
-##  8 female     5     1 character History             NA 
-##  9 female     5     2 numeric   &lt;NA&gt;                 3.
-## 10 female     5     3 numeric   &lt;NA&gt;                 4.
+##  1 female     1     1 character Table of scores      NA
+##  2 female     3     1 character Subject              NA
+##  3 female     3     2 character Matilda              NA
+##  4 female     3     3 character Olivia               NA
+##  5 female     4     1 character Classics             NA
+##  6 female     4     2 numeric   &lt;NA&gt;                  1
+##  7 female     4     3 numeric   &lt;NA&gt;                  2
+##  8 female     5     1 character History              NA
+##  9 female     5     2 numeric   &lt;NA&gt;                  3
+## 10 female     5     3 numeric   &lt;NA&gt;                  4
 ## # ... with 11 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {
-  cells <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span>
-<span class="st">    </span>{<span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)
-}
-
-all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb270-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-3" data-line-number="3"><span class="st">    </span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-4" data-line-number="4"><span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-5" data-line-number="5"><span class="st">    </span>{<span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-6" data-line-number="6"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-7" data-line-number="7"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
+<a class="sourceLine" id="cb270-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb270-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb270-10" data-line-number="10">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-11" data-line-number="11"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-13" data-line-number="13"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb270-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   sex    name     subject  score
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1 female Matilda  Classics    1.
-## 2 female Olivia   Classics    2.
-## 3 female Matilda  History     3.
-## 4 female Olivia   History     4.
-## 5 male   Nicholas Classics    3.
-## 6 male   Paul     Classics    0.
-## 7 male   Nicholas History     5.
-## 8 male   Paul     History     1.</code></pre>
+## 1 female Matilda  Classics     1
+## 2 female Olivia   Classics     2
+## 3 female Matilda  History      3
+## 4 female Olivia   History      4
+## 5 male   Nicholas Classics     3
+## 6 male   Paul     Classics     0
+## 7 male   Nicholas History      5
+## 8 male   Paul     History      1</code></pre>
 
 </div>
 </div>

@@ -24,6 +24,9 @@ R packages that feature heavily are
 * [tidyxl](https://nacnudus.github.io/tidyxl): imports non-tabular data from
   Excel files
 
+Tidyxl and unpivotr are much more complicated than readxl, and that’s the point.
+Tidyxl and unpivotr give you more power and complexity when you need it.
+
 Please help me to improve this book by [opening a GitHub issue]() or [tweeting]().
 
 ---

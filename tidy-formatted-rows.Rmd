@@ -1,5 +1,7 @@
 ## Meaningfully formatted rows {#tidy-formatted-rows}
 
+![](images/highlights.png)
+
 As with [clean, tidy tables](clean), but with a second step to interpret the
 formatting.
 

@@ -14,6 +14,8 @@ but in fact it is straightforward to find out a cell's formatting.
 
 ## An example formatting lookup
 
+![](images/formatting.png)
+
 This example shows how to look up whether a cell is bold.
 
 ```{r}
@@ -103,6 +105,8 @@ which you already have.  If you think you need it, feel free to open an
 
 ## Common formats
 
+![](images/formatting.png)
+
 This example shows how to look up the most common formats.
 
 ```{r}
@@ -138,6 +142,8 @@ mutate(cells,
 ```
 
 ## In-cell formatting
+
+![](images/in-cell-formatting.png)
 
 The previous section was about formatting applied at the level of cells.  What
 about when multiple formats are applied within a single cell?  A single word in
@@ -184,6 +190,8 @@ It's hard to think of a plausible example, so what follows is an implausible one
 that nevertheless occurred in real life.
 
 ## Multiple pieces of information in a single cell, with meaningful formatting
+
+![](images/in-cell-formatting.png)
 
 The following table of products and their
 production readiness combines three pieces of information in a single cell.
@@ -236,6 +244,8 @@ left_join(cells, strikethrough, by = "row") %>%
 ```
 
 ## Superscript symbols {#superscript-symbols}
+
+![](images/superscript-symbols.png)
 
 This is pernicious.  What was Paula's score, in the table below?
 

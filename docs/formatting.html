@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -140,7 +140,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-formatted-rows"><i class="fa fa-check"></i><b>3.2</b> Meaningfully formatted rows</a></li>
 <li class="chapter" data-level="3.3" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-formatted-cells"><i class="fa fa-check"></i><b>3.3</b> Meaningfully formatted cells</a></li>
 <li class="chapter" data-level="3.4" data-path="tidy-clean.html"><a href="tidy-clean.html#layered-formatting"><i class="fa fa-check"></i><b>3.4</b> Layered meaningful formatting</a></li>
-<li class="chapter" data-level="3.5" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-sentinel"><i class="fa fa-check"></i><b>3.5</b> Sentinel values in non-text columns</a></li>
+<li class="chapter" data-level="3.5" data-path="tidy-clean.html"><a href="tidy-clean.html#hierarchies-in-formatting"><i class="fa fa-check"></i><b>3.5</b> Hierarchies in formatting</a></li>
+<li class="chapter" data-level="3.6" data-path="tidy-clean.html"><a href="tidy-clean.html#tidy-sentinel"><i class="fa fa-check"></i><b>3.6</b> Sentinel values in non-text columns</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>4</b> Pivot tables</a><ul>
 <li class="chapter" data-level="4.1" data-path="pivot.html"><a href="pivot.html#pivot-simple"><i class="fa fa-check"></i><b>4.1</b> Simple unpivoting</a><ul>
@@ -211,13 +212,14 @@ but in fact it is straightforward to find out a cell’s formatting.</p>
 </ol>
 <div id="an-example-formatting-lookup" class="section level2">
 <h2><span class="header-section-number">6.1</span> An example formatting lookup</h2>
+<p><img src="images/formatting.png" /></p>
 <p>This example shows how to look up whether a cell is bold.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)
-cells</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb272-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb272-3" data-line-number="3">cells &lt;-</a>
+<a class="sourceLine" id="cb272-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)</a>
+<a class="sourceLine" id="cb272-6" data-line-number="6">cells</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 5
 ##      row   col character          style_format local_format_id
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                  &lt;int&gt;
@@ -235,16 +237,16 @@ cells</code></pre>
 ## 12    12     1 row height 30      Normal                     1
 ## 13    13     2 column width 16.76 Normal                     1
 ## 14    14     1 Bad&#39; style         Bad                       56</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span>
-bold</code></pre>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb274-2" data-line-number="2">bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span></a>
+<a class="sourceLine" id="cb274-3" data-line-number="3">bold</a></code></pre></div>
 <pre><code>##  [1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
 ## [12] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [45] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [56] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</code></pre>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1"><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 6
 ##      row   col character          style_format local_format_id bold 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                  &lt;int&gt; &lt;lgl&gt;
@@ -264,8 +266,8 @@ bold</code></pre>
 ## 14    14     1 Bad&#39; style         Bad                       56 FALSE</code></pre>
 <p>A quick way to see what formatting definitions exist is to use <code>str()</code>. (Scroll
 past this for now – you don’t need to memorise it).</p>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-<span class="kw">str</span>(formats)</code></pre>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb278-2" data-line-number="2"><span class="kw">str</span>(formats)</a></code></pre></div>
 <pre><code>## List of 2
 ##  $ local:List of 6
 ##   ..$ numFmt    : chr [1:66] &quot;General&quot; &quot;General&quot; &quot;General&quot; &quot;General&quot; ...
@@ -649,28 +651,28 @@ it’s easy to switch from checking a cell’s style-level formatting to its loc
 formatting.</p>
 <p>Here’s an example of looking up both the local bold formatting and the
 style-level bold formatting of a cell.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
-cells</code></pre>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb280-2" data-line-number="2">cells &lt;-</a>
+<a class="sourceLine" id="cb280-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb280-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb280-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb280-6" data-line-number="6">cells</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     row   col character style_format local_format_id
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt;
 ## 1     1     1 bold      Normal                     3</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-
-local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold
-local_bold</code></pre>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb282-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb282-3" data-line-number="3">local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb282-4" data-line-number="4">local_bold</a></code></pre></div>
 <pre><code>##  [1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
 ## [12] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [45] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [56] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold
-style_bold</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1">style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb284-2" data-line-number="2">style_bold</a></code></pre></div>
 <pre><code>##           Normal            Title        Heading 1        Heading 2 
 ##            FALSE             TRUE             TRUE             TRUE 
 ##        Heading 3        Heading 4             Good              Bad 
@@ -693,9 +695,9 @@ style_bold</code></pre>
 ##            FALSE            FALSE            FALSE            FALSE 
 ##    40% - Accent6    60% - Accent6         Normal 2 
 ##            FALSE            FALSE            FALSE</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mutate</span>(cells,
-       <span class="dt">style_bold =</span> style_bold[style_format],
-       <span class="dt">local_bold =</span> local_bold[local_format_id])</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1"><span class="kw">mutate</span>(cells,</a>
+<a class="sourceLine" id="cb286-2" data-line-number="2">       <span class="dt">style_bold =</span> style_bold[style_format],</a>
+<a class="sourceLine" id="cb286-3" data-line-number="3">       <span class="dt">local_bold =</span> local_bold[local_format_id])</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##     row   col character style_format local_format_id style_bold local_bold
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt; &lt;lgl&gt;      &lt;lgl&gt;     
@@ -710,53 +712,54 @@ which you already have. If you think you need it, feel free to open an
 </div>
 <div id="common-formats" class="section level2">
 <h2><span class="header-section-number">6.2</span> Common formats</h2>
+<p><img src="images/formatting.png" /></p>
 <p>This example shows how to look up the most common formats.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)
-
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-
-bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold
-italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic
-underline &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>underline
-strikethrough &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>strike
-font_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb
-fill_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-font_size &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>size
-font_name &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>name
-border_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>color<span class="op">$</span>rgb
-border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>style
-
-<span class="kw">mutate</span>(cells,
-       <span class="dt">bold =</span> bold[local_format_id],
-       <span class="dt">italic =</span> italic[local_format_id],
-       <span class="dt">underline =</span> underline[local_format_id],
-       <span class="dt">strikethrough =</span> strikethrough[local_format_id],
-       <span class="dt">font_colour =</span> font_colour[local_format_id],
-       <span class="dt">font_size =</span> font_size[local_format_id],
-       <span class="dt">font_name =</span> font_name[local_format_id],
-       <span class="dt">fill_colour =</span> fill_colour[local_format_id],
-       <span class="dt">border_colour =</span> border_colour[local_format_id],
-       <span class="dt">border_linetype =</span> border_linetype[local_format_id])</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb288-2" data-line-number="2">cells &lt;-</a>
+<a class="sourceLine" id="cb288-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb288-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)</a>
+<a class="sourceLine" id="cb288-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb288-6" data-line-number="6">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb288-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb288-8" data-line-number="8">bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb288-9" data-line-number="9">italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</a>
+<a class="sourceLine" id="cb288-10" data-line-number="10">underline &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>underline</a>
+<a class="sourceLine" id="cb288-11" data-line-number="11">strikethrough &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>strike</a>
+<a class="sourceLine" id="cb288-12" data-line-number="12">font_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb288-13" data-line-number="13">fill_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb288-14" data-line-number="14">font_size &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>size</a>
+<a class="sourceLine" id="cb288-15" data-line-number="15">font_name &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb288-16" data-line-number="16">border_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>color<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb288-17" data-line-number="17">border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>style</a>
+<a class="sourceLine" id="cb288-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb288-19" data-line-number="19"><span class="kw">mutate</span>(cells,</a>
+<a class="sourceLine" id="cb288-20" data-line-number="20">       <span class="dt">bold =</span> bold[local_format_id],</a>
+<a class="sourceLine" id="cb288-21" data-line-number="21">       <span class="dt">italic =</span> italic[local_format_id],</a>
+<a class="sourceLine" id="cb288-22" data-line-number="22">       <span class="dt">underline =</span> underline[local_format_id],</a>
+<a class="sourceLine" id="cb288-23" data-line-number="23">       <span class="dt">strikethrough =</span> strikethrough[local_format_id],</a>
+<a class="sourceLine" id="cb288-24" data-line-number="24">       <span class="dt">font_colour =</span> font_colour[local_format_id],</a>
+<a class="sourceLine" id="cb288-25" data-line-number="25">       <span class="dt">font_size =</span> font_size[local_format_id],</a>
+<a class="sourceLine" id="cb288-26" data-line-number="26">       <span class="dt">font_name =</span> font_name[local_format_id],</a>
+<a class="sourceLine" id="cb288-27" data-line-number="27">       <span class="dt">fill_colour =</span> fill_colour[local_format_id],</a>
+<a class="sourceLine" id="cb288-28" data-line-number="28">       <span class="dt">border_colour =</span> border_colour[local_format_id],</a>
+<a class="sourceLine" id="cb288-29" data-line-number="29">       <span class="dt">border_linetype =</span> border_linetype[local_format_id])</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 17
 ##      row   col character   style_format local_format_id height width bold 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;
-##  1     1     1 bold        Normal                     3   15.0  8.38 TRUE 
-##  2     2     1 italic      Normal                     2   15.0  8.38 FALSE
-##  3     3     1 underline   Normal                    50   15.0  8.38 FALSE
-##  4     4     1 strikethro… Normal                    51   15.0  8.38 FALSE
-##  5     5     1 red text    Normal                     4   15.0  8.38 FALSE
+##  1     1     1 bold        Normal                     3   15    8.38 TRUE 
+##  2     2     1 italic      Normal                     2   15    8.38 FALSE
+##  3     3     1 underline   Normal                    50   15    8.38 FALSE
+##  4     4     1 strikethro… Normal                    51   15    8.38 FALSE
+##  5     5     1 red text    Normal                     4   15    8.38 FALSE
 ##  6     6     1 font size … Normal                    52   18.8  8.38 FALSE
-##  7     7     1 font arial  Normal                    53   15.0  8.38 FALSE
-##  8     8     1 yellow fill Normal                     5   15.0  8.38 FALSE
+##  7     7     1 font arial  Normal                    53   15    8.38 FALSE
+##  8     8     1 yellow fill Normal                     5   15    8.38 FALSE
 ##  9     9     1 black bord… Normal                    36   15.8  8.38 FALSE
 ## 10    10     1 thick bord… Normal                    54   15.8  8.38 FALSE
 ## 11    11     1 dashed bor… Normal                    55   15.8  8.38 FALSE
-## 12    12     1 row height… Normal                     1   30.0  8.38 FALSE
-## 13    13     2 column wid… Normal                     1   15.0 17.4  FALSE
-## 14    14     1 Bad&#39; style  Bad                       56   15.0  8.38 FALSE
+## 12    12     1 row height… Normal                     1   30    8.38 FALSE
+## 13    13     2 column wid… Normal                     1   15   17.4  FALSE
+## 14    14     1 Bad&#39; style  Bad                       56   15    8.38 FALSE
 ## # ... with 9 more variables: italic &lt;lgl&gt;, underline &lt;chr&gt;,
 ## #   strikethrough &lt;lgl&gt;, font_colour &lt;chr&gt;, font_size &lt;dbl&gt;,
 ## #   font_name &lt;chr&gt;, fill_colour &lt;chr&gt;, border_colour &lt;chr&gt;,
@@ -764,6 +767,7 @@ border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>lo
 </div>
 <div id="in-cell-formatting" class="section level2">
 <h2><span class="header-section-number">6.3</span> In-cell formatting</h2>
+<p><img src="images/in-cell-formatting.png" /></p>
 <p>The previous section was about formatting applied at the level of cells. What
 about when multiple formats are applied within a single cell? A single word in
 a string might be a different colour, to stand out.</p>
@@ -786,9 +790,9 @@ provided as a data frame with the following columns.</p>
 </ul>
 <p>There is one of these data frames for each cell, and they are kept in a
 list-column called <code>character_formatted</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(address, character_formatted)</code></pre>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb290-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb290-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted)</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 2
 ##   address character_formatted
 ##   &lt;chr&gt;   &lt;list&gt;             
@@ -804,22 +808,22 @@ list-column called <code>character_formatted</code>.</p>
 <p>The way to access these data frames is via <code>tidyr::unnest()</code>. In this example,
 a single cell has a long string of words, where each word is formatted
 differently.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>()</code></pre>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb292-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb292-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb292-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 15
 ##   address character      bold  italic underline strike vertAlign    size
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;       &lt;dbl&gt;
-## 1 A1      in-cell:       NA    NA     &lt;NA&gt;      NA     &lt;NA&gt;          NA 
-## 2 A1      bold,          TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;           0.
-## 3 A1      italic,        FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;           0.
-## 4 A1      underline,     FALSE FALSE  single    FALSE  &lt;NA&gt;           0.
-## 5 A1      strikethrough, FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;           0.
-## 6 A1      superscript,   FALSE FALSE  &lt;NA&gt;      FALSE  superscript    0.
-## 7 A1      red,           FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;           0.
-## 8 A1      arial,         FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;           0.
-## 9 A1      size 14        FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;           0.
+## 1 A1      in-cell:       NA    NA     &lt;NA&gt;      NA     &lt;NA&gt;           NA
+## 2 A1      bold,          TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
+## 3 A1      italic,        FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;            0
+## 4 A1      underline,     FALSE FALSE  single    FALSE  &lt;NA&gt;            0
+## 5 A1      strikethrough, FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;            0
+## 6 A1      superscript,   FALSE FALSE  &lt;NA&gt;      FALSE  superscript     0
+## 7 A1      red,           FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
+## 8 A1      arial,         FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
+## 9 A1      size 14        FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
 ## # ... with 7 more variables: color_rgb &lt;chr&gt;, color_theme &lt;int&gt;,
 ## #   color_indexed &lt;int&gt;, color_tint &lt;dbl&gt;, font &lt;chr&gt;, family &lt;int&gt;,
 ## #   scheme &lt;chr&gt;</code></pre>
@@ -828,12 +832,13 @@ that nevertheless occurred in real life.</p>
 </div>
 <div id="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting" class="section level2">
 <h2><span class="header-section-number">6.4</span> Multiple pieces of information in a single cell, with meaningful formatting</h2>
+<p><img src="images/in-cell-formatting.png" /></p>
 <p>The following table of products and their
 production readiness combines three pieces of information in a single cell.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rectify</span>()</code></pre>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb294-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb294-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb294-4" data-line-number="4"><span class="st">  </span><span class="kw">rectify</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   `row/col` `1(A)`        `2(B)`
 ##       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; 
@@ -849,41 +854,42 @@ strikethrough, indicating failure.</p>
 <p>One way to extract the formatting is by unnesting, as above, but in this case we
 can get away with mapping over the nested data frames and pulling out a single
 value.</p>
-<pre class="sourceCode r"><code class="sourceCode r">strikethrough &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</code></pre>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">strikethrough &lt;-</a>
+<a class="sourceLine" id="cb296-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</a></code></pre></div>
 <p>This can then be joined onto the rest of the table, in the same way as the
 section “Already a tidy table but with meaningful formatting of single cells”.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)
-
-strikethrough &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, strikethrough)
-
-<span class="kw">left_join</span>(cells, strikethrough, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(ID, strikethrough, Count)</code></pre>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1">cells &lt;-</a>
+<a class="sourceLine" id="cb297-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb297-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb297-6" data-line-number="6">strikethrough &lt;-</a>
+<a class="sourceLine" id="cb297-7" data-line-number="7"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, strikethrough)</a>
+<a class="sourceLine" id="cb297-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb297-12" data-line-number="12"><span class="kw">left_join</span>(cells, strikethrough, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-15" data-line-number="15"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-16" data-line-number="16"><span class="st">  </span><span class="kw">select</span>(ID, strikethrough, Count)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   ID            strikethrough Count
 ##   &lt;chr&gt;         &lt;lgl&gt;         &lt;dbl&gt;
-## 1 A1-TEST       NA               1.
-## 2 A2-PRODUCTION TRUE             2.
-## 3 A3-PRODUCTION NA               3.</code></pre>
+## 1 A1-TEST       NA                1
+## 2 A2-PRODUCTION TRUE              2
+## 3 A3-PRODUCTION NA                3</code></pre>
 </div>
 <div id="superscript-symbols" class="section level2">
 <h2><span class="header-section-number">6.5</span> Superscript symbols</h2>
+<p><img src="images/superscript-symbols.png" /></p>
 <p>This is pernicious. What was Paula’s score, in the table below?</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-<span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb299-2" data-line-number="2"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name    Score
 ##   &lt;chr&gt;   &lt;chr&gt;
@@ -898,10 +904,10 @@ would be easy to interpret that as an accident of translation, and simply coerce
 back to numeric with <code>as.integer()</code>.</p>
 <p>With tidyxl, you can count the rows of each element of the <code>character_formatted</code>
 column to identify cells that have in-cell formatting.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, character)</code></pre>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row   col character
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    
@@ -909,27 +915,27 @@ column to identify cells that have in-cell formatting.</p>
 ## 2     2     2 91</code></pre>
 <p>The values and symbols can then be separated by assuming the value is the first
 string, and the symbol is the second.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
-                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
-         <span class="dt">symbol =</span> <span class="kw">map_chr</span>(character_formatted,
-                          <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), <span class="ot">NA</span>, .x<span class="op">$</span>character[<span class="dv">2</span>])),
-         <span class="dt">numeric =</span> <span class="kw">if_else</span>(row <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>col <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
-                           <span class="kw">as.numeric</span>(character),
-                           numeric),
-         <span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(numeric), character, <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, numeric, character, symbol)</code></pre>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</a>
+<a class="sourceLine" id="cb303-3" data-line-number="3">                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</a>
+<a class="sourceLine" id="cb303-4" data-line-number="4">         <span class="dt">symbol =</span> <span class="kw">map_chr</span>(character_formatted,</a>
+<a class="sourceLine" id="cb303-5" data-line-number="5">                          <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), <span class="ot">NA</span>, .x<span class="op">$</span>character[<span class="dv">2</span>])),</a>
+<a class="sourceLine" id="cb303-6" data-line-number="6">         <span class="dt">numeric =</span> <span class="kw">if_else</span>(row <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>col <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb303-7" data-line-number="7">                           <span class="kw">as.numeric</span>(character),</a>
+<a class="sourceLine" id="cb303-8" data-line-number="8">                           numeric),</a>
+<a class="sourceLine" id="cb303-9" data-line-number="9">         <span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(numeric), character, <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, numeric, character, symbol)</a></code></pre></div>
 <pre><code>## Warning in if_else(row &gt; 1 &amp; col == 2 &amp; data_type == &quot;character&quot;,
 ## as.numeric(character), : NAs introduced by coercion</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ##     row   col numeric character symbol
 ##   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; 
-## 1     1     1     NA  Name      &lt;NA&gt;  
-## 2     1     2     NA  Score     &lt;NA&gt;  
-## 3     2     1     NA  Paul      a     
-## 4     2     2      9. &lt;NA&gt;      1     
-## 5     3     1     NA  Matilda   &lt;NA&gt;  
-## 6     3     2     10. &lt;NA&gt;      &lt;NA&gt;</code></pre>
+## 1     1     1      NA Name      &lt;NA&gt;  
+## 2     1     2      NA Score     &lt;NA&gt;  
+## 3     2     1      NA Paul      a     
+## 4     2     2       9 &lt;NA&gt;      1     
+## 5     3     1      NA Matilda   &lt;NA&gt;  
+## 6     3     2      10 &lt;NA&gt;      &lt;NA&gt;</code></pre>
 
 </div>
 </div>

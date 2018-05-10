@@ -1,5 +1,7 @@
 # Clean, tidy tables {#tidy-clean}
 
+![](images/clean.png)
+
 If the tables in the spreadsheet are clean and tidy, then you should use a
 package like [readxl](https://github.com/tidyverse/readxl).  But it's worth
 knowing how to emulate readxl with tidyxl and unpivotr, because some *almost*
