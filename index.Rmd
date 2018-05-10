@@ -10,9 +10,9 @@ output:
 
 # Welcome {-}
 
-This is a work-in-progress book about getting data out of spreadsheets, nomatter
-how peculiar.  The book is designed primarily for R users who have to extract
-data from spreadsheets and who are already familiar with the
+This is a work-in-progress book about getting data out of spreadsheets, no
+matter how peculiar.  The book is designed primarily for R users who have to
+extract data from spreadsheets and who are already familiar with the
 [tidyverse](https://www.tidyverse.org).  It has a cookbook structure, and can be
 used as a reference, but readers who begin in the middle might have to work
 backwards from time to time.
@@ -27,7 +27,9 @@ R packages that feature heavily are
 Tidyxl and unpivotr are much more complicated than readxl, and that’s the point.
 Tidyxl and unpivotr give you more power and complexity when you need it.
 
-Please help me to improve this book by [opening a GitHub issue]() or [tweeting]().
+Please help me to improve this book by [opening a GitHub
+issue](https://github.com/nacnudus/spreadsheet-munging-strategies/issues) or
+[tweeting](https://twitter.com/nacnudus).
 
 ---
 
