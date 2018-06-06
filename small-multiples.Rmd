@@ -19,12 +19,12 @@ then apply that to each in turn.
 The code to import one of these multiples will be simple.
 
 ```{r, eval = FALSE}
-# cells %>%
-#   behead("NNW", subject) %>%
-#   behead("N", header) %>%
-#   select(-col, - local_format_id) %>%
-#   spatter(header) %>%
-#   select(-row)
+cells %>%
+  behead("NNW", subject) %>%
+  behead("N", header) %>%
+  select(-col, - local_format_id) %>%
+  spatter(header) %>%
+  select(-row)
 ```
 
 The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
