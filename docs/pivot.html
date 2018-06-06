@@ -312,7 +312,7 @@ coerced all data types to <code>character</code>, whereas <code>xlsx_cells()</co
 original data types.)</p>
 <p>The tidyxl version is easier to traverse, because it describes the position of
 each cell as well as the value. To filter for the first row of headers:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">filter</span>(cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb94-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, character, numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##     row   col character numeric
@@ -321,7 +321,7 @@ each cell as well as the value. To filter for the first row of headers:</p>
 ## 2     2     6 Male           NA</code></pre>
 <p>Or to filter for cells containing data (in this case, we know that only data
 cells are numeric)</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb96-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##      row   col numeric
@@ -371,7 +371,7 @@ every column.</p>
 <div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb98-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb98-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb98-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
+<a class="sourceLine" id="cb98-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
 <a class="sourceLine" id="cb98-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
 <a class="sourceLine" id="cb98-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 22 x 5
@@ -485,7 +485,7 @@ left-and-above the data cells.</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb106-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb106-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb106-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb106-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb106-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb106-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
@@ -546,7 +546,7 @@ and <code>col</code> of each data cell.</li>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb110-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb110-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb110-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb110-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb110-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb110-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
@@ -611,7 +611,7 @@ and <code>col</code> of each data cell.</li>
 <a class="sourceLine" id="cb116-3" data-line-number="3"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb116-4" data-line-number="4">annotations &lt;-</a>
 <a class="sourceLine" id="cb116-5" data-line-number="5"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb116-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
+<a class="sourceLine" id="cb116-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
 <a class="sourceLine" id="cb116-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb116-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
 <a class="sourceLine" id="cb116-9" data-line-number="9">annotations</a></code></pre></div>
@@ -676,7 +676,7 @@ header cells.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb120-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb120-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb120-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
+<a class="sourceLine" id="cb120-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
 <a class="sourceLine" id="cb120-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb120-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 22 x 5
@@ -705,7 +705,7 @@ header cells.</p>
 ## 5         6 5       6      9        2     
 ## 6         7 7       8      12       3</code></pre>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">first_header_row &lt;-</a>
-<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb124-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)</a>
 <a class="sourceLine" id="cb124-4" data-line-number="4">  <span class="co"># the title of this header is &#39;sex&#39;</span></a>
 <a class="sourceLine" id="cb124-5" data-line-number="5">  <span class="co"># the cells are text cells (`&quot;Female&quot;` and `&quot;Male&quot;`) so take the value in the</span></a>
@@ -717,7 +717,7 @@ header cells.</p>
 ## 1     2     4 Female
 ## 2     2     6 Male</code></pre>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">second_header_row &lt;-</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb126-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb126-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb126-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -730,7 +730,7 @@ header cells.</p>
 ## 3     3     6 Nicholas
 ## 4     3     7 Paul</code></pre>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb128-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb128-4" data-line-number="4">  <span class="co"># The data is exam scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb128-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -824,7 +824,7 @@ from left to right instead of from top to bottom.</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb135-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb135-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the column headers in this example</span></a>
+<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the column headers in this example</span></a>
 <a class="sourceLine" id="cb135-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb135-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 26 x 5
@@ -852,7 +852,7 @@ from left to right instead of from top to bottom.</p>
 ## 4         6 Performance Music    5       6      9        2     
 ## 5         7 &lt;NA&gt;        Drama    7       8      12       3</code></pre>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">first_header_col &lt;-</a>
-<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">field =</span> character)</a>
 <a class="sourceLine" id="cb139-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb139-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -864,7 +864,7 @@ from left to right instead of from top to bottom.</p>
 ## 1     4     2 Humanities 
 ## 2     6     2 Performance</code></pre>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">second_header_col &lt;-</a>
-<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb141-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb141-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb141-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -878,7 +878,7 @@ from left to right instead of from top to bottom.</p>
 ## 3     6     3 Music   
 ## 4     7     3 Drama</code></pre>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb143-4" data-line-number="4">  <span class="co"># The data is examp scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb143-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -920,7 +920,7 @@ from left to right instead of from top to bottom.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb145-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb145-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb145-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb145-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
@@ -949,7 +949,7 @@ from left to right instead of from top to bottom.</p>
 ## 5         6 Performance Music    5       6      9        2     
 ## 6         7 &lt;NA&gt;        Drama    7       8      12       3</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">first_header_row &lt;-</a>
-<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb149-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)</a>
 <a class="sourceLine" id="cb149-4" data-line-number="4">  <span class="co"># the title of this header is &#39;sex&#39;</span></a>
 <a class="sourceLine" id="cb149-5" data-line-number="5">  <span class="co"># the cells are text cells (`&quot;Female&quot;` and `&quot;Male&quot;`) so take the value in the</span></a>
@@ -961,7 +961,7 @@ from left to right instead of from top to bottom.</p>
 ## 1     2     4 Female
 ## 2     2     6 Male</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">second_header_row &lt;-</a>
-<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb151-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb151-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb151-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -974,7 +974,7 @@ from left to right instead of from top to bottom.</p>
 ## 3     3     6 Nicholas
 ## 4     3     7 Paul</code></pre>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">first_header_col &lt;-</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb153-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">field =</span> character)</a>
 <a class="sourceLine" id="cb153-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb153-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -986,7 +986,7 @@ from left to right instead of from top to bottom.</p>
 ## 1     4     2 Humanities 
 ## 2     6     2 Performance</code></pre>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">second_header_col &lt;-</a>
-<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb155-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb155-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb155-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb155-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1000,7 +1000,7 @@ from left to right instead of from top to bottom.</p>
 ## 3     6     3 Music   
 ## 4     7     3 Drama</code></pre>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb157-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb157-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb157-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb157-4" data-line-number="4">  <span class="co"># The data is examp scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb157-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -1085,7 +1085,7 @@ border.</p>
 <a class="sourceLine" id="cb161-7" data-line-number="7">left_borders &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>left<span class="op">$</span>style))</a>
 <a class="sourceLine" id="cb161-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb161-9" data-line-number="9">first_header_row_corners &lt;-</a>
-<a class="sourceLine" id="cb161-10" data-line-number="10"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>left_borders) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb161-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>left_borders) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb161-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
 <a class="sourceLine" id="cb161-12" data-line-number="12">first_header_row_corners</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
@@ -1094,7 +1094,7 @@ border.</p>
 ## 1     2     4
 ## 2     2     7</code></pre>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">first_header_col_corners &lt;-</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>top_borders) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>top_borders) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb163-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
 <a class="sourceLine" id="cb163-4" data-line-number="4">first_header_col_corners</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
@@ -1104,7 +1104,7 @@ border.</p>
 ## 2     9     2</code></pre>
 <p>Next, get the first row and first column of header cells as usual.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">first_header_row &lt;-</a>
-<a class="sourceLine" id="cb165-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, <span class="op">!</span>is_blank, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb165-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, <span class="op">!</span>is_blank, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb165-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)</a>
 <a class="sourceLine" id="cb165-4" data-line-number="4">  <span class="co"># the title of this header is &#39;sex&#39;</span></a>
 <a class="sourceLine" id="cb165-5" data-line-number="5">  <span class="co"># the cells are text cells (`&quot;Female&quot;` and `&quot;Male&quot;`) so take the value in the</span></a>
@@ -1116,7 +1116,7 @@ border.</p>
 ## 1     2     5 Female
 ## 2     2     9 Male</code></pre>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">first_header_col &lt;-</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, <span class="op">!</span>is_blank, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb167-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, <span class="op">!</span>is_blank, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb167-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">field =</span> character)</a>
 <a class="sourceLine" id="cb167-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb167-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1146,7 +1146,7 @@ border.</p>
 <p>The rest of this example is the same as “Two clear rows and columns of text
 headers, top-aligned and left-aligned”.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">second_header_row &lt;-</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb173-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb173-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb173-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb173-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -1162,7 +1162,7 @@ headers, top-aligned and left-aligned”.</p>
 ## 6     3     9 Nicholas
 ## 7     3    10 Paul</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">second_header_col &lt;-</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb175-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb175-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb175-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1180,7 +1180,7 @@ headers, top-aligned and left-aligned”.</p>
 ## 7    10     3 Dance     
 ## 8    11     3 Drama</code></pre>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb177-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb177-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb177-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb177-4" data-line-number="4">  <span class="co"># The data is examp scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb177-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -1225,7 +1225,7 @@ and <code>col</code> of each data cell.</li>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb179-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb179-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb179-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb179-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb179-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb179-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
@@ -1254,7 +1254,7 @@ and <code>col</code> of each data cell.</li>
 ## 5         6 Performance Music    5       6      9        2     
 ## 6         7 &lt;NA&gt;        Drama    7       8      12       3</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1">first_header_row &lt;-</a>
-<a class="sourceLine" id="cb183-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb183-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb183-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)</a>
 <a class="sourceLine" id="cb183-4" data-line-number="4">  <span class="co"># the title of this header is &#39;sex&#39;</span></a>
 <a class="sourceLine" id="cb183-5" data-line-number="5">  <span class="co"># the cells are text cells (`&quot;Female&quot;` and `&quot;Male&quot;`) so take the value in the</span></a>
@@ -1266,7 +1266,7 @@ and <code>col</code> of each data cell.</li>
 ## 1     2     4 Female
 ## 2     2     6 Male</code></pre>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">second_header_row &lt;-</a>
-<a class="sourceLine" id="cb185-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb185-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb185-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb185-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb185-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -1279,7 +1279,7 @@ and <code>col</code> of each data cell.</li>
 ## 3     3     6 Nicholas
 ## 4     3     7 Paul</code></pre>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">first_header_col &lt;-</a>
-<a class="sourceLine" id="cb187-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb187-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb187-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">field =</span> character)</a>
 <a class="sourceLine" id="cb187-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb187-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1291,7 +1291,7 @@ and <code>col</code> of each data cell.</li>
 ## 1     4     2 Humanities 
 ## 2     6     2 Performance</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1">second_header_col &lt;-</a>
-<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb189-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb189-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb189-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1305,7 +1305,7 @@ and <code>col</code> of each data cell.</li>
 ## 3     6     3 Music   
 ## 4     7     3 Drama</code></pre>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb191-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb191-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb191-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb191-4" data-line-number="4">  <span class="co"># The data is exam scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb191-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -1330,7 +1330,7 @@ and <code>col</code> of each data cell.</li>
 <a class="sourceLine" id="cb191-24" data-line-number="24"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb191-25" data-line-number="25">annotations &lt;-</a>
 <a class="sourceLine" id="cb191-26" data-line-number="26"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb191-27" data-line-number="27"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
+<a class="sourceLine" id="cb191-27" data-line-number="27"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
 <a class="sourceLine" id="cb191-28" data-line-number="28"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb191-29" data-line-number="29"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
 <a class="sourceLine" id="cb191-30" data-line-number="30">annotations</a></code></pre></div>
@@ -1396,7 +1396,7 @@ italic or red text aren’t headers, even if they are in amongst header cells.</
 <a class="sourceLine" id="cb197-2" data-line-number="2"><span class="co"># red.</span></a>
 <a class="sourceLine" id="cb197-3" data-line-number="3">red_cell_format_id &lt;-</a>
 <a class="sourceLine" id="cb197-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb197-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">5</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb197-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">5</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb197-6" data-line-number="6"><span class="st">  </span><span class="kw">pull</span>(local_format_id)</a>
 <a class="sourceLine" id="cb197-7" data-line-number="7">red_cell_format_id</a></code></pre></div>
 <pre><code>## [1] 34</code></pre>
@@ -1408,7 +1408,7 @@ italic or red text aren’t headers, even if they are in amongst header cells.</
 italic cells.</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">all_cells &lt;-</a>
 <a class="sourceLine" id="cb201-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb201-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb201-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb201-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, numeric, local_format_id) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb201-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 31 x 5
@@ -1426,7 +1426,7 @@ italic cells.</p>
 ## 10     4     4 &lt;NA&gt;             1              22
 ## # ... with 21 more rows</code></pre>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1">first_header_row &lt;-</a>
-<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>(local_format_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(red, italic))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>(local_format_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(red, italic))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb203-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)</a>
 <a class="sourceLine" id="cb203-4" data-line-number="4">  <span class="co"># the title of this header is &#39;sex&#39;</span></a>
 <a class="sourceLine" id="cb203-5" data-line-number="5">  <span class="co"># the cells are text cells (`&quot;Female&quot;` and `&quot;Male&quot;`) so take the value in the</span></a>
@@ -1438,7 +1438,7 @@ italic cells.</p>
 ## 1     2     4 Female
 ## 2     2     6 Male</code></pre>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">first_header_col &lt;-</a>
-<a class="sourceLine" id="cb205-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>(local_format_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(red, italic))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb205-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>(local_format_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(red, italic))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb205-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">qualification =</span> character)</a>
 <a class="sourceLine" id="cb205-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb205-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1450,7 +1450,7 @@ italic cells.</p>
 ## 1     4     2 Humanities   
 ## 2     6     2 Performance</code></pre>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">second_header_col &lt;-</a>
-<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb207-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb207-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb207-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1509,7 +1509,7 @@ indentation.</p>
 first column.</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1">all_cells &lt;-</a>
 <a class="sourceLine" id="cb213-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-hierarchy&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb213-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb213-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb213-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb213-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
@@ -1532,7 +1532,7 @@ first column.</p>
 ## 15     8     3 numeric   &lt;NA&gt;              7              30
 ## 16     8     4 numeric   &lt;NA&gt;             12              38</code></pre>
 <div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1">field &lt;-</a>
-<a class="sourceLine" id="cb215-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>indent0) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb215-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>indent0) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb215-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">field =</span> character)</a>
 <a class="sourceLine" id="cb215-4" data-line-number="4">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb215-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1544,7 +1544,7 @@ first column.</p>
 ## 1     3     2 Humanities 
 ## 2     6     2 Performance</code></pre>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1">subject &lt;-</a>
-<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>indent1) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, local_format_id <span class="op">%in%</span><span class="st"> </span>indent1) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb217-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb217-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb217-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1558,7 +1558,7 @@ first column.</p>
 ## 3     7     2 Music   
 ## 4     8     2 Drama</code></pre>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1">name &lt;-</a>
-<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb219-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb219-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb219-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -1569,7 +1569,7 @@ first column.</p>
 ## 1     2     3 Matilda 
 ## 2     2     4 Nicholas</code></pre>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1">data_cells &lt;-</a>
-<a class="sourceLine" id="cb221-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb221-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb221-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb221-4" data-line-number="4">  <span class="co"># The data is exam scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb221-5" data-line-number="5">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -1603,7 +1603,7 @@ from the headers mixed in among them, because only the data cells have the
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb223-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb223-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-repeated-headers&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb223-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb223-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb223-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb223-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 80 x 5
@@ -1647,7 +1647,7 @@ from the headers mixed in among them, because only the data cells have the
 ## 20        21 &lt;NA&gt;     Paul     7      4      5</code></pre>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1"><span class="co"># The &#39;term&#39; headers appear four times, but only the first one is needed.</span></a>
 <a class="sourceLine" id="cb227-2" data-line-number="2">term &lt;-</a>
-<a class="sourceLine" id="cb227-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb227-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb227-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">term =</span> character)</a>
 <a class="sourceLine" id="cb227-5" data-line-number="5">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb227-6" data-line-number="6">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1660,7 +1660,7 @@ from the headers mixed in among them, because only the data cells have the
 ## 2     2     5 Term 2
 ## 3     2     6 Term 3</code></pre>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1">subject &lt;-</a>
-<a class="sourceLine" id="cb229-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb229-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb229-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
 <a class="sourceLine" id="cb229-4" data-line-number="4">  <span class="co"># The title of this header is &#39;subject&#39;</span></a>
 <a class="sourceLine" id="cb229-5" data-line-number="5">  <span class="co"># The cells are text cells (`&quot;history&quot;`, etc.) so take the value in the</span></a>
@@ -1674,7 +1674,7 @@ from the headers mixed in among them, because only the data cells have the
 ## 3    13     2 Music   
 ## 4    18     2 Drama</code></pre>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" data-line-number="1">name &lt;-</a>
-<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb231-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb231-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb231-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -1701,7 +1701,7 @@ from the headers mixed in among them, because only the data cells have the
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1"><span class="co"># The data cells are distinguished from the &#39;term&#39; headers by their data type --</span></a>
 <a class="sourceLine" id="cb233-2" data-line-number="2"><span class="co"># the data cells are numeric, whereas the term headers are character.</span></a>
 <a class="sourceLine" id="cb233-3" data-line-number="3">data_cells &lt;-</a>
-<a class="sourceLine" id="cb233-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb233-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb233-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb233-6" data-line-number="6">  <span class="co"># The data is exam scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb233-7" data-line-number="7">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>
@@ -1754,7 +1754,7 @@ presented to the side.)</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb237-2" data-line-number="2">all_cells &lt;-</a>
 <a class="sourceLine" id="cb237-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-header-within-data&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb237-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb237-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb237-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb237-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 80 x 6
@@ -1792,7 +1792,7 @@ presented to the side.)</p>
 <a class="sourceLine" id="cb241-3" data-line-number="3"><span class="co"># The subject headers, though mixed with the data and the &#39;term&#39; headers, are</span></a>
 <a class="sourceLine" id="cb241-4" data-line-number="4"><span class="co"># distinguishable by the data type &quot;character&quot; and by being bold.</span></a>
 <a class="sourceLine" id="cb241-5" data-line-number="5">subject &lt;-</a>
-<a class="sourceLine" id="cb241-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(all_cells,</a>
+<a class="sourceLine" id="cb241-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells,</a>
 <a class="sourceLine" id="cb241-7" data-line-number="7">         col <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb241-8" data-line-number="8">         data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
 <a class="sourceLine" id="cb241-9" data-line-number="9">         local_format_id <span class="op">%in%</span><span class="st"> </span>bold) <span class="op">%&gt;%</span></a>
@@ -1810,7 +1810,7 @@ presented to the side.)</p>
 ## 4    20     3 Drama</code></pre>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" data-line-number="1"><span class="co"># We only need one set of the &#39;term&#39; headers</span></a>
 <a class="sourceLine" id="cb243-2" data-line-number="2">term &lt;-</a>
-<a class="sourceLine" id="cb243-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb243-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb243-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">term =</span> character)</a>
 <a class="sourceLine" id="cb243-5" data-line-number="5">  <span class="co"># the title of this header is &#39;field&#39;, meaning &#39;group of subjects&#39;.</span></a>
 <a class="sourceLine" id="cb243-6" data-line-number="6">  <span class="co"># The cells are text cells (`&quot;Humanities&quot;`, `&quot;Performance&quot;`) so take the value</span></a>
@@ -1823,7 +1823,7 @@ presented to the side.)</p>
 ## 2     3     4 Term 2
 ## 3     3     5 Term 3</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" data-line-number="1">name &lt;-</a>
-<a class="sourceLine" id="cb245-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb245-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb245-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">name =</span> character)</a>
 <a class="sourceLine" id="cb245-4" data-line-number="4">  <span class="co"># The title of this header is &#39;name&#39;.</span></a>
 <a class="sourceLine" id="cb245-5" data-line-number="5">  <span class="co"># The cells are text cells, so take the value in the &#39;`character` column.</span></a>
@@ -1850,7 +1850,7 @@ presented to the side.)</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1"><span class="co"># The data cells are distinguished from the &#39;subject&#39; headers by their data</span></a>
 <a class="sourceLine" id="cb247-2" data-line-number="2"><span class="co"># type -- the data cells are numeric, whereas the term headers are character.</span></a>
 <a class="sourceLine" id="cb247-3" data-line-number="3">data_cells &lt;-</a>
-<a class="sourceLine" id="cb247-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb247-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb247-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">score =</span> numeric)</a>
 <a class="sourceLine" id="cb247-6" data-line-number="6">  <span class="co"># The data is exam scores in certain subjects, so give the data that title.</span></a>
 <a class="sourceLine" id="cb247-7" data-line-number="7">  <span class="co"># The data is numeric, so select only that &#39;value&#39;.  If some of the data was</span></a>

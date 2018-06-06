@@ -20,7 +20,7 @@ The first stage, identifying header vs data cells, is simply filtering.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
+  dplyr::filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -28,7 +28,7 @@ all_cells <-
 rectify(all_cells)
 
 first_header_row <-
-  filter(all_cells, row == 2) %>%
+  dplyr::filter(all_cells, row == 2) %>%
   select(row, col, sex = character)
   # the title of this header is 'sex'
   # the cells are text cells (`"Female"` and `"Male"`) so take the value in the
@@ -36,14 +36,14 @@ first_header_row <-
 first_header_row
 
 second_header_row <-
-  filter(all_cells, row == 3) %>%
+  dplyr::filter(all_cells, row == 3) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
 second_header_row
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is exam scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -99,7 +99,7 @@ from left to right instead of from top to bottom.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(row >= 3, !is_blank) %>% # Ignore the column headers in this example
+  dplyr::filter(row >= 3, !is_blank) %>% # Ignore the column headers in this example
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -107,7 +107,7 @@ all_cells <-
 rectify(all_cells)
 
 first_header_col <-
-  filter(all_cells, col == 2) %>%
+  dplyr::filter(all_cells, col == 2) %>%
   select(row, col, field = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -115,7 +115,7 @@ first_header_col <-
 first_header_col
 
 second_header_col <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -123,7 +123,7 @@ second_header_col <-
 second_header_col
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is examp scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -149,7 +149,7 @@ This is a combination of the previous two sections.  No new techniques are used.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -157,7 +157,7 @@ all_cells <-
 rectify(all_cells)
 
 first_header_row <-
-  filter(all_cells, row == 2) %>%
+  dplyr::filter(all_cells, row == 2) %>%
   select(row, col, sex = character)
   # the title of this header is 'sex'
   # the cells are text cells (`"Female"` and `"Male"`) so take the value in the
@@ -165,14 +165,14 @@ first_header_row <-
 first_header_row
 
 second_header_row <-
-  filter(all_cells, row == 3) %>%
+  dplyr::filter(all_cells, row == 3) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
 second_header_row
 
 first_header_col <-
-  filter(all_cells, col == 2) %>%
+  dplyr::filter(all_cells, col == 2) %>%
   select(row, col, field = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -180,7 +180,7 @@ first_header_col <-
 first_header_col
 
 second_header_col <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -188,7 +188,7 @@ second_header_col <-
 second_header_col
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is examp scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -249,12 +249,12 @@ top_borders <- which(!is.na(formats$local$border$top$style))
 left_borders <- which(!is.na(formats$local$border$left$style))
 
 first_header_row_corners <-
-  filter(all_cells, row == 2, local_format_id %in% left_borders) %>%
+  dplyr::filter(all_cells, row == 2, local_format_id %in% left_borders) %>%
   select(row, col)
 first_header_row_corners
 
 first_header_col_corners <-
-  filter(all_cells, col == 2, local_format_id %in% top_borders) %>%
+  dplyr::filter(all_cells, col == 2, local_format_id %in% top_borders) %>%
   select(row, col)
 first_header_col_corners
 ```
@@ -263,7 +263,7 @@ Next, get the first row and first column of header cells as usual.
 
 ```{r}
 first_header_row <-
-  filter(all_cells, !is_blank, row == 2) %>%
+  dplyr::filter(all_cells, !is_blank, row == 2) %>%
   select(row, col, sex = character)
   # the title of this header is 'sex'
   # the cells are text cells (`"Female"` and `"Male"`) so take the value in the
@@ -271,7 +271,7 @@ first_header_row <-
 first_header_row
 
 first_header_col <-
-  filter(all_cells, !is_blank, col == 2) %>%
+  dplyr::filter(all_cells, !is_blank, col == 2) %>%
   select(row, col, field = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -294,14 +294,14 @@ headers, top-aligned and left-aligned".
 
 ```{r}
 second_header_row <-
-  filter(all_cells, row == 3) %>%
+  dplyr::filter(all_cells, row == 3) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
 second_header_row
 
 second_header_col <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -309,7 +309,7 @@ second_header_col <-
 second_header_col
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is examp scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -343,7 +343,7 @@ formatting.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -351,7 +351,7 @@ all_cells <-
 rectify(all_cells)
 
 first_header_row <-
-  filter(all_cells, row == 2) %>%
+  dplyr::filter(all_cells, row == 2) %>%
   select(row, col, sex = character)
   # the title of this header is 'sex'
   # the cells are text cells (`"Female"` and `"Male"`) so take the value in the
@@ -359,14 +359,14 @@ first_header_row <-
 first_header_row
 
 second_header_row <-
-  filter(all_cells, row == 3) %>%
+  dplyr::filter(all_cells, row == 3) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
 second_header_row
 
 first_header_col <-
-  filter(all_cells, col == 2) %>%
+  dplyr::filter(all_cells, col == 2) %>%
   select(row, col, field = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -374,7 +374,7 @@ first_header_col <-
 first_header_col
 
 second_header_col <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -382,7 +382,7 @@ second_header_col <-
 second_header_col
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is exam scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -407,7 +407,7 @@ fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
 # the local_format_id of each cell in the `formats` pallette.
 annotations <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(row >= 4, col >= 4) %>% # Omit the headers
+  dplyr::filter(row >= 4, col >= 4) %>% # Omit the headers
   mutate(fill_colour = fill_colours[local_format_id]) %>%
   select(row, col, fill_colour)
 annotations
@@ -441,7 +441,7 @@ red
 # red.
 red_cell_format_id <-
   xlsx_cells(path, sheets = "pivot-notes") %>%
-  filter(row == 5, col == 2) %>%
+  dplyr::filter(row == 5, col == 2) %>%
   pull(local_format_id)
 red_cell_format_id
 red_rgb <- formats$local$font$color$rgb[red_cell_format_id]
@@ -455,12 +455,12 @@ italic cells.
 ```{r}
 all_cells <-
   xlsx_cells(path, sheets = "pivot-notes") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, character, numeric, local_format_id) %>%
   print()
 
 first_header_row <-
-  filter(all_cells, row == 2, !(local_format_id %in% c(red, italic))) %>%
+  dplyr::filter(all_cells, row == 2, !(local_format_id %in% c(red, italic))) %>%
   select(row, col, sex = character)
   # the title of this header is 'sex'
   # the cells are text cells (`"Female"` and `"Male"`) so take the value in the
@@ -468,7 +468,7 @@ first_header_row <-
 first_header_row
 
 first_header_col <-
-  filter(all_cells, col == 2, !(local_format_id %in% c(red, italic))) %>%
+  dplyr::filter(all_cells, col == 2, !(local_format_id %in% c(red, italic))) %>%
   select(row, col, qualification = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -476,7 +476,7 @@ first_header_col <-
 first_header_col
 
 second_header_col <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -522,12 +522,12 @@ first column.
 ```{r}
 all_cells <-
   xlsx_cells(path, sheets = "pivot-hierarchy") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric, local_format_id) %>%
   print()
 
 field <-
-  filter(all_cells, col == 2, local_format_id %in% indent0) %>%
+  dplyr::filter(all_cells, col == 2, local_format_id %in% indent0) %>%
   select(row, col, field = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -535,7 +535,7 @@ field <-
 field
 
 subject <-
-  filter(all_cells, col == 2, local_format_id %in% indent1) %>%
+  dplyr::filter(all_cells, col == 2, local_format_id %in% indent1) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -543,14 +543,14 @@ subject <-
 subject
 
 name <-
-  filter(all_cells, row == 2) %>%
+  dplyr::filter(all_cells, row == 2) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
 name
 
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is exam scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -577,7 +577,7 @@ from the headers mixed in among them, because only the data cells have the
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-repeated-headers") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -586,7 +586,7 @@ rectify(all_cells)
 
 # The 'term' headers appear four times, but only the first one is needed.
 term <-
-  filter(all_cells, row == 2) %>%
+  dplyr::filter(all_cells, row == 2) %>%
   select(row, col, term = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -594,7 +594,7 @@ term <-
 term
 
 subject <-
-  filter(all_cells, col == 2) %>%
+  dplyr::filter(all_cells, col == 2) %>%
   select(row, col, subject = character)
   # The title of this header is 'subject'
   # The cells are text cells (`"history"`, etc.) so take the value in the
@@ -602,7 +602,7 @@ subject <-
 subject
 
 name <-
-  filter(all_cells, col == 3) %>%
+  dplyr::filter(all_cells, col == 3) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
@@ -611,7 +611,7 @@ name
 # The data cells are distinguished from the 'term' headers by their data type --
 # the data cells are numeric, whereas the term headers are character.
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is exam scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was
@@ -642,7 +642,7 @@ The way to handle it is to *pretend* that it is a row header, and use the
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-header-within-data") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric, local_format_id) %>%
   print()
 
@@ -654,7 +654,7 @@ bold <- which(xlsx_formats(path)$local$font$bold)
 # The subject headers, though mixed with the data and the 'term' headers, are
 # distinguishable by the data type "character" and by being bold.
 subject <-
-  filter(all_cells,
+  dplyr::filter(all_cells,
          col == 3,
          data_type == "character",
          local_format_id %in% bold) %>%
@@ -666,7 +666,7 @@ subject
 
 # We only need one set of the 'term' headers
 term <-
-  filter(all_cells, row == 3, data_type == "character") %>%
+  dplyr::filter(all_cells, row == 3, data_type == "character") %>%
   select(row, col, term = character)
   # the title of this header is 'field', meaning 'group of subjects'.
   # The cells are text cells (`"Humanities"`, `"Performance"`) so take the value
@@ -674,7 +674,7 @@ term <-
 term
 
 name <-
-  filter(all_cells, col == 2) %>%
+  dplyr::filter(all_cells, col == 2) %>%
   select(row, col, name = character)
   # The title of this header is 'name'.
   # The cells are text cells, so take the value in the '`character` column.
@@ -683,7 +683,7 @@ name
 # The data cells are distinguished from the 'subject' headers by their data
 # type -- the data cells are numeric, whereas the term headers are character.
 data_cells <-
-  filter(all_cells, data_type == "numeric") %>%
+  dplyr::filter(all_cells, data_type == "numeric") %>%
   select(row, col, score = numeric)
   # The data is exam scores in certain subjects, so give the data that title.
   # The data is numeric, so select only that 'value'.  If some of the data was

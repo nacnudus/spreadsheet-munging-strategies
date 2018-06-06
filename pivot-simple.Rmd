@@ -19,7 +19,7 @@ every column.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
+  dplyr::filter(col >= 4, !is_blank) %>% # Ignore the row headers in this example
   select(row, col, data_type, character, numeric)
 all_cells
 ```
@@ -75,7 +75,7 @@ left-and-above the data cells.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -107,7 +107,7 @@ and the formatting.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
   print()
 
@@ -131,7 +131,7 @@ fill_colours
 # the local_format_id of each cell in the `formats` pallette.
 annotations <-
   xlsx_cells(path, sheets = "pivot-annotations") %>%
-  filter(row >= 4, col >= 4) %>% # Omit the headers
+  dplyr::filter(row >= 4, col >= 4) %>% # Omit the headers
   mutate(fill_colour = fill_colours[local_format_id]) %>%
   select(row, col, fill_colour)
 annotations

@@ -29,7 +29,7 @@ font_colours <- xlsx_formats(path)$local$font$color$rgb
 # local_format_id of each cell in the `formats` pallette.
 formats <-
   xlsx_cells(path, sheet = "combined-highlights") %>%
-  filter(row >= 2, col == 1) %>% # Omit the header row
+  dplyr::filter(row >= 2, col == 1) %>% # Omit the header row
   mutate(fill_colour = fill_colours[local_format_id],
          font_colour = font_colours[local_format_id]) %>%
   select(fill_colour, font_colour)
@@ -99,7 +99,7 @@ italic <- xlsx_formats(path)$local$font$italic
 # local_format_id of each cell in the `formats` pallette.
 formats <-
   xlsx_cells(path, sheet = "highlight-hierarchy") %>%
-  filter(row >= 2, col == 1) %>% # Omit the header row
+  dplyr::filter(row >= 2, col == 1) %>% # Omit the header row
   mutate(bold = bold[local_format_id],
          italic = italic[local_format_id]) %>%
   mutate(grade = case_when(bold & italic ~ "fail",

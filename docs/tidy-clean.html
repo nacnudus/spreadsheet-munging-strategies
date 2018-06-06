@@ -286,7 +286,7 @@ can be confused by extraneous data, so it’s usually a good idea to drop the
 <p>In case the table has no column headers, you can spatter the <code>col</code> column
 instead of a nonexistent <code>header</code> column.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">spatter</span>(col) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
@@ -412,7 +412,7 @@ headers, and a cell in the final row of data.</li>
 ## 6         6 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   &lt;NA&gt;    
 ## 7         7 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   Footnote</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">top_left &lt;-</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">top_left</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
@@ -422,7 +422,7 @@ headers, and a cell in the final row of data.</li>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># It can be tricky to find the bottom-right cell because you have to make some</span></a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co"># assumptions.  Here we assume that only cells within the table are numeric.</span></a>
 <a class="sourceLine" id="cb28-3" data-line-number="3">bottom_right &lt;-</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb28-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">row =</span> <span class="kw">max</span>(row), <span class="dt">col =</span> <span class="kw">max</span>(col))</a>
 <a class="sourceLine" id="cb28-6" data-line-number="6">bottom_right</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
@@ -443,7 +443,7 @@ headers, and a cell in the final row of data.</li>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># Step 2: filter for cells between the top-left and bottom-right, and spatter</span></a>
 <a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co"># into a table</span></a>
 <a class="sourceLine" id="cb32-3" data-line-number="3">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</a>
 <a class="sourceLine" id="cb32-5" data-line-number="5">         <span class="kw">between</span>(col, top_left<span class="op">$</span>col, bottom_right<span class="op">$</span>col)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb32-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb32-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
@@ -502,7 +502,7 @@ this procedure.</p>
 <a class="sourceLine" id="cb34-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></a>
 <a class="sourceLine" id="cb34-15" data-line-number="15">fills &lt;-</a>
 <a class="sourceLine" id="cb34-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-17" data-line-number="17"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
+<a class="sourceLine" id="cb34-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
 <a class="sourceLine" id="cb34-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb34-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(fill_colour)</a>
 <a class="sourceLine" id="cb34-20" data-line-number="20"></a>
@@ -565,7 +565,7 @@ and <code>height</code> columns are highlighted, then you could create two new c
 <a class="sourceLine" id="cb38-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb38-15" data-line-number="15">fills &lt;-</a>
 <a class="sourceLine" id="cb38-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
 <a class="sourceLine" id="cb38-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb38-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb38-20" data-line-number="20"><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></a>
@@ -702,7 +702,7 @@ individual variables, rather than to whole observations.</p>
 <a class="sourceLine" id="cb56-7" data-line-number="7"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb56-8" data-line-number="8">fills &lt;-</a>
 <a class="sourceLine" id="cb56-9" data-line-number="9"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-10" data-line-number="10"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb56-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
 <a class="sourceLine" id="cb56-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb56-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
 <a class="sourceLine" id="cb56-13" data-line-number="13">fills</a></code></pre></div>
@@ -773,7 +773,7 @@ another, etc.</p>
 <a class="sourceLine" id="cb62-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb62-15" data-line-number="15">formats &lt;-</a>
 <a class="sourceLine" id="cb62-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-17" data-line-number="17"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
+<a class="sourceLine" id="cb62-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
 <a class="sourceLine" id="cb62-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id],</a>
 <a class="sourceLine" id="cb62-19" data-line-number="19">         <span class="dt">font_colour =</span> font_colours[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb62-20" data-line-number="20"><span class="st">  </span><span class="kw">select</span>(fill_colour, font_colour)</a>
@@ -873,7 +873,7 @@ combine them into a third column, perhaps using <code>paste()</code>, or <code>c
 <a class="sourceLine" id="cb68-10" data-line-number="10"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
 <a class="sourceLine" id="cb68-11" data-line-number="11">formats &lt;-</a>
 <a class="sourceLine" id="cb68-12" data-line-number="12"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb68-13" data-line-number="13"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
+<a class="sourceLine" id="cb68-13" data-line-number="13"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
 <a class="sourceLine" id="cb68-14" data-line-number="14"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</a>
 <a class="sourceLine" id="cb68-15" data-line-number="15">         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb68-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</a>
@@ -1006,7 +1006,7 @@ individual variables, rather than to whole observations.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="co"># Import all the cells, and filter for sentinel values</span></a>
 <a class="sourceLine" id="cb82-2" data-line-number="2">sentinels &lt;-</a>
 <a class="sourceLine" id="cb82-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb82-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(character <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb82-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb82-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sentinel =</span> character) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb82-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, sentinel)</a>
 <a class="sourceLine" id="cb82-7" data-line-number="7">sentinels</a></code></pre></div>

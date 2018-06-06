@@ -77,7 +77,7 @@ The tidyxl version is easier to traverse, because it describes the position of
 each cell as well as the value.  To filter for the first row of headers:
 
 ```{r}
-filter(cells, row == 2, !is_blank) %>%
+dplyr::filter(cells, row == 2, !is_blank) %>%
   select(row, col, character, numeric)
 ```
 
@@ -85,7 +85,7 @@ Or to filter for cells containing data (in this case, we know that only data
 cells are numeric)
 
 ```{r}
-filter(cells, data_type == "numeric") %>%
+dplyr::filter(cells, data_type == "numeric") %>%
   select(row, col, numeric)
 ```
 

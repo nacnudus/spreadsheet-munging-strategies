@@ -78,7 +78,7 @@ path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 cells <-
   xlsx_cells(path, sheet = "formatting") %>%
   select(row, col, character, style_format, local_format_id) %>%
-  filter(row == 1, col == 1)
+  dplyr::filter(row == 1, col == 1)
 cells
 
 formats <- xlsx_formats(path)
@@ -181,7 +181,7 @@ differently.
 
 ```{r}
 xlsx_cells(path, sheet = "in-cell formatting") %>%
-  filter(address == "A1") %>%
+  dplyr::filter(address == "A1") %>%
   select(address, character_formatted) %>%
   unnest()
 ```
@@ -199,7 +199,7 @@ production readiness combines three pieces of information in a single cell.
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "in-cell formatting") %>%
-  filter(address != "A1") %>%
+  dplyr::filter(address != "A1") %>%
   rectify()
 ```
 
@@ -216,7 +216,7 @@ value.
 ```{r}
 strikethrough <-
   xlsx_cells(path, sheet = "in-cell formatting") %>%
-  filter(address != "A1", col == 1) %>%
+  dplyr::filter(address != "A1", col == 1) %>%
   mutate(strikethrough = map_lgl(character_formatted, ~ any(.x$strike))) %>%
   select(row, col, character, strikethrough)
 ```
@@ -227,12 +227,12 @@ section "Already a tidy table but with meaningful formatting of single cells".
 ```{r}
 cells <-
   xlsx_cells(path, sheet = "in-cell formatting") %>%
-  filter(address != "A1") %>%
+  dplyr::filter(address != "A1") %>%
   select(row, col, data_type, character, numeric)
 
 strikethrough <-
   xlsx_cells(path, sheet = "in-cell formatting") %>%
-  filter(address != "A1", col == 1) %>%
+  dplyr::filter(address != "A1", col == 1) %>%
   mutate(strikethrough = map_lgl(character_formatted, ~ any(.x$strike))) %>%
   select(row, strikethrough)
 
@@ -268,8 +268,8 @@ column to identify cells that have in-cell formatting.
 
 ```{r}
 xlsx_cells(path, sheet = "superscript symbols") %>%
-  filter(data_type == "character") %>%
-  filter(map_int(character_formatted, nrow) != 1) %>%
+  dplyr::filter(data_type == "character") %>%
+  dplyr::filter(map_int(character_formatted, nrow) != 1) %>%
   select(row, col, character)
 ```
 

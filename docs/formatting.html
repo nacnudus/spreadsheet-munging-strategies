@@ -655,7 +655,7 @@ style-level bold formatting of a cell.</p>
 <a class="sourceLine" id="cb280-2" data-line-number="2">cells &lt;-</a>
 <a class="sourceLine" id="cb280-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb280-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb280-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb280-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb280-6" data-line-number="6">cells</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     row   col character style_format local_format_id
@@ -809,7 +809,7 @@ list-column called <code>character_formatted</code>.</p>
 a single cell has a long string of words, where each word is formatted
 differently.</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb292-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb292-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb292-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb292-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 15
@@ -837,7 +837,7 @@ that nevertheless occurred in real life.</p>
 production readiness combines three pieces of information in a single cell.</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
 <a class="sourceLine" id="cb294-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb294-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb294-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb294-4" data-line-number="4"><span class="st">  </span><span class="kw">rectify</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   `row/col` `1(A)`        `2(B)`
@@ -856,19 +856,19 @@ can get away with mapping over the nested data frames and pulling out a single
 value.</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">strikethrough &lt;-</a>
 <a class="sourceLine" id="cb296-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb296-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb296-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb296-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</a></code></pre></div>
 <p>This can then be joined onto the rest of the table, in the same way as the
 section “Already a tidy table but with meaningful formatting of single cells”.</p>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1">cells &lt;-</a>
 <a class="sourceLine" id="cb297-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb297-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb297-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
 <a class="sourceLine" id="cb297-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb297-6" data-line-number="6">strikethrough &lt;-</a>
 <a class="sourceLine" id="cb297-7" data-line-number="7"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb297-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-8" data-line-number="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb297-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb297-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, strikethrough)</a>
 <a class="sourceLine" id="cb297-11" data-line-number="11"></a>
@@ -905,8 +905,8 @@ back to numeric with <code>as.integer()</code>.</p>
 <p>With tidyxl, you can count the rows of each element of the <code>character_formatted</code>
 column to identify cells that have in-cell formatting.</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb301-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb301-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb301-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row   col character

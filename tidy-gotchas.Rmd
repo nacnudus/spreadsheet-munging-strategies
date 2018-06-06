@@ -88,14 +88,14 @@ cells <- xlsx_cells(path, sheet = "notes")
 rectify(cells)
 
 top_left <-
-  filter(cells, character == "Name") %>%
+  dplyr::filter(cells, character == "Name") %>%
   select(row, col)
 top_left
 
 # It can be tricky to find the bottom-right cell because you have to make some
 # assumptions.  Here we assume that only cells within the table are numeric.
 bottom_right <-
-  filter(cells, data_type == "numeric") %>%
+  dplyr::filter(cells, data_type == "numeric") %>%
   summarise(row = max(row), col = max(col))
 bottom_right
 
@@ -112,7 +112,7 @@ Here's another way using only tidyxl and unpivotr.
 # Step 2: filter for cells between the top-left and bottom-right, and spatter
 # into a table
 cells %>%
-  filter(between(row, top_left$row, bottom_right$row),
+  dplyr::filter(between(row, top_left$row, bottom_right$row),
          between(col, top_left$col, bottom_right$col)) %>%
   select(row, col, data_type, character, numeric) %>%
   behead("N", header) %>%

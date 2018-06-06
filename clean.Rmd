@@ -75,7 +75,7 @@ instead of a nonexistent `header` column.
 
 ```{r}
 xlsx_cells(path, sheet = "clean") %>%
-  filter(row >= 2) %>%
+  dplyr::filter(row >= 2) %>%
   select(row, col, data_type, character, numeric) %>%
   spatter(col) %>%
   select(-row)

@@ -34,10 +34,10 @@ code to import only that table.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = "small-multiples") %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric, local_format_id)
 
-table1 <- filter(all_cells, row %in% 1:4, col %in% 1:3)
+table1 <- dplyr::filter(all_cells, row %in% 1:4, col %in% 1:3)
 
 table1 %>%
   behead("NNW", subject) %>%
@@ -67,7 +67,7 @@ identifying a corner cell in each table.
 formats <- xlsx_formats(path)
 italic <- which(formats$local$font$italic)
 
-corners <- filter(all_cells, local_format_id %in% italic)
+corners <- dplyr::filter(all_cells, local_format_id %in% italic)
 partitions <- partition(all_cells, corners)
 partitions
 ```
@@ -98,7 +98,7 @@ is its `row`, its `col`, and its `sheet`.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = c("humanities", "performance")) %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(sheet, row, col, data_type, character, numeric)
 all_cells
 ```
@@ -164,15 +164,15 @@ extend the selection to include the whole table.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 all_cells <-
   xlsx_cells(path, sheets = c("female", "male")) %>%
-  filter(!is_blank) %>%
+  dplyr::filter(!is_blank) %>%
   select(sheet, row, col, data_type, character, numeric)
 all_cells
 
 unpivot <- function(cells) {
   cells %>%
-    filter(character == "Subject") %>%
+    dplyr::filter(character == "Subject") %>%
     pull(row) %>%
-    {filter(cells, row >= .)} %>%
+    {dplyr::filter(cells, row >= .)} %>%
     behead("N", name) %>%
     behead("W", subject)
 }
