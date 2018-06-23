@@ -32,7 +32,7 @@ problem down into steps:
 
 The first step is a matter of traversing the cells, which is *much easier* if
 you load them with the [tidyxl](https://nacnudus.github.io/tidyxl) package, or
-pass the table through `tidy_table()` in the
+pass the table through `as_cells()` in the
 [unpivotr](https://nacnudus.github.io/unpivotr) package.  This gives you a table
 of cells and their properties; one row of the table describes one cell of the
 source table or spreadsheet.  The first two properties are the row and column
@@ -59,17 +59,17 @@ select(cells, row, col, data_type, character, numeric) %>%
   print(cells, n = 20)
 ```
 
-A similar result is obtained via `unpivotr::tidy_table()`.
+A similar result is obtained via `unpivotr::as_cells()`.
 
 ```{r}
 original <- read_excel(path, sheet = "pivot-annotations", col_names = FALSE)
-tidy_table(original) %>%
+as_cells(original) %>%
   arrange(row, col) %>%
   print(n = 20)
 ```
 
 (One difference is that `read_excel()` has filled in some missing cells with
-blanks, which `tidy_table()` retains.  Another is that `read_excel()` has
+blanks, which `as_cells()` retains.  Another is that `read_excel()` has
 coerced all data types to `character`, whereas `xlsx_cells()` preserved the
 original data types.)
 

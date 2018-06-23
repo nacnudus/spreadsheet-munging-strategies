@@ -252,7 +252,7 @@ formulas.</p>
 part of the data. Think of it like <code>tidyr::gather()</code>, except that it works when
 there is more than one row of headers (or more than one column of row-headers),
 and it only works on tables that have first come through
-<code>unpivotr::tidy_table()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
+<code>unpivotr::as_cells()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</a></code></pre></div>

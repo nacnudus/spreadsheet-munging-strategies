@@ -226,7 +226,7 @@ problem down into steps:</p>
 </ol>
 <p>The first step is a matter of traversing the cells, which is <em>much easier</em> if
 you load them with the <a href="https://nacnudus.github.io/tidyxl">tidyxl</a> package, or
-pass the table through <code>tidy_table()</code> in the
+pass the table through <code>as_cells()</code> in the
 <a href="https://nacnudus.github.io/unpivotr">unpivotr</a> package. This gives you a table
 of cells and their properties; one row of the table describes one cell of the
 source table or spreadsheet. The first two properties are the row and column
@@ -277,9 +277,9 @@ a few properties of each cell are shown, to make it easier to read).</p>
 ## 19     5     2 blank     &lt;NA&gt;            NA
 ## 20     5     3 character History         NA
 ## # ... with 16 more rows</code></pre>
-<p>A similar result is obtained via <code>unpivotr::tidy_table()</code>.</p>
+<p>A similar result is obtained via <code>unpivotr::as_cells()</code>.</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="kw">tidy_table</span>(original) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="kw">as_cells</span>(original) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb92-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb92-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 36 x 4
@@ -307,7 +307,7 @@ a few properties of each cell are shown, to make it easier to read).</p>
 ## 20     4     2 chr       History   
 ## # ... with 16 more rows</code></pre>
 <p>(One difference is that <code>read_excel()</code> has filled in some missing cells with
-blanks, which <code>tidy_table()</code> retains. Another is that <code>read_excel()</code> has
+blanks, which <code>as_cells()</code> retains. Another is that <code>read_excel()</code> has
 coerced all data types to <code>character</code>, whereas <code>xlsx_cells()</code> preserved the
 original data types.)</p>
 <p>The tidyxl version is easier to traverse, because it describes the position of
@@ -360,7 +360,7 @@ data cells, using the <a href="https://nacnudus.github.io/unpivotr">unpivotr</a>
 it part of the data. Think of it like <code>tidyr::gather()</code>, except that it works
 when there is more than one row of headers (or more than one column of
 row-headers), and it only works on tables that have first come through
-<code>tidy_table()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
+<code>as_cells()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
 <div id="two-clear-rows-of-text-column-headers-left-aligned" class="section level3">
 <h3><span class="header-section-number">4.1.1</span> Two clear rows of text column headers, left-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
@@ -388,7 +388,7 @@ every column.</p>
 ##  9     4     6 numeric   &lt;NA&gt;            3
 ## 10     4     7 numeric   &lt;NA&gt;            0
 ## # ... with 12 more rows</code></pre>
-<p>The <code>behead()</code> function takes the ‘melted’ output of <code>tidy_table()</code>,
+<p>The <code>behead()</code> function takes the ‘melted’ output of <code>as_cells()</code>,
 <code>tidyxl::xlsx_cells()</code>, or a previous <code>behead()</code>, and three more arguments to
 specify how the header cells relate to the data cells.</p>
 <p>The outermost header is the top row, <code>&quot;Female&quot; NA &quot;Male&quot; NA</code>. The <code>&quot;Female&quot;</code>

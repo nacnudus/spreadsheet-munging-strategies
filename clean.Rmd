@@ -46,7 +46,7 @@ xlsx_cells(path, sheet = "clean") %>%
 part of the data.  Think of it like `tidyr::gather()`, except that it works when
 there is more than one row of headers (or more than one column of row-headers),
 and it only works on tables that have first come through
-`unpivotr::tidy_table()` or `tidyxl::xlsx_cells()`.
+`unpivotr::as_cells()` or `tidyxl::xlsx_cells()`.
 
 ```{r}
 xlsx_cells(path, sheet = "clean") %>%

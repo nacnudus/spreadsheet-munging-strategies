@@ -4,7 +4,7 @@ The `behead()` function takes one level of headers from a pivot table and makes
 it part of the data.  Think of it like `tidyr::gather()`, except that it works
 when there is more than one row of headers (or more than one column of
 row-headers), and it only works on tables that have first come through
-`tidy_table()` or `tidyxl::xlsx_cells()`.
+`as_cells()` or `tidyxl::xlsx_cells()`.
 
 ### Two clear rows of text column headers, left-aligned
 
@@ -24,7 +24,7 @@ all_cells <-
 all_cells
 ```
 
-The `behead()` function takes the 'melted' output of `tidy_table()`,
+The `behead()` function takes the 'melted' output of `as_cells()`,
 `tidyxl::xlsx_cells()`, or a previous `behead()`, and three more arguments to
 specify how the header cells relate to the data cells.
 
