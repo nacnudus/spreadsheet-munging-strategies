@@ -6,7 +6,8 @@ This section describes how the code in the book is set up.
 
 Here are the packages used by the code in this book.  The last two are my own:
 [tidyxl](https://nacnudus.github.io/tidyxl) and
-[unpivotr](https://nacnudus.github.io/unpivotr).
+[unpivotr](https://nacnudus.github.io/unpivotr), and you will need the latest
+versions from CRAN.
 
 ```{r}
 library(tibble)
@@ -17,13 +18,6 @@ library(readr)
 library(readxl)
 library(tidyxl)
 library(unpivotr)
-```
-
-You will need to install the development version of unpivotr.
-
-```{r, eval = FALSE}
-# install.packages("devtools") # If you don't already have it
-devtools::install_github("nacnudus/unpivotr")
 ```
 
 ## Data
