@@ -196,6 +196,8 @@ Implied multiples look like a single table, but many of the headers appear more
 than once.  There is a dominant set of headers that are on the same 'level'
 (e.g. in the same row) as the other headers.
 
+![](images/implied-multiples.png)
+
 In the example, the header "Grade" is repeated, but it really belongs in
 each case to the header "Classics", "History", "Music" or "Drama".  Those
 subject headers serve two purposes: as title of each small multiple, and as the
