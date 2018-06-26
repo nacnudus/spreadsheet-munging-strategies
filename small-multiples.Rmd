@@ -22,7 +22,7 @@ The code to import one of these multiples will be simple.
 cells %>%
   behead("NNW", subject) %>%
   behead("N", header) %>%
-  select(-col, - local_format_id) %>%
+  select(-col, -local_format_id) %>%
   spatter(header) %>%
   select(-row)
 ```
@@ -42,7 +42,7 @@ table1 <- dplyr::filter(all_cells, row %in% 1:4, col %in% 1:3)
 table1 %>%
   behead("NNW", subject) %>%
   behead("N", header) %>%
-  select(-col, - local_format_id) %>%
+  select(-col, -local_format_id) %>%
   spatter(header) %>%
   select(-row)
 ```
@@ -54,7 +54,7 @@ unpivot <- function(cells) {
   cells %>%
     behead("NNW", subject) %>%
     behead("N", header) %>%
-    select(-col, - local_format_id) %>%
+    select(-col, -local_format_id) %>%
     spatter(header) %>%
     select(-row)
 }
@@ -67,7 +67,11 @@ identifying a corner cell in each table.
 formats <- xlsx_formats(path)
 italic <- which(formats$local$font$italic)
 
-corners <- dplyr::filter(all_cells, local_format_id %in% italic)
+corners <-
+  all_cells %>%
+  dplyr::filter(local_format_id %in% italic) %>%
+  select(row, col)
+
 partitions <- partition(all_cells, corners)
 partitions
 ```
@@ -76,8 +80,10 @@ Finally, map the unpivoting function over the partitions, and combine the
 results.
 
 ```{r}
-map(partitions$cells, unpivot) %>%
-  bind_rows()
+partitions %>%
+  mutate(cells = map(cells, unpivot)) %>%
+  unnest() %>%
+  select(-corner_row, -corner_col)
 ```
 
 ## Same table in several worksheets/files (using the sheet/file name)
@@ -184,4 +190,134 @@ all_cells %>%
   select(sex = sheet, name, subject, score = numeric)
 ```
 
+## Implied multiples
 
+Implied multiples look like a single table, but many of the headers appear more
+than once.  There is a dominant set of headers that are on the same 'level'
+(e.g. in the same row) as the other headers.
+
+In the example, the header "Grade" is repeated, but it really belongs in
+each case to the header "Classics", "History", "Music" or "Drama".  Those
+subject headers serve two purposes: as title of each small multiple, and as the
+unstated "Score" header of their columns.  The difficulty is in associating a
+grade with its corresponding score.
+
+The process is long-winded, but there are only two new ideas:
+
+1. Unpivot the corner cells on their own, with no data.
+1. Rename the corner cells to be normal header cells.
+
+TODO: link to `vaccinations` case study.
+
+```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+all_cells <-
+  xlsx_cells(path, sheets = "implied-multiples") %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric)
+```
+
+Unpivot only the corner cells "Classics", "History", etc. to associate them with
+their field ("Humanities", "Performance"), and store them in the variable
+`corners`.  It feels odd to unpivot only the headers and not the data, but bear
+with it.
+
+```{r}
+corners <-
+  all_cells %>%
+  dplyr::filter(col >= 2, row <= 2, character != "Grade") %>%
+  behead("NNW", "field") %>%
+  dplyr::select(row, col, subject = character, field)
+corners
+```
+
+Now the cells "Classics" and "History" can both be renamed "score", which is
+their function at the head of their columns (rather than labels of the implied
+small multiples).
+
+```{r}
+cells <-
+  all_cells %>%
+  dplyr::filter(row >= 2, col >= 2) %>%
+  mutate(character = if_else(character == "Grade", character, "score"))
+```
+
+Use `corners` to partition the rest of the headers and the data cells.
+Notice that the subject and field are mapped to the appropriate partition.
+
+```{r}
+partitions <-
+  partition(cells, corners, strict = FALSE) %>%
+  # `strict = FALSE` because the corners aren't among the cells
+  select(-corner_row, corner_col)
+partitions
+```
+
+Unnest and unpivot the "score" and "grade" headers.
+
+```{r}
+partitions <-
+  partitions %>%
+  unnest() %>%
+  behead("N", "header") %>%
+  select(-col, -corner_col)
+partitions
+```
+
+The "Name" row headers can now be joined.
+
+```{r}
+name <-
+  all_cells %>%
+  dplyr::filter(row >= 3, col == 1) %>%
+  select(row, name = character)
+name
+
+partitions <- inner_join(partitions, name, by = "row")
+partitions
+```
+
+Finally everything can be spattered into a recognisable table.
+
+```{r}
+spatter(partitions, header) %>%
+  select(-row)
+```
+
+The process is easier to understand when seen as a whole.
+
+```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+all_cells <-
+  xlsx_cells(path, sheets = "implied-multiples") %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric)
+
+name <-
+  all_cells %>%
+  dplyr::filter(row >= 3, col == 1) %>%
+  select(row, name = character)
+
+# Unpivot the corner cells on their own (no data)
+corners <-
+  all_cells %>%
+  dplyr::filter(col >= 2, row <= 2, character != "Grade") %>%
+  behead("NNW", "field") %>%
+  dplyr::select(row, col, subject = character, field)
+
+all_cells %>%
+  dplyr::filter(row >= 2, col >= 2) %>%
+  # Rename the corner cells as normal header cells
+  mutate(character = if_else(character == "Grade", character, "score")) %>%
+  # Partition by the corner cells, and bring the subject fields with them
+  partition(corners, strict = FALSE, nest = FALSE) %>%
+  select(-corner_row, corner_col) %>%
+  # Do some normal unpivotring
+  behead("N", "header") %>%
+  select(-col, -corner_col) %>%
+  # Attach the row headers
+  inner_join(name, by = "row") %>%
+  # Present as a normal table
+  spatter(header) %>%
+  select(-row)
+```
