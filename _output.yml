@@ -1,6 +1,8 @@
 bookdown::gitbook:
   css: css/style.css
   split_by: section
+  includes:
+    in_header: google_analytics.html
   config:
     toc:
       collapse: none
