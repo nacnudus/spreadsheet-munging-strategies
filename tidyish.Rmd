@@ -249,7 +249,7 @@ Why only one column?  Because if a whole row is highlighted, then you only need
 to know the highlighting of one column to know the highlighting of all the
 others.
 
-This is a special case of the following section, [meaninfully formatted
+This is a special case of the following section, [meaningfully formatted
 cells](tidy-formatted-cells). Here `dplyr::bind_cols()` can be used as a
 shortcut, because we are joining exactly `n` rows of formatting to `n` rows of
 data.  The following sections is a more general case that can be used instead of
