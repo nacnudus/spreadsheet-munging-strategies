@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="almost-tidy-tables.html">
-<link rel="next" href="tidy-formatted-cells.html">
+<link rel="prev" href="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting.html">
+<link rel="next" href="data-validation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -198,89 +198,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-formatted-rows" class="section level2">
-<h2><span class="header-section-number">2.3</span> Meaningfully formatted rows</h2>
-<p><img src="images/highlights.png" /></p>
-<p>As with <a href="clean">clean, tidy tables</a>, but with a second step to interpret the
-formatting.</p>
-<p>Sometimes whole rows in a table are highlighted by formatting them with, say, a
-bright yellow fill. The highlighting could mean “this observation should be
-ignored”, or “this product is no longer available”. Different colours could
-mean different levels of a hierarchy, e.g. green for “pass” and red for “fail”.</p>
-<p>There are three steps to interpreting this.</p>
-<ol style="list-style-type: decimal">
-<li>Import the table, taking only the cell values and ignoring the formatting.</li>
-<li>Import one column of the table, taking only the formatting and not the cell
-values.</li>
-<li>Use <code>dplyr::bind_cols()</code> to append the column of formatting to the table of
-cell values. You can then interpret the formatting however you like.</li>
-</ol>
-<p>Step 1 is the same as <a href="clean">clean, tidy tables</a>.</p>
-<p>Step 2 uses <code>tidyxl::xlsx_cells()</code> to load the data, <code>tidyxl::xlsx_formats()</code>,
-and several tidyverse functions to link the two and filter for only one column.
-Why only one column? Because if a whole row is highlighted, then you only need
-to know the highlighting of one column to know the highlighting of all the
-others.</p>
-<p>This is a special case of the following section, <a href="tidy-formatted-cells">meaninfully formatted
-cells</a>. Here <code>dplyr::bind_cols()</code> can be used as a
-shortcut, because we are joining exactly <code>n</code> rows of formatting to <code>n</code> rows of
-data. The following sections is a more general case that can be used instead of
-this procedure.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co"># cell values</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">fills &lt;-</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(fill_colour)</a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-23" data-line-number="23"><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##     Age Height fill_colour
-##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      
-## 1     1      2 &lt;NA&gt;       
-## 2     3      4 FFFFFF00   
-## 3     5      6 &lt;NA&gt;</code></pre>
-<p>Note that the fill colour is expressed as an RGB value with transparency in the
-first two letters, e.g. <code>FFFFFF00</code> is <code>FF</code> (opaque), with <code>FFFF00</code> (yellow).</p>
-<p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   fill_colour   Age Height
-##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
-## 1 &lt;NA&gt;            1      2
-## 2 FFFFFF00        3      4
-## 3 &lt;NA&gt;            5      6</code></pre>
+<div id="superscript-symbols" class="section level2">
+<h2><span class="header-section-number">5.5</span> Superscript symbols</h2>
+<p><img src="images/superscript-symbols.png" /></p>
+<p>This is pernicious. What was Paula’s score, in the table below?</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb314-2" data-line-number="2"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   Name    Score
+##   &lt;chr&gt;   &lt;chr&gt;
+## 1 Paula   91   
+## 2 Matilda 10</code></pre>
+<p>The answer is, it’s not Paula, it’s Paul (superscript ‘a’), who scored 9
+(superscript ‘1’).</p>
+<p>This sort of thing is difficult to spot. There’s a clue in the ‘Score’ column,
+which has been coerced to character so that the author could enter the
+superscript ‘1’ (Excel doesn’t allow superscripts in numeric cells), But it
+would be easy to interpret that as an accident of translation, and simply coerce
+back to numeric with <code>as.integer()</code>.</p>
+<p>With tidyxl, you can count the rows of each element of the <code>character_formatted</code>
+column to identify cells that have in-cell formatting.</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb316-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb316-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb316-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##     row   col character
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    
+## 1     2     1 Paula    
+## 2     2     2 91</code></pre>
+<p>The values and symbols can then be separated by assuming the value is the first
+string, and the symbol is the second.</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb318-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb318-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</a>
+<a class="sourceLine" id="cb318-3" data-line-number="3">                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</a>
+<a class="sourceLine" id="cb318-4" data-line-number="4">         <span class="dt">symbol =</span> <span class="kw">map_chr</span>(character_formatted,</a>
+<a class="sourceLine" id="cb318-5" data-line-number="5">                          <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), <span class="ot">NA</span>, .x<span class="op">$</span>character[<span class="dv">2</span>])),</a>
+<a class="sourceLine" id="cb318-6" data-line-number="6">         <span class="dt">numeric =</span> <span class="kw">if_else</span>(row <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>col <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb318-7" data-line-number="7">                           <span class="kw">as.numeric</span>(character),</a>
+<a class="sourceLine" id="cb318-8" data-line-number="8">                           numeric),</a>
+<a class="sourceLine" id="cb318-9" data-line-number="9">         <span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(numeric), character, <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb318-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, numeric, character, symbol)</a></code></pre></div>
+<pre><code>## Warning in if_else(row &gt; 1 &amp; col == 2 &amp; data_type == &quot;character&quot;,
+## as.numeric(character), : NAs introduced by coercion</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##     row   col numeric character symbol
+##   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; 
+## 1     1     1      NA Name      &lt;NA&gt;  
+## 2     1     2      NA Score     &lt;NA&gt;  
+## 3     2     1      NA Paul      a     
+## 4     2     2       9 &lt;NA&gt;      1     
+## 5     3     1      NA Matilda   &lt;NA&gt;  
+## 6     3     2      10 &lt;NA&gt;      &lt;NA&gt;</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="almost-tidy-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidy-formatted-cells.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -310,7 +289,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/formatting.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub", "_main.mobi"],

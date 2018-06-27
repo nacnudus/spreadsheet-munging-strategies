@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -128,38 +128,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
-<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#packages"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
-<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#data"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
+<li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
+<li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
 </ul></li>
-<li class="part"><span><b>I Tidy tables with gotchas</b></span></li>
-<li class="chapter" data-level="2" data-path="part-tidy.html"><a href="part-tidy.html"><i class="fa fa-check"></i><b>2</b> Tidy tables with gotchas</a></li>
-<li class="chapter" data-level="3" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>3</b> Clean, tidy tables</a></li>
-<li class="chapter" data-level="4" data-path="tidy-tables-but-with-gotchas.html"><a href="tidy-tables-but-with-gotchas.html"><i class="fa fa-check"></i><b>4</b> Tidy tables but with gotchas</a><ul>
-<li class="chapter" data-level="4.1" data-path="tidy-tables-but-with-gotchas.html"><a href="tidy-tables-but-with-gotchas.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>4.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
-<li class="chapter" data-level="4.2" data-path="tidy-tables-but-with-gotchas.html"><a href="tidy-tables-but-with-gotchas.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>4.2</b> Other stuff on the same sheet</a></li>
+<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a><ul>
+<li class="chapter" data-level="2.1" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>2.1</b> Clean &amp; tidy tables</a></li>
+<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>2.2.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>2.2.2</b> Other stuff on the same sheet</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="tidy-formatted-rows.html"><a href="tidy-formatted-rows.html"><i class="fa fa-check"></i><b>5</b> Meaningfully formatted rows</a></li>
-<li class="chapter" data-level="6" data-path="tidy-formatted-cells.html"><a href="tidy-formatted-cells.html"><i class="fa fa-check"></i><b>6</b> Meaningfully formatted cells</a></li>
-<li class="chapter" data-level="7" data-path="layered-formatting.html"><a href="layered-formatting.html"><i class="fa fa-check"></i><b>7</b> Layered meaningful formatting</a></li>
-<li class="chapter" data-level="8" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>8</b> Sentinel values in non-text columns</a></li>
-<li class="part"><span><b>II Pivot tables</b></span></li>
-<li class="chapter" data-level="9" data-path="part-pivot.html"><a href="part-pivot.html"><i class="fa fa-check"></i><b>9</b> Pivot tables</a></li>
-<li class="chapter" data-level="10" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>10</b> Pivot tables</a></li>
-<li class="chapter" data-level="11" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>11</b> Simple unpivoting</a><ul>
-<li class="chapter" data-level="11.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>11.1</b> Two clear rows of text column headers, left-aligned</a></li>
-<li class="chapter" data-level="11.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>11.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
-<li class="chapter" data-level="11.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>11.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="2.3" data-path="tidy-formatted-rows.html"><a href="tidy-formatted-rows.html"><i class="fa fa-check"></i><b>2.3</b> Meaningfully formatted rows</a></li>
+<li class="chapter" data-level="2.4" data-path="tidy-formatted-cells.html"><a href="tidy-formatted-cells.html"><i class="fa fa-check"></i><b>2.4</b> Meaningfully formatted cells</a></li>
+<li class="chapter" data-level="2.5" data-path="layered-formatting.html"><a href="layered-formatting.html"><i class="fa fa-check"></i><b>2.5</b> Layered meaningful formatting</a></li>
+<li class="chapter" data-level="2.6" data-path="hierarchies-in-formatting.html"><a href="hierarchies-in-formatting.html"><i class="fa fa-check"></i><b>2.6</b> Hierarchies in formatting</a></li>
+<li class="chapter" data-level="2.7" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>2.7</b> Sentinel values in non-text columns</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>12</b> Complex unpivoting</a><ul>
-<li class="chapter" data-level="12.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-2rl"><i class="fa fa-check"></i><b>12.1</b> Two clear rows of text column headers, left-aligned {#2RL}</a></li>
-<li class="chapter" data-level="12.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>12.2</b> Two clear columns of text row headers, top-aligned</a></li>
-<li class="chapter" data-level="12.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>12.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
-<li class="chapter" data-level="12.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>12.4</b> Centre-aligned headers</a></li>
-<li class="chapter" data-level="12.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>12.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
-<li class="chapter" data-level="12.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>12.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="12.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>12.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="12.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>12.8</b> Repeated rows/columns of headers within the table</a></li>
-<li class="chapter" data-level="12.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>12.9</b> Headers amongst the data</a></li>
+<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
+<li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
+<li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-2rl"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned {#2RL}</a></li>
+<li class="chapter" data-level="3.2.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>3.2.2</b> Two clear columns of text row headers, top-aligned</a></li>
+<li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
+<li class="chapter" data-level="3.2.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>3.2.4</b> Centre-aligned headers</a></li>
+<li class="chapter" data-level="3.2.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>3.2.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>3.2.8</b> Repeated rows/columns of headers within the table</a></li>
+<li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a><ul>
+<li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
+<li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
+<li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
+<li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
+<li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
+<li class="chapter" data-level="5.2" data-path="common-formats.html"><a href="common-formats.html"><i class="fa fa-check"></i><b>5.2</b> Common formats</a></li>
+<li class="chapter" data-level="5.3" data-path="in-cell-formatting.html"><a href="in-cell-formatting.html"><i class="fa fa-check"></i><b>5.3</b> In-cell formatting</a></li>
+<li class="chapter" data-level="5.4" data-path="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting.html"><a href="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting.html"><i class="fa fa-check"></i><b>5.4</b> Multiple pieces of information in a single cell, with meaningful formatting</a></li>
+<li class="chapter" data-level="5.5" data-path="superscript-symbols.html"><a href="superscript-symbols.html"><i class="fa fa-check"></i><b>5.5</b> Superscript symbols</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>6</b> Data validation</a></li>
+<li class="chapter" data-level="7" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>7</b> Formulas</a></li>
+<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a><ul>
+<li class="chapter" data-level="8.1" data-path="non-text-headers-e-g-dates.html"><a href="non-text-headers-e-g-dates.html"><i class="fa fa-check"></i><b>8.1</b> Non-text headers e.g. dates</a></li>
+<li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
+<li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
 </ul>
 
@@ -178,8 +198,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-formatted-cells" class="section level1">
-<h1><span class="header-section-number">6</span> Meaningfully formatted cells</h1>
+<div id="tidy-formatted-cells" class="section level2">
+<h2><span class="header-section-number">2.4</span> Meaningfully formatted cells</h2>
+<p><img src="images/annotations.png" /></p>
 <p>If single cells are highlighted, rather than whole rows, then the highlights
 probably indicate something about the column rather than the row. For example,
 a highlighted cell in a column called “age” of a table of medical patients,
@@ -189,164 +210,165 @@ column in the original that has any highlighted cells. For example, if
 highlighted cells mean “this value is uncertain”, and some cells in the <code>age</code>
 and <code>height</code> columns are highlighted, then you could create two new columns:
 <code>uncertain_age</code>, and <code>uncertain_height</code>, by following the procedure of
-<a href="tidy-formatted-rows">meaningfully formatteed rows</a> for each column <code>age</code> and
+<a href="tidy-formatted-rows">meaningfully formatted rows</a> for each column <code>age</code> and
 <code>height</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
-x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)
-
-<span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span>
-<span class="co"># cell values</span>
-
-<span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
-<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
-fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-
-<span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
-<span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span>
-<span class="co"># local_format_id of each cell in the `formats` pallette.</span>
-fills &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))
-fills</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co"># cell values</span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
+<a class="sourceLine" id="cb37-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb37-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb37-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
+<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span></a>
+<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
+<a class="sourceLine" id="cb37-15" data-line-number="15">fills &lt;-</a>
+<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb37-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-20" data-line-number="20"><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-21" data-line-number="21"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-22" data-line-number="22"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))</a>
+<a class="sourceLine" id="cb37-23" data-line-number="23">fills</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;chr&gt;      
 ## 1 &lt;NA&gt;     &lt;NA&gt;       
 ## 2 FFFFFF00 &lt;NA&gt;       
 ## 3 &lt;NA&gt;     FF92D050</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 3: append the `fill` column to the rest of the data</span>
-<span class="kw">bind_cols</span>(x, fills)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">bind_cols</span>(x, fills)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Name       Age Height Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      
-## 1 Matilda     1.     2. &lt;NA&gt;     &lt;NA&gt;       
-## 2 Nicholas    3.     4. FFFFFF00 &lt;NA&gt;       
-## 3 Olivia      5.     6. &lt;NA&gt;     FF92D050</code></pre>
+## 1 Matilda      1      2 &lt;NA&gt;     &lt;NA&gt;       
+## 2 Nicholas     3      4 FFFFFF00 &lt;NA&gt;       
+## 3 Olivia       5      6 &lt;NA&gt;     FF92D050</code></pre>
 <p>Here’s the same thing, but using only tidyxl and unpivotr</p>
-<pre class="sourceCode r"><code class="sourceCode r">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-
-cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)
-cells</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">cells &lt;-</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)</a>
+<a class="sourceLine" id="cb41-7" data-line-number="7">cells</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 6
 ##      row   col data_type character numeric fill_colour
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      
-##  1     1     1 character Name          NA  &lt;NA&gt;       
-##  2     1     2 character Age           NA  &lt;NA&gt;       
-##  3     1     3 character Height        NA  &lt;NA&gt;       
-##  4     2     1 character Matilda       NA  &lt;NA&gt;       
-##  5     2     2 numeric   &lt;NA&gt;           1. &lt;NA&gt;       
-##  6     2     3 numeric   &lt;NA&gt;           2. &lt;NA&gt;       
-##  7     3     1 character Nicholas      NA  &lt;NA&gt;       
-##  8     3     2 numeric   &lt;NA&gt;           3. FFFFFF00   
-##  9     3     3 numeric   &lt;NA&gt;           4. &lt;NA&gt;       
-## 10     4     1 character Olivia        NA  &lt;NA&gt;       
-## 11     4     2 numeric   &lt;NA&gt;           5. &lt;NA&gt;       
-## 12     4     3 numeric   &lt;NA&gt;           6. FF92D050</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">values &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(header)
-values</code></pre>
+##  1     1     1 character Name           NA &lt;NA&gt;       
+##  2     1     2 character Age            NA &lt;NA&gt;       
+##  3     1     3 character Height         NA &lt;NA&gt;       
+##  4     2     1 character Matilda        NA &lt;NA&gt;       
+##  5     2     2 numeric   &lt;NA&gt;            1 &lt;NA&gt;       
+##  6     2     3 numeric   &lt;NA&gt;            2 &lt;NA&gt;       
+##  7     3     1 character Nicholas       NA &lt;NA&gt;       
+##  8     3     2 numeric   &lt;NA&gt;            3 FFFFFF00   
+##  9     3     3 numeric   &lt;NA&gt;            4 &lt;NA&gt;       
+## 10     4     1 character Olivia         NA &lt;NA&gt;       
+## 11     4     2 numeric   &lt;NA&gt;            5 &lt;NA&gt;       
+## 12     4     3 numeric   &lt;NA&gt;            6 FF92D050</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">values &lt;-</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb43-6" data-line-number="6"><span class="st">  </span><span class="kw">spatter</span>(header)</a>
+<a class="sourceLine" id="cb43-7" data-line-number="7">values</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row   Age Height Name    
 ##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
-## 1     2    1.     2. Matilda 
-## 2     3    3.     4. Nicholas
-## 3     4    5.     6. Olivia</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fills &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(header, fill_colour)
-fills</code></pre>
+## 1     2     1      2 Matilda 
+## 2     3     3      4 Nicholas
+## 3     4     5      6 Olivia</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">fills &lt;-</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="st">  </span><span class="kw">spread</span>(header, fill_colour)</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7">fills</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row Age_fill Height_fill Name_fill
 ##   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
 ## 1     2 &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;     
 ## 2     3 FFFFFF00 &lt;NA&gt;        &lt;NA&gt;     
 ## 3     4 &lt;NA&gt;     FF92D050    &lt;NA&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##     Age Height Name     Age_fill Height_fill Name_fill
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
-## 1    1.     2. Matilda  &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;     
-## 2    3.     4. Nicholas FFFFFF00 &lt;NA&gt;        &lt;NA&gt;     
-## 3    5.     6. Olivia   &lt;NA&gt;     FF92D050    &lt;NA&gt;</code></pre>
+## 1     1      2 Matilda  &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;     
+## 2     3      4 Nicholas FFFFFF00 &lt;NA&gt;        &lt;NA&gt;     
+## 3     5      6 Olivia   &lt;NA&gt;     FF92D050    &lt;NA&gt;</code></pre>
 <p>Another way would be to make the table what I call “extra-tidy”. If it is tidy,
 then each row is an observation, and each column is a variable. To make it
 “extra-tidy”, you <code>gather()</code> the variables so that each row is <em>one observation
 of one variable</em>. This works best when every variable has the same data type,
 otherwise the values will be coerced, probably to a character.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Tidy</span>
-(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># Tidy</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   Name       Age Height
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-## 1 Matilda     1.     2.
-## 2 Nicholas    3.     4.
-## 3 Olivia      5.     6.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Extra-tidy</span>
-extra_tidy &lt;-
-<span class="st">  </span>x <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(Name, variable)
-extra_tidy</code></pre>
+## 1 Matilda      1      2
+## 2 Nicholas     3      4
+## 3 Olivia       5      6</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># Extra-tidy</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span>x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</a>
+<a class="sourceLine" id="cb51-6" data-line-number="6">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   Name     variable value
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1 Matilda  Age         1.
-## 2 Matilda  Height      2.
-## 3 Nicholas Age         3.
-## 4 Nicholas Height      4.
-## 5 Olivia   Age         5.
-## 6 Olivia   Height      6.</code></pre>
+## 1 Matilda  Age          1
+## 2 Matilda  Height       2
+## 3 Nicholas Age          3
+## 4 Nicholas Height       4
+## 5 Olivia   Age          5
+## 6 Olivia   Height       6</code></pre>
 <p>With an extra-tidy dataset, the formatting can now be appended to the values of
 individual variables, rather than to whole observations.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Extra-tidy, with row and column numbers of the original variables</span>
-extra_tidy &lt;-
-<span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(row, col)
-extra_tidy</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co"># Extra-tidy, with row and column numbers of the original variables</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-10" data-line-number="10"><span class="st">  </span><span class="kw">arrange</span>(row, col)</a>
+<a class="sourceLine" id="cb53-11" data-line-number="11">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##     row   col Name     variable value
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1     2     2 Matilda  Age         1.
-## 2     2     3 Matilda  Height      2.
-## 3     3     2 Nicholas Age         3.
-## 4     3     3 Nicholas Height      4.
-## 5     4     2 Olivia   Age         5.
-## 6     4     3 Olivia   Height      6.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
-<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
-fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-
-<span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
-<span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span>
-<span class="co"># the local_format_id of each cell in the `formats` pallette.</span>
-fills &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)
-fills</code></pre>
+## 1     2     2 Matilda  Age          1
+## 2     2     3 Matilda  Height       2
+## 3     3     2 Nicholas Age          3
+## 4     3     3 Nicholas Height       4
+## 5     4     2 Olivia   Age          5
+## 6     4     3 Olivia   Height       6</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
+<a class="sourceLine" id="cb55-6" data-line-number="6"><span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span></a>
+<a class="sourceLine" id="cb55-7" data-line-number="7"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
+<a class="sourceLine" id="cb55-8" data-line-number="8">fills &lt;-</a>
+<a class="sourceLine" id="cb55-9" data-line-number="9"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb55-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb55-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb55-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
+<a class="sourceLine" id="cb55-13" data-line-number="13">fills</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##     row   col fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      
@@ -356,36 +378,35 @@ fills</code></pre>
 ## 4     3     3 &lt;NA&gt;       
 ## 5     4     2 &lt;NA&gt;       
 ## 6     4     3 FF92D050</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 3: append the `fill` column to the rest of the data</span>
-<span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col Name     variable value fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
-## 1     2     2 Matilda  Age         1. &lt;NA&gt;       
-## 2     2     3 Matilda  Height      2. &lt;NA&gt;       
-## 3     3     2 Nicholas Age         3. FFFFFF00   
-## 4     3     3 Nicholas Height      4. &lt;NA&gt;       
-## 5     4     2 Olivia   Age         5. &lt;NA&gt;       
-## 6     4     3 Olivia   Height      6. FF92D050</code></pre>
+## 1     2     2 Matilda  Age          1 &lt;NA&gt;       
+## 2     2     3 Matilda  Height       2 &lt;NA&gt;       
+## 3     3     2 Nicholas Age          3 FFFFFF00   
+## 4     3     3 Nicholas Height       4 &lt;NA&gt;       
+## 5     4     2 Olivia   Age          5 &lt;NA&gt;       
+## 6     4     3 Olivia   Height       6 FF92D050</code></pre>
 <p>Here’s the same extra-tidy version, but using only tidyxl and unpivotr.</p>
-<pre class="sourceCode r"><code class="sourceCode r">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-
-<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col value fill_colour Name     variable
 ##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   
-## 1     2     2    1. &lt;NA&gt;        Matilda  Age     
-## 2     2     3    2. &lt;NA&gt;        Matilda  Height  
-## 3     3     2    3. FFFFFF00    Nicholas Age     
-## 4     3     3    4. &lt;NA&gt;        Nicholas Height  
-## 5     4     2    5. &lt;NA&gt;        Olivia   Age     
-## 6     4     3    6. FF92D050    Olivia   Height</code></pre>
-
+## 1     2     2     1 &lt;NA&gt;        Matilda  Age     
+## 2     2     3     2 &lt;NA&gt;        Matilda  Height  
+## 3     3     2     3 FFFFFF00    Nicholas Age     
+## 4     3     3     4 &lt;NA&gt;        Nicholas Height  
+## 5     4     2     5 &lt;NA&gt;        Olivia   Age     
+## 6     4     3     6 FF92D050    Olivia   Height</code></pre>
 </div>
             </section>
 
@@ -407,8 +428,8 @@ fills</code></pre>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "linkedin": false,
@@ -423,12 +444,12 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"text": "Edit"
 },
-"download": null,
+"download": ["_main.pdf", "_main.epub", "_main.mobi"],
 "toc": {
-"collapse": "subsection"
+"collapse": "none"
 }
 });
 });

@@ -3,9 +3,6 @@ title: "Spreadsheet Munging Strategies"
 author: "Duncan Garmonsway"
 site: bookdown::bookdown_site
 documentclass: book
-output:
-  bookdown::gitbook: default
-  bookdown::pdf_book: default
 ---
 
 # Welcome {-}

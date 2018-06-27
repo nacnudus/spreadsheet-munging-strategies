@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="almost-tidy-tables.html">
-<link rel="next" href="tidy-formatted-cells.html">
+<link rel="prev" href="small-multiples-with-all-headers-present-for-each-multiple.html">
+<link rel="next" href="same-table-in-several-worksheetsfiles-but-in-different-positions.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -198,89 +198,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-formatted-rows" class="section level2">
-<h2><span class="header-section-number">2.3</span> Meaningfully formatted rows</h2>
-<p><img src="images/highlights.png" /></p>
-<p>As with <a href="clean">clean, tidy tables</a>, but with a second step to interpret the
-formatting.</p>
-<p>Sometimes whole rows in a table are highlighted by formatting them with, say, a
-bright yellow fill. The highlighting could mean “this observation should be
-ignored”, or “this product is no longer available”. Different colours could
-mean different levels of a hierarchy, e.g. green for “pass” and red for “fail”.</p>
-<p>There are three steps to interpreting this.</p>
-<ol style="list-style-type: decimal">
-<li>Import the table, taking only the cell values and ignoring the formatting.</li>
-<li>Import one column of the table, taking only the formatting and not the cell
-values.</li>
-<li>Use <code>dplyr::bind_cols()</code> to append the column of formatting to the table of
-cell values. You can then interpret the formatting however you like.</li>
-</ol>
-<p>Step 1 is the same as <a href="clean">clean, tidy tables</a>.</p>
-<p>Step 2 uses <code>tidyxl::xlsx_cells()</code> to load the data, <code>tidyxl::xlsx_formats()</code>,
-and several tidyverse functions to link the two and filter for only one column.
-Why only one column? Because if a whole row is highlighted, then you only need
-to know the highlighting of one column to know the highlighting of all the
-others.</p>
-<p>This is a special case of the following section, <a href="tidy-formatted-cells">meaninfully formatted
-cells</a>. Here <code>dplyr::bind_cols()</code> can be used as a
-shortcut, because we are joining exactly <code>n</code> rows of formatting to <code>n</code> rows of
-data. The following sections is a more general case that can be used instead of
-this procedure.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co"># cell values</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">fills &lt;-</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(fill_colour)</a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-23" data-line-number="23"><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##     Age Height fill_colour
-##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      
-## 1     1      2 &lt;NA&gt;       
-## 2     3      4 FFFFFF00   
-## 3     5      6 &lt;NA&gt;</code></pre>
-<p>Note that the fill colour is expressed as an RGB value with transparency in the
-first two letters, e.g. <code>FFFFFF00</code> is <code>FF</code> (opaque), with <code>FFFF00</code> (yellow).</p>
-<p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   fill_colour   Age Height
-##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
-## 1 &lt;NA&gt;            1      2
-## 2 FFFFFF00        3      4
-## 3 &lt;NA&gt;            5      6</code></pre>
+<div id="same-table-in-several-worksheetsfiles-using-the-sheetfile-name" class="section level2">
+<h2><span class="header-section-number">4.2</span> Same table in several worksheets/files (using the sheet/file name)</h2>
+<p><img src="images/humanities.png" alt="sheet: humanities" />
+<img src="images/performance.png" alt="sheet: performance" /></p>
+<p>Because <code>tidyxl()</code> imports cells from multiple sheets into the same data frame,
+tables on separate sheets can be imported by mapping over the different sheets.
+Just name each sheet in the <code>xlsx_cell()</code> call, or don’t name any to import them
+all.</p>
+<p>As far as <code>tidyxl()</code> is concerned, the particular sheet (aka ‘tab’) that a cell
+is on is another coordinate like <code>row</code> and <code>col</code>, so the full location of a cell
+is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb258-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb258-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb258-6" data-line-number="6">all_cells</a></code></pre></div>
+<pre><code>## # A tibble: 16 x 6
+##    sheet         row   col data_type character numeric
+##    &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
+##  1 humanities      1     2 character Matilda        NA
+##  2 humanities      1     3 character Nicholas       NA
+##  3 humanities      2     1 character Classics       NA
+##  4 humanities      2     2 numeric   &lt;NA&gt;            1
+##  5 humanities      2     3 numeric   &lt;NA&gt;            3
+##  6 humanities      3     1 character History        NA
+##  7 humanities      3     2 numeric   &lt;NA&gt;            3
+##  8 humanities      3     3 numeric   &lt;NA&gt;            5
+##  9 performance     1     2 character Matilda        NA
+## 10 performance     1     3 character Nicholas       NA
+## 11 performance     2     1 character Music          NA
+## 12 performance     2     2 numeric   &lt;NA&gt;            5
+## 13 performance     2     3 numeric   &lt;NA&gt;            9
+## 14 performance     3     1 character Drama          NA
+## 15 performance     3     2 numeric   &lt;NA&gt;            7
+## 16 performance     3     3 numeric   &lt;NA&gt;           12</code></pre>
+<p>To prepare the sheets to be mapped over, use <code>tidyr::nest()</code>. The <code>data</code> column
+contains the cells of each sheet.</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   sheet       data            
+##   &lt;chr&gt;       &lt;list&gt;          
+## 1 humanities  &lt;tibble [8 × 5]&gt;
+## 2 performance &lt;tibble [8 × 5]&gt;</code></pre>
+<p>The function to unpivot each table in this case will be a couple of <code>behead()</code>
+statements. Further clean-up can be saved until the end.</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb262-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
+<a class="sourceLine" id="cb262-5" data-line-number="5">}</a></code></pre></div>
+<p>After mapping the unpivot function over each sheet of cells, use
+<code>tidyr::unnest()</code> to show every row of data again.</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 8
+##   sheet         row   col data_type character numeric name     subject 
+##   &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+## 1 humanities      2     2 numeric   &lt;NA&gt;            1 Matilda  Classics
+## 2 humanities      2     3 numeric   &lt;NA&gt;            3 Nicholas Classics
+## 3 humanities      3     2 numeric   &lt;NA&gt;            3 Matilda  History 
+## 4 humanities      3     3 numeric   &lt;NA&gt;            5 Nicholas History 
+## 5 performance     2     2 numeric   &lt;NA&gt;            5 Matilda  Music   
+## 6 performance     2     3 numeric   &lt;NA&gt;            9 Nicholas Music   
+## 7 performance     3     2 numeric   &lt;NA&gt;            7 Matilda  Drama   
+## 8 performance     3     3 numeric   &lt;NA&gt;           12 Nicholas Drama</code></pre>
+<p>Finally, do the clean-up operations that were saved until now.</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-5" data-line-number="5"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</a>
+<a class="sourceLine" id="cb265-6" data-line-number="6">            name,</a>
+<a class="sourceLine" id="cb265-7" data-line-number="7">            subject,</a>
+<a class="sourceLine" id="cb265-8" data-line-number="8">            <span class="dt">score =</span> numeric)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 4
+##   field       name     subject  score
+##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+## 1 humanities  Matilda  Classics     1
+## 2 humanities  Nicholas Classics     3
+## 3 humanities  Matilda  History      3
+## 4 humanities  Nicholas History      5
+## 5 performance Matilda  Music        5
+## 6 performance Nicholas Music        9
+## 7 performance Matilda  Drama        7
+## 8 performance Nicholas Drama       12</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="almost-tidy-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidy-formatted-cells.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="small-multiples-with-all-headers-present-for-each-multiple.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -310,7 +324,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/small-multiples.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub", "_main.mobi"],

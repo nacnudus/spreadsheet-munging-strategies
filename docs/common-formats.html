@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="almost-tidy-tables.html">
-<link rel="next" href="tidy-formatted-cells.html">
+<link rel="prev" href="an-example-formatting-lookup.html">
+<link rel="next" href="in-cell-formatting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -198,89 +198,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-formatted-rows" class="section level2">
-<h2><span class="header-section-number">2.3</span> Meaningfully formatted rows</h2>
-<p><img src="images/highlights.png" /></p>
-<p>As with <a href="clean">clean, tidy tables</a>, but with a second step to interpret the
-formatting.</p>
-<p>Sometimes whole rows in a table are highlighted by formatting them with, say, a
-bright yellow fill. The highlighting could mean “this observation should be
-ignored”, or “this product is no longer available”. Different colours could
-mean different levels of a hierarchy, e.g. green for “pass” and red for “fail”.</p>
-<p>There are three steps to interpreting this.</p>
-<ol style="list-style-type: decimal">
-<li>Import the table, taking only the cell values and ignoring the formatting.</li>
-<li>Import one column of the table, taking only the formatting and not the cell
-values.</li>
-<li>Use <code>dplyr::bind_cols()</code> to append the column of formatting to the table of
-cell values. You can then interpret the formatting however you like.</li>
-</ol>
-<p>Step 1 is the same as <a href="clean">clean, tidy tables</a>.</p>
-<p>Step 2 uses <code>tidyxl::xlsx_cells()</code> to load the data, <code>tidyxl::xlsx_formats()</code>,
-and several tidyverse functions to link the two and filter for only one column.
-Why only one column? Because if a whole row is highlighted, then you only need
-to know the highlighting of one column to know the highlighting of all the
-others.</p>
-<p>This is a special case of the following section, <a href="tidy-formatted-cells">meaninfully formatted
-cells</a>. Here <code>dplyr::bind_cols()</code> can be used as a
-shortcut, because we are joining exactly <code>n</code> rows of formatting to <code>n</code> rows of
-data. The following sections is a more general case that can be used instead of
-this procedure.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co"># cell values</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">fills &lt;-</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(fill_colour)</a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-23" data-line-number="23"><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##     Age Height fill_colour
-##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      
-## 1     1      2 &lt;NA&gt;       
-## 2     3      4 FFFFFF00   
-## 3     5      6 &lt;NA&gt;</code></pre>
-<p>Note that the fill colour is expressed as an RGB value with transparency in the
-first two letters, e.g. <code>FFFFFF00</code> is <code>FF</code> (opaque), with <code>FFFF00</code> (yellow).</p>
-<p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   fill_colour   Age Height
-##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
-## 1 &lt;NA&gt;            1      2
-## 2 FFFFFF00        3      4
-## 3 &lt;NA&gt;            5      6</code></pre>
+<div id="common-formats" class="section level2">
+<h2><span class="header-section-number">5.2</span> Common formats</h2>
+<p><img src="images/formatting.png" /></p>
+<p>This example shows how to look up the most common formats.</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb303-2" data-line-number="2">cells &lt;-</a>
+<a class="sourceLine" id="cb303-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)</a>
+<a class="sourceLine" id="cb303-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb303-6" data-line-number="6">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb303-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb303-8" data-line-number="8">bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb303-9" data-line-number="9">italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</a>
+<a class="sourceLine" id="cb303-10" data-line-number="10">underline &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>underline</a>
+<a class="sourceLine" id="cb303-11" data-line-number="11">strikethrough &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>strike</a>
+<a class="sourceLine" id="cb303-12" data-line-number="12">font_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb303-13" data-line-number="13">fill_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb303-14" data-line-number="14">font_size &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>size</a>
+<a class="sourceLine" id="cb303-15" data-line-number="15">font_name &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb303-16" data-line-number="16">border_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>color<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb303-17" data-line-number="17">border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>style</a>
+<a class="sourceLine" id="cb303-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb303-19" data-line-number="19"><span class="kw">mutate</span>(cells,</a>
+<a class="sourceLine" id="cb303-20" data-line-number="20">       <span class="dt">bold =</span> bold[local_format_id],</a>
+<a class="sourceLine" id="cb303-21" data-line-number="21">       <span class="dt">italic =</span> italic[local_format_id],</a>
+<a class="sourceLine" id="cb303-22" data-line-number="22">       <span class="dt">underline =</span> underline[local_format_id],</a>
+<a class="sourceLine" id="cb303-23" data-line-number="23">       <span class="dt">strikethrough =</span> strikethrough[local_format_id],</a>
+<a class="sourceLine" id="cb303-24" data-line-number="24">       <span class="dt">font_colour =</span> font_colour[local_format_id],</a>
+<a class="sourceLine" id="cb303-25" data-line-number="25">       <span class="dt">font_size =</span> font_size[local_format_id],</a>
+<a class="sourceLine" id="cb303-26" data-line-number="26">       <span class="dt">font_name =</span> font_name[local_format_id],</a>
+<a class="sourceLine" id="cb303-27" data-line-number="27">       <span class="dt">fill_colour =</span> fill_colour[local_format_id],</a>
+<a class="sourceLine" id="cb303-28" data-line-number="28">       <span class="dt">border_colour =</span> border_colour[local_format_id],</a>
+<a class="sourceLine" id="cb303-29" data-line-number="29">       <span class="dt">border_linetype =</span> border_linetype[local_format_id])</a></code></pre></div>
+<pre><code>## # A tibble: 14 x 17
+##      row   col character   style_format local_format_id height width bold 
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;
+##  1     1     1 bold        Normal                     5   15    8.67 TRUE 
+##  2     2     1 italic      Normal                     7   15    8.67 FALSE
+##  3     3     1 underline   Normal                    54   15    8.67 FALSE
+##  4     4     1 strikethro… Normal                    55   15    8.67 FALSE
+##  5     5     1 red text    Normal                    11   15    8.67 FALSE
+##  6     6     1 font size … Normal                    56   18.8  8.67 FALSE
+##  7     7     1 font arial  Normal                    57   15    8.67 FALSE
+##  8     8     1 yellow fill Normal                    10   15    8.67 FALSE
+##  9     9     1 black bord… Normal                    42   15.8  8.67 FALSE
+## 10    10     1 thick bord… Normal                    58   15.8  8.67 FALSE
+## 11    11     1 dashed bor… Normal                    59   15.8  8.67 FALSE
+## 12    12     1 row height… Normal                     1   30    8.67 FALSE
+## 13    13     2 column wid… Normal                     1   15   17.4  FALSE
+## 14    14     1 Bad&#39; style  Excel Built…              60   15    8.67 FALSE
+## # ... with 9 more variables: italic &lt;lgl&gt;, underline &lt;chr&gt;,
+## #   strikethrough &lt;lgl&gt;, font_colour &lt;chr&gt;, font_size &lt;dbl&gt;,
+## #   font_name &lt;chr&gt;, fill_colour &lt;chr&gt;, border_colour &lt;chr&gt;,
+## #   border_linetype &lt;chr&gt;</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="almost-tidy-tables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidy-formatted-cells.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="an-example-formatting-lookup.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="in-cell-formatting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -310,7 +289,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/formatting.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub", "_main.mobi"],
