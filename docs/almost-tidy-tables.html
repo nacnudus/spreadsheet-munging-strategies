@@ -216,12 +216,12 @@ observation.</p>
 transposing with <code>t()</code> (which outputs a matrix), placing the headers as names,
 and converting back to a data frame, but this almost always results in all the
 data types being converted.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(.[<span class="dv">1</span>, ]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span>.[<span class="op">-</span><span class="dv">1</span>, ] <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw">as_tibble</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(.[<span class="dv">1</span>, ]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span>.[<span class="op">-</span><span class="dv">1</span>, ] <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">  </span><span class="kw">as_tibble</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Name     Age  
 ##   &lt;chr&gt;    &lt;chr&gt;
@@ -231,11 +231,11 @@ data types being converted.</p>
 <p>Tidyxl and unpivotr are agnostic to the layout of tables. Importing the
 transpose is the same is importing the usual layout, merely using the <code>&quot;W&quot;</code>
 (west) direction instead of <code>&quot;N&quot;</code> (north) when beheading the headers.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(col, data_type, header, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(Name, Age)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(col, data_type, header, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(Name, Age)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -258,13 +258,13 @@ argument of <code>readxl::read_excel()</code> to ignore those columns.</li>
 <li>Blank or non-blank cells below the table: use <code>n_max</code>
 argument of <code>readxl::read_excel()</code> to ignore those rows.</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">readxl<span class="op">::</span><span class="kw">read_excel</span>(path,</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">                   <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>,</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">                   <span class="dt">skip =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">                   <span class="dt">n_max =</span> <span class="dv">33</span>,</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">                   <span class="dt">col_types =</span> <span class="kw">c</span>(<span class="st">&quot;guess&quot;</span>, <span class="st">&quot;guess&quot;</span>, <span class="st">&quot;skip&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">  </span><span class="kw">drop_na</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">readxl<span class="op">::</span><span class="kw">read_excel</span>(path,</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">                   <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>,</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">                   <span class="dt">skip =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">                   <span class="dt">n_max =</span> <span class="dv">33</span>,</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">                   <span class="dt">col_types =</span> <span class="kw">c</span>(<span class="st">&quot;guess&quot;</span>, <span class="st">&quot;guess&quot;</span>, <span class="st">&quot;skip&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="st">  </span><span class="kw">drop_na</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -283,10 +283,10 @@ headers, and a cell in the final row of data.</li>
 <li>Construct the arguments <code>skip</code>, <code>n_max</code> and <code>col_types</code> so that
 <code>readxl::read_excel()</code> gets the exact dimensions of the table.</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># Step 1: read the spreadsheet and filter for sentinel values to detect the</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co"># top-left and bottom-right cells</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>)</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">rectify</span>(cells)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># Step 1: read the spreadsheet and filter for sentinel values to detect the</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># top-left and bottom-right cells</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">rectify</span>(cells)</a></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   `row/col` `1(A)`     `2(B)`   `3(C)` `4(D)`  
 ##       &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
@@ -297,45 +297,45 @@ headers, and a cell in the final row of data.</li>
 ## 5         5 &lt;NA&gt;       Nicholas 3      &lt;NA&gt;    
 ## 6         6 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   &lt;NA&gt;    
 ## 7         7 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   Footnote</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">top_left &lt;-</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">top_left</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">top_left &lt;-</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">top_left</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##     row   col
 ##   &lt;int&gt; &lt;int&gt;
 ## 1     3     2</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># It can be tricky to find the bottom-right cell because you have to make some</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co"># assumptions.  Here we assume that only cells within the table are numeric.</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">bottom_right &lt;-</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">row =</span> <span class="kw">max</span>(row), <span class="dt">col =</span> <span class="kw">max</span>(col))</a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">bottom_right</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># It can be tricky to find the bottom-right cell because you have to make some</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co"># assumptions.  Here we assume that only cells within the table are numeric.</span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">bottom_right &lt;-</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">row =</span> <span class="kw">max</span>(row), <span class="dt">col =</span> <span class="kw">max</span>(col))</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">bottom_right</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##     row   col
 ##   &lt;dbl&gt; &lt;dbl&gt;
 ## 1     5     3</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># Step 2: construct the arguments `skip` and `n_max` for read_excel()</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">skip &lt;-<span class="st"> </span>top_left<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>1L</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">n_rows &lt;-<span class="st"> </span>bottom_right<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>skip</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>, <span class="dt">skip =</span> skip, <span class="dt">n_max =</span> n_rows)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># Step 2: construct the arguments `skip` and `n_max` for read_excel()</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">skip &lt;-<span class="st"> </span>top_left<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>1L</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">n_rows &lt;-<span class="st"> </span>bottom_right<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>skip</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>, <span class="dt">skip =</span> skip, <span class="dt">n_max =</span> n_rows)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
 ## 1 Matilda      1
 ## 2 Nicholas     3</code></pre>
 <p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># Step 2: filter for cells between the top-left and bottom-right, and spatter</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co"># into a table</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</a>
-<a class="sourceLine" id="cb29-5" data-line-number="5">         <span class="kw">between</span>(col, top_left<span class="op">$</span>col, bottom_right<span class="op">$</span>col)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># Step 2: filter for cells between the top-left and bottom-right, and spatter</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co"># into a table</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">         <span class="kw">between</span>(col, top_left<span class="op">$</span>col, bottom_right<span class="op">$</span>col)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   
@@ -382,7 +382,7 @@ gitbook.start({
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
 "text": "Edit"
 },
-"download": ["_main.pdf", "_main.epub", "_main.mobi"],
+"download": null,
 "toc": {
 "collapse": "none"
 }
