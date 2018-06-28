@@ -222,37 +222,37 @@ and <code>height</code> columns are highlighted, then you could create two new c
 <code>uncertain_age</code>, and <code>uncertain_height</code>, by following the procedure of
 <a href="tidy-formatted-rows">meaningfully formatted rows</a> for each column <code>age</code> and
 <code>height</code>.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)</a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
-<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co"># cell values</span></a>
-<a class="sourceLine" id="cb37-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb37-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb37-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb37-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
-<a class="sourceLine" id="cb37-15" data-line-number="15">fills &lt;-</a>
-<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
-<a class="sourceLine" id="cb37-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-20" data-line-number="20"><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-21" data-line-number="21"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-22" data-line-number="22"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))</a>
-<a class="sourceLine" id="cb37-23" data-line-number="23">fills</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
+<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="co"># cell values</span></a>
+<a class="sourceLine" id="cb41-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb41-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
+<a class="sourceLine" id="cb41-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
+<a class="sourceLine" id="cb41-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb41-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb41-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
+<a class="sourceLine" id="cb41-13" data-line-number="13"><span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span></a>
+<a class="sourceLine" id="cb41-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
+<a class="sourceLine" id="cb41-15" data-line-number="15">fills &lt;-</a>
+<a class="sourceLine" id="cb41-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb41-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-20" data-line-number="20"><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-21" data-line-number="21"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-22" data-line-number="22"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))</a>
+<a class="sourceLine" id="cb41-23" data-line-number="23">fills</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;chr&gt;      
 ## 1 &lt;NA&gt;     &lt;NA&gt;       
 ## 2 FFFFFF00 &lt;NA&gt;       
 ## 3 &lt;NA&gt;     FF92D050</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">bind_cols</span>(x, fills)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">bind_cols</span>(x, fills)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Name       Age Height Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      
@@ -260,13 +260,13 @@ and <code>height</code> columns are highlighted, then you could create two new c
 ## 2 Nicholas     3      4 FFFFFF00 &lt;NA&gt;       
 ## 3 Olivia       5      6 &lt;NA&gt;     FF92D050</code></pre>
 <p>Here’s the same thing, but using only tidyxl and unpivotr</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3">cells &lt;-</a>
-<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)</a>
-<a class="sourceLine" id="cb41-7" data-line-number="7">cells</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">cells &lt;-</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7">cells</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 6
 ##      row   col data_type character numeric fill_colour
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      
@@ -282,34 +282,34 @@ and <code>height</code> columns are highlighted, then you could create two new c
 ## 10     4     1 character Olivia         NA &lt;NA&gt;       
 ## 11     4     2 numeric   &lt;NA&gt;            5 &lt;NA&gt;       
 ## 12     4     3 numeric   &lt;NA&gt;            6 FF92D050</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">values &lt;-</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-6" data-line-number="6"><span class="st">  </span><span class="kw">spatter</span>(header)</a>
-<a class="sourceLine" id="cb43-7" data-line-number="7">values</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">values &lt;-</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-6" data-line-number="6"><span class="st">  </span><span class="kw">spatter</span>(header)</a>
+<a class="sourceLine" id="cb47-7" data-line-number="7">values</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row   Age Height Name    
 ##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
 ## 1     2     1      2 Matilda 
 ## 2     3     3      4 Nicholas
 ## 3     4     5      6 Olivia</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">fills &lt;-</a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="st">  </span><span class="kw">spread</span>(header, fill_colour)</a>
-<a class="sourceLine" id="cb45-7" data-line-number="7">fills</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">fills &lt;-</a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-6" data-line-number="6"><span class="st">  </span><span class="kw">spread</span>(header, fill_colour)</a>
+<a class="sourceLine" id="cb49-7" data-line-number="7">fills</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row Age_fill Height_fill Name_fill
 ##   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
 ## 1     2 &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;     
 ## 2     3 FFFFFF00 &lt;NA&gt;        &lt;NA&gt;     
 ## 3     4 &lt;NA&gt;     FF92D050    &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##     Age Height Name     Age_fill Height_fill Name_fill
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
@@ -321,20 +321,20 @@ then each row is an observation, and each column is a variable. To make it
 “extra-tidy”, you <code>gather()</code> the variables so that each row is <em>one observation
 of one variable</em>. This works best when every variable has the same data type,
 otherwise the values will be coerced, probably to a character.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># Tidy</span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co"># Tidy</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   Name       Age Height
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Matilda      1      2
 ## 2 Nicholas     3      4
 ## 3 Olivia       5      6</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># Extra-tidy</span></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">extra_tidy &lt;-</a>
-<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span>x <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</a>
-<a class="sourceLine" id="cb51-6" data-line-number="6">extra_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co"># Extra-tidy</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="st">  </span>x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</a>
+<a class="sourceLine" id="cb55-6" data-line-number="6">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   Name     variable value
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -346,17 +346,17 @@ otherwise the values will be coerced, probably to a character.</p>
 ## 6 Olivia   Height       6</code></pre>
 <p>With an extra-tidy dataset, the formatting can now be appended to the values of
 individual variables, rather than to whole observations.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co"># Extra-tidy, with row and column numbers of the original variables</span></a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">extra_tidy &lt;-</a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-10" data-line-number="10"><span class="st">  </span><span class="kw">arrange</span>(row, col)</a>
-<a class="sourceLine" id="cb53-11" data-line-number="11">extra_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co"># Extra-tidy, with row and column numbers of the original variables</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-5" data-line-number="5"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb57-10" data-line-number="10"><span class="st">  </span><span class="kw">arrange</span>(row, col)</a>
+<a class="sourceLine" id="cb57-11" data-line-number="11">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##     row   col Name     variable value
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -366,19 +366,19 @@ individual variables, rather than to whole observations.</p>
 ## 4     3     3 Nicholas Height       4
 ## 5     4     2 Olivia   Age          5
 ## 6     4     3 Olivia   Height       6</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb55-3" data-line-number="3">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb55-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb55-6" data-line-number="6"><span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span></a>
-<a class="sourceLine" id="cb55-7" data-line-number="7"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
-<a class="sourceLine" id="cb55-8" data-line-number="8">fills &lt;-</a>
-<a class="sourceLine" id="cb55-9" data-line-number="9"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
-<a class="sourceLine" id="cb55-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
-<a class="sourceLine" id="cb55-13" data-line-number="13">fills</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6"><span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span></a>
+<a class="sourceLine" id="cb59-7" data-line-number="7"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
+<a class="sourceLine" id="cb59-8" data-line-number="8">fills &lt;-</a>
+<a class="sourceLine" id="cb59-9" data-line-number="9"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></a>
+<a class="sourceLine" id="cb59-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
+<a class="sourceLine" id="cb59-13" data-line-number="13">fills</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##     row   col fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      
@@ -388,8 +388,8 @@ individual variables, rather than to whole observations.</p>
 ## 4     3     3 &lt;NA&gt;       
 ## 5     4     2 &lt;NA&gt;       
 ## 6     4     3 FF92D050</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col Name     variable value fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
@@ -400,14 +400,14 @@ individual variables, rather than to whole observations.</p>
 ## 5     4     2 Olivia   Age          5 &lt;NA&gt;       
 ## 6     4     3 Olivia   Height       6 FF92D050</code></pre>
 <p>Here’s the same extra-tidy version, but using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col value fill_colour Name     variable
 ##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   
@@ -457,7 +457,7 @@ gitbook.start({
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
 "text": "Edit"
 },
-"download": null,
+"download": ["_main.pdf", "_main.epub"],
 "toc": {
 "collapse": "none"
 }
