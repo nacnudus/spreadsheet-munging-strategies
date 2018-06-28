@@ -3,12 +3,12 @@ bookdown::gitbook:
   split_by: section
   includes:
     in_header: google_analytics.html
+    download: [pdf, epub, mobi]
   config:
     toc:
       collapse: none
+    download: [pdf, epub]
     edit: https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/%s
     sharing:
       github: yes
-      facebook: no
-bookdown::pdf_book:
-bookdown::epub_book:
+ , mobi     facebook: no
