@@ -18,9 +18,9 @@ devtools::install_github("nacnudus/smungs")
 
 ## Australian Marriage Survey
 
-![[Tweet by Miles McBain about tidying the Australian Marriage Survey results
+[![Tweet by Miles McBain about tidying the Australian Marriage Survey results
 with
-R](https://twitter.com/MilesMcBain/status/932257990253645829)](images/ozmarriage_tweet.png)
+R](images/ozmarriage_tweet.png)](https://twitter.com/MilesMcBain/status/932257990253645829)
 
 These are the results of a survey in 2017 by the Australian Bureau of Statistics
 that asked, "Should the law be changed to allow same-sex couples to marry?"
