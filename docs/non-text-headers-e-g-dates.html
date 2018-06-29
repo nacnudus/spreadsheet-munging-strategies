@@ -191,6 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -217,14 +223,14 @@ are in the header row.</p>
 tidy ‘header’, and you can reformat it as text before <code>spatter()</code> turns it into
 the header of a data frame. Another way to format headers as part of the
 <code>behead()</code> will be shown later.</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb325-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, data_type, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, name, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-7" data-line-number="7"><span class="st">  </span><span class="kw">spatter</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb321-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, data_type, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, name, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-7" data-line-number="7"><span class="st">  </span><span class="kw">spatter</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb321-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   name     `2017` `2018`
 ##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
@@ -233,9 +239,9 @@ the header of a data frame. Another way to format headers as part of the
 <p>When a single set of headers is of mixed data types, e.g. some character and
 some date, <code>behead()</code> chooses the correct ones using the <code>data_type</code> column,
 before converting them all to text via <code>format()</code>.</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb327-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</a></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb323-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb323-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##     row   col data_type character numeric date                header    
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;     
@@ -247,10 +253,10 @@ before converting them all to text via <code>format()</code>.</p>
 ## 6     3     3 numeric   &lt;NA&gt;            3 NA                  2017-01-01</code></pre>
 <p>To format a header when a single set of headers are of mixed data types, you
 can specify a function for each data type in the call to <code>behead()</code>.</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">date =</span> <span class="op">~</span><span class="st"> </span><span class="kw">strftime</span>(.x, <span class="st">&quot;%Y&quot;</span>),</a>
-<a class="sourceLine" id="cb329-4" data-line-number="4">                                        <span class="dt">character =</span> toupper))</a></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">date =</span> <span class="op">~</span><span class="st"> </span><span class="kw">strftime</span>(.x, <span class="st">&quot;%Y&quot;</span>),</a>
+<a class="sourceLine" id="cb325-4" data-line-number="4">                                        <span class="dt">character =</span> toupper))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##     row   col data_type character numeric date                header
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt; 
@@ -282,7 +288,7 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": true,
-"facebook": false,
+"facebook": true,
 "twitter": true,
 "google": false,
 "linkedin": false,

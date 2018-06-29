@@ -191,6 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -225,21 +231,21 @@ grade with its corresponding score.</p>
 <li>Rename the corner cells to be normal header cells.</li>
 </ol>
 <p>TODO: link to <code>vaccinations</code> case study.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb275-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb275-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb275-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb275-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb271-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
 <p>Unpivot only the corner cells “Classics”, “History”, etc. to associate them with
 their field (“Humanities”, “Performance”), and store them in the variable
 <code>corners</code>. It feels odd to unpivot only the headers and not the data, but bear
 with it.</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1">corners &lt;-</a>
-<a class="sourceLine" id="cb276-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb276-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb276-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb276-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character, field)</a>
-<a class="sourceLine" id="cb276-6" data-line-number="6">corners</a></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1">corners &lt;-</a>
+<a class="sourceLine" id="cb272-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character, field)</a>
+<a class="sourceLine" id="cb272-6" data-line-number="6">corners</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 4
 ##     row   col subject  field      
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      
@@ -250,17 +256,17 @@ with it.</p>
 <p>Now the cells “Classics” and “History” can both be renamed “score”, which is
 their function at the head of their columns (rather than labels of the implied
 small multiples).</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb278-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb278-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb278-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, character, <span class="st">&quot;score&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1">cells &lt;-</a>
+<a class="sourceLine" id="cb274-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, character, <span class="st">&quot;score&quot;</span>))</a></code></pre></div>
 <p>Use <code>corners</code> to partition the rest of the headers and the data cells.
 Notice that the subject and field are mapped to the appropriate partition.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1">partitions &lt;-</a>
-<a class="sourceLine" id="cb279-2" data-line-number="2"><span class="st">  </span><span class="kw">partition</span>(cells, corners, <span class="dt">strict =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb279-3" data-line-number="3"><span class="st">  </span><span class="co"># `strict = FALSE` because the corners aren&#39;t among the cells</span></a>
-<a class="sourceLine" id="cb279-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, corner_col)</a>
-<a class="sourceLine" id="cb279-5" data-line-number="5">partitions</a></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1">partitions &lt;-</a>
+<a class="sourceLine" id="cb275-2" data-line-number="2"><span class="st">  </span><span class="kw">partition</span>(cells, corners, <span class="dt">strict =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb275-3" data-line-number="3"><span class="st">  </span><span class="co"># `strict = FALSE` because the corners aren&#39;t among the cells</span></a>
+<a class="sourceLine" id="cb275-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, corner_col)</a>
+<a class="sourceLine" id="cb275-5" data-line-number="5">partitions</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 4
 ##   corner_col cells            subject  field      
 ##        &lt;dbl&gt; &lt;list&gt;           &lt;chr&gt;    &lt;chr&gt;      
@@ -269,12 +275,12 @@ Notice that the subject and field are mapped to the appropriate partition.</p>
 ## 3          6 &lt;tibble [6 × 5]&gt; Music    Performance
 ## 4          8 &lt;tibble [6 × 5]&gt; Drama    Performance</code></pre>
 <p>Unnest and unpivot the “score” and “grade” headers.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1">partitions &lt;-</a>
-<a class="sourceLine" id="cb281-2" data-line-number="2"><span class="st">  </span>partitions <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb281-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb281-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb281-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>corner_col)</a>
-<a class="sourceLine" id="cb281-6" data-line-number="6">partitions</a></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1">partitions &lt;-</a>
+<a class="sourceLine" id="cb277-2" data-line-number="2"><span class="st">  </span>partitions <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb277-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb277-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb277-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>corner_col)</a>
+<a class="sourceLine" id="cb277-6" data-line-number="6">partitions</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 7
 ##    subject  field         row data_type character numeric header
 ##    &lt;chr&gt;    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
@@ -295,18 +301,18 @@ Notice that the subject and field are mapped to the appropriate partition.</p>
 ## 15 Drama    Performance     4 numeric   &lt;NA&gt;            8 score 
 ## 16 Drama    Performance     4 character score          NA Grade</code></pre>
 <p>The “Name” row headers can now be joined.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1">name &lt;-</a>
-<a class="sourceLine" id="cb283-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, <span class="dt">name =</span> character)</a>
-<a class="sourceLine" id="cb283-5" data-line-number="5">name</a></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1">name &lt;-</a>
+<a class="sourceLine" id="cb279-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb279-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb279-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, <span class="dt">name =</span> character)</a>
+<a class="sourceLine" id="cb279-5" data-line-number="5">name</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##     row name   
 ##   &lt;int&gt; &lt;chr&gt;  
 ## 1     3 Matilda
 ## 2     4 Olivia</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1">partitions &lt;-<span class="st"> </span><span class="kw">inner_join</span>(partitions, name, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>)</a>
-<a class="sourceLine" id="cb285-2" data-line-number="2">partitions</a></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1">partitions &lt;-<span class="st"> </span><span class="kw">inner_join</span>(partitions, name, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>)</a>
+<a class="sourceLine" id="cb281-2" data-line-number="2">partitions</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 8
 ##    subject  field         row data_type character numeric header name   
 ##    &lt;chr&gt;    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  
@@ -327,8 +333,8 @@ Notice that the subject and field are mapped to the appropriate partition.</p>
 ## 15 Drama    Performance     4 numeric   &lt;NA&gt;            8 score  Olivia 
 ## 16 Drama    Performance     4 character score          NA Grade  Olivia</code></pre>
 <p>Finally everything can be spattered into a recognisable table.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1"><span class="kw">spatter</span>(partitions, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1"><span class="kw">spatter</span>(partitions, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb283-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##   subject  field       name    Grade score
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
@@ -341,39 +347,39 @@ Notice that the subject and field are mapped to the appropriate partition.</p>
 ## 7 Music    Performance Matilda score     5
 ## 8 Music    Performance Olivia  score     6</code></pre>
 <p>The process is easier to understand when seen as a whole.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb289-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb289-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb289-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb289-7" data-line-number="7">name &lt;-</a>
-<a class="sourceLine" id="cb289-8" data-line-number="8"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-9" data-line-number="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, <span class="dt">name =</span> character)</a>
-<a class="sourceLine" id="cb289-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb289-12" data-line-number="12"><span class="co"># Unpivot the corner cells on their own (no data)</span></a>
-<a class="sourceLine" id="cb289-13" data-line-number="13">corners &lt;-</a>
-<a class="sourceLine" id="cb289-14" data-line-number="14"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-15" data-line-number="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-16" data-line-number="16"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character, field)</a>
-<a class="sourceLine" id="cb289-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb289-19" data-line-number="19">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-20" data-line-number="20"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-21" data-line-number="21"><span class="st">  </span><span class="co"># Rename the corner cells as normal header cells</span></a>
-<a class="sourceLine" id="cb289-22" data-line-number="22"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, character, <span class="st">&quot;score&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-23" data-line-number="23"><span class="st">  </span><span class="co"># Partition by the corner cells, and bring the subject fields with them</span></a>
-<a class="sourceLine" id="cb289-24" data-line-number="24"><span class="st">  </span><span class="kw">partition</span>(corners, <span class="dt">strict =</span> <span class="ot">FALSE</span>, <span class="dt">nest =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-25" data-line-number="25"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, corner_col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-26" data-line-number="26"><span class="st">  </span><span class="co"># Do some normal unpivotring</span></a>
-<a class="sourceLine" id="cb289-27" data-line-number="27"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-28" data-line-number="28"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>corner_col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-29" data-line-number="29"><span class="st">  </span><span class="co"># Attach the row headers</span></a>
-<a class="sourceLine" id="cb289-30" data-line-number="30"><span class="st">  </span><span class="kw">inner_join</span>(name, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-31" data-line-number="31"><span class="st">  </span><span class="co"># Present as a normal table</span></a>
-<a class="sourceLine" id="cb289-32" data-line-number="32"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb289-33" data-line-number="33"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb285-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb285-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb285-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb285-7" data-line-number="7">name &lt;-</a>
+<a class="sourceLine" id="cb285-8" data-line-number="8"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-9" data-line-number="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, <span class="dt">name =</span> character)</a>
+<a class="sourceLine" id="cb285-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb285-12" data-line-number="12"><span class="co"># Unpivot the corner cells on their own (no data)</span></a>
+<a class="sourceLine" id="cb285-13" data-line-number="13">corners &lt;-</a>
+<a class="sourceLine" id="cb285-14" data-line-number="14"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-15" data-line-number="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-16" data-line-number="16"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character, field)</a>
+<a class="sourceLine" id="cb285-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb285-19" data-line-number="19">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-20" data-line-number="20"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-21" data-line-number="21"><span class="st">  </span><span class="co"># Rename the corner cells as normal header cells</span></a>
+<a class="sourceLine" id="cb285-22" data-line-number="22"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, character, <span class="st">&quot;score&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-23" data-line-number="23"><span class="st">  </span><span class="co"># Partition by the corner cells, and bring the subject fields with them</span></a>
+<a class="sourceLine" id="cb285-24" data-line-number="24"><span class="st">  </span><span class="kw">partition</span>(corners, <span class="dt">strict =</span> <span class="ot">FALSE</span>, <span class="dt">nest =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-25" data-line-number="25"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, corner_col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-26" data-line-number="26"><span class="st">  </span><span class="co"># Do some normal unpivotring</span></a>
+<a class="sourceLine" id="cb285-27" data-line-number="27"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-28" data-line-number="28"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>corner_col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-29" data-line-number="29"><span class="st">  </span><span class="co"># Attach the row headers</span></a>
+<a class="sourceLine" id="cb285-30" data-line-number="30"><span class="st">  </span><span class="kw">inner_join</span>(name, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-31" data-line-number="31"><span class="st">  </span><span class="co"># Present as a normal table</span></a>
+<a class="sourceLine" id="cb285-32" data-line-number="32"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-33" data-line-number="33"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##   subject  field       name    Grade score
 ##   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
@@ -409,7 +415,7 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": true,
-"facebook": false,
+"facebook": true,
 "twitter": true,
 "google": false,
 "linkedin": false,

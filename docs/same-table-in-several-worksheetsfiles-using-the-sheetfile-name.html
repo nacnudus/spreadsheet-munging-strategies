@@ -191,6 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
+<li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -219,12 +225,12 @@ all.</p>
 <p>As far as <code>tidyxl()</code> is concerned, the particular sheet (aka ‘tab’) that a cell
 is on is another coordinate like <code>row</code> and <code>col</code>, so the full location of a cell
 is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb262-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb262-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb262-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb262-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb262-6" data-line-number="6">all_cells</a></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb258-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb258-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb258-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##    sheet         row   col data_type character numeric
 ##    &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -246,8 +252,8 @@ is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
 ## 16 performance     3     3 numeric   &lt;NA&gt;           12</code></pre>
 <p>To prepare the sheets to be mapped over, use <code>tidyr::nest()</code>. The <code>data</code> column
 contains the cells of each sheet.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb264-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   sheet       data            
 ##   &lt;chr&gt;       &lt;list&gt;          
@@ -255,17 +261,17 @@ contains the cells of each sheet.</p>
 ## 2 performance &lt;tibble [8 × 5]&gt;</code></pre>
 <p>The function to unpivot each table in this case will be a couple of <code>behead()</code>
 statements. Further clean-up can be saved until the end.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
-<a class="sourceLine" id="cb266-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
-<a class="sourceLine" id="cb266-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb262-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
+<a class="sourceLine" id="cb262-5" data-line-number="5">}</a></code></pre></div>
 <p>After mapping the unpivot function over each sheet of cells, use
 <code>tidyr::unnest()</code> to show every row of data again.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb267-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb267-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb267-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb263-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 8
 ##   sheet         row   col data_type character numeric name     subject 
 ##   &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
@@ -278,14 +284,14 @@ statements. Further clean-up can be saved until the end.</p>
 ## 7 performance     3     2 numeric   &lt;NA&gt;            7 Matilda  Drama   
 ## 8 performance     3     3 numeric   &lt;NA&gt;           12 Nicholas Drama</code></pre>
 <p>Finally, do the clean-up operations that were saved until now.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-5" data-line-number="5"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</a>
-<a class="sourceLine" id="cb269-6" data-line-number="6">            name,</a>
-<a class="sourceLine" id="cb269-7" data-line-number="7">            subject,</a>
-<a class="sourceLine" id="cb269-8" data-line-number="8">            <span class="dt">score =</span> numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-2" data-line-number="2"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb265-5" data-line-number="5"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</a>
+<a class="sourceLine" id="cb265-6" data-line-number="6">            name,</a>
+<a class="sourceLine" id="cb265-7" data-line-number="7">            subject,</a>
+<a class="sourceLine" id="cb265-8" data-line-number="8">            <span class="dt">score =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   field       name     subject  score
 ##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -319,7 +325,7 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": true,
-"facebook": false,
+"facebook": true,
 "twitter": true,
 "google": false,
 "linkedin": false,
