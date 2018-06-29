@@ -11,4 +11,3 @@ bookdown::gitbook:
     edit: https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/%s
     sharing:
       github: yes
- , mobi     facebook: no
