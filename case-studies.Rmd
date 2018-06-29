@@ -1,0 +1,159 @@
+# Case studies
+
+This is a collection of spreadsheets found in the wild.  Some are as easy to
+mung as the examples; others are harder because their structure is less
+consistent.
+
+Seeing and reading the code will help you guage how much work is still involved
+in munging a spreadsheet.  Attempting them for yourself and checking the model
+answer will help you to hone your instincts.
+
+The spreadsheet files are provided in the `smungs` package on GitHub.  Install
+as follows.
+
+```{r eval = FALSE}
+# install.packages("devtools") # If you don't already have it
+devtools::install_github("nacnudus/smungs")
+```
+
+## Australian Marriage Survey
+
+![[Tweet by Miles McBain about tidying the Australian Marriage Survey results
+with
+R](https://twitter.com/MilesMcBain/status/932257990253645829)](images/ozmarriage_tweet.png)
+
+These are the results of a survey in 2017 by the Australian Bureau of Statistics
+that asked, "Should the law be changed to allow same-sex couples to marry?"
+
+There are two tables with structures that are similar but different.
+
+![](images/ozmarriage1.png)
+
+![](images/ozmarriage2.png)
+
+### The full code listing
+
+```{r}
+cells <- xlsx_cells(smungs::ozmarriage)
+formats <- xlsx_formats(smungs::ozmarriage)
+
+table_1  <-
+  cells %>%
+  dplyr::filter(sheet == "Table 1", row >= 5L, !is_blank) %>%
+  mutate(character = str_trim(character)) %>%
+  behead("NNW", "population") %>%
+  behead("NNW", "response") %>%
+  behead("N", "unit") %>%
+  behead("W", "state") %>%
+  arrange(row, col) %>%
+  select(row, data_type, numeric, state, population, response, unit) %>%
+  spatter(unit) %>%
+  select(-row)
+
+state <-
+  cells %>%
+  dplyr::filter(sheet == "Table 2",
+                row >= 5L,
+                col == 1L,
+                !is_blank,
+                formats$local$font$bold[local_format_id]) %>%
+  select(row, col, state = character)
+
+table_2 <-
+  cells %>%
+  dplyr::filter(sheet == "Table 2",
+                row >= 5L,
+                !is_blank) %>%
+  mutate(character = str_trim(character)) %>%
+  behead("NNW", "population") %>%
+  behead("NNW", "response") %>%
+  behead("N", "unit") %>%
+  behead("W", "territory") %>%
+  enhead(state, "NNW") %>%
+  arrange(row, col) %>%
+  select(row, data_type, numeric, state, territory, population, response,
+         unit) %>%
+  spatter(unit) %>%
+  select(-row)
+
+all_tables <- bind_rows("Table 1" = table_1, "Table 2" = table_2, .id = "sheet")
+all_tables
+```
+
+### Step by step
+
+#### Table 1
+
+The first rows, up to the column-headers, must be filtered out.  The trailing
+rows below the table will be treated us row-headers, but because there is no
+data to join them to, they will be dropped automatically.  That is handy,
+because otherwise we would have to know where the bottom of the table is, which
+is likely to change with later editions of the same data.
+
+Apart from filtering the first rows, the rest of this example is 'textbook'.
+
+```{r}
+cells <- xlsx_cells(smungs::ozmarriage)
+
+table_1  <-
+  cells %>%
+  dplyr::filter(sheet == "Table 1", row >= 5L, !is_blank) %>%
+  mutate(character = str_trim(character)) %>%
+  behead("NNW", "population") %>%
+  behead("NNW", "response") %>%
+  behead("N", "unit") %>%
+  behead("W", "state") %>%
+  arrange(row, col) %>%
+  select(row, data_type, numeric, state, population, response, unit) %>%
+  spatter(unit) %>%
+  select(-row)
+
+table_1
+```
+
+#### Table 2
+
+This is like Table 1, broken down by division rather than by state.  The snag is
+that the states are named in the same column as their divisions.  Because the
+state names are formatted in bold, we can isolate them from the division names.
+With them out of the way, unpivot the rest of the table as normal, and then use
+`enhead()` at the end to join the state names back on.
+
+Since tables 1 and 2 are so similar structurally, they might as well be joined
+into one.
+
+```{r}
+cells <- xlsx_cells(smungs::ozmarriage)
+formats <- xlsx_formats(smungs::ozmarriage)
+
+state <-
+  cells %>%
+  dplyr::filter(sheet == "Table 2",
+                row >= 5L,
+                col == 1L,
+                !is_blank,
+                formats$local$font$bold[local_format_id]) %>%
+  select(row, col, state = character)
+
+table_2 <-
+  cells %>%
+  dplyr::filter(sheet == "Table 2",
+                row >= 5L,
+                !is_blank) %>%
+  mutate(character = str_trim(character)) %>%
+  behead("NNW", "population") %>%
+  behead("NNW", "response") %>%
+  behead("N", "unit") %>%
+  behead("W", "territory") %>%
+  enhead(state, "NNW") %>%
+  arrange(row, col) %>%
+  select(row, data_type, numeric, state, territory, population, response,
+         unit) %>%
+  spatter(unit) %>%
+  select(-row)
+
+all_tables <-
+  bind_rows("Table 1" = table_1, "Table 2" = table_2, .id = "sheet") %>%
+  select(sheet, state, territory, population, response, `%`, no.)
+all_tables
+```

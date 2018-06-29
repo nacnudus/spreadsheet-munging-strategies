@@ -4,20 +4,23 @@ This section describes how the code in the book is set up.
 
 ## Packages
 
-Here are the packages used by the code in this book.  The last two are my own:
-[tidyxl](https://nacnudus.github.io/tidyxl) and
-[unpivotr](https://nacnudus.github.io/unpivotr), and you will need the latest
-versions from CRAN.
+Here are the packages used by the code in this book.  The last three are my own:
+[tidyxl](https://nacnudus.github.io/tidyxl),
+[unpivotr](https://nacnudus.github.io/unpivotr) and
+[smungs](https://github.com/nacnudus/smungs).  You will need to install the
+latest versions from CRAN or GitHub.
 
 ```{r}
 library(tibble)
 library(tidyr)
 library(dplyr)
 library(purrr)
+library(stringr)
 library(readr)
 library(readxl)
 library(tidyxl)
 library(unpivotr)
+library(smungs)
 ```
 
 ## Data
@@ -31,4 +34,3 @@ book.
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 ```
-

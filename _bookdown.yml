@@ -9,5 +9,6 @@ rmd_files: ["index.Rmd",
             "formatting.Rmd",
             "data-validation.Rmd",
             "formulas.Rmd",
-            "other-gotchas.Rmd"]
+            "other-gotchas.Rmd",
+            "case-studies.Rmd"]
 
