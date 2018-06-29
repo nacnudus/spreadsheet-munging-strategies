@@ -25,7 +25,10 @@ R](https://twitter.com/MilesMcBain/status/932257990253645829)](images/ozmarriage
 These are the results of a survey in 2017 by the Australian Bureau of Statistics
 that asked, "Should the law be changed to allow same-sex couples to marry?"
 
-There are two tables with structures that are similar but different.
+There are two tables with structures that are similar but different.  [Download
+the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/ozmarriage.xlsx?raw=true).
+[Original source](http://www.abs.gov.au/ausstats/abs@.nsf/mf/1800.0).
 
 ![](images/ozmarriage1.png)
 

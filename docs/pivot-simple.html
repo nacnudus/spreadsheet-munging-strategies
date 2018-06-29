@@ -228,12 +228,12 @@ row-headers), and it only works on tables that have first come through
 headers is left-aligned, so <code>&quot;Female&quot;</code> applies to the first two columns of data,
 and <code>&quot;Male&quot;</code> applies to the next two. The second row of headers has a header in
 every column.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb97-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb97-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb97-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
-<a class="sourceLine" id="cb97-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb97-6" data-line-number="6">all_cells</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb101-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb101-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></a>
+<a class="sourceLine" id="cb101-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb101-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 22 x 5
 ##      row   col data_type character numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -256,8 +256,8 @@ and <code>&quot;Male&quot;</code> headers are above and to-the-left-of the data 
 this as a compass direction, north-north-west, or <code>&quot;NNW&quot;</code>. We also give the
 headers a name, <code>sex</code>, and say which column of <code>all_cells</code> contains the value
 of the header cells – it’s usually the <code>character</code> column.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex)</a></code></pre></div>
 <pre><code>## # A tibble: 20 x 6
 ##      row   col data_type character numeric sex   
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
@@ -287,9 +287,9 @@ another header. The next step is to strip that second level of column headers.
 This time, the compass direction is <code>&quot;N&quot;</code>, because the headers are directly
 above the associated data cells, and we call it <code>name</code>, because it represents
 names of people.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 7
 ##      row   col data_type character numeric sex    name    
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
@@ -312,10 +312,10 @@ names of people.</p>
 <p>A final step is a normal clean-up. We drop the <code>row</code>, <code>col</code> and <code>character</code>
 columns, and we rename the <code>numeric</code> column to <code>score</code>, which is what it
 represents.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb103-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="dt">score =</span> numeric, sex, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb107-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb107-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="dt">score =</span> numeric, sex, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##    score sex    name    
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
@@ -342,12 +342,12 @@ represents.</p>
 <p>There are no new techniques are used, just more compass directions: <code>&quot;W&quot;</code> for
 headers directly to the left of the data cells, and <code>&quot;WNW&quot;</code> for headers
 left-and-above the data cells.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb105-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb109-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb109-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb109-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb109-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb109-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
 ##      row   col data_type character  numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
@@ -362,13 +362,13 @@ left-and-above the data cells.</p>
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
 ## # ... with 18 more rows</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></a>
-<a class="sourceLine" id="cb107-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span></a>
-<a class="sourceLine" id="cb107-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></a>
-<a class="sourceLine" id="cb107-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span></a>
-<a class="sourceLine" id="cb107-6" data-line-number="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb107-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col, <span class="op">-</span>character)</a></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span></a>
+<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></a>
+<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span></a>
+<a class="sourceLine" id="cb111-6" data-line-number="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb111-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col, <span class="op">-</span>character)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##    data_type score sex    name     field       subject 
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
@@ -403,12 +403,12 @@ and <code>col</code> of each data cell.</li>
 <li>Collect the <code>row</code>, <code>col</code> and formatting of each data cell.</li>
 <li>Join the data to the formatting by the <code>row</code> and <code>col</code>.</li>
 </ol>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb109-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb109-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb109-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb109-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb109-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb113-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb113-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb113-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
 ##      row   col data_type character  numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
@@ -423,15 +423,15 @@ and <code>col</code> of each data cell.</li>
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
 ## # ... with 18 more rows</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">unpivoted &lt;-</a>
-<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></a>
-<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span></a>
-<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></a>
-<a class="sourceLine" id="cb111-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span></a>
-<a class="sourceLine" id="cb111-7" data-line-number="7"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb111-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>character)                <span class="co"># Retain the row and col for now</span></a>
-<a class="sourceLine" id="cb111-9" data-line-number="9">unpivoted</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">unpivoted &lt;-</a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></a>
+<a class="sourceLine" id="cb115-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span></a>
+<a class="sourceLine" id="cb115-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></a>
+<a class="sourceLine" id="cb115-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span></a>
+<a class="sourceLine" id="cb115-7" data-line-number="7"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb115-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>character)                <span class="co"># Retain the row and col for now</span></a>
+<a class="sourceLine" id="cb115-9" data-line-number="9">unpivoted</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 8
 ##      row   col data_type score sex    name     field       subject 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
@@ -451,10 +451,10 @@ and <code>col</code> of each data cell.</li>
 ## 14     6     7 numeric       2 Male   Paul     Performance Music   
 ## 15     7     6 numeric      12 Male   Nicholas Performance Drama   
 ## 16     7     7 numeric       3 Male   Paul     Performance Drama</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb113-3" data-line-number="3">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb113-4" data-line-number="4">fill_colours</a></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
+<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
+<a class="sourceLine" id="cb117-3" data-line-number="3">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
+<a class="sourceLine" id="cb117-4" data-line-number="4">fill_colours</a></code></pre></div>
 <pre><code>##  [1] NA         NA         NA         NA         NA         NA        
 ##  [7] NA         NA         &quot;FFFFFF00&quot; &quot;FF92D050&quot; &quot;FFFFFF00&quot; NA        
 ## [13] NA         &quot;FFFFFF00&quot; NA         NA         NA         NA        
@@ -465,15 +465,15 @@ and <code>col</code> of each data cell.</li>
 ## [43] NA         NA         NA         NA         NA         NA        
 ## [49] NA         NA         NA         NA         NA         NA        
 ## [55] NA         NA         &quot;FFFFC7CE&quot; NA         NA</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="co"># and create a new column `approximate` based on the fill colours, by looking up</span></a>
-<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
-<a class="sourceLine" id="cb115-4" data-line-number="4">annotations &lt;-</a>
-<a class="sourceLine" id="cb115-5" data-line-number="5"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb115-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
-<a class="sourceLine" id="cb115-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb115-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
-<a class="sourceLine" id="cb115-9" data-line-number="9">annotations</a></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
+<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="co"># and create a new column `approximate` based on the fill colours, by looking up</span></a>
+<a class="sourceLine" id="cb119-3" data-line-number="3"><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></a>
+<a class="sourceLine" id="cb119-4" data-line-number="4">annotations &lt;-</a>
+<a class="sourceLine" id="cb119-5" data-line-number="5"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb119-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></a>
+<a class="sourceLine" id="cb119-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb119-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</a>
+<a class="sourceLine" id="cb119-9" data-line-number="9">annotations</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##      row   col fill_colour
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      
@@ -493,8 +493,8 @@ and <code>col</code> of each data cell.</li>
 ## 14     7     5 &lt;NA&gt;       
 ## 15     7     6 FFFFFF00   
 ## 16     7     7 &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">left_join</span>(unpivoted, annotations, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col)</a></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">left_join</span>(unpivoted, annotations, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 7
 ##    data_type score sex    name     field       subject  fill_colour
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      

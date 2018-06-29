@@ -226,12 +226,12 @@ robust to differences in the placement and context of the table on each sheet.</
 of notes above one of the tables. There are a few ways to tackle this problem.
 Here, we filter for the <code>Subject</code> cell, which is either <code>A3</code> or <code>A4</code>, and then
 extend the selection to include the whole table.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb267-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb267-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb267-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb267-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb267-6" data-line-number="6">all_cells</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb271-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</a>
+<a class="sourceLine" id="cb271-6" data-line-number="6">all_cells</a></code></pre></div>
 <pre><code>## # A tibble: 21 x 6
 ##    sheet    row   col data_type character       numeric
 ##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;
@@ -246,20 +246,20 @@ extend the selection to include the whole table.</p>
 ##  9 female     5     2 numeric   &lt;NA&gt;                  3
 ## 10 female     5     3 numeric   &lt;NA&gt;                  4
 ## # ... with 11 more rows</code></pre>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
-<a class="sourceLine" id="cb269-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-3" data-line-number="3"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-4" data-line-number="4"><span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-5" data-line-number="5"><span class="st">    </span>{dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-6" data-line-number="6"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-7" data-line-number="7"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
-<a class="sourceLine" id="cb269-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb269-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb269-10" data-line-number="10">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-11" data-line-number="11"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-13" data-line-number="13"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb269-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb273-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-3" data-line-number="3"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-4" data-line-number="4"><span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-5" data-line-number="5"><span class="st">    </span>{dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-6" data-line-number="6"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-7" data-line-number="7"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)</a>
+<a class="sourceLine" id="cb273-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb273-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb273-10" data-line-number="10">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-11" data-line-number="11"><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-13" data-line-number="13"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb273-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   sex    name     subject  score
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;

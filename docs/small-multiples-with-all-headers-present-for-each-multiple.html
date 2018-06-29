@@ -218,54 +218,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.1</span> Small multiples with all headers present for each multiple</h2>
 <p><img src="images/small-multiples.png" /></p>
 <p>The code to import one of these multiples will be simple.</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-5" data-line-number="5"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-5" data-line-number="5"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb254-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <p>The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
 code to import only that table.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb251-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb251-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)</a>
-<a class="sourceLine" id="cb251-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb251-7" data-line-number="7">table1 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb251-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb251-9" data-line-number="9">table1 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb251-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb255-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb255-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)</a>
+<a class="sourceLine" id="cb255-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb255-7" data-line-number="7">table1 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb255-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb255-9" data-line-number="9">table1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb255-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   subject  Grade Name    Score
 ##   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
 ## 1 Classics F     Matilda     1
 ## 2 Classics D     Olivia      2</code></pre>
 <p>We wrap that code in a function, to be applied to each separate table.</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
-<a class="sourceLine" id="cb253-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-5" data-line-number="5"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-6" data-line-number="6"><span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-7" data-line-number="7"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
-<a class="sourceLine" id="cb253-8" data-line-number="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" data-line-number="1">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</a>
+<a class="sourceLine" id="cb257-2" data-line-number="2">  cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-3" data-line-number="3"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, subject) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-4" data-line-number="4"><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-5" data-line-number="5"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-6" data-line-number="6"><span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb257-7" data-line-number="7"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb257-8" data-line-number="8">}</a></code></pre></div>
 <p>Now we partition the spreadsheet into the separate tables. This is done by
 identifying a corner cell in each table.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
-<a class="sourceLine" id="cb254-2" data-line-number="2">italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)</a>
-<a class="sourceLine" id="cb254-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb254-4" data-line-number="4">corners &lt;-</a>
-<a class="sourceLine" id="cb254-5" data-line-number="5"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb254-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(local_format_id <span class="op">%in%</span><span class="st"> </span>italic) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb254-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
-<a class="sourceLine" id="cb254-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb254-9" data-line-number="9">partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)</a>
-<a class="sourceLine" id="cb254-10" data-line-number="10">partitions</a></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb258-2" data-line-number="2">italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)</a>
+<a class="sourceLine" id="cb258-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb258-4" data-line-number="4">corners &lt;-</a>
+<a class="sourceLine" id="cb258-5" data-line-number="5"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(local_format_id <span class="op">%in%</span><span class="st"> </span>italic) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb258-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(row, col)</a>
+<a class="sourceLine" id="cb258-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb258-9" data-line-number="9">partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)</a>
+<a class="sourceLine" id="cb258-10" data-line-number="10">partitions</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   corner_row corner_col cells            
 ##        &lt;dbl&gt;      &lt;dbl&gt; &lt;list&gt;           
@@ -275,10 +275,10 @@ identifying a corner cell in each table.</p>
 ## 4          6          5 &lt;tibble [10 × 6]&gt;</code></pre>
 <p>Finally, map the unpivoting function over the partitions, and combine the
 results.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1">partitions <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb256-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cells =</span> <span class="kw">map</span>(cells, unpivot)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb256-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb256-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, <span class="op">-</span>corner_col)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">partitions <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cells =</span> <span class="kw">map</span>(cells, unpivot)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-3" data-line-number="3"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, <span class="op">-</span>corner_col)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   subject  Grade Name    Score
 ##   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
