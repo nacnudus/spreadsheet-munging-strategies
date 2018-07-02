@@ -190,11 +190,13 @@ all_cells %>%
   select(sex = sheet, name, subject, score = numeric)
 ```
 
-## Implied multiples
+## Implied multiples {#implied-multiples}
 
 Implied multiples look like a single table, but many of the headers appear more
 than once.  There is a dominant set of headers that are on the same 'level'
 (e.g. in the same row) as the other headers.
+
+See a real-life [case study](#vaccinations)
 
 ![](images/implied-multiples.png)
 
@@ -209,8 +211,6 @@ grade with its corresponding score.
    faking a set of headers that doesn't exist, but is implied.
 2. Meanwhile, `behead()` the original "Classics", "History" (etc.) cells and
    then overwrite them with "Score".
-
-TODO: link to `vaccinations` case study.
 
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")

@@ -160,3 +160,57 @@ all_tables <-
   select(sheet, state, territory, population, response, `%`, no.)
 all_tables
 ```
+
+## Vaccinations {#vaccinations}
+
+[![Tweet by Bob Rudis challenging R users to tidy a particular spreadsheet](images/vaccinations_tweet.png)](https://twitter.com/hrbrmstr/status/890200287356620806)
+
+This is a real-life example of [implied multiples](#implied-multiples).  Implied
+multiples look like a single table, but many of the headers appear more than
+once.  There is a dominant set of headers that are on the same 'level' (e.g. in
+the same row) as the other headers.
+
+In this case, there is a small multiple for each year of data.  The year headers
+are highlighted in yellow in the screenshot.
+
+The way to unpivot this is to realise that the year cells represent two
+different things: the year (obviously) and a statistic (percentage vaccinated).
+It would have been easier to unpivot if the years had been put into a separate
+row of headers, so we will pretend that that was in fact the case.
+
+1. Filter for the year cells and store in a variable to `enhead()` later.
+1. `behead()` everything else as usual, and then overwite the year headers with
+   `percentage_vaccinated`.
+1. `enhead()` the year cells.
+
+The original spreadsheet has been replaced by an [annual
+refresh](https://www.cdc.gov/vaccines/vaxview/index.html), so you will need to
+use the file from the [smungs](https://github.com/nacnudus/smungs) package.
+
+```{r}
+cells <- xlsx_cells(smungs::vaccinations, "SVV Coverage Trend Data")
+
+years <-
+  cells %>%
+  dplyr::filter(row == 3,
+                col >= 1,
+                str_detect(character, "20[0-9]{2}-[0-9]{2}")) %>%
+  select(row, col, year = character)
+years
+
+cells %>%
+  select(row, col, data_type, character) %>%
+  behead("NNW", "series") %>%
+  behead("NNW", "population") %>%
+  behead("W", "state") %>%
+  behead("N", "header") %>%
+  mutate(header = if_else(str_detect(header, "20[0-9]{2}-[0-9]{2}"),
+                          "percent_vaccinated",
+                          header),
+         header = str_replace_all(str_to_lower(header), " ", "_")) %>%
+  enhead(years, "NNW") %>%
+  select(row, series, population, state, year, header, character) %>%
+  spatter(header, character) %>%
+  select(series, population, state, year, percent_vaccinated, percent_surveyed,
+         everything())
+```
