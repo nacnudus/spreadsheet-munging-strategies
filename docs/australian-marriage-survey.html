@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="case-studies.html">
-
+<link rel="next" href="vaccinations.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
 </ul></li>
 </ul>
 
@@ -227,50 +228,50 @@ file</a>.
 <p><img src="images/ozmarriage2.png" /></p>
 <div id="the-full-code-listing" class="section level3">
 <h3><span class="header-section-number">9.1.1</span> The full code listing</h3>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb327-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
-<a class="sourceLine" id="cb327-2" data-line-number="2">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</a>
-<a class="sourceLine" id="cb327-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb327-4" data-line-number="4">table_<span class="dv">1</span>  &lt;-</a>
-<a class="sourceLine" id="cb327-5" data-line-number="5"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-9" data-line-number="9"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-12" data-line-number="12"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-13" data-line-number="13"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-14" data-line-number="14"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-15" data-line-number="15"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
-<a class="sourceLine" id="cb327-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb327-17" data-line-number="17">state &lt;-</a>
-<a class="sourceLine" id="cb327-18" data-line-number="18"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-19" data-line-number="19"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
-<a class="sourceLine" id="cb327-20" data-line-number="20">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
-<a class="sourceLine" id="cb327-21" data-line-number="21">                col <span class="op">==</span><span class="st"> </span>1L,</a>
-<a class="sourceLine" id="cb327-22" data-line-number="22">                <span class="op">!</span>is_blank,</a>
-<a class="sourceLine" id="cb327-23" data-line-number="23">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-24" data-line-number="24"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</a>
-<a class="sourceLine" id="cb327-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb327-26" data-line-number="26">table_<span class="dv">2</span> &lt;-</a>
-<a class="sourceLine" id="cb327-27" data-line-number="27"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-28" data-line-number="28"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
-<a class="sourceLine" id="cb327-29" data-line-number="29">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
-<a class="sourceLine" id="cb327-30" data-line-number="30">                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-32" data-line-number="32"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-33" data-line-number="33"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-34" data-line-number="34"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-35" data-line-number="35"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-36" data-line-number="36"><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-37" data-line-number="37"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-38" data-line-number="38"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</a>
-<a class="sourceLine" id="cb327-39" data-line-number="39">         unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-40" data-line-number="40"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb327-41" data-line-number="41"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
-<a class="sourceLine" id="cb327-42" data-line-number="42"></a>
-<a class="sourceLine" id="cb327-43" data-line-number="43">all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)</a>
-<a class="sourceLine" id="cb327-44" data-line-number="44">all_tables</a></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb331-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
+<a class="sourceLine" id="cb331-2" data-line-number="2">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</a>
+<a class="sourceLine" id="cb331-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb331-4" data-line-number="4">table_<span class="dv">1</span>  &lt;-</a>
+<a class="sourceLine" id="cb331-5" data-line-number="5"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-9" data-line-number="9"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-12" data-line-number="12"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-13" data-line-number="13"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-14" data-line-number="14"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-15" data-line-number="15"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb331-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb331-17" data-line-number="17">state &lt;-</a>
+<a class="sourceLine" id="cb331-18" data-line-number="18"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-19" data-line-number="19"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
+<a class="sourceLine" id="cb331-20" data-line-number="20">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
+<a class="sourceLine" id="cb331-21" data-line-number="21">                col <span class="op">==</span><span class="st"> </span>1L,</a>
+<a class="sourceLine" id="cb331-22" data-line-number="22">                <span class="op">!</span>is_blank,</a>
+<a class="sourceLine" id="cb331-23" data-line-number="23">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-24" data-line-number="24"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</a>
+<a class="sourceLine" id="cb331-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb331-26" data-line-number="26">table_<span class="dv">2</span> &lt;-</a>
+<a class="sourceLine" id="cb331-27" data-line-number="27"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-28" data-line-number="28"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
+<a class="sourceLine" id="cb331-29" data-line-number="29">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
+<a class="sourceLine" id="cb331-30" data-line-number="30">                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-32" data-line-number="32"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-33" data-line-number="33"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-34" data-line-number="34"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-35" data-line-number="35"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-36" data-line-number="36"><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-37" data-line-number="37"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-38" data-line-number="38"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</a>
+<a class="sourceLine" id="cb331-39" data-line-number="39">         unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-40" data-line-number="40"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-41" data-line-number="41"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb331-42" data-line-number="42"></a>
+<a class="sourceLine" id="cb331-43" data-line-number="43">all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)</a>
+<a class="sourceLine" id="cb331-44" data-line-number="44">all_tables</a></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
 ##    sheet   state           population    response     `%`    no. territory
 ##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    
@@ -296,22 +297,22 @@ data to join them to, they will be dropped automatically. That is handy,
 because otherwise we would have to know where the bottom of the table is, which
 is likely to change with later editions of the same data.</p>
 <p>Apart from filtering the first rows, the rest of this example is ‘textbook’.</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
-<a class="sourceLine" id="cb329-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb329-3" data-line-number="3">table_<span class="dv">1</span>  &lt;-</a>
-<a class="sourceLine" id="cb329-4" data-line-number="4"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-9" data-line-number="9"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb329-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
-<a class="sourceLine" id="cb329-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb329-16" data-line-number="16">table_<span class="dv">1</span></a></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
+<a class="sourceLine" id="cb333-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb333-3" data-line-number="3">table_<span class="dv">1</span>  &lt;-</a>
+<a class="sourceLine" id="cb333-4" data-line-number="4"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-9" data-line-number="9"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb333-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb333-16" data-line-number="16">table_<span class="dv">1</span></a></code></pre></div>
 <pre><code>## # A tibble: 63 x 5
 ##    state           population            response               `%`    no.
 ##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                &lt;dbl&gt;  &lt;dbl&gt;
@@ -336,39 +337,39 @@ With them out of the way, unpivot the rest of the table as normal, and then use
 <code>enhead()</code> at the end to join the state names back on.</p>
 <p>Since tables 1 and 2 are so similar structurally, they might as well be joined
 into one.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb331-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
-<a class="sourceLine" id="cb331-2" data-line-number="2">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</a>
-<a class="sourceLine" id="cb331-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb331-4" data-line-number="4">state &lt;-</a>
-<a class="sourceLine" id="cb331-5" data-line-number="5"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
-<a class="sourceLine" id="cb331-7" data-line-number="7">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
-<a class="sourceLine" id="cb331-8" data-line-number="8">                col <span class="op">==</span><span class="st"> </span>1L,</a>
-<a class="sourceLine" id="cb331-9" data-line-number="9">                <span class="op">!</span>is_blank,</a>
-<a class="sourceLine" id="cb331-10" data-line-number="10">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</a>
-<a class="sourceLine" id="cb331-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb331-13" data-line-number="13">table_<span class="dv">2</span> &lt;-</a>
-<a class="sourceLine" id="cb331-14" data-line-number="14"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-15" data-line-number="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
-<a class="sourceLine" id="cb331-16" data-line-number="16">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
-<a class="sourceLine" id="cb331-17" data-line-number="17">                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-19" data-line-number="19"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-20" data-line-number="20"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-21" data-line-number="21"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-22" data-line-number="22"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-23" data-line-number="23"><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-24" data-line-number="24"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-25" data-line-number="25"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</a>
-<a class="sourceLine" id="cb331-26" data-line-number="26">         unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-27" data-line-number="27"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-28" data-line-number="28"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
-<a class="sourceLine" id="cb331-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb331-30" data-line-number="30">all_tables &lt;-</a>
-<a class="sourceLine" id="cb331-31" data-line-number="31"><span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb331-32" data-line-number="32"><span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)</a>
-<a class="sourceLine" id="cb331-33" data-line-number="33">all_tables</a></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</a>
+<a class="sourceLine" id="cb335-2" data-line-number="2">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</a>
+<a class="sourceLine" id="cb335-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb335-4" data-line-number="4">state &lt;-</a>
+<a class="sourceLine" id="cb335-5" data-line-number="5"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-6" data-line-number="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
+<a class="sourceLine" id="cb335-7" data-line-number="7">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
+<a class="sourceLine" id="cb335-8" data-line-number="8">                col <span class="op">==</span><span class="st"> </span>1L,</a>
+<a class="sourceLine" id="cb335-9" data-line-number="9">                <span class="op">!</span>is_blank,</a>
+<a class="sourceLine" id="cb335-10" data-line-number="10">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</a>
+<a class="sourceLine" id="cb335-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb335-13" data-line-number="13">table_<span class="dv">2</span> &lt;-</a>
+<a class="sourceLine" id="cb335-14" data-line-number="14"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-15" data-line-number="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</a>
+<a class="sourceLine" id="cb335-16" data-line-number="16">                row <span class="op">&gt;=</span><span class="st"> </span>5L,</a>
+<a class="sourceLine" id="cb335-17" data-line-number="17">                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-19" data-line-number="19"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-20" data-line-number="20"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-21" data-line-number="21"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-22" data-line-number="22"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-23" data-line-number="23"><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-24" data-line-number="24"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-25" data-line-number="25"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</a>
+<a class="sourceLine" id="cb335-26" data-line-number="26">         unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-27" data-line-number="27"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-28" data-line-number="28"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a>
+<a class="sourceLine" id="cb335-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb335-30" data-line-number="30">all_tables &lt;-</a>
+<a class="sourceLine" id="cb335-31" data-line-number="31"><span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-32" data-line-number="32"><span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)</a>
+<a class="sourceLine" id="cb335-33" data-line-number="33">all_tables</a></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
 ##    sheet   state           territory population    response     `%`    no.
 ##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
@@ -383,18 +384,16 @@ into one.</p>
 ##  9 Table 1 Victoria        &lt;NA&gt;      Eligible Par… Response …  81.4 3.31e6
 ## 10 Table 1 Victoria        &lt;NA&gt;      Eligible Par… Response …   0.3 1.10e4
 ## # ... with 1,166 more rows</code></pre>
-
 </div>
 </div>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="case-studies.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="case-studies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vaccinations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

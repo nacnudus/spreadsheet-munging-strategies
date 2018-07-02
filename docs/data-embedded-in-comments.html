@@ -196,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
 </ul></li>
 </ul>
 
@@ -222,10 +223,10 @@ Comments can have formatting, but tidyxl doesn’t yet import the formatting. If
 you need this, please open an
 <a href="https://github.com/nacnudus/tidyxl/issues">issue</a>. It would probably be
 imported into a <code>comment_formatted</code> column, similarly to <code>character_formatted</code>.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb316-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb316-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb316-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb320-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb320-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb320-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 7
 ##     row   col data_type character numeric comment       header
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; 
@@ -235,10 +236,10 @@ imported into a <code>comment_formatted</code> column, similarly to <code>charac
 ## 4     3     2 numeric   &lt;NA&gt;           10 &lt;NA&gt;          Score</code></pre>
 <p>Comments apply to single cells, so follow the same procedure as “Already a tidy
 table but with meaningful formatting of single cells”.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb318-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb318-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb318-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment)</a>
-<a class="sourceLine" id="cb318-4" data-line-number="4">cells</a></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb322-1" data-line-number="1">cells &lt;-</a>
+<a class="sourceLine" id="cb322-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;comments&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb322-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, comment)</a>
+<a class="sourceLine" id="cb322-4" data-line-number="4">cells</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col data_type character numeric comment      
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;        
@@ -248,32 +249,32 @@ table but with meaningful formatting of single cells”.</p>
 ## 4     2     2 numeric   &lt;NA&gt;            9 Predicted    
 ## 5     3     1 character Matilda        NA &lt;NA&gt;         
 ## 6     3     2 numeric   &lt;NA&gt;           10 &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1">values &lt;-</a>
-<a class="sourceLine" id="cb320-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb320-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>comment) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb320-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb320-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb320-6" data-line-number="6"><span class="st">  </span><span class="kw">spatter</span>(header)</a>
-<a class="sourceLine" id="cb320-7" data-line-number="7">values</a></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1">values &lt;-</a>
+<a class="sourceLine" id="cb324-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb324-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>comment) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb324-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb324-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb324-6" data-line-number="6"><span class="st">  </span><span class="kw">spatter</span>(header)</a>
+<a class="sourceLine" id="cb324-7" data-line-number="7">values</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row Name    Score
 ##   &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
 ## 1     2 Paul        9
 ## 2     3 Matilda    10</code></pre>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb322-1" data-line-number="1">comments &lt;-</a>
-<a class="sourceLine" id="cb322-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb322-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb322-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_comment&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb322-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, header, comment) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb322-6" data-line-number="6"><span class="st">  </span><span class="kw">spread</span>(header, comment)</a>
-<a class="sourceLine" id="cb322-7" data-line-number="7">comments</a></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1">comments &lt;-</a>
+<a class="sourceLine" id="cb326-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_comment&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, header, comment) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-6" data-line-number="6"><span class="st">  </span><span class="kw">spread</span>(header, comment)</a>
+<a class="sourceLine" id="cb326-7" data-line-number="7">comments</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row Name_comment  Score_comment
 ##   &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;        
 ## 1     2 Absent Term 1 Predicted    
 ## 2     3 &lt;NA&gt;          &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1"><span class="kw">left_join</span>(values, comments, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb324-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb328-1" data-line-number="1"><span class="kw">left_join</span>(values, comments, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   Name    Score Name_comment  Score_comment
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;        

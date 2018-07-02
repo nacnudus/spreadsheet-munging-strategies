@@ -196,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
 </ul></li>
 </ul>
 
@@ -219,6 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Implied multiples look like a single table, but many of the headers appear more
 than once. There is a dominant set of headers that are on the same ‘level’
 (e.g. in the same row) as the other headers.</p>
+<p>See a real-life <a href="vaccinations.html#vaccinations">case study</a></p>
 <p><img src="images/implied-multiples.png" /></p>
 <p>In the example, the header “Grade” is repeated, but it really belongs in
 each case to the header “Classics”, “History”, “Music” or “Drama”. Those
@@ -232,19 +234,18 @@ faking a set of headers that doesn’t exist, but is implied.</li>
 <li>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and
 then overwrite them with “Score”.</li>
 </ol>
-<p>TODO: link to <code>vaccinations</code> case study.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb271-2" data-line-number="2">all_cells &lt;-</a>
-<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb271-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb275-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb275-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb275-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb275-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
 <p>Filter for the “Classics”, “History”, “Music” and “Drama” headers, and assign
 them to a variable to be <code>enhead()</code>ed later.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1">subjects &lt;-</a>
-<a class="sourceLine" id="cb272-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb272-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
-<a class="sourceLine" id="cb272-5" data-line-number="5">subjects</a></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1">subjects &lt;-</a>
+<a class="sourceLine" id="cb276-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb276-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb276-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
+<a class="sourceLine" id="cb276-5" data-line-number="5">subjects</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##     row   col subject 
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   
@@ -254,15 +255,15 @@ them to a variable to be <code>enhead()</code>ed later.</p>
 ## 4     2     8 Drama</code></pre>
 <p>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and then
 overwrite them with “Score”.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-5" data-line-number="5"><span class="st">  </span><span class="kw">enhead</span>(subjects, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Reattach the filtered subject headers</span></a>
-<a class="sourceLine" id="cb274-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(header <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, header, <span class="st">&quot;Score&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb274-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-5" data-line-number="5"><span class="st">  </span><span class="kw">enhead</span>(subjects, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Reattach the filtered subject headers</span></a>
+<a class="sourceLine" id="cb278-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(header <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, header, <span class="st">&quot;Score&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb278-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##   field       name    subject  Grade Score
 ##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;

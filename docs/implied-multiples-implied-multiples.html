@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="in-cell-formatting.html">
-<link rel="next" href="superscript-symbols.html">
+<link rel="prev" href="same-table-in-several-worksheetsfiles-but-in-different-positions.html">
+<link rel="next" href="formatting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -175,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
 <li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
 <li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
-<li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
+<li class="chapter" data-level="4.4" data-path="implied-multiples-implied-multiples.html"><a href="implied-multiples-implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples #implied-multiples</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
 <li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
@@ -215,67 +215,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting" class="section level2">
-<h2><span class="header-section-number">5.4</span> Multiple pieces of information in a single cell, with meaningful formatting</h2>
-<p><img src="images/in-cell-formatting.png" /></p>
-<p>The following table of products and their
-production readiness combines three pieces of information in a single cell.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb302-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="st">  </span><span class="kw">rectify</span>()</a></code></pre></div>
+<div id="implied-multiples-implied-multiples" class="section level2">
+<h2><span class="header-section-number">4.4</span> Implied multiples #implied-multiples</h2>
+<p>Implied multiples look like a single table, but many of the headers appear more
+than once. There is a dominant set of headers that are on the same ‘level’
+(e.g. in the same row) as the other headers.</p>
+<p><img src="images/implied-multiples.png" /></p>
+<p>In the example, the header “Grade” is repeated, but it really belongs in
+each case to the header “Classics”, “History”, “Music” or “Drama”. Those
+subject headers serve two purposes: as title of each small multiple, and as the
+unstated “Score” header of their columns. The difficulty is in associating a
+grade with its corresponding score.</p>
+<ol style="list-style-type: decimal">
+<li>Filter for the “Classics”, “History”, “Music” and “Drama” headers, and assign
+them to a variable to be <code>enhead()</code>ed later. You could think of this as
+faking a set of headers that doesn’t exist, but is implied.</li>
+<li>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and
+then overwrite them with “Score”.</li>
+</ol>
+<p>See a real-life <a href="vaccinations.html#vaccinations">case study</a></p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb271-2" data-line-number="2">all_cells &lt;-</a>
+<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
+<p>Filter for the “Classics”, “History”, “Music” and “Drama” headers, and assign
+them to a variable to be <code>enhead()</code>ed later.</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1">subjects &lt;-</a>
+<a class="sourceLine" id="cb272-2" data-line-number="2"><span class="st">  </span>all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb272-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</a>
+<a class="sourceLine" id="cb272-5" data-line-number="5">subjects</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
-##   `row/col` `1(A)`        `2(B)`
-##       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; 
-## 1         3 ID            Count 
-## 2         4 A1-TEST       1     
-## 3         5 A2-PRODUCTION 2     
-## 4         6 A3-PRODUCTION 3</code></pre>
-<p>In the <code>ID</code> column, the first section <code>&quot;A1&quot;</code>, <code>&quot;A2&quot;</code>, <code>&quot;A3&quot;</code> is the product ID.
-The second section <code>&quot;TEST&quot;</code>, <code>&quot;PRODUCTION&quot;</code> is the production readiness, and the
-formatting of <code>&quot;TEST&quot;</code> and <code>&quot;PRODUCTION&quot;</code> shows whether or not manufacturing
-failed. In the file, one of those strings is formatted red with a
-strikethrough, indicating failure.</p>
-<p>One way to extract the formatting is by unnesting, as above, but in this case we
-can get away with mapping over the nested data frames and pulling out a single
-value.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb304-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</a></code></pre></div>
-<p>This can then be joined onto the rest of the table, in the same way as the
-section “Already a tidy table but with meaningful formatting of single cells”.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb305-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb305-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb305-6" data-line-number="6">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb305-7" data-line-number="7"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-8" data-line-number="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, strikethrough)</a>
-<a class="sourceLine" id="cb305-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb305-12" data-line-number="12"><span class="kw">left_join</span>(cells, strikethrough, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-15" data-line-number="15"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-16" data-line-number="16"><span class="st">  </span><span class="kw">select</span>(ID, strikethrough, Count)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   ID            strikethrough Count
-##   &lt;chr&gt;         &lt;lgl&gt;         &lt;dbl&gt;
-## 1 A1-TEST       NA                1
-## 2 A2-PRODUCTION TRUE              2
-## 3 A3-PRODUCTION NA                3</code></pre>
+##     row   col subject 
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   
+## 1     2     2 Classics
+## 2     2     4 History 
+## 3     2     6 Music   
+## 4     2     8 Drama</code></pre>
+<p>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and then
+overwrite them with “Score”.</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1">all_cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-2" data-line-number="2"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-5" data-line-number="5"><span class="st">  </span><span class="kw">enhead</span>(subjects, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Reattach the filtered subject headers</span></a>
+<a class="sourceLine" id="cb274-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(header <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, header, <span class="st">&quot;Score&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb274-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 5
+##   field       name    subject  Grade Score
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;
+## 1 Humanities  Matilda Classics F         1
+## 2 Humanities  Matilda History  D         3
+## 3 Performance Matilda Drama    A         7
+## 4 Performance Matilda Music    B         5
+## 5 Humanities  Olivia  Classics D         2
+## 6 Humanities  Olivia  History  C         4
+## 7 Performance Olivia  Drama    A         8
+## 8 Performance Olivia  Music    B         6</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="in-cell-formatting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="superscript-symbols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="formatting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -305,7 +314,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/formatting.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/small-multiples.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub"],

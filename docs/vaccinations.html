@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="in-cell-formatting.html">
-<link rel="next" href="superscript-symbols.html">
+<link rel="prev" href="australian-marriage-survey.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -215,67 +215,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting" class="section level2">
-<h2><span class="header-section-number">5.4</span> Multiple pieces of information in a single cell, with meaningful formatting</h2>
-<p><img src="images/in-cell-formatting.png" /></p>
-<p>The following table of products and their
-production readiness combines three pieces of information in a single cell.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb302-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="st">  </span><span class="kw">rectify</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 3
-##   `row/col` `1(A)`        `2(B)`
-##       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; 
-## 1         3 ID            Count 
-## 2         4 A1-TEST       1     
-## 3         5 A2-PRODUCTION 2     
-## 4         6 A3-PRODUCTION 3</code></pre>
-<p>In the <code>ID</code> column, the first section <code>&quot;A1&quot;</code>, <code>&quot;A2&quot;</code>, <code>&quot;A3&quot;</code> is the product ID.
-The second section <code>&quot;TEST&quot;</code>, <code>&quot;PRODUCTION&quot;</code> is the production readiness, and the
-formatting of <code>&quot;TEST&quot;</code> and <code>&quot;PRODUCTION&quot;</code> shows whether or not manufacturing
-failed. In the file, one of those strings is formatted red with a
-strikethrough, indicating failure.</p>
-<p>One way to extract the formatting is by unnesting, as above, but in this case we
-can get away with mapping over the nested data frames and pulling out a single
-value.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb304-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</a></code></pre></div>
-<p>This can then be joined onto the rest of the table, in the same way as the
-section “Already a tidy table but with meaningful formatting of single cells”.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb305-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb305-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb305-6" data-line-number="6">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb305-7" data-line-number="7"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-8" data-line-number="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, strikethrough)</a>
-<a class="sourceLine" id="cb305-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb305-12" data-line-number="12"><span class="kw">left_join</span>(cells, strikethrough, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-15" data-line-number="15"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-16" data-line-number="16"><span class="st">  </span><span class="kw">select</span>(ID, strikethrough, Count)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   ID            strikethrough Count
-##   &lt;chr&gt;         &lt;lgl&gt;         &lt;dbl&gt;
-## 1 A1-TEST       NA                1
-## 2 A2-PRODUCTION TRUE              2
-## 3 A3-PRODUCTION NA                3</code></pre>
+<div id="vaccinations" class="section level2">
+<h2><span class="header-section-number">9.2</span> Vaccinations</h2>
+<p><a href="https://twitter.com/hrbrmstr/status/890200287356620806"><img src="images/vaccinations_tweet.png" alt="Tweet by Bob Rudis challenging R users to tidy a particular spreadsheet" /></a></p>
+<p>This is a real-life example of <a href="implied-multiples.html#implied-multiples">implied multiples</a>. Implied
+multiples look like a single table, but many of the headers appear more than
+once. There is a dominant set of headers that are on the same ‘level’ (e.g. in
+the same row) as the other headers.</p>
+<p>In this case, there is a small multiple for each year of data. The year headers
+are highlighted in yellow in the screenshot.</p>
+<p>The way to unpivot this is to realise that the year cells represent two
+different things: the year (obviously) and a statistic (percentage vaccinated).
+It would have been easier to unpivot if the years had been put into a separate
+row of headers, so we will pretend that that was in fact the case.</p>
+<ol style="list-style-type: decimal">
+<li>Filter for the year cells and store in a variable to <code>enhead()</code> later.</li>
+<li><code>behead()</code> everything else as usual, and then overwite the year headers with
+<code>percentage_vaccinated</code>.</li>
+<li><code>enhead()</code> the year cells.</li>
+</ol>
+<p>The original spreadsheet has been replaced by an <a href="https://www.cdc.gov/vaccines/vaxview/index.html">annual
+refresh</a>, so you will need to
+use the file from the <a href="https://github.com/nacnudus/smungs">smungs</a> package.</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>vaccinations, <span class="st">&quot;SVV Coverage Trend Data&quot;</span>)</a>
+<a class="sourceLine" id="cb337-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb337-3" data-line-number="3">years &lt;-</a>
+<a class="sourceLine" id="cb337-4" data-line-number="4"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb337-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb337-6" data-line-number="6">                col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb337-7" data-line-number="7">                <span class="kw">str_detect</span>(character, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb337-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">year =</span> character)</a>
+<a class="sourceLine" id="cb337-9" data-line-number="9">years</a></code></pre></div>
+<pre><code>## # A tibble: 42 x 3
+##      row   col year   
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  
+##  1     3     2 2009-10
+##  2     3     8 2010-11
+##  3     3    14 2011-12
+##  4     3    20 2012-13
+##  5     3    26 2013-14
+##  6     3    32 2014-15
+##  7     3    38 2015-16
+##  8     3    44 2009-10
+##  9     3    50 2010-11
+## 10     3    56 2011-12
+## # ... with 32 more rows</code></pre>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;series&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(header, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>),</a>
+<a class="sourceLine" id="cb339-8" data-line-number="8">                          <span class="st">&quot;percent_vaccinated&quot;</span>,</a>
+<a class="sourceLine" id="cb339-9" data-line-number="9">                          header),</a>
+<a class="sourceLine" id="cb339-10" data-line-number="10">         <span class="dt">header =</span> <span class="kw">str_replace_all</span>(<span class="kw">str_to_lower</span>(header), <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-11" data-line-number="11"><span class="st">  </span><span class="kw">enhead</span>(years, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(row, series, population, state, year, header, character) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-13" data-line-number="13"><span class="st">  </span><span class="kw">spatter</span>(header, character) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(series, population, state, year, percent_vaccinated, percent_surveyed,</a>
+<a class="sourceLine" id="cb339-15" data-line-number="15">         <span class="kw">everything</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 2,226 x 11
+##    series   population state year  percent_vaccina… percent_surveyed   row
+##    &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;            &lt;int&gt;
+##  1 School … All kinde… Alab… 2009… 94.0             100.0                4
+##  2 School … All kinde… Alab… 2010… NA               NA                   4
+##  3 School … All kinde… Alab… 2011… 93.6             100.0                4
+##  4 School … All kinde… Alab… 2012… 92.8             100.0                4
+##  5 School … All kinde… Alab… 2013… 92.0             100.0                4
+##  6 School … All kinde… Alab… 2014… 93.5             100.0                4
+##  7 School … All kinde… Alab… 2015… 93.1             100.0                4
+##  8 School … All kinde… Alab… 2009… NReq             100.0                4
+##  9 School … All kinde… Alab… 2010… NA               NA                   4
+## 10 School … All kinde… Alab… 2011… NReq             100.0                4
+## # ... with 2,216 more rows, and 4 more variables: footnotes &lt;chr&gt;,
+## #   survey_type &lt;chr&gt;, target &lt;chr&gt;, total_kindergarten_population &lt;chr&gt;</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="in-cell-formatting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="superscript-symbols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="australian-marriage-survey.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -305,7 +329,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/formatting.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub"],
