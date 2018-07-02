@@ -204,10 +204,11 @@ subject headers serve two purposes: as title of each small multiple, and as the
 unstated "Score" header of their columns.  The difficulty is in associating a
 grade with its corresponding score.
 
-The process is long-winded, but there are only two new ideas:
-
-1. Unpivot the corner cells on their own, with no data.
-1. Rename the corner cells to be normal header cells.
+1. Filter for the "Classics", "History", "Music" and "Drama" headers, and assign
+   them to a variable to be `enhead()`ed later.  You could think of this as
+   faking a set of headers that doesn't exist, but is implied.
+2. Meanwhile, `behead()` the original "Classics", "History" (etc.) cells and
+   then overwrite them with "Score".
 
 TODO: link to `vaccinations` case study.
 
@@ -219,107 +220,28 @@ all_cells <-
   select(row, col, data_type, character, numeric)
 ```
 
-Unpivot only the corner cells "Classics", "History", etc. to associate them with
-their field ("Humanities", "Performance"), and store them in the variable
-`corners`.  It feels odd to unpivot only the headers and not the data, but bear
-with it.
+Filter for the "Classics", "History", "Music" and "Drama" headers, and assign
+them to a variable to be `enhead()`ed later.
 
 ```{r}
-corners <-
+subjects <-
   all_cells %>%
-  dplyr::filter(col >= 2, row <= 2, character != "Grade") %>%
-  behead("NNW", "field") %>%
-  dplyr::select(row, col, subject = character, field)
-corners
+  dplyr::filter(col >= 2, row == 2, character != "Grade") %>%
+  select(row, col, subject = character)
+subjects
 ```
 
-Now the cells "Classics" and "History" can both be renamed "score", which is
-their function at the head of their columns (rather than labels of the implied
-small multiples).
+Meanwhile, `behead()` the original "Classics", "History" (etc.) cells and then
+overwrite them with "Score".
 
 ```{r}
-cells <-
-  all_cells %>%
-  dplyr::filter(row >= 2, col >= 2) %>%
-  mutate(character = if_else(character == "Grade", character, "score"))
-```
-
-Use `corners` to partition the rest of the headers and the data cells.
-Notice that the subject and field are mapped to the appropriate partition.
-
-```{r}
-partitions <-
-  partition(cells, corners, strict = FALSE) %>%
-  # `strict = FALSE` because the corners aren't among the cells
-  select(-corner_row, corner_col)
-partitions
-```
-
-Unnest and unpivot the "score" and "grade" headers.
-
-```{r}
-partitions <-
-  partitions %>%
-  unnest() %>%
-  behead("N", "header") %>%
-  select(-col, -corner_col)
-partitions
-```
-
-The "Name" row headers can now be joined.
-
-```{r}
-name <-
-  all_cells %>%
-  dplyr::filter(row >= 3, col == 1) %>%
-  select(row, name = character)
-name
-
-partitions <- inner_join(partitions, name, by = "row")
-partitions
-```
-
-Finally everything can be spattered into a recognisable table.
-
-```{r}
-spatter(partitions, header) %>%
-  select(-row)
-```
-
-The process is easier to understand when seen as a whole.
-
-```{r}
-path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
-all_cells <-
-  xlsx_cells(path, sheets = "implied-multiples") %>%
-  dplyr::filter(!is_blank) %>%
-  select(row, col, data_type, character, numeric)
-
-name <-
-  all_cells %>%
-  dplyr::filter(row >= 3, col == 1) %>%
-  select(row, name = character)
-
-# Unpivot the corner cells on their own (no data)
-corners <-
-  all_cells %>%
-  dplyr::filter(col >= 2, row <= 2, character != "Grade") %>%
-  behead("NNW", "field") %>%
-  dplyr::select(row, col, subject = character, field)
-
 all_cells %>%
-  dplyr::filter(row >= 2, col >= 2) %>%
-  # Rename the corner cells as normal header cells
-  mutate(character = if_else(character == "Grade", character, "score")) %>%
-  # Partition by the corner cells, and bring the subject fields with them
-  partition(corners, strict = FALSE, nest = FALSE) %>%
-  select(-corner_row, corner_col) %>%
-  # Do some normal unpivotring
+  behead("NNW", "field") %>%
   behead("N", "header") %>%
-  select(-col, -corner_col) %>%
-  # Attach the row headers
-  inner_join(name, by = "row") %>%
-  # Present as a normal table
+  behead("W", "name") %>%
+  enhead(subjects, "NNW") %>% # Reattach the filtered subject headers
+  mutate(header = if_else(header == "Grade", header, "Score")) %>%
+  select(-col) %>%
   spatter(header) %>%
   select(-row)
 ```
