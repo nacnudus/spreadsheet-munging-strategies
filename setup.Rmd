@@ -20,7 +20,7 @@ library(readr)
 library(readxl)
 library(tidyxl)
 library(unpivotr)
-library(smungs)
+library(smungs) # GitHub only https://github.com/nacnudus/smungs
 ```
 
 ## Data
