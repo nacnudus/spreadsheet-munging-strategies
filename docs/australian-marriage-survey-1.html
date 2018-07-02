@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-sentinel.html">
-<link rel="next" href="pivot-simple.html">
+<link rel="prev" href="australian-marriage-survey.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -196,6 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="australian-marriage-survey-1.html"><a href="australian-marriage-survey-1.html"><i class="fa fa-check"></i><b>9.2</b> Australian Marriage Survey</a></li>
 </ul></li>
 </ul>
 
@@ -214,170 +215,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivot" class="section level1">
-<h1><span class="header-section-number">3</span> Pivot tables</h1>
-<p><img src="images/pivot-annotations.png" /></p>
-<p>This part introduces pivot tables. <a href="https://nacnudus.github.io/tidyxl">Tidyxl</a>
-and <a href="https://nacnudus.github.io/unpivotr">unpivotr</a> come into their own here,
-and are (as far as I know) the only the only packages to acknowledge the
-intuitive grammar of pivot tables.</p>
-<p>Pivot tables are ones with more than one row of column headers, or more than one
-column of row headers, or both (and there can be more complex arrangements).
-Tables in that form take up less space on a page or a screen than ‘tidy’ tables,
-and are easier for humans to read. But most software can’t interpret or traverse
-data in that form; it must first be reshaped into a long, ‘tidy’ form, with a
-single row of column headers.</p>
-<p>It takes a lot of code to reshape a pivot table into a ‘tidy’ one, and the code
-has to be bespoke for each table. There’s no general solution, because it is
-ambiguous whether a given cell is part of a header or part of the data.</p>
-<p>There are some ambiguities in ‘tidy’ tables, too, which is why most functions
-for reading csv files allow you to specify whether the first row of the data is
-a header, and how many rows to skip before the data begins. Functions often
-guess, but they can never be certain.</p>
-<p>Pivot tables, being more complex, are so much more ambiguous that it isn’t
-reasonable to import them with a single function. A better way is to break the
-problem down into steps:</p>
-<ol style="list-style-type: decimal">
-<li>Identify which cells are headers, and which are data.</li>
-<li>State how the data cells relate to the header cells.</li>
-</ol>
-<p>The first step is a matter of traversing the cells, which is <em>much easier</em> if
-you load them with the <a href="https://nacnudus.github.io/tidyxl">tidyxl</a> package, or
-pass the table through <code>as_cells()</code> in the
-<a href="https://nacnudus.github.io/unpivotr">unpivotr</a> package. This gives you a table
-of cells and their properties; one row of the table describes one cell of the
-source table or spreadsheet. The first two properties are the row and column
-position of the cell, which makes it easy to filter for cells in a particular
-region of the spreadsheet. If the first row of cells is a header row, then you
-can filter for <code>row == 1</code>.</p>
-<p>Here is an example of a pivot table where the first two rows, and the first two
-columns, are headers. The other cells contain the data. First, see how the
-cells are laid out in the source file by importing it with readxl.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb87-2" data-line-number="2">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">print</span>(original, <span class="dt">n =</span> <span class="ot">Inf</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 6
-##   X__1        X__2     X__3    X__4   X__5     X__6 
-##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;
-## 1 &lt;NA&gt;        &lt;NA&gt;     Female  &lt;NA&gt;   Male     &lt;NA&gt; 
-## 2 &lt;NA&gt;        &lt;NA&gt;     Matilda Olivia Nicholas Paul 
-## 3 Humanities  Classics 1       2      3        0    
-## 4 &lt;NA&gt;        History  3       4      5        1    
-## 5 Performance Music    5       6      9        2    
-## 6 &lt;NA&gt;        Drama    7       8      12       3</code></pre>
-<p>Compare that with the long set of cells, one per row, that tidyxl gives. (Only
-a few properties of each cell are shown, to make it easier to read).</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>)</a>
-<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw">select</span>(cells, row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>(cells, <span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 32 x 5
-##      row   col data_type character  numeric
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
-##  1     2     4 character Female          NA
-##  2     2     5 blank     &lt;NA&gt;            NA
-##  3     2     6 character Male            NA
-##  4     2     7 blank     &lt;NA&gt;            NA
-##  5     3     4 character Matilda         NA
-##  6     3     5 character Olivia          NA
-##  7     3     6 character Nicholas        NA
-##  8     3     7 character Paul            NA
-##  9     4     2 character Humanities      NA
-## 10     4     3 character Classics        NA
-## 11     4     4 numeric   &lt;NA&gt;             1
-## 12     4     5 numeric   &lt;NA&gt;             2
-## 13     4     6 numeric   &lt;NA&gt;             3
-## 14     4     7 numeric   &lt;NA&gt;             0
-## 15     5     2 blank     &lt;NA&gt;            NA
-## 16     5     3 character History         NA
-## 17     5     4 numeric   &lt;NA&gt;             3
-## 18     5     5 numeric   &lt;NA&gt;             4
-## 19     5     6 numeric   &lt;NA&gt;             5
-## 20     5     7 numeric   &lt;NA&gt;             1
-## # ... with 12 more rows</code></pre>
-<p>A similar result is obtained via <code>unpivotr::as_cells()</code>.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">as_cells</span>(original) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 36 x 4
-##      row   col data_type chr       
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     
-##  1     1     1 chr       &lt;NA&gt;      
-##  2     1     2 chr       &lt;NA&gt;      
-##  3     1     3 chr       Female    
-##  4     1     4 chr       &lt;NA&gt;      
-##  5     1     5 chr       Male      
-##  6     1     6 chr       &lt;NA&gt;      
-##  7     2     1 chr       &lt;NA&gt;      
-##  8     2     2 chr       &lt;NA&gt;      
-##  9     2     3 chr       Matilda   
-## 10     2     4 chr       Olivia    
-## 11     2     5 chr       Nicholas  
-## 12     2     6 chr       Paul      
-## 13     3     1 chr       Humanities
-## 14     3     2 chr       Classics  
-## 15     3     3 chr       1         
-## 16     3     4 chr       2         
-## 17     3     5 chr       3         
-## 18     3     6 chr       0         
-## 19     4     1 chr       &lt;NA&gt;      
-## 20     4     2 chr       History   
-## # ... with 16 more rows</code></pre>
-<p>(One difference is that <code>read_excel()</code> has filled in some missing cells with
-blanks, which <code>as_cells()</code> retains. Another is that <code>read_excel()</code> has
-coerced all data types to <code>character</code>, whereas <code>xlsx_cells()</code> preserved the
-original data types.)</p>
-<p>The tidyxl version is easier to traverse, because it describes the position of
-each cell as well as the value. To filter for the first row of headers:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, character, numeric)</a></code></pre></div>
-<pre><code>## # A tibble: 2 x 4
-##     row   col character numeric
-##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
-## 1     2     4 Female         NA
-## 2     2     6 Male           NA</code></pre>
-<p>Or to filter for cells containing data (in this case, we know that only data
-cells are numeric)</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, numeric)</a></code></pre></div>
-<pre><code>## # A tibble: 16 x 3
-##      row   col numeric
-##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
-##  1     4     4       1
-##  2     4     5       2
-##  3     4     6       3
-##  4     4     7       0
-##  5     5     4       3
-##  6     5     5       4
-##  7     5     6       5
-##  8     5     7       1
-##  9     6     4       5
-## 10     6     5       6
-## 11     6     6       9
-## 12     6     7       2
-## 13     7     4       7
-## 14     7     5       8
-## 15     7     6      12
-## 16     7     7       3</code></pre>
-<p>By identifying the header cells separately from the data cells, and knowing
-exactly where they are on the sheet, we can associated the data cells with the
-relevant headers.</p>
-<p>To a human it is intuitive that the cells below and to the right of the header
-<code>Male</code> represent males, and that ones to the right of and below the header
-<code>Postgraduate qualification</code> represent people with postgraduate qualifications,
-but it isn’t so obvious to the computer. How would the computer know that the
-header <code>Male</code> doesn’t also relate to the column of cells below and to the left,
-beginning with <code>2</code>?</p>
-<p>This section shows how you can express the relationships between headers and
-data cells, using the <a href="https://nacnudus.github.io/unpivotr">unpivotr</a> package.</p> 
+<div id="australian-marriage-survey-1" class="section level2">
+<h2><span class="header-section-number">9.2</span> Australian Marriage Survey</h2>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidy-sentinel.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivot-simple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="australian-marriage-survey.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -407,7 +256,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/pivot-tables.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub"],

@@ -227,19 +227,19 @@ values as sentinels, and it will import them all as <code>NA</code>.</p>
 Statistics New Zealand uses <code>…</code> to mean “Not applicable”, and <code>..C</code> to mean
 “Confidentialised”. Most tools will either regard both values as <code>NA</code>, or
 coerce the whole column to characters.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;a, b,   c</span></a>
-<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="st">          1, 2,   3</span></a>
-<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="st">          4, …, ..C&quot;</span>,</a>
-<a class="sourceLine" id="cb75-4" data-line-number="4">         <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="co"># Regard both values as NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;a, b,   c</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="st">          1, 2,   3</span></a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="st">          4, …, ..C&quot;</span>,</a>
+<a class="sourceLine" id="cb71-4" data-line-number="4">         <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="co"># Regard both values as NA</span></a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##       a     b     c
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1     1     2     3
 ## 2     4    NA    NA</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;a, b,   c</span></a>
-<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="st">          1, 2,   3</span></a>
-<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="st">          4, …, ..C&quot;</span>,</a>
-<a class="sourceLine" id="cb77-4" data-line-number="4">         <span class="dt">na =</span> <span class="st">&quot;&quot;</span>)              <span class="co"># Coerce the whole column to characters</span></a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;a, b,   c</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">          1, 2,   3</span></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="st">          4, …, ..C&quot;</span>,</a>
+<a class="sourceLine" id="cb73-4" data-line-number="4">         <span class="dt">na =</span> <span class="st">&quot;&quot;</span>)              <span class="co"># Coerce the whole column to characters</span></a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##       a b     c    
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
@@ -250,10 +250,10 @@ even into separate <code>TRUE</code>/<code>FALSE</code> columns for each kind of
 <p>Note that sentinel values relate the the value in the cell, rather than to the
 whole row, so the first step is to make the dataset <em>extra-tidy</em> as in the
 section “Already a tidy table but with meaningful formatting of single cells”.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co"># Tidy</span></a>
-<a class="sourceLine" id="cb79-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb79-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>)</a>
-<a class="sourceLine" id="cb79-4" data-line-number="4">x</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="co"># Tidy</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb75-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>)</a>
+<a class="sourceLine" id="cb75-4" data-line-number="4">x</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Name     Subject  Score
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;
@@ -261,11 +261,11 @@ section “Already a tidy table but with meaningful formatting of single cells�
 ## 2 Nicholas Classics NA   
 ## 3 Olivia   …        3    
 ## 4 Paul     NA       ..C</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="co"># Extra-tidy</span></a>
-<a class="sourceLine" id="cb81-2" data-line-number="2">extra_tidy &lt;-</a>
-<a class="sourceLine" id="cb81-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(x, variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</a>
-<a class="sourceLine" id="cb81-5" data-line-number="5">extra_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co"># Extra-tidy</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(x, variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb77-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</a>
+<a class="sourceLine" id="cb77-5" data-line-number="5">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   Name     variable value   
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
@@ -279,18 +279,18 @@ section “Already a tidy table but with meaningful formatting of single cells�
 ## 8 Paul     Subject  NA</code></pre>
 <p>With an extra-tidy dataset, the sentinels can now be appended to the values of
 individual variables, rather than to whole observations.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="co"># Extra-tidy, with row and column numbers of the original variables, and the</span></a>
-<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="co"># sentinels omitted</span></a>
-<a class="sourceLine" id="cb83-3" data-line-number="3">extra_tidy &lt;-</a>
-<a class="sourceLine" id="cb83-4" data-line-number="4"><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>, <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-9" data-line-number="9"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb83-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(row, col)</a>
-<a class="sourceLine" id="cb83-12" data-line-number="12">extra_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co"># Extra-tidy, with row and column numbers of the original variables, and the</span></a>
+<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="co"># sentinels omitted</span></a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">extra_tidy &lt;-</a>
+<a class="sourceLine" id="cb79-4" data-line-number="4"><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>, <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-9" data-line-number="9"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb79-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(row, col)</a>
+<a class="sourceLine" id="cb79-12" data-line-number="12">extra_tidy</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##     row   col Name     variable value   
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
@@ -302,13 +302,13 @@ individual variables, rather than to whole observations.</p>
 ## 6     4     3 Olivia   Score    3       
 ## 7     5     2 Paul     Subject  &lt;NA&gt;    
 ## 8     5     3 Paul     Score    &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co"># Import all the cells, and filter for sentinel values</span></a>
-<a class="sourceLine" id="cb85-2" data-line-number="2">sentinels &lt;-</a>
-<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sentinel =</span> character) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, sentinel)</a>
-<a class="sourceLine" id="cb85-7" data-line-number="7">sentinels</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="co"># Import all the cells, and filter for sentinel values</span></a>
+<a class="sourceLine" id="cb81-2" data-line-number="2">sentinels &lt;-</a>
+<a class="sourceLine" id="cb81-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb81-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb81-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sentinel =</span> character) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb81-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(row, col, sentinel)</a>
+<a class="sourceLine" id="cb81-7" data-line-number="7">sentinels</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##     row   col sentinel
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   
@@ -316,8 +316,8 @@ individual variables, rather than to whole observations.</p>
 ## 2     4     2 …       
 ## 3     5     2 NA      
 ## 4     5     3 ..C</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co"># Join the `sentinel` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="kw">left_join</span>(extra_tidy, sentinels, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="co"># Join the `sentinel` column to the rest of the data</span></a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">left_join</span>(extra_tidy, sentinels, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 6
 ##     row   col Name     variable value    sentinel
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
@@ -331,12 +331,12 @@ individual variables, rather than to whole observations.</p>
 ## 8     5     3 Paul     Score    &lt;NA&gt;     ..C</code></pre>
 <p>Here’s another version using only tidyxl and unpivotr, which provides
 <code>isolate_sentinels()</code> to make this much more straightforward.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="st">  </span><span class="kw">isolate_sentinels</span>(character, <span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb89-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(Name, variable, character, numeric, sentinel)</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;sentinels&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="st">  </span><span class="kw">isolate_sentinels</span>(character, <span class="kw">c</span>(<span class="st">&quot;NA&quot;</span>, <span class="st">&quot;…&quot;</span>, <span class="st">&quot;..C&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, variable) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(Name, variable, character, numeric, sentinel)</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##   Name     variable character numeric sentinel
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;   
