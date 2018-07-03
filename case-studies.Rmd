@@ -216,3 +216,198 @@ cells %>%
   select(series, population, state, year, percent_vaccinated, percent_surveyed,
          everything())
 ```
+
+## US Crime {#us-crime}
+
+[![Tweet by Alberto Cairo about a spreadsheet that violates Hadley Wickham's principles of tidy data](images/us-crime-tweet.jpg)](https://twitter.com/albertocairo/status/963133927530483712)
+
+These are two tables of numbers of crimes in the USA, by state and category of
+crime.  Confusingly, they're numbered Table 2 and Table 3.  Table 1 exists but
+isn't included in this case study because it is so straightforward.
+
+### Table 2 {#us-crime-2}
+
+![](images/us-crime-2.jpg)
+
+#### Simple version {#us-crime-2-simple}
+
+This is straightforward to import as long as you don't care to organise the
+hierarchies of crimes and areas.  For example, Conneticut is within the division
+New England, which itself is within the region Northeast, but if you don't need
+to express those relationships in the data then you can ignore the bold
+formatting.
+
+The only slight snag is that the header cells in row 5 are blank.  There is a
+header for the units "Rate per 100,000", but no header for the units "Count" --
+the cells in those positions are empty.  It would be a problem if the cells
+didn't exist at all, because `behead("N", "unit")` wouldn't be able to associate
+data cells with missing header cells.  Fortunately they do exist (because they
+have formatting), they are just empty or `NA`.  To make sure they aren't
+ignored, use `drop_na = FALSE` in `behead()`, and then later fill the blanks in
+the `units` column with `"Count"`.
+
+```{r}
+cells <-
+  xlsx_cells(smungs::us_crime_2) %>%
+  mutate(character = map_chr(character_formatted,
+                             ~ ifelse(is.null(.x), character, .x$character[1])),
+         character = str_replace_all(character, "\n", " "))
+
+cells %>%
+  dplyr::filter(row >= 4L) %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("NNW", "crime") %>%
+  behead("N", "unit", drop_na = FALSE) %>%
+  behead("WNW", "area") %>%
+  behead("W", "year") %>%
+  behead("W", "population") %>%
+  dplyr::filter(year != "Percent change") %>%
+  mutate(unit = if_else(unit == "", "Count", unit)) %>%
+  select(row, data_type, numeric, unit, area, year, population, crime) %>%
+  spatter(unit) %>%
+  select(-row)
+```
+
+#### Complex version {#us-crime-2-complex}
+
+If you do mind about grouping states within divisions within regions, and
+crimes within categories, then you have more work to do using `enhead()` rather
+than `behead()`.
+
+1. Select the header cells at each level of the hierarchy and store them in
+   their own variables.  For example, filter for the bold cells in row 4, which
+   are the categories of crimes, and store them in the `categories` variable.
+1. Select the data cells, and use `enhead()` to join them to the headers.
+
+In fact the headers `unit`, `year`, `population` can be handled by `behead()`,
+because they aren't hierarchichal, so only the variables `category`, `crime`,
+`region`, `division` and `state` are handled by `enhead()`.
+
+```{r}
+cells <-
+  xlsx_cells(smungs::us_crime_2) %>%
+  mutate(character = map_chr(character_formatted,
+                             ~ ifelse(is.null(.x), character, .x$character[1])),
+         character = str_replace_all(character, "\n", " "))
+
+formats <- xlsx_formats(smungs::us_crime_2)
+
+categories <-
+  cells %>%
+  dplyr::filter(row == 4L,
+                data_type == "character",
+                formats$local$font$bold[local_format_id]) %>%
+  select(row, col, category = character)
+categories
+
+crimes <-
+  cells %>%
+  dplyr::filter(row == 4L, data_type == "character") %>%
+  mutate(character = if_else(character %in% categories$category,
+                             "Total",
+                             character)) %>%
+  select(row, col, crime = character)
+crimes
+
+regions <-
+  cells %>%
+  dplyr::filter(row >= 6L,
+                col == 1L,
+                data_type == "character",
+                formats$local$font$bold[local_format_id]) %>%
+  select(row, col, region = character)
+regions
+
+divisions <-
+  cells %>%
+  dplyr::filter(row >= 6L,
+                col == 1L,
+                data_type == "character",
+                !formats$local$font$bold[local_format_id],
+                !str_detect(character, "^ {5}")) %>%
+  select(row, col, division = character)
+divisions
+
+states <-
+  cells %>%
+  dplyr::filter(row >= 6L,
+                col == 1L,
+                data_type == "character") %>%
+  mutate(character = if_else(str_detect(character, "^ {5}"),
+                             str_trim(character),
+                             "Total")) %>%
+  select(row, col, state = character)
+states
+
+cells %>%
+  dplyr::filter(row >= 5L, col >= 2L) %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("N", "unit") %>%
+  behead("W", "year") %>%
+  behead("W", "population") %>%
+  enhead(categories, "NNW") %>%
+  enhead(crimes, "NNW") %>%
+  enhead(regions, "WNW") %>%
+  enhead(divisions, "WNW", drop = FALSE) %>%
+  enhead(states, "WNW", drop = FALSE) %>%
+  dplyr::filter(year != "Percent change") %>%
+  select(value = numeric, category, crime, region, division, state, year, population)
+```
+
+#### Table 3 {#us-crime-3}
+
+![](images/us-crime-3.jpg)
+
+This table is confusing to humans, let alone computers.  The `Population` column
+seems to belong to a different table altogether, so that's how we'll treat it.
+
+1. Import the `Population` column and the state/area headers to the left.
+1. Import the crime-related column headers, and the state/area headers to the left.
+1. Join the two datasets.
+
+The `statistic` header ends up having blank values due to the cells being blank,
+so these are manually filled in.
+
+The hierarchy of crime (e.g. 'robbery' is within 'violent crime') is ignored.
+That would be handled in the same way as for [Table 2](#us-crime-2).
+
+```{r}
+cells <-
+  xlsx_cells(smungs::us_crime_3) %>%
+  mutate(character = map_chr(character_formatted,
+                             ~ ifelse(is.null(.x), character, .x$character[1])),
+         character = str_replace_all(character, "\n", " "))
+
+population <-
+  cells %>%
+  dplyr::filter(row >= 5L, col <= 4L) %>%
+  behead("WNW", "state") %>%
+  behead("WNW", "area") %>%
+  behead("W", "statistic", drop_na = FALSE) %>%
+  mutate(statistic = case_when(is.na(statistic) ~ "Population",
+                               statistic == "" ~ "Population",
+                               TRUE ~ str_trim(statistic))) %>%
+  dplyr::filter(data_type == "numeric",
+                !str_detect(area, regex("total", ignore_case = TRUE)),
+                statistic != "Estimated total") %>%
+  select(data_type, numeric, state, area, statistic) %>%
+  spatter(statistic)
+
+crime <-
+  cells %>%
+  dplyr::filter(row >= 4, col != 5L) %>%
+  behead("WNW", "state") %>%
+  behead("WNW", "area") %>%
+  behead("W", "statistic", formatters = list(character = str_trim)) %>%
+  behead("N", "crime") %>%
+  dplyr::filter(data_type == "numeric",
+                !str_detect(area, regex("total", ignore_case = TRUE)),
+                !is.na(statistic),
+                statistic != "") %>%
+  mutate(statistic = case_when(statistic == "Area actually reporting" ~ "Actual",
+                               statistic == "Estimated total" ~ "Estimated")) %>%
+  select(data_type, numeric, state, area, statistic, crime) %>%
+  spatter(statistic)
+
+left_join(population, crime)
+```
