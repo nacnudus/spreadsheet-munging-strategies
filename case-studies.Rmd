@@ -411,3 +411,90 @@ crime <-
 
 left_join(population, crime)
 ```
+
+## Toronto Transit Commission
+
+[![Tweet by Sharla Gelfand about tidying Toronto Transit Commission data with
+R](images/toronto-tweet.png)](https://twitter.com/sharlagelfand/status/996739127562391552)
+
+This table shows the number of trips recorded on the Toronto Transit Commission
+per year, by type of ticket, person, vehicle, and weeday/weekend/holiday.
+Sharla Gelfand's annotated screenshot explains the structure.
+
+### The full code listing
+
+```{r}
+cells <-
+  xlsx_cells(smungs::toronto_transit) %>%
+  dplyr::filter(!is_blank, row >= 6)
+
+fare <-
+  cells %>%
+  dplyr::filter(col == 2,
+                !str_detect(character, "^ "),
+                !str_detect(character, "TOTAL")) %>%
+  select(row, col, fare = character)
+
+cells %>%
+  behead("N", "year", formatters = list(character = str_trim)) %>%
+  behead("WNW", "context") %>%
+  behead("W", "media", formatters = list(character = str_trim)) %>%
+  enhead(fare, "WNW") %>%
+  dplyr::filter(!str_detect(media, "TOTAL")) %>%
+  separate(year, c("year", "note"), sep = " ", fill = "right") %>%
+  select(year, context, fare, media, count = numeric)
+```
+
+### Step by step
+
+Although the annotations point out that there are really three separate tables
+(`WHO`, `WHERE` and `WHEN`), they can be imported as one.
+
+Coiumn 2 has two levels of headers in it: the fare in bold ("ADULT", "BUS",
+etc.), and the media used to pay for it indented by a few spaces ("TOKENS",
+"WEEKLY PASS", etc.).
+
+Because `behead()` can't distinguish between different
+levels of headers in the same column, we need to put the bold fare headers into
+a separate variable on their own, and `enhead()` them back onto the rest of the
+table later.
+
+Unfortunately the fare headers in the "WHEN" context arene't bold, so rather
+than filter for bold headers, instead we filter for headers that aren't indented
+by spaces.  We also filter out any "TOTAL" headers.
+
+```{r}
+cells <-
+  xlsx_cells(smungs::toronto_transit) %>%
+  dplyr::filter(!is_blank, row >= 6)
+
+fare <-
+  cells %>%
+  dplyr::filter(col == 2,
+                !str_detect(character, "^ "), # Filter out indented headers
+                !str_detect(character, "TOTAL")) %>% # Filteroout totals
+  select(row, col, fare = character)
+fare
+
+ttc <-
+  cells %>%
+  behead("N", "year") %>%
+  behead("WNW", "context") %>%
+  behead("W", "media") %>%
+  enhead(fare, "WNW") %>%
+  dplyr::filter(!str_detect(media, "TOTAL")) %>%
+  select(year, context, fare, media, count = numeric)
+ttc
+```
+
+There's a bit more cosmetic cleaning to do.  The indentation can be trimmed from
+the `media` and the `year` headers, and the asterisk removed from the year `2015
+*`.
+
+```{r}
+ttc %>%
+  mutate(year = str_trim(year), media = str_trim(media)) %>%
+  separate(year, c("year", "note"), sep = " ", fill = "right") %>%
+  select(-note)
+```
+
