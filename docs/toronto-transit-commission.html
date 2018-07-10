@@ -60,7 +60,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -73,13 +73,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -268,16 +266,15 @@ Sharla Gelfand’s annotated screenshot explains the structure.</p>
 <h3><span class="header-section-number">9.4.2</span> Step by step</h3>
 <p>Although the annotations point out that there are really three separate tables
 (<code>WHO</code>, <code>WHERE</code> and <code>WHEN</code>), they can be imported as one.</p>
-<p>Coiumn 2 has two levels of headers in it: the fare in bold (“ADULT”, “BUS”,
+<p>Column 2 has two levels of headers in it: the fare in bold (“ADULT”, “BUS”,
 etc.), and the media used to pay for it indented by a few spaces (“TOKENS”,
 “WEEKLY PASS”, etc.).</p>
-<p>Because <code>behead()</code> can’t distinguish between different
-levels of headers in the same column, we need to put the bold fare headers into
-a separate variable on their own, and <code>enhead()</code> them back onto the rest of the
-table later.</p>
-<p>Unfortunately the fare headers in the “WHEN” context arene’t bold, so rather
-than filter for bold headers, instead we filter for headers that aren’t indented
-by spaces. We also filter out any “TOTAL” headers.</p>
+<p>Because <code>behead()</code> can’t distinguish between different levels of headers in the
+same column, we need to put the bold fare headers into a separate variable on
+their own, and <code>enhead()</code> them back onto the rest of the table later.</p>
+<p>Unfortunately the fare headers in the “WHEN” context aren’t bold, so rather than
+filter for bold headers, instead we filter for headers that aren’t indented by
+spaces. We also filter out any “TOTAL” headers.</p>
 <div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1">cells &lt;-</a>
 <a class="sourceLine" id="cb360-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb360-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
