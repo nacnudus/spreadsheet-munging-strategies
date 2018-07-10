@@ -450,18 +450,17 @@ cells %>%
 Although the annotations point out that there are really three separate tables
 (`WHO`, `WHERE` and `WHEN`), they can be imported as one.
 
-Coiumn 2 has two levels of headers in it: the fare in bold ("ADULT", "BUS",
+Column 2 has two levels of headers in it: the fare in bold ("ADULT", "BUS",
 etc.), and the media used to pay for it indented by a few spaces ("TOKENS",
 "WEEKLY PASS", etc.).
 
-Because `behead()` can't distinguish between different
-levels of headers in the same column, we need to put the bold fare headers into
-a separate variable on their own, and `enhead()` them back onto the rest of the
-table later.
+Because `behead()` can't distinguish between different levels of headers in the
+same column, we need to put the bold fare headers into a separate variable on
+their own, and `enhead()` them back onto the rest of the table later.
 
-Unfortunately the fare headers in the "WHEN" context arene't bold, so rather
-than filter for bold headers, instead we filter for headers that aren't indented
-by spaces.  We also filter out any "TOTAL" headers.
+Unfortunately the fare headers in the "WHEN" context aren't bold, so rather than
+filter for bold headers, instead we filter for headers that aren't indented by
+spaces.  We also filter out any "TOTAL" headers.
 
 ```{r}
 cells <-
