@@ -224,8 +224,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">9.4</span> Toronto Transit Commission</h2>
 <p><a href="https://twitter.com/sharlagelfand/status/996739127562391552"><img src="images/toronto-tweet.png" alt="Tweet by Sharla Gelfand about tidying Toronto Transit Commission data with R" /></a></p>
 <p>This table shows the number of trips recorded on the Toronto Transit Commission
-per year, by type of ticket, person, vehicle, and weeday/weekend/holiday.
-Sharla Gelfand’s annotated screenshot explains the structure.</p>
+per year, by type of ticket, person, vehicle, and weeday/weekend/holiday.</p>
+<p>Sharla Gelfand’s annotated screenshot explains the structure, and see her
+excellent <a href="https://sharlagelfand.netlify.com/posts/tidy-ttc/">blog post</a> for how
+she wrangled it with standard tidyverse tools. I show here an alternative
+method with tidyxl and unpivotr.</p>
 <div id="the-full-code-listing-1" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> The full code listing</h3>
 <div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1">cells &lt;-</a>

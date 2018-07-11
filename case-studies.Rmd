@@ -419,7 +419,11 @@ R](images/toronto-tweet.png)](https://twitter.com/sharlagelfand/status/996739127
 
 This table shows the number of trips recorded on the Toronto Transit Commission
 per year, by type of ticket, person, vehicle, and weeday/weekend/holiday.
-Sharla Gelfand's annotated screenshot explains the structure.
+
+Sharla Gelfand's annotated screenshot explains the structure, and see her
+excellent [blog post](https://sharlagelfand.netlify.com/posts/tidy-ttc/) for how
+she wrangled it with standard tidyverse tools.  I show here an alternative
+method with tidyxl and unpivotr.
 
 ### The full code listing
 
