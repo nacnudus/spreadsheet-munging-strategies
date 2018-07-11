@@ -554,3 +554,54 @@ x %>%
   select(-col) %>%
   spread(data_type, numeric)
 ```
+
+## Cashflows
+
+[![Blog post by Dennis Vaughan about tidying cashflow data with
+unpivotr](images/cashflows-blog.png)](https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/)
+
+Dennis Vaughan kindly
+[blogged](https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/)
+about using unpivotr to tidy spreadsheets of cashflows.  Here is an example
+using unpivotr's new, more powerful syntax.
+
+![](images/cashflows.png)
+
+The techniques here are
+
+1. Filter out `TOTAL` rows
+2. Create an ordered factor of the months, which follow the fiscal year April to
+   March.  This is done using the fact that the months appear in column-order as
+   well as year-order, so we can sort on `col`.
+
+```{r}
+cashflows <-
+  xlsx_cells(smungs::cashflows) %>%
+  dplyr::filter(!is_blank, row >= 4L) %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("N", "month") %>%
+  behead("WNW", "main_header") %>%
+  behead("W", "sub_header") %>%
+  dplyr::filter(month != "TOTALS",
+                !str_detect(sub_header, "otal")) %>%
+  arrange(col) %>%
+  mutate(month = factor(month, levels = unique(month), ordered = TRUE),
+         sub_header = str_trim(sub_header)) %>%
+  select(main_header, sub_header, month, value = numeric)
+cashflows
+```
+
+To prove that the data is correct, we can reproduce the total row at the bottom
+('Ending Cash Balance').
+
+```{r}
+cashflows %>%
+  group_by(main_header, month) %>%
+  summarise(value = sum(value)) %>%
+  arrange(month, main_header) %>%
+  dplyr::filter(str_detect(main_header, "ows")) %>%
+  mutate(value = if_else(str_detect(main_header, "Income"), value, -value)) %>%
+  group_by(month) %>%
+  summarise(value = sum(value)) %>%
+  mutate(value = cumsum(value))
+```
