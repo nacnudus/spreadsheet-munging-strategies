@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="in-cell-formatting.html">
-<link rel="next" href="superscript-symbols.html">
+<link rel="prev" href="toronto-transit-commission.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -221,67 +221,128 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multiple-pieces-of-information-in-a-single-cell-with-meaningful-formatting" class="section level2">
-<h2><span class="header-section-number">5.4</span> Multiple pieces of information in a single cell, with meaningful formatting</h2>
-<p><img src="images/in-cell-formatting.png" /></p>
-<p>The following table of products and their
-production readiness combines three pieces of information in a single cell.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb302-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="st">  </span><span class="kw">rectify</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 3
-##   `row/col` `1(A)`        `2(B)`
-##       &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; 
-## 1         3 ID            Count 
-## 2         4 A1-TEST       1     
-## 3         5 A2-PRODUCTION 2     
-## 4         6 A3-PRODUCTION 3</code></pre>
-<p>In the <code>ID</code> column, the first section <code>&quot;A1&quot;</code>, <code>&quot;A2&quot;</code>, <code>&quot;A3&quot;</code> is the product ID.
-The second section <code>&quot;TEST&quot;</code>, <code>&quot;PRODUCTION&quot;</code> is the production readiness, and the
-formatting of <code>&quot;TEST&quot;</code> and <code>&quot;PRODUCTION&quot;</code> shows whether or not manufacturing
-failed. In the file, one of those strings is formatted red with a
-strikethrough, indicating failure.</p>
-<p>One way to extract the formatting is by unnesting, as above, but in this case we
-can get away with mapping over the nested data frames and pulling out a single
-value.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb304-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, strikethrough)</a></code></pre></div>
-<p>This can then be joined onto the rest of the table, in the same way as the
-section “Already a tidy table but with meaningful formatting of single cells”.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb305-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a>
-<a class="sourceLine" id="cb305-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb305-6" data-line-number="6">strikethrough &lt;-</a>
-<a class="sourceLine" id="cb305-7" data-line-number="7"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-8" data-line-number="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">!=</span><span class="st"> &quot;A1&quot;</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">strikethrough =</span> <span class="kw">map_lgl</span>(character_formatted, <span class="op">~</span><span class="st"> </span><span class="kw">any</span>(.x<span class="op">$</span>strike))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, strikethrough)</a>
-<a class="sourceLine" id="cb305-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb305-12" data-line-number="12"><span class="kw">left_join</span>(cells, strikethrough, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-15" data-line-number="15"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-16" data-line-number="16"><span class="st">  </span><span class="kw">select</span>(ID, strikethrough, Count)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   ID            strikethrough Count
-##   &lt;chr&gt;         &lt;lgl&gt;         &lt;dbl&gt;
-## 1 A1-TEST       NA                1
-## 2 A2-PRODUCTION TRUE              2
-## 3 A3-PRODUCTION NA                3</code></pre>
+<div id="ground-water" class="section level2">
+<h2><span class="header-section-number">9.5</span> Ground water</h2>
+<p><a href="https://twitter.com/sharlagelfand/status/996739127562391552"><img src="images/groundwater-tweet.png" alt="Tweet by Beck Frydenborg about tidying data with R" /></a></p>
+<p>If the cells containing <code>U</code> didn’t exist, then this spreadsheet would be a
+textbook example of unpivoting a pivot table. There are two rows of column
+headers, as well as two columns of row headers, so you would use <code>behead()</code> for
+each header.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">x &lt;-</a>
+<a class="sourceLine" id="cb366-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;sample-type&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;site&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;unit&quot;</span>)</a>
+<a class="sourceLine" id="cb366-9" data-line-number="9">x</a></code></pre></div>
+<pre><code>## # A tibble: 17 x 9
+##      row   col data_type character numeric `sample-type` site  parameter  
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;      
+##  1     4     3 numeric   &lt;NA&gt;        3.2   ground water  A     Nitrogen, …
+##  2     6     3 numeric   &lt;NA&gt;        0.025 ground water  A     Nitrate Ni…
+##  3     6     4 character U          NA     ground water  A     Nitrate Ni…
+##  4     8     3 numeric   &lt;NA&gt;        0.04  ground water  A     Phosphorus…
+##  5     4     5 numeric   &lt;NA&gt;        1.2   ground water  B     Nitrogen, …
+##  6     6     5 numeric   &lt;NA&gt;        0.025 ground water  B     Nitrate Ni…
+##  7     6     6 character U          NA     ground water  B     Nitrate Ni…
+##  8     8     5 numeric   &lt;NA&gt;        0.17  ground water  B     Phosphorus…
+##  9     4     7 numeric   &lt;NA&gt;        0.5   ground water  C     Nitrogen, …
+## 10     6     7 numeric   &lt;NA&gt;        0.025 ground water  C     Nitrate Ni…
+## 11     6     8 character U          NA     ground water  C     Nitrate Ni…
+## 12     8     7 numeric   &lt;NA&gt;        0.062 ground water  C     Phosphorus…
+## 13     4     9 numeric   &lt;NA&gt;        0.4   ground water  D     Nitrogen, …
+## 14     6     9 numeric   &lt;NA&gt;        0.025 ground water  D     Nitrate Ni…
+## 15     6    10 character U          NA     ground water  D     Nitrate Ni…
+## 16     8     9 numeric   &lt;NA&gt;        0.04  ground water  D     Phosphorus…
+## 17     8    10 character J3         NA     ground water  D     Phosphorus…
+## # ... with 1 more variable: unit &lt;chr&gt;</code></pre>
+<p>So what to do about the <code>U</code> cells? We don’t know what they mean, but perhaps
+they are some kind of flag, to inform the interpretation of the numbers. If
+that’s the case, then they should appear in the same row of the final data frame
+as the numbers.</p>
+<p>Something like <code>tidyr::spread()</code> would work, except that
+instead of spreading the values in just one column, we need to spread the values
+in both the <code>character</code> and <code>numeric</code> columns, depending on the value in the
+<code>data_type</code> column. This is what <code>spatter()</code> is for.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb368-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb368-3" data-line-number="3"><span class="st">  </span><span class="kw">spatter</span>(data_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb368-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre><code>## # A tibble: 12 x 6
+##    `sample-type` site  parameter            unit  character numeric
+##    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
+##  1 ground water  A     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;        3.2  
+##  2 ground water  B     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;        1.2  
+##  3 ground water  C     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;        0.5  
+##  4 ground water  D     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;        0.4  
+##  5 ground water  A     Nitrate Nitrite as N mg/L  U           0.025
+##  6 ground water  B     Nitrate Nitrite as N mg/L  U           0.025
+##  7 ground water  C     Nitrate Nitrite as N mg/L  U           0.025
+##  8 ground water  D     Nitrate Nitrite as N mg/L  U           0.025
+##  9 ground water  A     Phosphorus as P      mg/L  &lt;NA&gt;        0.04 
+## 10 ground water  B     Phosphorus as P      mg/L  &lt;NA&gt;        0.17 
+## 11 ground water  C     Phosphorus as P      mg/L  &lt;NA&gt;        0.062
+## 12 ground water  D     Phosphorus as P      mg/L  J3          0.04</code></pre>
+<p>Compare that with the results of <code>spread()</code>, which can only spread one value
+column at a time.</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb370-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb370-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, character)</a></code></pre></div>
+<pre><code>## # A tibble: 17 x 7
+##      row `sample-type` site  parameter            unit  character numeric
+##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  
+##  1     4 ground water  D     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;      &lt;NA&gt;   
+##  2     4 ground water  C     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;      &lt;NA&gt;   
+##  3     4 ground water  B     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;      &lt;NA&gt;   
+##  4     4 ground water  A     Nitrogen, Kjeldahl   mn/L  &lt;NA&gt;      &lt;NA&gt;   
+##  5     6 ground water  A     Nitrate Nitrite as N mg/L  &lt;NA&gt;      &lt;NA&gt;   
+##  6     6 ground water  B     Nitrate Nitrite as N mg/L  &lt;NA&gt;      &lt;NA&gt;   
+##  7     6 ground water  C     Nitrate Nitrite as N mg/L  &lt;NA&gt;      &lt;NA&gt;   
+##  8     6 ground water  D     Nitrate Nitrite as N mg/L  &lt;NA&gt;      &lt;NA&gt;   
+##  9     6 ground water  A     Nitrate Nitrite as N mg/L  U         &lt;NA&gt;   
+## 10     6 ground water  B     Nitrate Nitrite as N mg/L  U         &lt;NA&gt;   
+## 11     6 ground water  C     Nitrate Nitrite as N mg/L  U         &lt;NA&gt;   
+## 12     6 ground water  D     Nitrate Nitrite as N mg/L  U         &lt;NA&gt;   
+## 13     8 ground water  A     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
+## 14     8 ground water  D     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
+## 15     8 ground water  C     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
+## 16     8 ground water  B     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
+## 17     8 ground water  D     Phosphorus as P      mg/L  J3        &lt;NA&gt;</code></pre>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb372-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb372-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb372-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, numeric)</a></code></pre></div>
+<pre><code>## # A tibble: 17 x 7
+##      row `sample-type` site  parameter            unit  character numeric
+##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1     4 ground water  A     Nitrogen, Kjeldahl   mn/L         NA   3.2  
+##  2     4 ground water  B     Nitrogen, Kjeldahl   mn/L         NA   1.2  
+##  3     4 ground water  C     Nitrogen, Kjeldahl   mn/L         NA   0.5  
+##  4     4 ground water  D     Nitrogen, Kjeldahl   mn/L         NA   0.4  
+##  5     6 ground water  A     Nitrate Nitrite as N mg/L         NA  NA    
+##  6     6 ground water  B     Nitrate Nitrite as N mg/L         NA  NA    
+##  7     6 ground water  C     Nitrate Nitrite as N mg/L         NA  NA    
+##  8     6 ground water  D     Nitrate Nitrite as N mg/L         NA  NA    
+##  9     6 ground water  A     Nitrate Nitrite as N mg/L         NA   0.025
+## 10     6 ground water  B     Nitrate Nitrite as N mg/L         NA   0.025
+## 11     6 ground water  C     Nitrate Nitrite as N mg/L         NA   0.025
+## 12     6 ground water  D     Nitrate Nitrite as N mg/L         NA   0.025
+## 13     8 ground water  D     Phosphorus as P      mg/L         NA  NA    
+## 14     8 ground water  A     Phosphorus as P      mg/L         NA   0.04 
+## 15     8 ground water  B     Phosphorus as P      mg/L         NA   0.17 
+## 16     8 ground water  C     Phosphorus as P      mg/L         NA   0.062
+## 17     8 ground water  D     Phosphorus as P      mg/L         NA   0.04</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="in-cell-formatting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="superscript-symbols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="toronto-transit-commission.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -311,7 +372,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/formatting.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
 },
 "download": ["_main.pdf", "_main.epub"],
