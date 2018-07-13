@@ -257,7 +257,7 @@ This kind of unpivoting is always done in two stages.
 1. Identify which cells are headers, and which are data
 1. State how the data cells relate to the header cells.
 
-### Two clear rows of text column headers, left-aligned {#2RL}
+### Two clear rows of text column headers, left-aligned
 
 ![](images/pivot-annotations.png)
 
