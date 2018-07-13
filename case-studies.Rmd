@@ -501,3 +501,56 @@ ttc %>%
   select(-note)
 ```
 
+## Ground water
+
+[![Tweet by Beck Frydenborg about tidying data with
+R](images/groundwater-tweet.png)](https://twitter.com/sharlagelfand/status/996739127562391552)
+
+If the cells containing `U` didn't exist, then this spreadsheet would be a
+textbook example of unpivoting a pivot table.  There are two rows of column
+headers, as well as two columns of row headers, so you would use `behead()` for
+each header.
+
+```{r}
+x <-
+  xlsx_cells(smungs::groundwater) %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric) %>%
+  behead("NNW", "sample-type") %>%
+  behead("NNW", "site") %>%
+  behead("W", "parameter") %>%
+  behead("W", "unit")
+x
+```
+
+So what to do about the `U` cells?  We don't know what they mean, but perhaps
+they are some kind of flag, to inform the interpretation of the numbers.  If
+that's the case, then they should appear in the same row of the final data frame
+as the numbers.
+
+Something like `tidyr::spread()` would work, except that
+instead of spreading the values in just one column, we need to spread the values
+in both the `character` and `numeric` columns, depending on the value in the
+`data_type` column.  This is what `spatter()` is for.
+
+```{r}
+x %>%
+  select(-col) %>%
+  spatter(data_type) %>%
+  select(-row)
+```
+
+Compare that with the results of `spread()`, which can only spread one value
+column at a time.
+
+```{r}
+x %>%
+  select(-col) %>%
+  spread(data_type, character)
+```
+
+```{r}
+x %>%
+  select(-col) %>%
+  spread(data_type, numeric)
+```
