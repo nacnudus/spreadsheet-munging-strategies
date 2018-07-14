@@ -228,15 +228,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 textbook example of unpivoting a pivot table. There are two rows of column
 headers, as well as two columns of row headers, so you would use <code>behead()</code> for
 each header.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">x &lt;-</a>
-<a class="sourceLine" id="cb366-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;sample-type&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;site&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb366-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;unit&quot;</span>)</a>
-<a class="sourceLine" id="cb366-9" data-line-number="9">x</a></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1">x &lt;-</a>
+<a class="sourceLine" id="cb362-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;sample-type&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;site&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-7" data-line-number="7"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb362-8" data-line-number="8"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;unit&quot;</span>)</a>
+<a class="sourceLine" id="cb362-9" data-line-number="9">x</a></code></pre></div>
 <pre><code>## # A tibble: 17 x 9
 ##      row   col data_type character numeric `sample-type` site  parameter  
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;      
@@ -266,10 +266,10 @@ as the numbers.</p>
 instead of spreading the values in just one column, we need to spread the values
 in both the <code>character</code> and <code>numeric</code> columns, depending on the value in the
 <code>data_type</code> column. This is what <code>spatter()</code> is for.</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb368-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb368-3" data-line-number="3"><span class="st">  </span><span class="kw">spatter</span>(data_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb368-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb364-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb364-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb364-3" data-line-number="3"><span class="st">  </span><span class="kw">spatter</span>(data_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb364-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 6
 ##    `sample-type` site  parameter            unit  character numeric
 ##    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
@@ -287,9 +287,9 @@ in both the <code>character</code> and <code>numeric</code> columns, depending o
 ## 12 ground water  D     Phosphorus as P      mg/L  J3          0.04</code></pre>
 <p>Compare that with the results of <code>spread()</code>, which can only spread one value
 column at a time.</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb370-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb370-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, character)</a></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, character)</a></code></pre></div>
 <pre><code>## # A tibble: 17 x 7
 ##      row `sample-type` site  parameter            unit  character numeric
 ##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  
@@ -310,9 +310,9 @@ column at a time.</p>
 ## 15     8 ground water  C     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
 ## 16     8 ground water  B     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
 ## 17     8 ground water  D     Phosphorus as P      mg/L  J3        &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb372-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb372-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb372-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">x <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb368-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb368-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(data_type, numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 17 x 7
 ##      row `sample-type` site  parameter            unit  character numeric
 ##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;

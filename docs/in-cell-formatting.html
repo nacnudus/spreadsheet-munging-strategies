@@ -246,9 +246,9 @@ provided as a data frame with the following columns.</p>
 </ul>
 <p>There is one of these data frames for each cell, and they are kept in a
 list-column called <code>character_formatted</code>.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb298-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb298-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted)</a></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb294-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb294-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted)</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 2
 ##   address character_formatted
 ##   &lt;chr&gt;   &lt;list&gt;             
@@ -264,10 +264,10 @@ list-column called <code>character_formatted</code>.</p>
 <p>The way to access these data frames is via <code>tidyr::unnest()</code>. In this example,
 a single cell has a long string of words, where each word is formatted
 differently.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb300-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb300-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb300-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb296-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 9 x 15
 ##   address character      bold  italic underline strike vertAlign    size
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;       &lt;dbl&gt;

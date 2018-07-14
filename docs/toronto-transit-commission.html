@@ -232,25 +232,25 @@ she wrangled it with standard tidyverse tools. I show here an alternative
 method with tidyxl and unpivotr.</p>
 <div id="the-full-code-listing-1" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> The full code listing</h3>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb358-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb358-5" data-line-number="5">fare &lt;-</a>
-<a class="sourceLine" id="cb358-6" data-line-number="6"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb358-8" data-line-number="8">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>),</a>
-<a class="sourceLine" id="cb358-9" data-line-number="9">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</a>
-<a class="sourceLine" id="cb358-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb358-12" data-line-number="12">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-14" data-line-number="14"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-15" data-line-number="15"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;media&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-16" data-line-number="16"><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-18" data-line-number="18"><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">cells &lt;-</a>
+<a class="sourceLine" id="cb354-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb354-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb354-5" data-line-number="5">fare &lt;-</a>
+<a class="sourceLine" id="cb354-6" data-line-number="6"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb354-8" data-line-number="8">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>),</a>
+<a class="sourceLine" id="cb354-9" data-line-number="9">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</a>
+<a class="sourceLine" id="cb354-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb354-12" data-line-number="12">cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-14" data-line-number="14"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-15" data-line-number="15"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;media&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-16" data-line-number="16"><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-18" data-line-number="18"><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year  context fare  media   count
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -279,17 +279,17 @@ their own, and <code>enhead()</code> them back onto the rest of the table later.
 <p>Unfortunately the fare headers in the “WHEN” context aren’t bold, so rather than
 filter for bold headers, instead we filter for headers that aren’t indented by
 spaces. We also filter out any “TOTAL” headers.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb360-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb360-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb360-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb360-5" data-line-number="5">fare &lt;-</a>
-<a class="sourceLine" id="cb360-6" data-line-number="6"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb360-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb360-8" data-line-number="8">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>), <span class="co"># Filter out indented headers</span></a>
-<a class="sourceLine" id="cb360-9" data-line-number="9">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Filteroout totals</span></a>
-<a class="sourceLine" id="cb360-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</a>
-<a class="sourceLine" id="cb360-11" data-line-number="11">fare</a></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1">cells &lt;-</a>
+<a class="sourceLine" id="cb356-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb356-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb356-5" data-line-number="5">fare &lt;-</a>
+<a class="sourceLine" id="cb356-6" data-line-number="6"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb356-8" data-line-number="8">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>), <span class="co"># Filter out indented headers</span></a>
+<a class="sourceLine" id="cb356-9" data-line-number="9">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Filteroout totals</span></a>
+<a class="sourceLine" id="cb356-10" data-line-number="10"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</a>
+<a class="sourceLine" id="cb356-11" data-line-number="11">fare</a></code></pre></div>
 <pre><code>## # A tibble: 7 x 3
 ##     row   col fare           
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;          
@@ -300,15 +300,15 @@ spaces. We also filter out any “TOTAL” headers.</p>
 ## 5    46     2 RAIL           
 ## 6    53     2 WEEKDAY        
 ## 7    54     2 WEEKEND/HOLIDAY</code></pre>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1">ttc &lt;-</a>
-<a class="sourceLine" id="cb362-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;media&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-6" data-line-number="6"><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb362-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</a>
-<a class="sourceLine" id="cb362-9" data-line-number="9">ttc</a></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1">ttc &lt;-</a>
+<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;media&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-6" data-line-number="6"><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</a>
+<a class="sourceLine" id="cb358-9" data-line-number="9">ttc</a></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year      context fare  media          count
 ##    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;
@@ -325,10 +325,10 @@ spaces. We also filter out any “TOTAL” headers.</p>
 ## # ... with 1,178 more rows</code></pre>
 <p>There’s a bit more cosmetic cleaning to do. The indentation can be trimmed from
 the <code>media</code> and the <code>year</code> headers, and the asterisk removed from the year <code>2015 *</code>.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb364-1" data-line-number="1">ttc <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb364-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">str_trim</span>(year), <span class="dt">media =</span> <span class="kw">str_trim</span>(media)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb364-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb364-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>note)</a></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1">ttc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb360-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">str_trim</span>(year), <span class="dt">media =</span> <span class="kw">str_trim</span>(media)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb360-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb360-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>note)</a></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year  context fare  media   count
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;

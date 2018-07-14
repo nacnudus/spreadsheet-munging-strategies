@@ -225,12 +225,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.1</span> An example formatting lookup</h2>
 <p><img src="images/formatting.png" /></p>
 <p>This example shows how to look up whether a cell is bold.</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb280-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb280-3" data-line-number="3">cells &lt;-</a>
-<a class="sourceLine" id="cb280-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb280-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)</a>
-<a class="sourceLine" id="cb280-6" data-line-number="6">cells</a></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb276-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb276-3" data-line-number="3">cells &lt;-</a>
+<a class="sourceLine" id="cb276-4" data-line-number="4"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb276-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)</a>
+<a class="sourceLine" id="cb276-6" data-line-number="6">cells</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 5
 ##      row   col character          style_format     local_format_id
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                      &lt;int&gt;
@@ -248,16 +248,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 12    12     1 row height 30      Normal                         1
 ## 13    13     2 column width 16.76 Normal                         1
 ## 14    14     1 Bad&#39; style         Explanatory Text              57</code></pre>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
-<a class="sourceLine" id="cb282-2" data-line-number="2">bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span></a>
-<a class="sourceLine" id="cb282-3" data-line-number="3">bold</a></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb278-2" data-line-number="2">bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span></a>
+<a class="sourceLine" id="cb278-3" data-line-number="3">bold</a></code></pre></div>
 <pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
 ## [12] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
 ## [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [45] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [56] FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</a></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1"><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</a></code></pre></div>
 <pre><code>## # A tibble: 14 x 6
 ##      row   col character          style_format     local_format_id bold 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                      &lt;int&gt; &lt;lgl&gt;
@@ -277,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 14    14     1 Bad&#39; style         Explanatory Text              57 FALSE</code></pre>
 <p>A quick way to see what formatting definitions exist is to use <code>str()</code>. (Scroll
 past this for now – you don’t need to memorise it).</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
-<a class="sourceLine" id="cb286-2" data-line-number="2"><span class="kw">str</span>(formats)</a></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb282-2" data-line-number="2"><span class="kw">str</span>(formats)</a></code></pre></div>
 <pre><code>## List of 2
 ##  $ local:List of 6
 ##   ..$ numFmt    : chr [1:59] &quot;General&quot; &quot;General&quot; &quot;General&quot; &quot;General&quot; ...
@@ -662,33 +662,33 @@ it’s easy to switch from checking a cell’s style-level formatting to its loc
 formatting.</p>
 <p>Here’s an example of looking up both the local bold formatting and the
 style-level bold formatting of a cell.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb288-2" data-line-number="2">cells &lt;-</a>
-<a class="sourceLine" id="cb288-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb288-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb288-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb288-6" data-line-number="6">cells</a></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb284-2" data-line-number="2">cells &lt;-</a>
+<a class="sourceLine" id="cb284-3" data-line-number="3"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb284-6" data-line-number="6">cells</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     row   col character style_format local_format_id
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt;
 ## 1     1     1 bold      Normal                     6</code></pre>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
-<a class="sourceLine" id="cb290-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb290-3" data-line-number="3">local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
-<a class="sourceLine" id="cb290-4" data-line-number="4">local_bold</a></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</a>
+<a class="sourceLine" id="cb286-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb286-3" data-line-number="3">local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb286-4" data-line-number="4">local_bold</a></code></pre></div>
 <pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
 ## [12] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
 ## [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [45] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [56] FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1">style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold</a>
-<a class="sourceLine" id="cb292-2" data-line-number="2">style_bold</a></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1">style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold</a>
+<a class="sourceLine" id="cb288-2" data-line-number="2">style_bold</a></code></pre></div>
 <pre><code>##           Normal Explanatory Text 
 ##            FALSE            FALSE</code></pre>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1"><span class="kw">mutate</span>(cells,</a>
-<a class="sourceLine" id="cb294-2" data-line-number="2">       <span class="dt">style_bold =</span> style_bold[style_format],</a>
-<a class="sourceLine" id="cb294-3" data-line-number="3">       <span class="dt">local_bold =</span> local_bold[local_format_id])</a></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1"><span class="kw">mutate</span>(cells,</a>
+<a class="sourceLine" id="cb290-2" data-line-number="2">       <span class="dt">style_bold =</span> style_bold[style_format],</a>
+<a class="sourceLine" id="cb290-3" data-line-number="3">       <span class="dt">local_bold =</span> local_bold[local_format_id])</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##     row   col character style_format local_format_id style_bold local_bold
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt; &lt;lgl&gt;      &lt;lgl&gt;     

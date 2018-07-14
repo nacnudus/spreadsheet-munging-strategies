@@ -260,9 +260,9 @@ can filter for <code>row == 1</code>.</p>
 <p>Here is an example of a pivot table where the first two rows, and the first two
 columns, are headers. The other cells contain the data. First, see how the
 cells are laid out in the source file by importing it with readxl.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb91-2" data-line-number="2">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="kw">print</span>(original, <span class="dt">n =</span> <span class="ot">Inf</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">print</span>(original, <span class="dt">n =</span> <span class="ot">Inf</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   X__1        X__2     X__3    X__4   X__5     X__6 
 ##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;
@@ -274,9 +274,9 @@ cells are laid out in the source file by importing it with readxl.</p>
 ## 6 &lt;NA&gt;        Drama    7       8      12       3</code></pre>
 <p>Compare that with the long set of cells, one per row, that tidyxl gives. (Only
 a few properties of each cell are shown, to make it easier to read).</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>)</a>
-<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="kw">select</span>(cells, row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>(cells, <span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>)</a>
+<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw">select</span>(cells, row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>(cells, <span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 32 x 5
 ##      row   col data_type character  numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
@@ -302,10 +302,10 @@ a few properties of each cell are shown, to make it easier to read).</p>
 ## 20     5     7 numeric   &lt;NA&gt;             1
 ## # ... with 12 more rows</code></pre>
 <p>A similar result is obtained via <code>unpivotr::as_cells()</code>.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="kw">as_cells</span>(original) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb95-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb95-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">original &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;pivot-annotations&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="kw">as_cells</span>(original) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 36 x 4
 ##      row   col data_type chr       
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     
@@ -336,8 +336,8 @@ coerced all data types to <code>character</code>, whereas <code>xlsx_cells()</co
 original data types.)</p>
 <p>The tidyxl version is easier to traverse, because it describes the position of
 each cell as well as the value. To filter for the first row of headers:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, character, numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, character, numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##     row   col character numeric
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
@@ -345,8 +345,8 @@ each cell as well as the value. To filter for the first row of headers:</p>
 ## 2     2     6 Male           NA</code></pre>
 <p>Or to filter for cells containing data (in this case, we know that only data
 cells are numeric)</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, numeric)</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##      row   col numeric
 ##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
