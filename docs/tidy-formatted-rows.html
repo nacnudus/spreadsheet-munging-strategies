@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -249,29 +249,29 @@ cells</a>. Here <code>dplyr::bind_cols()</code> can be used as a
 shortcut, because we are joining exactly <code>n</code> rows of formatting to <code>n</code> rows of
 data. The following sections is a more general case that can be used instead of
 this procedure.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co"># cell values</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">fills &lt;-</a>
-<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(fill_colour)</a>
-<a class="sourceLine" id="cb33-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22"><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-23" data-line-number="23"><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
+path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)
+
+<span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span>
+<span class="co"># cell values</span>
+
+<span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
+<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
+fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
+
+<span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
+<span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span>
+<span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span>
+fills &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(fill_colour)
+
+<span class="co"># Step 3: append the `fill` column to the rest of the data</span>
+<span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</code></pre>
 <pre><code>## # A tibble: 3 x 3
 ##     Age Height fill_colour
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      
@@ -281,15 +281,15 @@ this procedure.</p>
 <p>Note that the fill colour is expressed as an RGB value with transparency in the
 first two letters, e.g. <code>FFFFFF00</code> is <code>FF</code> (opaque), with <code>FFFF00</code> (yellow).</p>
 <p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
+
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
 <pre><code>## # A tibble: 3 x 3
 ##   fill_colour   Age Height
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;

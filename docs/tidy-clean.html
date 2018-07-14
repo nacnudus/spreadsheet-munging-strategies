@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -239,12 +239,12 @@ clean tables can be handled using these techniques.</p>
 <li>No need to refer to named ranges</li>
 </ul>
 <p>Here’s the full process.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(row, data_type, header, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, data_type, header, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   
@@ -258,9 +258,9 @@ cell is in one of the columns <code>error</code>, <code>logical</code>, <code>nu
 <code>character</code>, depending on the type of data in the cell. The column <code>data_type</code>
 says which column the value is in. Other columns describe formatting and
 formulas.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</code></pre>
 <pre><code>## # A tibble: 8 x 5
 ##     row   col data_type character numeric
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -277,9 +277,9 @@ part of the data. Think of it like <code>tidyr::gather()</code>, except that it 
 there is more than one row of headers (or more than one column of row-headers),
 and it only works on tables that have first come through
 <code>unpivotr::as_cells()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header)</code></pre>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col data_type character numeric header
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
@@ -295,12 +295,12 @@ column contains the cell value (i.e. the <code>character</code> column or the <
 column), by checking the <code>data_type</code> column. Just like <code>tidyr::spread()</code>, it
 can be confused by extraneous data, so it’s usually a good idea to drop the
 <code>col</code> column first, and to keep the <code>row</code> column.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   
@@ -309,11 +309,11 @@ can be confused by extraneous data, so it’s usually a good idea to drop the
 ## 3     5 Olivia</code></pre>
 <p>In case the table has no column headers, you can spatter the <code>col</code> column
 instead of a nonexistent <code>header</code> column.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">spatter</span>(col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(col) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   `1`        `2`
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -322,14 +322,14 @@ instead of a nonexistent <code>header</code> column.</p>
 ## 3 Olivia       5</code></pre>
 <p>Tidyxl and unpivotr are much more complicated than readxl, and that’s the point:
 tidyxl and unpivotr give you more power and complexity when you need it.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
 ## 1 Matilda      1
 ## 2 Nicholas     3
 ## 3 Olivia       5</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   X__1      X__2
 ##   &lt;chr&gt;    &lt;dbl&gt;

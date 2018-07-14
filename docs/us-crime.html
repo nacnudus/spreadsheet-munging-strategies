@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -245,25 +245,25 @@ data cells with missing header cells. Fortunately they do exist (because they
 have formatting), they are just empty or <code>NA</code>. To make sure they aren’t
 ignored, use <code>drop_na = FALSE</code> in <code>behead()</code>, and then later fill the blanks in
 the <code>units</code> column with <code>&quot;Count&quot;</code>.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb337-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</a>
-<a class="sourceLine" id="cb337-4" data-line-number="4">                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</a>
-<a class="sourceLine" id="cb337-5" data-line-number="5">         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</a>
-<a class="sourceLine" id="cb337-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb337-7" data-line-number="7">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-8" data-line-number="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-12" data-line-number="12"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-13" data-line-number="13"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-14" data-line-number="14"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-15" data-line-number="15"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">unit =</span> <span class="kw">if_else</span>(unit <span class="op">==</span><span class="st"> &quot;&quot;</span>, <span class="st">&quot;Count&quot;</span>, unit)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-17" data-line-number="17"><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, unit, area, year, population, crime) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-18" data-line-number="18"><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb337-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
+                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
+         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
+
+cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">unit =</span> <span class="kw">if_else</span>(unit <span class="op">==</span><span class="st"> &quot;&quot;</span>, <span class="st">&quot;Count&quot;</span>, unit)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, unit, area, year, population, crime) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
 <pre><code>## # A tibble: 1,320 x 6
 ##    area                year  population crime       Count `Rate per  100,…
 ##    &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt;
@@ -293,34 +293,34 @@ are the categories of crimes, and store them in the <code>categories</code> vari
 <p>In fact the headers <code>unit</code>, <code>year</code>, <code>population</code> can be handled by <code>behead()</code>,
 because they aren’t hierarchichal, so only the variables <code>category</code>, <code>crime</code>,
 <code>region</code>, <code>division</code> and <code>state</code> are handled by <code>enhead()</code>.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb339-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb339-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</a>
-<a class="sourceLine" id="cb339-4" data-line-number="4">                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</a>
-<a class="sourceLine" id="cb339-5" data-line-number="5">         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</a>
-<a class="sourceLine" id="cb339-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb339-7" data-line-number="7">formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb339-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb339-9" data-line-number="9">categories &lt;-</a>
-<a class="sourceLine" id="cb339-10" data-line-number="10"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb339-11" data-line-number="11"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L,</a>
-<a class="sourceLine" id="cb339-12" data-line-number="12">                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb339-13" data-line-number="13">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb339-14" data-line-number="14"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">category =</span> character)</a>
-<a class="sourceLine" id="cb339-15" data-line-number="15">categories</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
+                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
+         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
+
+formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>)
+
+categories &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L,
+                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
+                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">category =</span> character)
+categories</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##     row   col category      
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;         
 ## 1     4     4 Violent crime 
 ## 2     4    16 Property crime</code></pre>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" data-line-number="1">crimes &lt;-</a>
-<a class="sourceLine" id="cb341-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb341-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb341-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">%in%</span><span class="st"> </span>categories<span class="op">$</span>category,</a>
-<a class="sourceLine" id="cb341-5" data-line-number="5">                             <span class="st">&quot;Total&quot;</span>,</a>
-<a class="sourceLine" id="cb341-6" data-line-number="6">                             character)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb341-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">crime =</span> character)</a>
-<a class="sourceLine" id="cb341-8" data-line-number="8">crimes</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">crimes &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">%in%</span><span class="st"> </span>categories<span class="op">$</span>category,
+                             <span class="st">&quot;Total&quot;</span>,
+                             character)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">crime =</span> character)
+crimes</code></pre>
 <pre><code>## # A tibble: 13 x 3
 ##      row   col crime                                 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;                                 
@@ -337,14 +337,14 @@ because they aren’t hierarchichal, so only the variables <code>category</code>
 ## 11     4    18 Burglary                              
 ## 12     4    20 Larceny-theft                         
 ## 13     4    22 Motor vehicle theft</code></pre>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">regions &lt;-</a>
-<a class="sourceLine" id="cb343-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb343-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</a>
-<a class="sourceLine" id="cb343-4" data-line-number="4">                col <span class="op">==</span><span class="st"> </span>1L,</a>
-<a class="sourceLine" id="cb343-5" data-line-number="5">                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb343-6" data-line-number="6">                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb343-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">region =</span> character)</a>
-<a class="sourceLine" id="cb343-8" data-line-number="8">regions</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">regions &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
+                col <span class="op">==</span><span class="st"> </span>1L,
+                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
+                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">region =</span> character)
+regions</code></pre>
 <pre><code>## # A tibble: 5 x 3
 ##     row   col region             
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;              
@@ -353,15 +353,15 @@ because they aren’t hierarchichal, so only the variables <code>category</code>
 ## 3    45     1 Midwest            
 ## 4    90     1 South              
 ## 5   153     1 West</code></pre>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb345-1" data-line-number="1">divisions &lt;-</a>
-<a class="sourceLine" id="cb345-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb345-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</a>
-<a class="sourceLine" id="cb345-4" data-line-number="4">                col <span class="op">==</span><span class="st"> </span>1L,</a>
-<a class="sourceLine" id="cb345-5" data-line-number="5">                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb345-6" data-line-number="6">                <span class="op">!</span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id],</a>
-<a class="sourceLine" id="cb345-7" data-line-number="7">                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb345-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">division =</span> character)</a>
-<a class="sourceLine" id="cb345-9" data-line-number="9">divisions</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">divisions &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
+                col <span class="op">==</span><span class="st"> </span>1L,
+                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
+                <span class="op">!</span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id],
+                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">division =</span> character)
+divisions</code></pre>
 <pre><code>## # A tibble: 21 x 3
 ##      row   col division          
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;             
@@ -376,16 +376,16 @@ because they aren’t hierarchichal, so only the variables <code>category</code>
 ##  9   183     1 Pacific           
 ## 10   201     1 Puerto Rico       
 ## # ... with 11 more rows</code></pre>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb347-1" data-line-number="1">states &lt;-</a>
-<a class="sourceLine" id="cb347-2" data-line-number="2"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb347-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</a>
-<a class="sourceLine" id="cb347-4" data-line-number="4">                col <span class="op">==</span><span class="st"> </span>1L,</a>
-<a class="sourceLine" id="cb347-5" data-line-number="5">                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb347-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>),</a>
-<a class="sourceLine" id="cb347-7" data-line-number="7">                             <span class="kw">str_trim</span>(character),</a>
-<a class="sourceLine" id="cb347-8" data-line-number="8">                             <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb347-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</a>
-<a class="sourceLine" id="cb347-10" data-line-number="10">states</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">states &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
+                col <span class="op">==</span><span class="st"> </span>1L,
+                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>),
+                             <span class="kw">str_trim</span>(character),
+                             <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)
+states</code></pre>
 <pre><code>## # A tibble: 77 x 3
 ##      row   col state        
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;        
@@ -400,19 +400,19 @@ because they aren’t hierarchichal, so only the variables <code>category</code>
 ##  9    30     1 Vermont      
 ## 10    33     1 Total        
 ## # ... with 67 more rows</code></pre>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1">cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&gt;=</span><span class="st"> </span>2L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-4" data-line-number="4"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-5" data-line-number="5"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-6" data-line-number="6"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-7" data-line-number="7"><span class="st">  </span><span class="kw">enhead</span>(categories, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-8" data-line-number="8"><span class="st">  </span><span class="kw">enhead</span>(crimes, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-9" data-line-number="9"><span class="st">  </span><span class="kw">enhead</span>(regions, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-10" data-line-number="10"><span class="st">  </span><span class="kw">enhead</span>(divisions, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-11" data-line-number="11"><span class="st">  </span><span class="kw">enhead</span>(states, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-12" data-line-number="12"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb349-13" data-line-number="13"><span class="st">  </span><span class="kw">select</span>(<span class="dt">value =</span> numeric, category, crime, region, division, state, year, population)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&gt;=</span><span class="st"> </span>2L) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(categories, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(crimes, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(regions, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(divisions, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(states, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="dt">value =</span> numeric, category, crime, region, division, state, year, population)</code></pre>
 <pre><code>## # A tibble: 2,640 x 8
 ##      value category      crime      region division state year  population
 ##      &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
@@ -442,44 +442,44 @@ seems to belong to a different table altogether, so that’s how we’ll treat i
 so these are manually filled in.</p>
 <p>The hierarchy of crime (e.g. ‘robbery’ is within ‘violent crime’) is ignored.
 That would be handled in the same way as for <a href="us-crime.html#us-crime-2">Table 2</a>.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb351-1" data-line-number="1">cells &lt;-</a>
-<a class="sourceLine" id="cb351-2" data-line-number="2"><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</a>
-<a class="sourceLine" id="cb351-4" data-line-number="4">                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</a>
-<a class="sourceLine" id="cb351-5" data-line-number="5">         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</a>
-<a class="sourceLine" id="cb351-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb351-7" data-line-number="7">population &lt;-</a>
-<a class="sourceLine" id="cb351-8" data-line-number="8"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-9" data-line-number="9"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&lt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-10" data-line-number="10"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-11" data-line-number="11"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-12" data-line-number="12"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-13" data-line-number="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(<span class="kw">is.na</span>(statistic) <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,</a>
-<a class="sourceLine" id="cb351-14" data-line-number="14">                               statistic <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,</a>
-<a class="sourceLine" id="cb351-15" data-line-number="15">                               <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">str_trim</span>(statistic))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-16" data-line-number="16"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,</a>
-<a class="sourceLine" id="cb351-17" data-line-number="17">                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),</a>
-<a class="sourceLine" id="cb351-18" data-line-number="18">                statistic <span class="op">!=</span><span class="st"> &quot;Estimated total&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-20" data-line-number="20"><span class="st">  </span><span class="kw">spatter</span>(statistic)</a>
-<a class="sourceLine" id="cb351-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb351-22" data-line-number="22">crime &lt;-</a>
-<a class="sourceLine" id="cb351-23" data-line-number="23"><span class="st">  </span>cells <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-24" data-line-number="24"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">!=</span><span class="st"> </span>5L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-25" data-line-number="25"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-26" data-line-number="26"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-27" data-line-number="27"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-28" data-line-number="28"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-29" data-line-number="29"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,</a>
-<a class="sourceLine" id="cb351-30" data-line-number="30">                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),</a>
-<a class="sourceLine" id="cb351-31" data-line-number="31">                <span class="op">!</span><span class="kw">is.na</span>(statistic),</a>
-<a class="sourceLine" id="cb351-32" data-line-number="32">                statistic <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-33" data-line-number="33"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(statistic <span class="op">==</span><span class="st"> &quot;Area actually reporting&quot;</span> <span class="op">~</span><span class="st"> &quot;Actual&quot;</span>,</a>
-<a class="sourceLine" id="cb351-34" data-line-number="34">                               statistic <span class="op">==</span><span class="st"> &quot;Estimated total&quot;</span> <span class="op">~</span><span class="st"> &quot;Estimated&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-35" data-line-number="35"><span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic, crime) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb351-36" data-line-number="36"><span class="st">  </span><span class="kw">spatter</span>(statistic)</a>
-<a class="sourceLine" id="cb351-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb351-38" data-line-number="38"><span class="kw">left_join</span>(population, crime)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">3</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
+                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
+         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
+
+population &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&lt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(<span class="kw">is.na</span>(statistic) <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,
+                               statistic <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,
+                               <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">str_trim</span>(statistic))) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,
+                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),
+                statistic <span class="op">!=</span><span class="st"> &quot;Estimated total&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(statistic)
+
+crime &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">!=</span><span class="st"> </span>5L) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,
+                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),
+                <span class="op">!</span><span class="kw">is.na</span>(statistic),
+                statistic <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(statistic <span class="op">==</span><span class="st"> &quot;Area actually reporting&quot;</span> <span class="op">~</span><span class="st"> &quot;Actual&quot;</span>,
+                               statistic <span class="op">==</span><span class="st"> &quot;Estimated total&quot;</span> <span class="op">~</span><span class="st"> &quot;Estimated&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic, crime) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(statistic)
+
+<span class="kw">left_join</span>(population, crime)</code></pre>
 <pre><code>## Joining, by = c(&quot;state&quot;, &quot;area&quot;)</code></pre>
 <pre><code>## # A tibble: 1,480 x 7
 ##    state   area     `Area actually r… Population crime    Actual Estimated

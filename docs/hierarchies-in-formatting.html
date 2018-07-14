@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Spreadsheet Munging Strategies</title>
   <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
 
   <meta property="og:title" content="Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -255,9 +255,9 @@ hierarchy, e.g.</p>
 <p>When each kind of formatting relates to a different level of one hierarchy,
 import the different kinds of formatting into different columns, and then
 combine them into a third column, perhaps using <code>paste()</code>, or <code>case_when()</code>.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></a>
-<a class="sourceLine" id="cb65-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>)</a>
-<a class="sourceLine" id="cb65-3" data-line-number="3">x</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
+x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>)
+x</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   Name     Score
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -265,29 +265,29 @@ combine them into a third column, perhaps using <code>paste()</code>, or <code>c
 ## 2 Nicholas     5
 ## 3 Olivia       3
 ## 4 Paul         1</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="co"># Step 2: import one kind of formatting of one column of the table</span></a>
-<a class="sourceLine" id="cb67-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></a>
-<a class="sourceLine" id="cb67-4" data-line-number="4"><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></a>
-<a class="sourceLine" id="cb67-5" data-line-number="5">bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
-<a class="sourceLine" id="cb67-6" data-line-number="6">italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</a>
-<a class="sourceLine" id="cb67-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb67-8" data-line-number="8"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></a>
-<a class="sourceLine" id="cb67-9" data-line-number="9"><span class="co"># and create a new column `fill` of the fill colours, by looking up the</span></a>
-<a class="sourceLine" id="cb67-10" data-line-number="10"><span class="co"># local_format_id of each cell in the `formats` pallette.</span></a>
-<a class="sourceLine" id="cb67-11" data-line-number="11">formats &lt;-</a>
-<a class="sourceLine" id="cb67-12" data-line-number="12"><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb67-13" data-line-number="13"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></a>
-<a class="sourceLine" id="cb67-14" data-line-number="14"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</a>
-<a class="sourceLine" id="cb67-15" data-line-number="15">         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb67-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</a>
-<a class="sourceLine" id="cb67-17" data-line-number="17">                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</a>
-<a class="sourceLine" id="cb67-18" data-line-number="18">                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</a>
-<a class="sourceLine" id="cb67-19" data-line-number="19">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb67-20" data-line-number="20"><span class="st">  </span><span class="kw">select</span>(bold, italic, grade)</a>
-<a class="sourceLine" id="cb67-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb67-22" data-line-number="22"><span class="co"># Step 3: append the `fill` column to the rest of the data</span></a>
-<a class="sourceLine" id="cb67-23" data-line-number="23"><span class="kw">bind_cols</span>(x, formats)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 2: import one kind of formatting of one column of the table</span>
+
+<span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
+<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
+bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold
+italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic
+
+<span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
+<span class="co"># and create a new column `fill` of the fill colours, by looking up the</span>
+<span class="co"># local_format_id of each cell in the `formats` pallette.</span>
+formats &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],
+         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,
+                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,
+                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,
+                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(bold, italic, grade)
+
+<span class="co"># Step 3: append the `fill` column to the rest of the data</span>
+<span class="kw">bind_cols</span>(x, formats)</code></pre>
 <pre><code>## # A tibble: 4 x 5
 ##   Name     Score bold  italic grade       
 ##   &lt;chr&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;       
@@ -296,20 +296,20 @@ combine them into a third column, perhaps using <code>paste()</code>, or <code>c
 ## 3 Olivia       3 TRUE  FALSE  poor        
 ## 4 Paul         1 TRUE  TRUE   fail</code></pre>
 <p>Here it is again, using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</a>
-<a class="sourceLine" id="cb69-2" data-line-number="2">italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</a>
-<a class="sourceLine" id="cb69-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb69-4" data-line-number="4"><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</a>
-<a class="sourceLine" id="cb69-6" data-line-number="6">         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</a>
-<a class="sourceLine" id="cb69-8" data-line-number="8">                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</a>
-<a class="sourceLine" id="cb69-9" data-line-number="9">                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</a>
-<a class="sourceLine" id="cb69-10" data-line-number="10">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, bold, italic, grade) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-12" data-line-number="12"><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-13" data-line-number="13"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb69-14" data-line-number="14"><span class="st">  </span><span class="kw">spatter</span>(header)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold
+italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic
+
+<span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],
+         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,
+                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,
+                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,
+                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, bold, italic, grade) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(header)</code></pre>
 <pre><code>## # A tibble: 4 x 6
 ##     row bold  italic grade        Name     Score
 ##   &lt;int&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;
