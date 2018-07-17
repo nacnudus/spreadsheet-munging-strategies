@@ -1,8 +1,8 @@
 # Tidy-ish tables {#tidyish}
 
-This chapter is a gentle introduction, by taking what you already know about
+This chapter is a gentle introduction, taking what you already know about
 importing tidy tabular data (with `read.csv()` or the
-[readr](https://readr.tidyverse.org) package), and shows you how to how to do
+[readr](https://readr.tidyverse.org) package), and showing you how to how to do
 the same things with [tidyxl](https://nacnudus.github.io/tidyxl) and
 [unpivotr](https://nacnudus.github.io/unpivotr).  It works up to tables that are
 mostly tidy, but have subtle problems.
