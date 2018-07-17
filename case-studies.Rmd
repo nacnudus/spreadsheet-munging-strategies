@@ -504,7 +504,7 @@ ttc %>%
 ## Ground water
 
 [![Tweet by Beck Frydenborg about tidying data with
-R](images/groundwater-tweet.png)](https://twitter.com/sharlagelfand/status/996739127562391552)
+R](images/groundwater-tweet.png)](https://twitter.com/beckfrydenborg/status/974787652573646849)
 
 If the cells containing `U` didn't exist, then this spreadsheet would be a
 textbook example of unpivoting a pivot table.  There are two rows of column
