@@ -1,4 +1,10 @@
-repo: https://github.com/nacnudus/spreadsheet-munging-strategies/
+title: "Spreadsheet Munging Strategies"
+author: "Duncan Garmonsway"
+description: "A guide to reading complex spreadsheets into tidy data with R.  Extract colour, comments, mixed data types, multi-level headers and formulas with the tidyxl package.  Unpivot pivot tables and small multiples with the unpivotr package."
+book_filename: "spreadsheet-munging-strategies.Rmd"
+github-repo: "nacnudus/spreadsheet-munging-strategies"
+edit: https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/%s
+url: https://github.com/nacnudus/spreadsheet-munging-strategies/
 output_dir: "docs"
 delete_merged_file: true
 rmd_files: ["index.Rmd",

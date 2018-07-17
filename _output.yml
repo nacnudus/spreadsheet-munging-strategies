@@ -3,11 +3,21 @@ bookdown::gitbook:
   split_by: section
   includes:
     in_header: google_analytics.html
-    download: [pdf, epub]
   config:
     toc:
-      collapse: none
+      collapse: subsection
+      scroll_highlight: yes
+    toolbar:
+      position: fixed
+    edit: null
     download: [pdf, epub]
-    edit: https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/%s
+    search: yes
     sharing:
-      github: yes
+      facebook: yes
+      google: yes
+      twitter: yes
+      linkedin: yes
+      weibo: no
+      instapper: no
+      vk: no
+      all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
