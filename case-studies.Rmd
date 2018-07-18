@@ -175,6 +175,11 @@ are highlighted in yellow in the screenshot.
 
 ![](images/vaccinations.png)
 
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/vaccinations.xlsx?raw=true).
+[Original
+source](https://www.cdc.gov/vaccines/imz-managers/coverage/schoolvaxview/data-reports/vacc-coverage.html).
+
 The way to unpivot this is to realise that the year cells represent two
 different things: the year (obviously) and a statistic (percentage vaccinated).
 It would have been easier to unpivot if the years had been put into a separate
@@ -184,10 +189,6 @@ row of headers, so we will pretend that that was in fact the case.
 1. `behead()` everything else as usual, and then overwite the year headers with
    `percentage_vaccinated`.
 1. `enhead()` the year cells.
-
-The original spreadsheet has been replaced by an [annual
-refresh](https://www.cdc.gov/vaccines/vaxview/index.html), so you will need to
-use the file from the [smungs](https://github.com/nacnudus/smungs) package.
 
 ```{r}
 cells <- xlsx_cells(smungs::vaccinations, "SVV Coverage Trend Data")
@@ -228,6 +229,11 @@ isn't included in this case study because it is so straightforward.
 ### Table 2 {#us-crime-2}
 
 ![](images/us-crime-2.jpg)
+
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/us-crime-2.xlsx?raw=true).
+[Original
+source](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/tables/table-2).
 
 #### Simple version {#us-crime-2-simple}
 
@@ -358,6 +364,11 @@ cells %>%
 
 ![](images/us-crime-3.jpg)
 
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/us-crime-3.xlsx?raw=true).
+[Original
+source](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/tables/table-3).
+
 This table is confusing to humans, let alone computers.  The `Population` column
 seems to belong to a different table altogether, so that's how we'll treat it.
 
@@ -424,6 +435,11 @@ Sharla Gelfand's annotated screenshot explains the structure, and see her
 excellent [blog post](https://sharlagelfand.netlify.com/posts/tidy-ttc/) for how
 she wrangled it with standard tidyverse tools.  I show here an alternative
 method with tidyxl and unpivotr.
+
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/toronto_transit.xlsx?raw=true).
+[Original
+source](https://portal0.cf.opendata.inter.sandbox-toronto.ca/dataset/ttc-ridership-analysis).
 
 ### The full code listing
 
@@ -511,6 +527,11 @@ textbook example of unpivoting a pivot table.  There are two rows of column
 headers, as well as two columns of row headers, so you would use `behead()` for
 each header.
 
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/groundwater.xlsx?raw=true).
+Synthesised from the [original
+tweet](https://twitter.com/beckfrydenborg/status/974787652573646849).
+
 ```{r}
 x <-
   xlsx_cells(smungs::groundwater) %>%
@@ -567,7 +588,12 @@ using unpivotr's new, more powerful syntax.
 
 ![](images/cashflows.png)
 
-The techniques here are
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/cashflows.xlsx?raw=true).
+[Original
+source](https://github.com/DavisVaughan/tidying-excel-cashflows-blog-companion).
+
+The techniques are
 
 1. Filter out `TOTAL` rows
 2. Create an ordered factor of the months, which follow the fiscal year April to
