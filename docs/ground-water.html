@@ -230,6 +230,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 textbook example of unpivoting a pivot table. There are two rows of column
 headers, as well as two columns of row headers, so you would use <code>behead()</code> for
 each header.</p>
+<p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/groundwater.xlsx?raw=true">Download the
+file</a>.
+Synthesised from the <a href="https://twitter.com/beckfrydenborg/status/974787652573646849">original
+tweet</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>

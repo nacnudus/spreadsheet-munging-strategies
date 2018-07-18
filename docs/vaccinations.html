@@ -233,6 +233,10 @@ the same row) as the other headers.</p>
 <p>In this case, there is a small multiple for each year of data. The year headers
 are highlighted in yellow in the screenshot.</p>
 <p><img src="images/vaccinations.png" /></p>
+<p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/vaccinations.xlsx?raw=true">Download the
+file</a>.
+<a href="https://www.cdc.gov/vaccines/imz-managers/coverage/schoolvaxview/data-reports/vacc-coverage.html">Original
+source</a>.</p>
 <p>The way to unpivot this is to realise that the year cells represent two
 different things: the year (obviously) and a statistic (percentage vaccinated).
 It would have been easier to unpivot if the years had been put into a separate
@@ -243,9 +247,6 @@ row of headers, so we will pretend that that was in fact the case.</p>
 <code>percentage_vaccinated</code>.</li>
 <li><code>enhead()</code> the year cells.</li>
 </ol>
-<p>The original spreadsheet has been replaced by an <a href="https://www.cdc.gov/vaccines/vaxview/index.html">annual
-refresh</a>, so you will need to
-use the file from the <a href="https://github.com/nacnudus/smungs">smungs</a> package.</p>
 <pre class="sourceCode r"><code class="sourceCode r">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>vaccinations, <span class="st">&quot;SVV Coverage Trend Data&quot;</span>)
 
 years &lt;-
