@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-formatted-cells.html">
-<link rel="next" href="hierarchies-in-formatting.html">
+<link rel="prev" href="ground-water.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -223,84 +223,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="layered-formatting" class="section level2">
-<h2><span class="header-section-number">2.5</span> Layered meaningful formatting</h2>
-<p><img src="images/combined-highlights.png" /></p>
-<p>Sometimes different kinds of formatting relate to clearly different aspects of
-an observation, e.g. yellow highlight for “uncertain data” and red text for
-“product no longer available”. Both yellow highlighting and red text in the
-same row would indicate uncertain data and unavailability of the product at the
-same time.</p>
-<p>Deal with it by reading each kind of formatting into a separate column,
-e.g. fill colour into one column, font colour into another, bold/not-bold into a
-another, etc.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
-path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>)
+<div id="cashflows" class="section level2">
+<h2><span class="header-section-number">9.6</span> Cashflows</h2>
+<p><a href="https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/"><img src="images/cashflows-blog.png" alt="Blog post by Dennis Vaughan about tidying cashflow data with unpivotr" /></a></p>
+<p>Dennis Vaughan kindly
+<a href="https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/">blogged</a>
+about using unpivotr to tidy spreadsheets of cashflows. Here is an example
+using unpivotr’s new, more powerful syntax.</p>
+<p><img src="images/cashflows.png" /></p>
+<p>The techniques here are</p>
+<ol style="list-style-type: decimal">
+<li>Filter out <code>TOTAL</code> rows</li>
+<li>Create an ordered factor of the months, which follow the fiscal year April to
+March. This is done using the fact that the months appear in column-order as
+well as year-order, so we can sort on <code>col</code>.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r">cashflows &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>cashflows) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;month&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;main_header&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;sub_header&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(month <span class="op">!=</span><span class="st"> &quot;TOTALS&quot;</span>,
+                <span class="op">!</span><span class="kw">str_detect</span>(sub_header, <span class="st">&quot;otal&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(col) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">factor</span>(month, <span class="dt">levels =</span> <span class="kw">unique</span>(month), <span class="dt">ordered =</span> <span class="ot">TRUE</span>),
+         <span class="dt">sub_header =</span> <span class="kw">str_trim</span>(sub_header)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(main_header, sub_header, month, <span class="dt">value =</span> numeric)
+cashflows</code></pre>
+<pre><code>## # A tibble: 336 x 4
+##    main_header               sub_header            month value
+##    &lt;chr&gt;                     &lt;chr&gt;                 &lt;ord&gt; &lt;dbl&gt;
+##  1 Cash Inflows (Income):    Cash Collections      April  2227
+##  2 Cash Inflows (Income):    Credit Collections    April -4712
+##  3 Cash Inflows (Income):    Investment Income     April -2412
+##  4 Cash Inflows (Income):    Other:                April   490
+##  5 Cash Outflows (Expenses): Advertising           April  -324
+##  6 Cash Outflows (Expenses): Bank Service Charges  April  3221
+##  7 Cash Outflows (Expenses): Insurance             April   960
+##  8 Cash Outflows (Expenses): Interest              April   936
+##  9 Cash Outflows (Expenses): Inventory Purchases   April  2522
+## 10 Cash Outflows (Expenses): Maintenance &amp; Repairs April  3883
+## # ... with 326 more rows</code></pre>
+<p>To prove that the data is correct, we can reproduce the total row at the bottom
+(‘Ending Cash Balance’).</p>
+<pre class="sourceCode r"><code class="sourceCode r">cashflows <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(main_header, month) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(month, main_header) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;ows&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;Income&quot;</span>), value, <span class="op">-</span>value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">cumsum</span>(value))</code></pre>
+<pre><code>## # A tibble: 12 x 2
+##    month  value
+##    &lt;ord&gt;  &lt;dbl&gt;
+##  1 April -39895
+##  2 May   -43080
+##  3 June  -39830
+##  4 July  -14108
+##  5 Aug   -25194
+##  6 Sept  -42963
+##  7 Oct   -39635
+##  8 Nov   -29761
+##  9 Dec   -49453
+## 10 Jan   -30359
+## 11 Feb   -33747
+## 12 Mar   -27016</code></pre>
 
-<span class="co"># Step 2: import one kind of formatting of one column of the table</span>
-
-<span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
-<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
-fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-font_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb
-
-<span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
-<span class="co"># and create a new column `fill` of the fill colours, by looking up the</span>
-<span class="co"># local_format_id of each cell in the `formats` pallette.</span>
-formats &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id],
-         <span class="dt">font_colour =</span> font_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(fill_colour, font_colour)
-
-<span class="co"># Step 3: append the `fill` column to the rest of the data</span>
-<span class="kw">bind_cols</span>(x, formats)</code></pre>
-<pre><code>## # A tibble: 4 x 5
-##   Name     Weight Price fill_colour font_colour
-##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
-## 1 Knife         7     8 &lt;NA&gt;        FF000000   
-## 2 Fork          5     6 FFFFFF00    FF000000   
-## 3 Spoon         3     4 &lt;NA&gt;        FFFF0000   
-## 4 Teaspoon      1     2 FFFFFF00    FFFF0000</code></pre>
-<p>Here’s the same thing, but using only tidyxl and unpivotr.</p>
-<pre class="sourceCode r"><code class="sourceCode r">fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-font_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb
-
-cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id],
-         <span class="dt">font_colour =</span> font_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour, font_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, header) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, Name) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character)
-
-values &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour, <span class="op">-</span>font_colour) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(header, numeric)
-
-formats &lt;-<span class="st"> </span><span class="kw">distinct</span>(cells, row, fill_colour, font_colour)
-
-<span class="kw">left_join</span>(values, formats, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
-<pre><code>## # A tibble: 4 x 6
-##   data_type Name     Price Weight fill_colour font_colour
-##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
-## 1 numeric   Knife        8      7 &lt;NA&gt;        FF000000   
-## 2 numeric   Fork         6      5 FFFFFF00    &lt;NA&gt;       
-## 3 numeric   Spoon        4      3 &lt;NA&gt;        FFFF0000   
-## 4 numeric   Teaspoon     2      1 FFFFFF00    FFFF0000</code></pre>
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidy-formatted-cells.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hierarchies-in-formatting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ground-water.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -330,7 +331,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
