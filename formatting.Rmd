@@ -193,8 +193,9 @@ that nevertheless occurred in real life.
 
 ![](images/in-cell-formatting.png)
 
-The following table of products and their
-production readiness combines three pieces of information in a single cell.
+The above table of products and their production readiness combines three pieces
+of information in a single cell.  Believe it or not, this is based on a
+real-life example.
 
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
