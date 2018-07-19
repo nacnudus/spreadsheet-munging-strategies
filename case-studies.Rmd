@@ -578,10 +578,10 @@ x %>%
 
 ## Cashflows
 
-[![Blog post by Dennis Vaughan about tidying cashflow data with
+[![Blog post by Davis Vaughan about tidying cashflow data with
 unpivotr](images/cashflows-blog.png)](https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/)
 
-Dennis Vaughan kindly
+Davis Vaughan kindly
 [blogged](https://blog.davisvaughan.com/post/tidying-excel-cash-flow-spreadsheets-in-r/)
 about using unpivotr to tidy spreadsheets of cashflows.  Here is an example
 using unpivotr's new, more powerful syntax.
