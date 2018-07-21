@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html">
-<link rel="next" href="implied-multiples.html">
+<link rel="prev" href="cashflows.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -227,71 +227,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="same-table-in-several-worksheetsfiles-but-in-different-positions" class="section level2">
-<h2><span class="header-section-number">4.3</span> Same table in several worksheets/files but in different positions</h2>
-<p><img src="images/female.png" alt="sheet: female" />
-<img src="images/male.png" alt="sheet: male" /></p>
-<p>This is almost the same as the section “Same table in several worksheets/files
-(using the sheet/file name)”. The only difference is that the function you
-write to unpivot the table must also <em>find</em> the table in the first place, and be
-robust to differences in the placement and context of the table on each sheet.</p>
-<p>In this example, both tables begin in the same column, but there is an extra row
-of notes above one of the tables. There are a few ways to tackle this problem.
-Here, we filter for the <code>Subject</code> cell, which is either <code>A3</code> or <code>A4</code>, and then
-extend the selection to include the whole table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)
-all_cells</code></pre>
-<pre><code>## # A tibble: 21 x 6
-##    sheet    row   col data_type character       numeric
-##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;
-##  1 female     1     1 character Table of scores      NA
-##  2 female     3     1 character Subject              NA
-##  3 female     3     2 character Matilda              NA
-##  4 female     3     3 character Olivia               NA
-##  5 female     4     1 character Classics             NA
-##  6 female     4     2 numeric   &lt;NA&gt;                  1
-##  7 female     4     3 numeric   &lt;NA&gt;                  2
-##  8 female     5     1 character History              NA
-##  9 female     5     2 numeric   &lt;NA&gt;                  3
-## 10 female     5     3 numeric   &lt;NA&gt;                  4
-## # ... with 11 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {
-  cells <span class="op">%&gt;%</span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span>
-<span class="st">    </span>{dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, name) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject)
-}
+<div id="school-performance" class="section level2">
+<h2><span class="header-section-number">9.7</span> School performance</h2>
+<p>A certain United States state education department provides its schools with
+spreadsheets of statistics. I bet the children in that state get a great
+education, because there’s at least one R enthusiast on the staff whose
+curiosity has never left them.</p>
+<div id="sheet-1" class="section level3">
+<h3><span class="header-section-number">9.7.1</span> Sheet 1</h3>
+<p>The first sheet is an example of [mixed headers in column 1 being distinguished
+by bold
+formatting][#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting].
+Filter for the bold cells in column 1 and assign them to a variable. Then
+<code>behead()</code> the other headers, and finally <code>enhead()</code> the bold headers back on.</p>
+<p><img src="images/school1.png" /></p>
+<p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true">Download the
+file</a>,
+modified from an original source provided to the author.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
+<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet1&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank)
 
-all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</code></pre>
-<pre><code>## # A tibble: 8 x 4
-##   sex    name     subject  score
-##   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-## 1 female Matilda  Classics     1
-## 2 female Olivia   Classics     2
-## 3 female Matilda  History      3
-## 4 female Olivia   History      4
-## 5 male   Nicholas Classics     3
-## 6 male   Paul     Classics     0
-## 7 male   Nicholas History      5
-## 8 male   Paul     History      1</code></pre>
+formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>school)
+
+bold_headers &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span>1L, formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">bold_header =</span> character)
+
+cells <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;metric&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;plain-header&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">enhead</span>(bold_headers, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, metric, <span class="st">`</span><span class="dt">plain-header</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spatter</span>(metric) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre>
+<pre><code>## # A tibble: 21 x 10
+##    `plain-header`           `% Advanced` `% Needs Improvem… `% Proficient`
+##    &lt;chr&gt;                           &lt;dbl&gt;              &lt;dbl&gt;          &lt;dbl&gt;
+##  1 All Students                    0.515             0.0297          0.446
+##  2 Economically Disadvanta…        0.333             0.0667          0.567
+##  3 Non-Economically Disadv…        0.592             0.0141          0.394
+##  4 Students w/ Disabilities       NA                NA              NA    
+##  5 Non-Disabled                    0.565             0.0217          0.413
+##  6 ELL                            NA                NA              NA    
+##  7 Non-ELL                         0.525             0.0202          0.444
+##  8 African Amer./Black            NA                NA              NA    
+##  9 Asian                          NA                NA              NA    
+## 10 Hispanic/Latino                NA                NA              NA    
+## 11 Nat. Haw. or Pacif. Isl.       NA                NA              NA    
+## 12 White                           0.541             0.0353          0.424
+## 13 Male                            0.364             0.0227          0.591
+## 14 Female                          0.632             0.0351          0.333
+## 15 Non-Title 1                     0.515             0.0297          0.446
+## 16 High Needs                      0.294             0.0588          0.618
+## 17 Non-High Needs                  0.627             0.0149          0.358
+## 18 Former ELL                     NA                NA              NA    
+## 19 Non-Former ELL                  0.52              0.03            0.44 
+## 20 ELL and Former ELL             NA                NA              NA    
+## 21 Ever ELL                        0.417             0.0833          0.5  
+## # ... with 6 more variables: `% Proficient or Higher` &lt;dbl&gt;, `% Warning/
+## #   Failing` &lt;dbl&gt;, CPI &lt;dbl&gt;, `Median SGP` &lt;dbl&gt;, `N Included` &lt;dbl&gt;, `N
+## #   Included in SGP` &lt;dbl&gt;</code></pre>
 </div>
+<div id="sheet-2" class="section level3">
+<h3><span class="header-section-number">9.7.2</span> Sheet 2</h3>
+<p>The second sheet is variation on <a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1">two clear rows of text column headers, left
+aligned</a>. Here, there
+are three rows of colum headers. The first row is left-aligned, and the second
+and third rows are directly above the data cells. But the second row is blank
+above columns D and E. That doesn’t actually matter; in the output, <code>header_2</code>
+will be <code>NA</code> for data from those columns.</p>
+<p><img src="images/school2.png" /></p>
+<p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true">Download the
+file</a>,
+modified from an original source provided to the author.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet2&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(row, col, address, data_type, character, numeric, is_blank) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;header_1&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header_2&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;header_3&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;classroom&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, <span class="op">!</span><span class="kw">is.na</span>(header_<span class="dv">3</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(col, row) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre>
+<pre><code>## # A tibble: 32 x 11
+##      row   col address data_type character numeric is_blank header_1      
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;lgl&gt;    &lt;chr&gt;         
+##  1     5     4 D5      character 10        NA      FALSE    MCAS Summary  
+##  2     6     4 D6      character 10        NA      FALSE    MCAS Summary  
+##  3     7     4 D7      character 10        NA      FALSE    MCAS Summary  
+##  4     8     4 D8      character 10        NA      FALSE    MCAS Summary  
+##  5     5     5 E5      character 4         NA      FALSE    MCAS Summary  
+##  6     6     5 E6      character 8         NA      FALSE    MCAS Summary  
+##  7     7     5 E7      character 5         NA      FALSE    MCAS Summary  
+##  8     8     5 E8      character 10        NA      FALSE    MCAS Summary  
+##  9     5     6 F5      numeric   &lt;NA&gt;       0.342  FALSE    Possible Poin…
+## 10     6     6 F6      numeric   &lt;NA&gt;       0.319  FALSE    Possible Poin…
+## 11     7     6 F7      numeric   &lt;NA&gt;       0.417  FALSE    Possible Poin…
+## 12     8     6 F8      numeric   &lt;NA&gt;       0.367  FALSE    Possible Poin…
+## 13     5     7 G5      numeric   &lt;NA&gt;       0.5    FALSE    Possible Poin…
+## 14     6     7 G6      numeric   &lt;NA&gt;       0.25   FALSE    Possible Poin…
+## 15     7     7 G7      numeric   &lt;NA&gt;       0.2    FALSE    Possible Poin…
+## 16     8     7 G8      numeric   &lt;NA&gt;       0.3    FALSE    Possible Poin…
+## 17     5     8 H5      numeric   &lt;NA&gt;       0.125  FALSE    Possible Poin…
+## 18     6     8 H6      numeric   &lt;NA&gt;       0.0312 FALSE    Possible Poin…
+## 19     7     8 H7      numeric   &lt;NA&gt;       0.4    FALSE    Possible Poin…
+## 20     8     8 H8      numeric   &lt;NA&gt;       0.5    FALSE    Possible Poin…
+## 21     5     9 I5      numeric   &lt;NA&gt;       0.398  FALSE    Possible Poin…
+## 22     6     9 I6      numeric   &lt;NA&gt;       0.430  FALSE    Possible Poin…
+## 23     7     9 I7      numeric   &lt;NA&gt;       0.512  FALSE    Possible Poin…
+## 24     8     9 I8      numeric   &lt;NA&gt;       0.453  FALSE    Possible Poin…
+## 25     5    10 J5      numeric   &lt;NA&gt;       0.240  FALSE    Possible Poin…
+## 26     6    10 J6      numeric   &lt;NA&gt;       0.182  FALSE    Possible Poin…
+## 27     7    10 J7      numeric   &lt;NA&gt;       0.308  FALSE    Possible Poin…
+## 28     8    10 J8      numeric   &lt;NA&gt;       0.267  FALSE    Possible Poin…
+## 29     5    11 K5      numeric   &lt;NA&gt;       0.5    FALSE    Possible Poin…
+## 30     6    11 K6      numeric   &lt;NA&gt;       0.25   FALSE    Possible Poin…
+## 31     7    11 K7      numeric   &lt;NA&gt;       0.3    FALSE    Possible Poin…
+## 32     8    11 K8      numeric   &lt;NA&gt;       0.275  FALSE    Possible Poin…
+## # ... with 3 more variables: header_2 &lt;chr&gt;, header_3 &lt;chr&gt;,
+## #   classroom &lt;chr&gt;</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="implied-multiples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cashflows.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -321,7 +390,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/small-multiples.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
