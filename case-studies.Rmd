@@ -631,3 +631,74 @@ cashflows %>%
   summarise(value = sum(value)) %>%
   mutate(value = cumsum(value))
 ```
+
+## School performance
+
+A certain United States state education department provides its schools with
+spreadsheets of statistics.  I bet the children in that state get a great
+education, because there's at least one R enthusiast on the staff whose
+curiosity has never left them.
+
+### Sheet 1
+
+The first sheet is an example of [mixed headers in column 1 being distinguished
+by bold
+formatting][#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting].
+Filter for the bold cells in column 1 and assign them to a variable.  Then
+`behead()` the other headers, and finally `enhead()` the bold headers back on.
+
+![](images/school1.png)
+
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true),
+modified from an original source provided to the author.
+
+```{r}
+cells <-
+  xlsx_cells(smungs::school, "Sheet1") %>%
+  dplyr::filter(!is_blank)
+
+formats <- xlsx_formats(smungs::school)
+
+bold_headers <-
+  cells %>%
+  dplyr::filter(col == 1L, formats$local$font$bold[local_format_id]) %>%
+  select(row, col, bold_header = character)
+
+cells %>%
+  behead("NNW", "metric") %>%
+  behead("W", "plain-header") %>%
+  enhead(bold_headers, "WNW") %>%
+  select(row, data_type, numeric, metric, `plain-header`) %>%
+  spatter(metric) %>%
+  select(-row) %>%
+  print(n = Inf)
+```
+
+### Sheet 2
+
+The second sheet is variation on [two clear rows of text column headers, left
+aligned](#two-clear-rows-of-text-column-headers-left-aligned-1).  Here, there
+are three rows of colum headers.  The first row is left-aligned, and the second
+and third rows are directly above the data cells. But the second row is blank
+above columns D and E.  That doesn't actually matter; in the output, `header_2`
+will be `NA` for data from those columns.
+
+![](images/school2.png)
+
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true),
+modified from an original source provided to the author.
+
+```{r}
+xlsx_cells(smungs::school, "Sheet2") %>%
+  select(row, col, address, data_type, character, numeric, is_blank) %>%
+  mutate(character = str_trim(character)) %>%
+  behead("NNW", "header_1") %>%
+  behead("N", "header_2") %>%
+  behead("N", "header_3") %>%
+  behead("W", "classroom") %>%
+  dplyr::filter(!is_blank, !is.na(header_3)) %>%
+  arrange(col, row) %>%
+  print(n = Inf)
+```
