@@ -610,18 +610,18 @@ data_cells <span class="op">%&gt;%</span>
 all_cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-centre-aligned&quot;</span>)
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 10 x 10
-##    `row/col` `2(B)`    `3(C)`   `4(D)` `5(E)` `6(F)` `7(G)` `8(H)` `9(I)` 
-##        &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  
-##  1         2 &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;   Female &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   Male   
-##  2         3 &lt;NA&gt;      &lt;NA&gt;     Leah   Matil… Olivia Lenny  Max    Nichol…
-##  3         4 &lt;NA&gt;      Classics 3      1      2      4      3      3      
-##  4         5 Humaniti… History  8      3      4      7      5      5      
-##  5         6 &lt;NA&gt;      Literat… 1      1      9      3      12     7      
-##  6         7 &lt;NA&gt;      Philoso… 5      10     10     8      2      5      
-##  7         8 &lt;NA&gt;      Languag… 5      4      5      9      8      3      
-##  8         9 &lt;NA&gt;      Music    4      10     10     2      4      5      
-##  9        10 Performa… Dance    4      5      6      4      12     9      
-## 10        11 &lt;NA&gt;      Drama    2      7      8      6      1      12     
+##    `row/col` `2(B)` `3(C)` `4(D)` `5(E)` `6(F)` `7(G)` `8(H)` `9(I)`
+##        &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; 
+##  1         2 &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   Female &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   Male  
+##  2         3 &lt;NA&gt;   &lt;NA&gt;   Leah   Matil… Olivia Lenny  Max    Nicho…
+##  3         4 &lt;NA&gt;   Class… 3      1      2      4      3      3     
+##  4         5 Human… Histo… 8      3      4      7      5      5     
+##  5         6 &lt;NA&gt;   Liter… 1      1      9      3      12     7     
+##  6         7 &lt;NA&gt;   Philo… 5      10     10     8      2      5     
+##  7         8 &lt;NA&gt;   Langu… 5      4      5      9      8      3     
+##  8         9 &lt;NA&gt;   Music  4      10     10     2      4      5     
+##  9        10 Perfo… Dance  4      5      6      4      12     9     
+## 10        11 &lt;NA&gt;   Drama  2      7      8      6      1      12    
 ## # ... with 1 more variable: `10(J)` &lt;chr&gt;</code></pre>
 <p>Looking at that table, it’s not immediately obvious where the boundary between
 <code>Female</code> and <code>Male</code> falls, or between <code>Humanities</code> and <code>Performance</code>. A naive

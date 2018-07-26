@@ -275,20 +275,19 @@ differently.</p>
 <span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest</span>()</code></pre>
 <pre><code>## # A tibble: 9 x 15
-##   address character      bold  italic underline strike vertAlign    size
-##   &lt;chr&gt;   &lt;chr&gt;          &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;       &lt;dbl&gt;
-## 1 A1      in-cell:       FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## 2 A1      bold,          TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## 3 A1      italic,        FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## 4 A1      underline,     FALSE FALSE  single    FALSE  &lt;NA&gt;            0
-## 5 A1      strikethrough, FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;            0
-## 6 A1      superscript,   FALSE FALSE  &lt;NA&gt;      FALSE  superscript     0
-## 7 A1      red,           FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## 8 A1      arial,         FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## 9 A1      size 14        FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;            0
-## # ... with 7 more variables: color_rgb &lt;chr&gt;, color_theme &lt;int&gt;,
-## #   color_indexed &lt;int&gt;, color_tint &lt;dbl&gt;, font &lt;chr&gt;, family &lt;int&gt;,
-## #   scheme &lt;chr&gt;</code></pre>
+##   address character bold  italic underline strike vertAlign  size color_rgb
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;    
+## 1 A1      in-cell:  FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 2 A1      bold,     TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 3 A1      italic,   FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 4 A1      underlin… FALSE FALSE  single    FALSE  &lt;NA&gt;          0 FF000000 
+## 5 A1      striketh… FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;          0 FF000000 
+## 6 A1      superscr… FALSE FALSE  &lt;NA&gt;      FALSE  superscr…     0 FF000000 
+## 7 A1      red,      FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FFFF0000 
+## 8 A1      arial,    FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;     
+## 9 A1      size 14   FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;     
+## # ... with 6 more variables: color_theme &lt;int&gt;, color_indexed &lt;int&gt;,
+## #   color_tint &lt;dbl&gt;, font &lt;chr&gt;, family &lt;int&gt;, scheme &lt;chr&gt;</code></pre>
 <p>It’s hard to think of a plausible example, so what follows is an implausible one
 that nevertheless occurred in real life.</p>
 </div>
