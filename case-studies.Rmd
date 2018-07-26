@@ -643,7 +643,7 @@ curiosity has never left them.
 
 The first sheet is an example of [mixed headers in column 1 being distinguished
 by bold
-formatting][#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting].
+formatting](#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting).
 Filter for the bold cells in column 1 and assign them to a variable.  Then
 `behead()` the other headers, and finally `enhead()` the bold headers back on.
 
