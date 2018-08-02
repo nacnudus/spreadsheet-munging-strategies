@@ -671,8 +671,7 @@ cells %>%
   enhead(bold_headers, "WNW") %>%
   select(row, data_type, numeric, metric, `plain-header`) %>%
   spatter(metric) %>%
-  select(-row) %>%
-  print(n = Inf)
+  select(-row)
 ```
 
 ### Sheet 2
@@ -699,6 +698,81 @@ xlsx_cells(smungs::school, "Sheet2") %>%
   behead("N", "header_3") %>%
   behead("W", "classroom") %>%
   dplyr::filter(!is_blank, !is.na(header_3)) %>%
-  arrange(col, row) %>%
+  arrange(col, row)
+```
+
+### Sheet 3
+
+The third sheet is variation on [two clear rows of text column headers, left
+aligned](#two-clear-rows-of-text-column-headers-left-aligned-1), with a nasty
+catch.  The creator of the spreadsheet didn't merge cells to make space for more
+words.  They didn't even 'centre across selection' (which is sometimes safer
+than merging cells).  Instead, they wrote each word on a separate line, meaning
+it is ambiguous whether a cell part of another header, or a header in its own
+right.
+
+![](images/school3.png)
+
+[Download the
+file](https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true),
+modified from an original source provided to the author.
+
+Compare columns C and D.  Column C has a single header, "Avg Years w/ Class
+Data", written across four cells.  Column D has two levels of headers, "Years in
+MA" first, then "% 3+" nested within it (and written across two cells).  There's
+no way for a machine to tell which cells are whole headers, and which are parts
+of headers.
+
+We can deal with this by first treating every cell as a header in its own right,
+and then concatenating the headers of rows 2 to 5.  Using the `"NNW"` direction,
+headers like "Years in MA" in cell D4 will be carried to the right, which is
+good.  Unfortunately so will headers like "# Students" in cell B2, which we'll
+just have to put up with.
+
+```{r}
+cells <-
+  xlsx_cells(smungs::school, "Sheet3") %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric)
+
+x <-
+  cells %>%
+  behead("W", "place") %>%
+  behead("NNW", "category") %>%
+  behead("NNW", "metric-cell-1") %>% # Treat every cell in every row as a header
+  behead("NNW", "metric-cell-2") %>%
+  behead("NNW", "metric-cell-3") %>%
+  behead("NNW", "metric-cell-4") %>%
+  behead("NNW", "metric-cell-5")
+glimpse(x)
+```
+
+Above you can see that every cell in every header row has been treated as a
+header in its own right, e.g. `"Avg"` is a level-2 header, and `"Years w/"` is a
+level-3 header.  The next step is to paste them together into a single header.
+
+```{r}
+x <-
+  x %>%
+  # Replace NA with "" otherwise unite() will spell it as "NA".
+  # This is a common irritation.
+  # https://stackoverflow.com/questions/13673894/suppress-nas-in-paste
+  mutate_at(vars(starts_with("metric-cell-")), replace_na, "") %>%
+  unite("metric", starts_with("metric-cell-"), sep = " ") %>%
+  mutate(metric = str_trim(metric))
+glimpse(x)
+```
+
+Now the headers are manageable.  They aren't perfect -- the `"# Students"`
+header has leaked into `"# Students Avg Years w/ Class Data"`, but that can be
+cleaned up manually later.  At least `"# Students Avg Years w/ Class Data"` is
+within the `"STUDENTS"` category, which is the hard part.
+
+Spreading this data is the final step to make it easy to work with.
+
+```{r}
+x %>%
+  select(place, category, metric, numeric) %>%
+  spread(place, numeric) %>%
   print(n = Inf)
 ```
