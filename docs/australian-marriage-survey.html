@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Spreadsheet Munging Strategies</title>
-  <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
+  <title>9.1 Australian Marriage Survey | Spreadsheet Munging Strategies</title>
+  <meta name="description" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Spreadsheet Munging Strategies" />
+  <meta property="og:title" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spreadsheet Munging Strategies" />
+  <meta name="twitter:title" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies" />
   
   
   
@@ -35,6 +35,7 @@
 <link rel="next" href="vaccinations.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -75,7 +76,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -156,6 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
@@ -163,8 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.2.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>3.2.4</b> Centre-aligned headers</a></li>
 <li class="chapter" data-level="3.2.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>3.2.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
-<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.2.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>3.2.8</b> Repeated rows/columns of headers within the table</a></li>
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
@@ -286,19 +289,19 @@ table_<span class="dv">2</span> &lt;-
 all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)
 all_tables</code></pre>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet  state      population       response        `%`    no. territory
-##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    
-##  1 Table… New South… Eligible Partic… Non-respondi…  20.5 1.07e6 &lt;NA&gt;     
-##  2 Table… New South… Eligible Partic… Response cle…  79.2 4.11e6 &lt;NA&gt;     
-##  3 Table… New South… Eligible Partic… Response not…   0.2 1.10e4 &lt;NA&gt;     
-##  4 Table… New South… Eligible Partic… Total         100   5.19e6 &lt;NA&gt;     
-##  5 Table… New South… Response clear   No             42.2 1.74e6 &lt;NA&gt;     
-##  6 Table… New South… Response clear   Total         100   4.11e6 &lt;NA&gt;     
-##  7 Table… New South… Response clear   Yes            57.8 2.37e6 &lt;NA&gt;     
-##  8 Table… Victoria   Eligible Partic… Non-respondi…  18.3 7.44e5 &lt;NA&gt;     
-##  9 Table… Victoria   Eligible Partic… Response cle…  81.4 3.31e6 &lt;NA&gt;     
-## 10 Table… Victoria   Eligible Partic… Response not…   0.3 1.10e4 &lt;NA&gt;     
-## # ... with 1,166 more rows</code></pre>
+##    sheet  state      population       response         `%`    no. territory
+##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    
+##  1 Table… New South… Eligible Partic… Non-responding  20.5 1.07e6 &lt;NA&gt;     
+##  2 Table… New South… Eligible Partic… Response clear  79.2 4.11e6 &lt;NA&gt;     
+##  3 Table… New South… Eligible Partic… Response not …   0.2 1.10e4 &lt;NA&gt;     
+##  4 Table… New South… Eligible Partic… Total          100   5.19e6 &lt;NA&gt;     
+##  5 Table… New South… Response clear   No              42.2 1.74e6 &lt;NA&gt;     
+##  6 Table… New South… Response clear   Total          100   4.11e6 &lt;NA&gt;     
+##  7 Table… New South… Response clear   Yes             57.8 2.37e6 &lt;NA&gt;     
+##  8 Table… Victoria   Eligible Partic… Non-responding  18.3 7.44e5 &lt;NA&gt;     
+##  9 Table… Victoria   Eligible Partic… Response clear  81.4 3.31e6 &lt;NA&gt;     
+## 10 Table… Victoria   Eligible Partic… Response not …   0.3 1.10e4 &lt;NA&gt;     
+## # … with 1,166 more rows</code></pre>
 </div>
 <div id="step-by-step" class="section level3">
 <h3><span class="header-section-number">9.1.2</span> Step by step</h3>
@@ -327,19 +330,19 @@ table_<span class="dv">1</span>  &lt;-
 
 table_<span class="dv">1</span></code></pre>
 <pre><code>## # A tibble: 63 x 5
-##    state           population            response               `%`    no.
-##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                &lt;dbl&gt;  &lt;dbl&gt;
-##  1 New South Wales Eligible Participants Non-responding        20.5 1.07e6
-##  2 New South Wales Eligible Participants Response clear        79.2 4.11e6
-##  3 New South Wales Eligible Participants Response not clear(…   0.2 1.10e4
-##  4 New South Wales Eligible Participants Total                100   5.19e6
-##  5 New South Wales Response clear        No                    42.2 1.74e6
-##  6 New South Wales Response clear        Total                100   4.11e6
-##  7 New South Wales Response clear        Yes                   57.8 2.37e6
-##  8 Victoria        Eligible Participants Non-responding        18.3 7.44e5
-##  9 Victoria        Eligible Participants Response clear        81.4 3.31e6
-## 10 Victoria        Eligible Participants Response not clear(…   0.3 1.10e4
-## # ... with 53 more rows</code></pre>
+##    state           population            response                `%`    no.
+##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;
+##  1 New South Wales Eligible Participants Non-responding         20.5 1.07e6
+##  2 New South Wales Eligible Participants Response clear         79.2 4.11e6
+##  3 New South Wales Eligible Participants Response not clear(a)   0.2 1.10e4
+##  4 New South Wales Eligible Participants Total                 100   5.19e6
+##  5 New South Wales Response clear        No                     42.2 1.74e6
+##  6 New South Wales Response clear        Total                 100   4.11e6
+##  7 New South Wales Response clear        Yes                    57.8 2.37e6
+##  8 Victoria        Eligible Participants Non-responding         18.3 7.44e5
+##  9 Victoria        Eligible Participants Response clear         81.4 3.31e6
+## 10 Victoria        Eligible Participants Response not clear(a)   0.3 1.10e4
+## # … with 53 more rows</code></pre>
 </div>
 <div id="table-2" class="section level4">
 <h4><span class="header-section-number">9.1.2.2</span> Table 2</h4>
@@ -384,19 +387,19 @@ all_tables &lt;-
 <span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)
 all_tables</code></pre>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet  state      territory population       response        `%`    no.
-##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Table… New South… &lt;NA&gt;      Eligible Partic… Non-respondi…  20.5 1.07e6
-##  2 Table… New South… &lt;NA&gt;      Eligible Partic… Response cle…  79.2 4.11e6
-##  3 Table… New South… &lt;NA&gt;      Eligible Partic… Response not…   0.2 1.10e4
-##  4 Table… New South… &lt;NA&gt;      Eligible Partic… Total         100   5.19e6
-##  5 Table… New South… &lt;NA&gt;      Response clear   No             42.2 1.74e6
-##  6 Table… New South… &lt;NA&gt;      Response clear   Total         100   4.11e6
-##  7 Table… New South… &lt;NA&gt;      Response clear   Yes            57.8 2.37e6
-##  8 Table… Victoria   &lt;NA&gt;      Eligible Partic… Non-respondi…  18.3 7.44e5
-##  9 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response cle…  81.4 3.31e6
-## 10 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response not…   0.3 1.10e4
-## # ... with 1,166 more rows</code></pre>
+##    sheet  state      territory population       response         `%`    no.
+##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Table… New South… &lt;NA&gt;      Eligible Partic… Non-responding  20.5 1.07e6
+##  2 Table… New South… &lt;NA&gt;      Eligible Partic… Response clear  79.2 4.11e6
+##  3 Table… New South… &lt;NA&gt;      Eligible Partic… Response not …   0.2 1.10e4
+##  4 Table… New South… &lt;NA&gt;      Eligible Partic… Total          100   5.19e6
+##  5 Table… New South… &lt;NA&gt;      Response clear   No              42.2 1.74e6
+##  6 Table… New South… &lt;NA&gt;      Response clear   Total          100   4.11e6
+##  7 Table… New South… &lt;NA&gt;      Response clear   Yes             57.8 2.37e6
+##  8 Table… Victoria   &lt;NA&gt;      Eligible Partic… Non-responding  18.3 7.44e5
+##  9 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response clear  81.4 3.31e6
+## 10 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response not …   0.3 1.10e4
+## # … with 1,166 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -426,9 +429,10 @@ gitbook.start({
 "google": true,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -438,6 +442,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
 "toc": {

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Spreadsheet Munging Strategies</title>
-  <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
+  <title>2.5 Layered meaningful formatting | Spreadsheet Munging Strategies</title>
+  <meta name="description" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Spreadsheet Munging Strategies" />
+  <meta property="og:title" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spreadsheet Munging Strategies" />
+  <meta name="twitter:title" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies" />
   
   
   
@@ -35,6 +35,7 @@
 <link rel="next" href="hierarchies-in-formatting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -75,7 +76,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -156,6 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
@@ -163,8 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.2.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>3.2.4</b> Centre-aligned headers</a></li>
 <li class="chapter" data-level="3.2.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>3.2.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
-<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.2.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>3.2.8</b> Repeated rows/columns of headers within the table</a></li>
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
@@ -236,8 +239,8 @@ an observation, e.g. yellow highlight for “uncertain data” and red text for
 “product no longer available”. Both yellow highlighting and red text in the
 same row would indicate uncertain data and unavailability of the product at the
 same time.</p>
-<p>Deal with it by reading each kind of formatting into a separate column,
-e.g. fill colour into one column, font colour into another, bold/not-bold into a
+<p>Deal with it by reading each kind of formatting into a separate column, e.g.
+fill colour into one column, font colour into another, bold/not-bold into a
 another, etc.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span>
 path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
@@ -325,9 +328,10 @@ gitbook.start({
 "google": true,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -337,6 +341,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
 "toc": {

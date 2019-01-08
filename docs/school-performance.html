@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Spreadsheet Munging Strategies</title>
-  <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
+  <title>9.7 School performance | Spreadsheet Munging Strategies</title>
+  <meta name="description" content="9.7 School performance | Spreadsheet Munging Strategies">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Spreadsheet Munging Strategies" />
+  <meta property="og:title" content="9.7 School performance | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spreadsheet Munging Strategies" />
+  <meta name="twitter:title" content="9.7 School performance | Spreadsheet Munging Strategies" />
   
   
   
@@ -35,6 +35,7 @@
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -75,7 +76,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -156,6 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
@@ -163,8 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.2.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>3.2.4</b> Centre-aligned headers</a></li>
 <li class="chapter" data-level="3.2.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>3.2.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
-<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.2.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>3.2.8</b> Repeated rows/columns of headers within the table</a></li>
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
@@ -236,7 +239,7 @@ education, because there’s at least one R enthusiast on the staff whose
 curiosity has never left them.</p>
 <div id="sheet-1" class="section level3">
 <h3><span class="header-section-number">9.7.1</span> Sheet 1</h3>
-<p>The first sheet is an example of <a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting">mixed headers in column 1 being distinguished
+<p>The first sheet is an example of <a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting">mixed headers in column 1 being distinguished
 by bold
 formatting</a>.
 Filter for the bold cells in column 1 and assign them to a variable. Then
@@ -276,7 +279,7 @@ cells <span class="op">%&gt;%</span>
 ##  8 African Amer.…       NA              NA              NA    
 ##  9 Asian                NA              NA              NA    
 ## 10 Hispanic/Lati…       NA              NA              NA    
-## # ... with 11 more rows, and 6 more variables: `% Proficient or
+## # … with 11 more rows, and 6 more variables: `% Proficient or
 ## #   Higher` &lt;dbl&gt;, `% Warning/ Failing` &lt;dbl&gt;, CPI &lt;dbl&gt;, `Median
 ## #   SGP` &lt;dbl&gt;, `N Included` &lt;dbl&gt;, `N Included in SGP` &lt;dbl&gt;</code></pre>
 </div>
@@ -314,7 +317,7 @@ modified from an original source provided to the author.</p>
 ##  8     8     5 E8      character 10         NA     FALSE    MCAS Su…
 ##  9     5     6 F5      numeric   &lt;NA&gt;        0.342 FALSE    Possibl…
 ## 10     6     6 F6      numeric   &lt;NA&gt;        0.319 FALSE    Possibl…
-## # ... with 22 more rows, and 3 more variables: header_2 &lt;chr&gt;,
+## # … with 22 more rows, and 3 more variables: header_2 &lt;chr&gt;,
 ## #   header_3 &lt;chr&gt;, classroom &lt;chr&gt;</code></pre>
 </div>
 <div id="sheet-3" class="section level3">
@@ -336,7 +339,7 @@ MA” first, then “% 3+” nested within it (and written across two cells). Th
 no way for a machine to tell which cells are whole headers, and which are parts
 of headers.</p>
 <p>We can deal with this by first treating every cell as a header in its own right,
-and then concatenating the headers of rows 2 to 5. Using the <code>&quot;NNW&quot;</code> direction,
+and then concatenating the headers of rows 2 to 5. Using the <code>"NNW"</code> direction,
 headers like “Years in MA” in cell D4 will be carried to the right, which is
 good. Unfortunately so will headers like “# Students” in cell B2, which we’ll
 just have to put up with.</p>
@@ -345,7 +348,114 @@ just have to put up with.</p>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)
 
-x &lt;-
+y &lt;-
+<span class="st">  </span>cells <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">merge_rows</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, character) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;place&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;category&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;metric&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">metric =</span> <span class="kw">str_trim</span>(metric)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(row, col)
+<span class="kw">glimpse</span>(x)</code></pre>
+<pre><code>## Observations: 17
+## Variables: 9
+## $ row           &lt;int&gt; 4, 6, 6, 8, 4, 6, 6, 8, 4, 6, 6, 8, 4, 6, 6, 8, 8
+## $ col           &lt;int&gt; 3, 3, 4, 3, 5, 5, 6, 5, 7, 7, 8, 7, 9, 9, 10, 9, 10
+## $ data_type     &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;character&quot;, &quot;numeric&quot;, &quot;num…
+## $ character     &lt;chr&gt; NA, NA, &quot;U&quot;, NA, NA, NA, &quot;U&quot;, NA, NA, NA, &quot;U&quot;, NA,…
+## $ numeric       &lt;dbl&gt; 3.200, 0.025, NA, 0.040, 1.200, 0.025, NA, 0.170, …
+## $ `sample-type` &lt;chr&gt; &quot;ground water&quot;, &quot;ground water&quot;, &quot;ground water&quot;, &quot;g…
+## $ site          &lt;chr&gt; &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;B&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;, …
+## $ parameter     &lt;chr&gt; &quot;Nitrogen, Kjeldahl&quot;, &quot;Nitrate Nitrite as N&quot;, &quot;Nit…
+## $ unit          &lt;chr&gt; &quot;mn/L&quot;, &quot;mg/L&quot;, &quot;mg/L&quot;, &quot;mg/L&quot;, &quot;mn/L&quot;, &quot;mg/L&quot;, &quot;m…</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glimpse</span>(y)</code></pre>
+<pre><code>## Observations: 36
+## Variables: 8
+## $ col       &lt;int&gt; 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 2, 3, 4, 5, 6,…
+## $ row       &lt;dbl&gt; 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, …
+## $ data_type &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;,…
+## $ numeric   &lt;dbl&gt; 7.384990e+05, 1.000000e+00, 8.427773e-01, 1.036851e-01…
+## $ character &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, &quot;*&quot;, &quot;*&quot;, NA, …
+## $ place     &lt;chr&gt; &quot;State (All Students)&quot;, &quot;State (All Students)&quot;, &quot;State…
+## $ category  &lt;chr&gt; &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;EDUCATOR EXPERIENCE&quot;, &quot;EDUCAT…
+## $ metric    &lt;chr&gt; &quot;# Students&quot;, &quot;Avg Years w/ Class Data&quot;, &quot;Years in MA …</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x</code></pre>
+<pre><code>## # A tibble: 17 x 9
+##      row   col data_type character numeric `sample-type` site  parameter
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;    
+##  1     4     3 numeric   &lt;NA&gt;        3.2   ground water  A     Nitrogen…
+##  2     6     3 numeric   &lt;NA&gt;        0.025 ground water  A     Nitrate …
+##  3     6     4 character U          NA     ground water  A     Nitrate …
+##  4     8     3 numeric   &lt;NA&gt;        0.04  ground water  A     Phosphor…
+##  5     4     5 numeric   &lt;NA&gt;        1.2   ground water  B     Nitrogen…
+##  6     6     5 numeric   &lt;NA&gt;        0.025 ground water  B     Nitrate …
+##  7     6     6 character U          NA     ground water  B     Nitrate …
+##  8     8     5 numeric   &lt;NA&gt;        0.17  ground water  B     Phosphor…
+##  9     4     7 numeric   &lt;NA&gt;        0.5   ground water  C     Nitrogen…
+## 10     6     7 numeric   &lt;NA&gt;        0.025 ground water  C     Nitrate …
+## 11     6     8 character U          NA     ground water  C     Nitrate …
+## 12     8     7 numeric   &lt;NA&gt;        0.062 ground water  C     Phosphor…
+## 13     4     9 numeric   &lt;NA&gt;        0.4   ground water  D     Nitrogen…
+## 14     6     9 numeric   &lt;NA&gt;        0.025 ground water  D     Nitrate …
+## 15     6    10 character U          NA     ground water  D     Nitrate …
+## 16     8     9 numeric   &lt;NA&gt;        0.04  ground water  D     Phosphor…
+## 17     8    10 character J3         NA     ground water  D     Phosphor…
+## # … with 1 more variable: unit &lt;chr&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">y</code></pre>
+<pre><code>## # A tibble: 36 x 8
+##      col   row data_type  numeric character place     category    metric   
+##    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;    
+##  1     2     7 numeric    7.38e+5 &lt;NA&gt;      State (A… STUDENTS    # Studen…
+##  2     3     7 numeric    1.00e+0 &lt;NA&gt;      State (A… STUDENTS    Avg Year…
+##  3     4     7 numeric    8.43e-1 &lt;NA&gt;      State (A… EDUCATOR E… Years in…
+##  4     5     7 numeric    1.04e-1 &lt;NA&gt;      State (A… EDUCATOR E… % 1-2    
+##  5     6     7 numeric    5.35e-2 &lt;NA&gt;      State (A… EDUCATOR E… % 0-1    
+##  6     7     7 numeric    7.53e-1 &lt;NA&gt;      State (A… EDUCATOR E… PTS % PTS
+##  7     8     7 numeric    2.47e-1 &lt;NA&gt;      State (A… EDUCATOR E… % Non- P…
+##  8     9     7 numeric    1.12e-2 &lt;NA&gt;      State (A… EDUCATOR Q… % Long T…
+##  9    10     7 numeric    9.03e-1 &lt;NA&gt;      State (A… EDUCATOR Q… % In Fie…
+## 10    11     7 numeric    9.65e-2 &lt;NA&gt;      State (A… EDUCATOR Q… % Out of…
+## # … with 26 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(x, y)</code></pre>
+<pre><code>## Joining, by = c(&quot;row&quot;, &quot;col&quot;, &quot;data_type&quot;, &quot;character&quot;, &quot;numeric&quot;)</code></pre>
+<pre><code>## # A tibble: 17 x 9
+##      row   col data_type character numeric `sample-type` site  parameter
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;    
+##  1     4     3 numeric   &lt;NA&gt;        3.2   ground water  A     Nitrogen…
+##  2     6     3 numeric   &lt;NA&gt;        0.025 ground water  A     Nitrate …
+##  3     6     4 character U          NA     ground water  A     Nitrate …
+##  4     8     3 numeric   &lt;NA&gt;        0.04  ground water  A     Phosphor…
+##  5     4     5 numeric   &lt;NA&gt;        1.2   ground water  B     Nitrogen…
+##  6     6     5 numeric   &lt;NA&gt;        0.025 ground water  B     Nitrate …
+##  7     6     6 character U          NA     ground water  B     Nitrate …
+##  8     8     5 numeric   &lt;NA&gt;        0.17  ground water  B     Phosphor…
+##  9     4     7 numeric   &lt;NA&gt;        0.5   ground water  C     Nitrogen…
+## 10     6     7 numeric   &lt;NA&gt;        0.025 ground water  C     Nitrate …
+## 11     6     8 character U          NA     ground water  C     Nitrate …
+## 12     8     7 numeric   &lt;NA&gt;        0.062 ground water  C     Phosphor…
+## 13     4     9 numeric   &lt;NA&gt;        0.4   ground water  D     Nitrogen…
+## 14     6     9 numeric   &lt;NA&gt;        0.025 ground water  D     Nitrate …
+## 15     6    10 character U          NA     ground water  D     Nitrate …
+## 16     8     9 numeric   &lt;NA&gt;        0.04  ground water  D     Phosphor…
+## 17     8    10 character J3         NA     ground water  D     Phosphor…
+## # … with 1 more variable: unit &lt;chr&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(y, x)</code></pre>
+<pre><code>## Joining, by = c(&quot;col&quot;, &quot;row&quot;, &quot;data_type&quot;, &quot;numeric&quot;, &quot;character&quot;)</code></pre>
+<pre><code>## # A tibble: 36 x 8
+##      col   row data_type  numeric character place     category    metric   
+##    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;    
+##  1     2     7 numeric    7.38e+5 &lt;NA&gt;      State (A… STUDENTS    # Studen…
+##  2     3     7 numeric    1.00e+0 &lt;NA&gt;      State (A… STUDENTS    Avg Year…
+##  3     4     7 numeric    8.43e-1 &lt;NA&gt;      State (A… EDUCATOR E… Years in…
+##  4     5     7 numeric    1.04e-1 &lt;NA&gt;      State (A… EDUCATOR E… % 1-2    
+##  5     6     7 numeric    5.35e-2 &lt;NA&gt;      State (A… EDUCATOR E… % 0-1    
+##  6     7     7 numeric    7.53e-1 &lt;NA&gt;      State (A… EDUCATOR E… PTS % PTS
+##  7     8     7 numeric    2.47e-1 &lt;NA&gt;      State (A… EDUCATOR E… % Non- P…
+##  8     9     7 numeric    1.12e-2 &lt;NA&gt;      State (A… EDUCATOR Q… % Long T…
+##  9    10     7 numeric    9.03e-1 &lt;NA&gt;      State (A… EDUCATOR Q… % In Fie…
+## 10    11     7 numeric    9.65e-2 &lt;NA&gt;      State (A… EDUCATOR Q… % Out of…
+## # … with 26 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-
 <span class="st">  </span>cells <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;place&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;category&quot;</span>) <span class="op">%&gt;%</span>
@@ -357,20 +467,20 @@ x &lt;-
 <span class="kw">glimpse</span>(x)</code></pre>
 <pre><code>## Observations: 36
 ## Variables: 12
-## $ row             &lt;int&gt; 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7...
-## $ col             &lt;int&gt; 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8...
-## $ data_type       &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;n...
-## $ character       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-## $ numeric         &lt;dbl&gt; 1.000000000, 1.000000000, 1.000000000, 0.84277...
-## $ place           &lt;chr&gt; &quot;State (All Students)&quot;, &quot;Region&quot;, &quot;School&quot;, &quot;S...
-## $ category        &lt;chr&gt; &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;EDUCATOR ...
-## $ `metric-cell-1` &lt;chr&gt; &quot;# Students&quot;, &quot;# Students&quot;, &quot;# Students&quot;, &quot;# S...
-## $ `metric-cell-2` &lt;chr&gt; &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg...
-## $ `metric-cell-3` &lt;chr&gt; &quot;Years w/&quot;, &quot;Years w/&quot;, &quot;Years w/&quot;, &quot;Years in ...
-## $ `metric-cell-4` &lt;chr&gt; &quot;Class&quot;, &quot;Class&quot;, &quot;Class&quot;, &quot;%&quot;, &quot;%&quot;, &quot;%&quot;, &quot;%&quot;,...
-## $ `metric-cell-5` &lt;chr&gt; &quot;Data&quot;, &quot;Data&quot;, &quot;Data&quot;, &quot;3+&quot;, &quot;3+&quot;, &quot;3+&quot;, &quot;1-2...</code></pre>
+## $ row             &lt;int&gt; 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, …
+## $ col             &lt;int&gt; 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, …
+## $ data_type       &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;num…
+## $ character       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+## $ numeric         &lt;dbl&gt; 1.000000000, 1.000000000, 1.000000000, 0.8427773…
+## $ place           &lt;chr&gt; &quot;State (All Students)&quot;, &quot;Region&quot;, &quot;School&quot;, &quot;Sta…
+## $ category        &lt;chr&gt; &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;EDUCATOR EX…
+## $ `metric-cell-1` &lt;chr&gt; &quot;# Students&quot;, &quot;# Students&quot;, &quot;# Students&quot;, &quot;# Stu…
+## $ `metric-cell-2` &lt;chr&gt; &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;, &quot;Avg&quot;,…
+## $ `metric-cell-3` &lt;chr&gt; &quot;Years w/&quot;, &quot;Years w/&quot;, &quot;Years w/&quot;, &quot;Years in MA…
+## $ `metric-cell-4` &lt;chr&gt; &quot;Class&quot;, &quot;Class&quot;, &quot;Class&quot;, &quot;%&quot;, &quot;%&quot;, &quot;%&quot;, &quot;%&quot;, &quot;…
+## $ `metric-cell-5` &lt;chr&gt; &quot;Data&quot;, &quot;Data&quot;, &quot;Data&quot;, &quot;3+&quot;, &quot;3+&quot;, &quot;3+&quot;, &quot;1-2&quot;,…</code></pre>
 <p>Above you can see that every cell in every header row has been treated as a
-header in its own right, e.g. <code>&quot;Avg&quot;</code> is a level-2 header, and <code>&quot;Years w/&quot;</code> is a
+header in its own right, e.g. <code>"Avg"</code> is a level-2 header, and <code>"Years w/"</code> is a
 level-3 header. The next step is to paste them together into a single header.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-
 <span class="st">  </span>x <span class="op">%&gt;%</span>
@@ -379,42 +489,43 @@ level-3 header. The next step is to paste them together into a single header.</p
 <span class="st">  </span><span class="co"># https://stackoverflow.com/questions/13673894/suppress-nas-in-paste</span>
 <span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>)), replace_na, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;metric&quot;</span>, <span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">metric =</span> <span class="kw">str_trim</span>(metric))
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">metric =</span> <span class="kw">str_trim</span>(metric)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(row, col)
 <span class="kw">glimpse</span>(x)</code></pre>
 <pre><code>## Observations: 36
 ## Variables: 8
-## $ row       &lt;int&gt; 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9...
-## $ col       &lt;int&gt; 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8...
-## $ data_type &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric...
-## $ character &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-## $ numeric   &lt;dbl&gt; 1.000000000, 1.000000000, 1.000000000, 0.842777337, ...
-## $ place     &lt;chr&gt; &quot;State (All Students)&quot;, &quot;Region&quot;, &quot;School&quot;, &quot;State (...
-## $ category  &lt;chr&gt; &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;EDUCATOR EXPERI...
-## $ metric    &lt;chr&gt; &quot;# Students Avg Years w/ Class Data&quot;, &quot;# Students Av...</code></pre>
-<p>Now the headers are manageable. They aren’t perfect – the <code>&quot;# Students&quot;</code>
-header has leaked into <code>&quot;# Students Avg Years w/ Class Data&quot;</code>, but that can be
-cleaned up manually later. At least <code>&quot;# Students Avg Years w/ Class Data&quot;</code> is
-within the <code>&quot;STUDENTS&quot;</code> category, which is the hard part.</p>
+## $ row       &lt;int&gt; 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, …
+## $ col       &lt;int&gt; 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 2, 3, 4, 5, 6,…
+## $ data_type &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;,…
+## $ character &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, &quot;*&quot;, &quot;*&quot;, NA, …
+## $ numeric   &lt;dbl&gt; 7.384990e+05, 1.000000e+00, 8.427773e-01, 1.036851e-01…
+## $ place     &lt;chr&gt; &quot;State (All Students)&quot;, &quot;State (All Students)&quot;, &quot;State…
+## $ category  &lt;chr&gt; &quot;STUDENTS&quot;, &quot;STUDENTS&quot;, &quot;EDUCATOR EXPERIENCE&quot;, &quot;EDUCAT…
+## $ metric    &lt;chr&gt; &quot;# Students&quot;, &quot;# Students Avg Years w/ Class Data&quot;, &quot;#…</code></pre>
+<p>Now the headers are manageable. They aren’t perfect – the <code>"# Students"</code>
+header has leaked into <code>"# Students Avg Years w/ Class Data"</code>, but that can be
+cleaned up manually later. At least <code>"# Students Avg Years w/ Class Data"</code> is
+within the <code>"STUDENTS"</code> category, which is the hard part.</p>
 <p>Spreading this data is the final step to make it easy to work with.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(place, category, metric, numeric) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread</span>(place, numeric) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre>
 <pre><code>## # A tibble: 12 x 5
-##    category        metric               Region   School `State (All Stude…
-##    &lt;chr&gt;           &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;              &lt;dbl&gt;
-##  1 EDUCATOR EXPER… # Students Avg Ye…  4.39e-2   0                  0.0535
-##  2 EDUCATOR EXPER… # Students Avg Ye…  5.99e-2   0.154              0.104 
-##  3 EDUCATOR EXPER… # Students Avg Ye…  8.96e-1   0.846              0.843 
-##  4 EDUCATOR EXPER… # Students PTS % …  2.48e-1   0.0684             0.247 
-##  5 EDUCATOR EXPER… # Students PTS Ye…  7.52e-1   0.932              0.753 
-##  6 EDUCATOR QUALI… # Students % % In…  9.44e-1   1                  0.903 
-##  7 EDUCATOR QUALI… # Students % % No… NA        NA                 NA     
-##  8 EDUCATOR QUALI… # Students % % SE… NA        NA                 NA     
-##  9 EDUCATOR QUALI… # Students % Long…  1.82e-3   0                  0.0112
-## 10 EDUCATOR QUALI… # Students % Out …  5.56e-2   0                  0.0965
-## 11 STUDENTS        # Students          6.25e+2 116             738499     
-## 12 STUDENTS        # Students Avg Ye…  1.00e+0   1                  1</code></pre>
+##    category        metric                Region   School `State (All Stude…
+##    &lt;chr&gt;           &lt;chr&gt;                  &lt;dbl&gt;    &lt;dbl&gt;              &lt;dbl&gt;
+##  1 EDUCATOR EXPER… # Students Avg Yea…  4.39e-2   0                  0.0535
+##  2 EDUCATOR EXPER… # Students Avg Yea…  5.99e-2   0.154              0.104 
+##  3 EDUCATOR EXPER… # Students Avg Yea…  8.96e-1   0.846              0.843 
+##  4 EDUCATOR EXPER… # Students PTS % N…  2.48e-1   0.0684             0.247 
+##  5 EDUCATOR EXPER… # Students PTS Yea…  7.52e-1   0.932              0.753 
+##  6 EDUCATOR QUALI… # Students % % In …  9.44e-1   1                  0.903 
+##  7 EDUCATOR QUALI… # Students % % Non… NA        NA                 NA     
+##  8 EDUCATOR QUALI… # Students % % SEI… NA        NA                 NA     
+##  9 EDUCATOR QUALI… # Students % Long …  1.82e-3   0                  0.0112
+## 10 EDUCATOR QUALI… # Students % Out o…  5.56e-2   0                  0.0965
+## 11 STUDENTS        # Students           6.25e+2 116             738499     
+## 12 STUDENTS        # Students Avg Yea…  1.00e+0   1                  1</code></pre>
 
 </div>
 </div>
@@ -445,9 +556,10 @@ gitbook.start({
 "google": true,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -457,6 +569,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/case-studies.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
 "toc": {

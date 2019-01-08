@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Spreadsheet Munging Strategies</title>
-  <meta name="description" content="Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown 0.7.14 and GitBook 2.6.7">
+  <title>3.2 Complex unpivoting | Spreadsheet Munging Strategies</title>
+  <meta name="description" content="3.2 Complex unpivoting | Spreadsheet Munging Strategies">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Spreadsheet Munging Strategies" />
+  <meta property="og:title" content="3.2 Complex unpivoting | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Spreadsheet Munging Strategies" />
+  <meta name="twitter:title" content="3.2 Complex unpivoting | Spreadsheet Munging Strategies" />
   
   
   
@@ -35,6 +35,7 @@
 <link rel="next" href="small-multiples.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -75,7 +76,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -156,6 +157,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
+<li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
@@ -163,8 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.2.4" data-path="pivot-complex.html"><a href="pivot-complex.html#centre-aligned-headers"><i class="fa fa-check"></i><b>3.2.4</b> Centre-aligned headers</a></li>
 <li class="chapter" data-level="3.2.5" data-path="pivot-complex.html"><a href="pivot-complex.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting-1"><i class="fa fa-check"></i><b>3.2.5</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
-<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
-<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.6" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.6</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
+<li class="chapter" data-level="3.2.7" data-path="pivot-complex.html"><a href="pivot-complex.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1"><i class="fa fa-check"></i><b>3.2.7</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.2.8" data-path="pivot-complex.html"><a href="pivot-complex.html#repeated-rowscolumns-of-headers-within-the-table"><i class="fa fa-check"></i><b>3.2.8</b> Repeated rows/columns of headers within the table</a></li>
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
@@ -262,7 +265,7 @@ all_cells &lt;-
 ##  8     4     5 numeric   &lt;NA&gt;            2
 ##  9     4     6 numeric   &lt;NA&gt;            3
 ## 10     4     7 numeric   &lt;NA&gt;            0
-## # ... with 12 more rows</code></pre>
+## # … with 12 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 6 x 5
@@ -310,7 +313,7 @@ second_header_row</code></pre>
 headers. Unpivotr provides a set of functions for this, derived from the points
 of the compass.</p>
 <p>Starting from the point of view of a data cell, the relevant column header from
-the second row of headers is the one directly north (up), or <code>&quot;N&quot;</code>.</p>
+the second row of headers is the one directly north (up), or <code>"N"</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">enhead</span>(data_cells, second_header_row, <span class="st">&quot;N&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 16 x 4
 ##      row   col score name    
@@ -332,7 +335,7 @@ the second row of headers is the one directly north (up), or <code>&quot;N&quot;
 ## 15     7     6    12 Nicholas
 ## 16     7     7     3 Paul</code></pre>
 <p>The first row of headers, from the point of view of a data cell, is either
-directly north (up), or north and west (up and left), or <code>&quot;NNW&quot;</code>.</p>
+directly north (up), or north and west (up and left), or <code>"NNW"</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">enhead</span>(data_cells, first_header_row, <span class="st">&quot;NNW&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 16 x 4
 ##      row   col score sex   
@@ -383,9 +386,9 @@ drop the <code>row</code> and <code>col</code> columns.</p>
 <h3><span class="header-section-number">3.2.2</span> Two clear columns of text row headers, top-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This is almost the same as <a href="2RL">Two clear rows of text column headers,
-left-aligned</a>, but with different compass directions: <code>&quot;W&quot;</code> for directly
-west (left), and <code>&quot;WNW&quot;</code> for west and north (left and up).</p>
-<p>(<code>&quot;NNW&quot;</code> and <code>&quot;WNW&quot;</code> look like synonyms. They happen to be synonyms in
+left-aligned</a>, but with different compass directions: <code>"W"</code> for directly
+west (left), and <code>"WNW"</code> for west and north (left and up).</p>
+<p>(<code>"NNW"</code> and <code>"WNW"</code> look like synonyms. They happen to be synonyms in
 <code>enhead()</code>, but they aren’t in <code>behead()</code>.</p>
 <p>In this example, the table has no column headers, only row headers. This is
 artificial here, but sometimes table are deliberately laid out in transpose
@@ -410,7 +413,7 @@ all_cells &lt;-
 ##  8     4     5 numeric   &lt;NA&gt;             2
 ##  9     4     6 numeric   &lt;NA&gt;             3
 ## 10     4     7 numeric   &lt;NA&gt;             0
-## # ... with 16 more rows</code></pre>
+## # … with 16 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 5 x 7
@@ -506,7 +509,7 @@ all_cells &lt;-
 ##  8     4     3 character Classics        NA
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
-## # ... with 18 more rows</code></pre>
+## # … with 18 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 6 x 7
@@ -623,19 +626,19 @@ all_cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path,
 ##  8         9 &lt;NA&gt;   Music  4      10     10     2      4      5     
 ##  9        10 Perfo… Dance  4      5      6      4      12     9     
 ## 10        11 &lt;NA&gt;   Drama  2      7      8      6      1      12    
-## # ... with 1 more variable: `10(J)` &lt;chr&gt;</code></pre>
+## # … with 1 more variable: `10(J)` &lt;chr&gt;</code></pre>
 <p>Looking at that table, it’s not immediately obvious where the boundary between
 <code>Female</code> and <code>Male</code> falls, or between <code>Humanities</code> and <code>Performance</code>. A naive
 approach would be to match the inner headers to the outer ones by proximity, and
-there are four directions to do so: <code>&quot;ABOVE&quot;</code>, <code>&quot;LEFT&quot;</code>, <code>&quot;BELOW&quot;</code>, and
-<code>&quot;RIGHT&quot;</code>.</p>
+there are four directions to do so: <code>"ABOVE"</code>, <code>"LEFT"</code>, <code>"BELOW"</code>, and
+<code>"RIGHT"</code>.</p>
 <p>But in this case, those directions are too naive.</p>
 <ul>
 <li><code>Languages</code> is closest to the <code>Performance</code> header, but is a humanity.</li>
 <li><code>Lenny</code> is the same distance from <code>Female</code> as from <code>Male</code>.</li>
 </ul>
 <p>You can fix this by justifying the header cells towards one side of the data
-cells that they describe, and then use a direction like <code>&quot;NNW&quot;</code> as usual. Do
+cells that they describe, and then use a direction like <code>"NNW"</code> as usual. Do
 this with <code>justify()</code>, providing the header cells with a second set of cells
 at the positions you want the header cells to move to.</p>
 <ul>
@@ -776,7 +779,7 @@ data_cells <span class="op">%&gt;%</span>
 ##  8     1 Female Matilda Humanities Literature
 ##  9     9 Female Olivia  Humanities Literature
 ## 10     5 Female Leah    Humanities Philosophy
-## # ... with 46 more rows</code></pre>
+## # … with 46 more rows</code></pre>
 </div>
 <div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting-1" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> Multiple rows or columns of headers, with meaningful formatting</h3>
@@ -811,7 +814,7 @@ all_cells &lt;-
 ##  8     4     3 character Classics        NA
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
-## # ... with 18 more rows</code></pre>
+## # … with 18 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 6 x 7
@@ -945,7 +948,7 @@ annotations</code></pre>
 ## 15    12 Male   Nicholas Performance Drama    FFFFFF00   
 ## 16     3 Male   Paul     Performance Drama    &lt;NA&gt;</code></pre>
 </div>
-<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3">
+<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3">
 <h3><span class="header-section-number">3.2.6</span> Mixed headers and notes in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-notes.png" /></p>
 <p>This doesn’t use any new techniques. The trick is, when selecting a row or
@@ -994,7 +997,7 @@ italic cells.</p>
 ##  8     4     2 Humanities      NA              18
 ##  9     4     3 Classics        NA              19
 ## 10     4     4 &lt;NA&gt;             1              33
-## # ... with 21 more rows</code></pre>
+## # … with 21 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">first_header_row &lt;-
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, <span class="op">!</span>(local_format_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(red, italic))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">sex =</span> character)
@@ -1050,7 +1053,7 @@ data_cells <span class="op">%&gt;%</span>
 ## 15    12 Male   Performance  
 ## 16     3 Male   Performance</code></pre>
 </div>
-<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3">
+<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3">
 <h3><span class="header-section-number">3.2.7</span> Mixed levels of headers in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-hierarchy.png" /></p>
 <p>Normally different levels of headers are in different rows, or different
@@ -1189,7 +1192,7 @@ all_cells &lt;-
 ##  8     3     6 numeric   &lt;NA&gt;            7
 ##  9     4     3 character Nicholas       NA
 ## 10     4     4 numeric   &lt;NA&gt;            3
-## # ... with 70 more rows</code></pre>
+## # … with 70 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 20 x 6
@@ -1291,7 +1294,7 @@ data_cells</code></pre>
 ##  8     5     5     0
 ##  9     5     6     1
 ## 10     6     4     2
-## # ... with 38 more rows</code></pre>
+## # … with 38 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">data_cells <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">enhead</span>(term, <span class="st">&quot;N&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">enhead</span>(subject, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
@@ -1310,7 +1313,7 @@ data_cells</code></pre>
 ##  8     0 Term 2 Classics Olivia  
 ##  9     1 Term 3 Classics Olivia  
 ## 10     2 Term 1 Classics Paul    
-## # ... with 38 more rows</code></pre>
+## # … with 38 more rows</code></pre>
 </div>
 <div id="headers-amongst-the-data" class="section level3">
 <h3><span class="header-section-number">3.2.9</span> Headers amongst the data</h3>
@@ -1320,7 +1323,7 @@ the left of the data, is presented above the data. (Alternatively, what is
 actually a column header, instead of being presented above the data, is
 presented to the side.)</p>
 <p>The way to handle it is to <em>pretend</em> that it is a row header, and use the
-<code>&quot;WNW&quot;</code> direction as normal.</p>
+<code>"WNW"</code> direction as normal.</p>
 <pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
 all_cells &lt;-
 <span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-header-within-data&quot;</span>) <span class="op">%&gt;%</span>
@@ -1340,7 +1343,7 @@ all_cells &lt;-
 ##  8     4     5 numeric   &lt;NA&gt;            7              19
 ##  9     5     2 character Nicholas       NA              20
 ## 10     5     3 numeric   &lt;NA&gt;            4              20
-## # ... with 70 more rows</code></pre>
+## # … with 70 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># View the cells in their original positions on the spreadsheet</span>
 <span class="kw">rectify</span>(all_cells)</code></pre>
 <pre><code>## # A tibble: 24 x 5
@@ -1356,7 +1359,7 @@ all_cells &lt;-
 ##  8         9 &lt;NA&gt;     Term 1   Term 2 Term 3
 ##  9        10 Matilda  0        4      2     
 ## 10        11 Nicholas 2        5      2     
-## # ... with 14 more rows</code></pre>
+## # … with 14 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">bold &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold)
 
 <span class="co"># The subject headers, though mixed with the data and the &#39;term&#39; headers, are</span>
@@ -1440,7 +1443,7 @@ data_cells</code></pre>
 ##  8     6     4     9
 ##  9     6     5     9
 ## 10     7     3     5
-## # ... with 38 more rows</code></pre>
+## # … with 38 more rows</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">data_cells <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">enhead</span>(subject, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">enhead</span>(term, <span class="st">&quot;N&quot;</span>) <span class="op">%&gt;%</span>
@@ -1459,7 +1462,7 @@ data_cells</code></pre>
 ##  8     9 Classics Term 2 Olivia  
 ##  9     9 Classics Term 3 Olivia  
 ## 10     5 Classics Term 1 Paul    
-## # ... with 38 more rows</code></pre>
+## # … with 38 more rows</code></pre>
 
 </div>
 </div>
@@ -1490,9 +1493,10 @@ gitbook.start({
 "google": true,
 "linkedin": true,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"instapper": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1502,6 +1506,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/pivot-tables.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["spreadsheet-munging-strategies.pdf", "spreadsheet-munging-strategies.epub"],
 "toc": {
