@@ -245,6 +245,123 @@ left_join(unpivoted, annotations, by = c("row", "col")) %>%
   select(-row, -col)
 ```
 
+### Mixed headers and notes in the same row/column, distinguished by formatting
+
+![](images/pivot-notes.png)
+
+This needs two passes over each row/column that contains a mixture.  The first
+pass, with `behead_if()` is to deal with the cells that are headers, and the
+second pass, with `dplyr::filter()` removes the remaining cells that are notes.
+
+The `behead_if()` function takes predicate functions to choose which cells are
+headers.
+
+```{r, eval = FALSE}
+# only treat bold cells beginning "Country: " as a header
+cells %>%
+  behead_if(formats$local$font$bold[local_format_id], # true for bold cells
+            str_detect(character, "^Country: "),      # true for "Country: ..."
+            direction = "WNW",                        # argument must be named
+            name = "country_name") %>%
+  dplyr::filter(col != 1L)                            # discard remaining cells
+```
+
+Note that the `direction` and `name` arguments must now be named, because they
+follow the `...`.
+
+After `behead_if()`, any cells that haven't been treated as headers will still
+exist, so if you want to discard them then use `dplyr::filter()` on the column
+or row number.
+
+In the screenshot above, cells with italic or red text aren't headers, even
+though they are in amongst header cells.
+
+First, identify the IDs of formats that have italic or red text.
+
+```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+formats <- xlsx_formats(path)
+
+italic <- formats$local$font$italic
+
+# For 'red' we can either look for the RGB code for red "FFFF0000"
+red <- "FFFF0000"
+
+# Or we can find out what that code is by starting from a cell that we know is
+# red.
+red_cell_format_id <-
+  xlsx_cells(path, sheets = "pivot-notes") %>%
+  dplyr::filter(row == 5, col == 2) %>%
+  pull(local_format_id)
+red_cell_format_id
+red <- formats$local$font$color$rgb[red_cell_format_id]
+red
+```
+
+Now we use `behead_if()`, filtering out cells with the format IDs of red or
+italic cells.
+
+```{r}
+cells <-
+  xlsx_cells(path, sheets = "pivot-notes") %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric, local_format_id) %>%
+  print()
+
+cells %>%
+  behead_if(!italic[local_format_id],                             # not italic
+            direction = "NNW",
+            name = "sex") %>%
+  dplyr::filter(row != min(row)) %>% # discard non-header cells
+  behead("N", "name") %>%
+  behead_if(formats$local$font$color$rgb[local_format_id] != red, # not red
+            direction = "WNW",
+            name = "field") %>%
+  dplyr::filter(col != min(col)) %>% # discard non-headere cells
+  behead("W", "subject") %>%
+  select(sex, name, field, subject, score = numeric)
+```
+
+### Mixed levels of headers in the same row/column, distinguished by formatting
+
+![](images/pivot-hierarchy.png)
+
+Normally different levels of headers are in different rows, or different
+columns, like [Two clear rows of text column headers, left-aligned](2Rl).  But
+sometimes they coexist in the same row or column, and are distinguishable by
+formatting, e.g. by indentation, or bold for the top level, italic for the mid
+level, and plain for the lowest level.
+
+In this example, there is a single column of row headers, where the levels are
+shown by different amounts of indentation.  The indentation is done by
+formatting, rather than by leading spaces or tabs.
+
+```{r}
+path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
+formats <- xlsx_formats(path)
+
+formats$local$alignment$indent
+```
+
+We can use the indentation with `behead_if()` to make two passes over the column
+of row headers, first for the unindented headers, then for the indented headers.
+
+```{r}
+cells <-
+  xlsx_cells(path, sheets = "pivot-hierarchy") %>%
+  dplyr::filter(!is_blank) %>%
+  select(row, col, data_type, character, numeric, local_format_id) %>%
+  print()
+
+cells %>%
+  behead_if(formats$local$alignment$indent[local_format_id] == 0,
+            direction = "WNW",
+            name = "field") %>%
+  behead("W", "subject") %>%
+  behead("N", "name") %>%
+  select(field, subject, name, score = numeric)
+```
+
 ## Complex unpivoting {#pivot-complex}
 
 When `behead()` isn't powerful enough (it makes certain assumptions, and it
