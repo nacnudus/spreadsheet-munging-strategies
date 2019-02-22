@@ -28,6 +28,12 @@ Please help me to improve this book by [opening a GitHub
 issue](https://github.com/nacnudus/spreadsheet-munging-strategies/issues) or
 [tweeting](https://twitter.com/nacnudus).
 
+#### Other ways to learn
+
+* [YouTube videos](https://www.youtube.com/channel/UCrw0ScBCFSbk_lgkjyg4ucw)
+* [Worked example code](https://github.com/nacnudus/ukfarm)
+* [Blog post on `readr::melt_csv()`](https://nacnudus.github.io/duncangarmonsway/posts/2018-12-29-meltcsv/)
+
 ---
 
 ![Creative Commons License](images/by-nc-sa.png)
