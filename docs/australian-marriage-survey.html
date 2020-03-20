@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.1 Australian Marriage Survey | Spreadsheet Munging Strategies</title>
-  <meta name="description" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.1 Australian Marriage Survey | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -22,17 +21,17 @@
   
   
 
-<meta name="author" content="Duncan Garmonsway">
+<meta name="author" content="Duncan Garmonsway" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="case-studies.html">
-<link rel="next" href="vaccinations.html">
+<link rel="prev" href="case-studies.html"/>
+<link rel="next" href="vaccinations.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +39,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -58,27 +60,28 @@
 </script>
 
 
+
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -87,9 +90,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -135,14 +138,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
 <li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a><ul>
+<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>2.1</b> Clean &amp; tidy tables</a></li>
-<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a><ul>
+<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>2.2.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
 <li class="chapter" data-level="2.2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>2.2.2</b> Other stuff on the same sheet</a></li>
 </ul></li>
@@ -152,15 +161,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="hierarchies-in-formatting.html"><a href="hierarchies-in-formatting.html"><i class="fa fa-check"></i><b>2.6</b> Hierarchies in formatting</a></li>
 <li class="chapter" data-level="2.7" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>2.7</b> Sentinel values in non-text columns</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a><ul>
-<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a><ul>
+<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
 <li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
+<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>3.2.2</b> Two clear columns of text row headers, top-aligned</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
@@ -172,13 +184,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a><ul>
+<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
 <li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
 <li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
 <li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
+<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
 <li class="chapter" data-level="5.2" data-path="common-formats.html"><a href="common-formats.html"><i class="fa fa-check"></i><b>5.2</b> Common formats</a></li>
 <li class="chapter" data-level="5.3" data-path="in-cell-formatting.html"><a href="in-cell-formatting.html"><i class="fa fa-check"></i><b>5.3</b> In-cell formatting</a></li>
@@ -187,28 +201,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>6</b> Data validation</a></li>
 <li class="chapter" data-level="7" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>7</b> Formulas</a></li>
-<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a><ul>
+<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="non-text-headers-e-g-dates.html"><a href="non-text-headers-e-g-dates.html"><i class="fa fa-check"></i><b>8.1</b> Non-text headers e.g. dates</a></li>
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
-<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
+<ul>
+<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
-<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a><ul>
+<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="us-crime.html"><a href="us-crime.html#us-crime-2"><i class="fa fa-check"></i><b>9.3.1</b> Table 2</a></li>
 <li class="chapter" data-level="9.3.2" data-path="us-crime.html"><a href="us-crime.html#us-crime-3"><i class="fa fa-check"></i><b>9.3.2</b> Table 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a><ul>
+<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#the-full-code-listing-1"><i class="fa fa-check"></i><b>9.4.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.4.2" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#step-by-step-1"><i class="fa fa-check"></i><b>9.4.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="ground-water.html"><a href="ground-water.html"><i class="fa fa-check"></i><b>9.5</b> Ground water</a></li>
 <li class="chapter" data-level="9.6" data-path="cashflows.html"><a href="cashflows.html"><i class="fa fa-check"></i><b>9.6</b> Cashflows</a></li>
-<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a><ul>
+<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="school-performance.html"><a href="school-performance.html#sheet-1"><i class="fa fa-check"></i><b>9.7.1</b> Sheet 1</a></li>
 <li class="chapter" data-level="9.7.2" data-path="school-performance.html"><a href="school-performance.html#sheet-2"><i class="fa fa-check"></i><b>9.7.2</b> Sheet 2</a></li>
 <li class="chapter" data-level="9.7.3" data-path="school-performance.html"><a href="school-performance.html#sheet-3"><i class="fa fa-check"></i><b>9.7.3</b> Sheet 3</a></li>
@@ -244,63 +265,63 @@ file</a>.
 <p><img src="images/ozmarriage2.png" /></p>
 <div id="the-full-code-listing" class="section level3">
 <h3><span class="header-section-number">9.1.1</span> The full code listing</h3>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)
-
-table_<span class="dv">1</span>  &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)
-
-state &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,
-                row <span class="op">&gt;=</span><span class="st"> </span>5L,
-                col <span class="op">==</span><span class="st"> </span>1L,
-                <span class="op">!</span>is_blank,
-                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)
-
-table_<span class="dv">2</span> &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,
-                row <span class="op">&gt;=</span><span class="st"> </span>5L,
-                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,
-         unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)
-
-all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)
-all_tables</code></pre>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="australian-marriage-survey.html#cb357-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb357-2"><a href="australian-marriage-survey.html#cb357-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb357-3"><a href="australian-marriage-survey.html#cb357-3"></a></span>
+<span id="cb357-4"><a href="australian-marriage-survey.html#cb357-4"></a>table_<span class="dv">1</span>  &lt;-</span>
+<span id="cb357-5"><a href="australian-marriage-survey.html#cb357-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb357-6"><a href="australian-marriage-survey.html#cb357-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb357-7"><a href="australian-marriage-survey.html#cb357-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb357-8"><a href="australian-marriage-survey.html#cb357-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-9"><a href="australian-marriage-survey.html#cb357-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-10"><a href="australian-marriage-survey.html#cb357-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-11"><a href="australian-marriage-survey.html#cb357-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-12"><a href="australian-marriage-survey.html#cb357-12"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb357-13"><a href="australian-marriage-survey.html#cb357-13"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
+<span id="cb357-14"><a href="australian-marriage-survey.html#cb357-14"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb357-15"><a href="australian-marriage-survey.html#cb357-15"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb357-16"><a href="australian-marriage-survey.html#cb357-16"></a></span>
+<span id="cb357-17"><a href="australian-marriage-survey.html#cb357-17"></a>state &lt;-</span>
+<span id="cb357-18"><a href="australian-marriage-survey.html#cb357-18"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb357-19"><a href="australian-marriage-survey.html#cb357-19"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb357-20"><a href="australian-marriage-survey.html#cb357-20"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb357-21"><a href="australian-marriage-survey.html#cb357-21"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb357-22"><a href="australian-marriage-survey.html#cb357-22"></a>                <span class="op">!</span>is_blank,</span>
+<span id="cb357-23"><a href="australian-marriage-survey.html#cb357-23"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb357-24"><a href="australian-marriage-survey.html#cb357-24"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
+<span id="cb357-25"><a href="australian-marriage-survey.html#cb357-25"></a></span>
+<span id="cb357-26"><a href="australian-marriage-survey.html#cb357-26"></a>table_<span class="dv">2</span> &lt;-</span>
+<span id="cb357-27"><a href="australian-marriage-survey.html#cb357-27"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb357-28"><a href="australian-marriage-survey.html#cb357-28"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb357-29"><a href="australian-marriage-survey.html#cb357-29"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb357-30"><a href="australian-marriage-survey.html#cb357-30"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb357-31"><a href="australian-marriage-survey.html#cb357-31"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb357-32"><a href="australian-marriage-survey.html#cb357-32"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-33"><a href="australian-marriage-survey.html#cb357-33"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-34"><a href="australian-marriage-survey.html#cb357-34"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-35"><a href="australian-marriage-survey.html#cb357-35"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-36"><a href="australian-marriage-survey.html#cb357-36"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb357-37"><a href="australian-marriage-survey.html#cb357-37"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb357-38"><a href="australian-marriage-survey.html#cb357-38"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
+<span id="cb357-39"><a href="australian-marriage-survey.html#cb357-39"></a>         unit) <span class="op">%&gt;%</span></span>
+<span id="cb357-40"><a href="australian-marriage-survey.html#cb357-40"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb357-41"><a href="australian-marriage-survey.html#cb357-41"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb357-42"><a href="australian-marriage-survey.html#cb357-42"></a></span>
+<span id="cb357-43"><a href="australian-marriage-survey.html#cb357-43"></a>all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)</span>
+<span id="cb357-44"><a href="australian-marriage-survey.html#cb357-44"></a>all_tables</span></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet  state      population       response         `%`    no. territory
-##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;            &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    
-##  1 Table… New South… Eligible Partic… Non-responding  20.5 1.07e6 &lt;NA&gt;     
-##  2 Table… New South… Eligible Partic… Response clear  79.2 4.11e6 &lt;NA&gt;     
-##  3 Table… New South… Eligible Partic… Response not …   0.2 1.10e4 &lt;NA&gt;     
-##  4 Table… New South… Eligible Partic… Total          100   5.19e6 &lt;NA&gt;     
-##  5 Table… New South… Response clear   No              42.2 1.74e6 &lt;NA&gt;     
-##  6 Table… New South… Response clear   Total          100   4.11e6 &lt;NA&gt;     
-##  7 Table… New South… Response clear   Yes             57.8 2.37e6 &lt;NA&gt;     
-##  8 Table… Victoria   Eligible Partic… Non-responding  18.3 7.44e5 &lt;NA&gt;     
-##  9 Table… Victoria   Eligible Partic… Response clear  81.4 3.31e6 &lt;NA&gt;     
-## 10 Table… Victoria   Eligible Partic… Response not …   0.3 1.10e4 &lt;NA&gt;     
+##    sheet   state           population            response                `%`     no. territory
+##  * &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
+##  1 Table 1 New South Wales Eligible Participants Non-responding         20.5 1065445 &lt;NA&gt;     
+##  2 Table 1 New South Wales Eligible Participants Response clear         79.2 4111200 &lt;NA&gt;     
+##  3 Table 1 New South Wales Eligible Participants Response not clear(a)   0.2   11036 &lt;NA&gt;     
+##  4 Table 1 New South Wales Eligible Participants Total                 100   5187681 &lt;NA&gt;     
+##  5 Table 1 New South Wales Response clear        No                     42.2 1736838 &lt;NA&gt;     
+##  6 Table 1 New South Wales Response clear        Total                 100   4111200 &lt;NA&gt;     
+##  7 Table 1 New South Wales Response clear        Yes                    57.8 2374362 &lt;NA&gt;     
+##  8 Table 1 Victoria        Eligible Participants Non-responding         18.3  743634 &lt;NA&gt;     
+##  9 Table 1 Victoria        Eligible Participants Response clear         81.4 3306727 &lt;NA&gt;     
+## 10 Table 1 Victoria        Eligible Participants Response not clear(a)   0.3   11028 &lt;NA&gt;     
 ## # … with 1,166 more rows</code></pre>
 </div>
 <div id="step-by-step" class="section level3">
@@ -313,35 +334,35 @@ data to join them to, they will be dropped automatically. That is handy,
 because otherwise we would have to know where the bottom of the table is, which
 is likely to change with later editions of the same data.</p>
 <p>Apart from filtering the first rows, the rest of this example is ‘textbook’.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)
-
-table_<span class="dv">1</span>  &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)
-
-table_<span class="dv">1</span></code></pre>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="australian-marriage-survey.html#cb359-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb359-2"><a href="australian-marriage-survey.html#cb359-2"></a></span>
+<span id="cb359-3"><a href="australian-marriage-survey.html#cb359-3"></a>table_<span class="dv">1</span>  &lt;-</span>
+<span id="cb359-4"><a href="australian-marriage-survey.html#cb359-4"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb359-5"><a href="australian-marriage-survey.html#cb359-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb359-6"><a href="australian-marriage-survey.html#cb359-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb359-7"><a href="australian-marriage-survey.html#cb359-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb359-8"><a href="australian-marriage-survey.html#cb359-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb359-9"><a href="australian-marriage-survey.html#cb359-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb359-10"><a href="australian-marriage-survey.html#cb359-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb359-11"><a href="australian-marriage-survey.html#cb359-11"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb359-12"><a href="australian-marriage-survey.html#cb359-12"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
+<span id="cb359-13"><a href="australian-marriage-survey.html#cb359-13"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb359-14"><a href="australian-marriage-survey.html#cb359-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb359-15"><a href="australian-marriage-survey.html#cb359-15"></a></span>
+<span id="cb359-16"><a href="australian-marriage-survey.html#cb359-16"></a>table_<span class="dv">1</span></span></code></pre></div>
 <pre><code>## # A tibble: 63 x 5
-##    state           population            response                `%`    no.
-##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;  &lt;dbl&gt;
-##  1 New South Wales Eligible Participants Non-responding         20.5 1.07e6
-##  2 New South Wales Eligible Participants Response clear         79.2 4.11e6
-##  3 New South Wales Eligible Participants Response not clear(a)   0.2 1.10e4
-##  4 New South Wales Eligible Participants Total                 100   5.19e6
-##  5 New South Wales Response clear        No                     42.2 1.74e6
-##  6 New South Wales Response clear        Total                 100   4.11e6
-##  7 New South Wales Response clear        Yes                    57.8 2.37e6
-##  8 Victoria        Eligible Participants Non-responding         18.3 7.44e5
-##  9 Victoria        Eligible Participants Response clear         81.4 3.31e6
-## 10 Victoria        Eligible Participants Response not clear(a)   0.3 1.10e4
+##    state           population            response                `%`     no.
+##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
+##  1 New South Wales Eligible Participants Non-responding         20.5 1065445
+##  2 New South Wales Eligible Participants Response clear         79.2 4111200
+##  3 New South Wales Eligible Participants Response not clear(a)   0.2   11036
+##  4 New South Wales Eligible Participants Total                 100   5187681
+##  5 New South Wales Response clear        No                     42.2 1736838
+##  6 New South Wales Response clear        Total                 100   4111200
+##  7 New South Wales Response clear        Yes                    57.8 2374362
+##  8 Victoria        Eligible Participants Non-responding         18.3  743634
+##  9 Victoria        Eligible Participants Response clear         81.4 3306727
+## 10 Victoria        Eligible Participants Response not clear(a)   0.3   11028
 ## # … with 53 more rows</code></pre>
 </div>
 <div id="table-2" class="section level4">
@@ -353,52 +374,52 @@ With them out of the way, unpivot the rest of the table as normal, and then use
 <code>enhead()</code> at the end to join the state names back on.</p>
 <p>Since tables 1 and 2 are so similar structurally, they might as well be joined
 into one.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)
-
-state &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,
-                row <span class="op">&gt;=</span><span class="st"> </span>5L,
-                col <span class="op">==</span><span class="st"> </span>1L,
-                <span class="op">!</span>is_blank,
-                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)
-
-table_<span class="dv">2</span> &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,
-                row <span class="op">&gt;=</span><span class="st"> </span>5L,
-                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,
-         unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)
-
-all_tables &lt;-
-<span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)
-all_tables</code></pre>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="australian-marriage-survey.html#cb361-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb361-2"><a href="australian-marriage-survey.html#cb361-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb361-3"><a href="australian-marriage-survey.html#cb361-3"></a></span>
+<span id="cb361-4"><a href="australian-marriage-survey.html#cb361-4"></a>state &lt;-</span>
+<span id="cb361-5"><a href="australian-marriage-survey.html#cb361-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb361-6"><a href="australian-marriage-survey.html#cb361-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb361-7"><a href="australian-marriage-survey.html#cb361-7"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb361-8"><a href="australian-marriage-survey.html#cb361-8"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb361-9"><a href="australian-marriage-survey.html#cb361-9"></a>                <span class="op">!</span>is_blank,</span>
+<span id="cb361-10"><a href="australian-marriage-survey.html#cb361-10"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb361-11"><a href="australian-marriage-survey.html#cb361-11"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
+<span id="cb361-12"><a href="australian-marriage-survey.html#cb361-12"></a></span>
+<span id="cb361-13"><a href="australian-marriage-survey.html#cb361-13"></a>table_<span class="dv">2</span> &lt;-</span>
+<span id="cb361-14"><a href="australian-marriage-survey.html#cb361-14"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb361-15"><a href="australian-marriage-survey.html#cb361-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb361-16"><a href="australian-marriage-survey.html#cb361-16"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb361-17"><a href="australian-marriage-survey.html#cb361-17"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb361-18"><a href="australian-marriage-survey.html#cb361-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb361-19"><a href="australian-marriage-survey.html#cb361-19"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-20"><a href="australian-marriage-survey.html#cb361-20"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-21"><a href="australian-marriage-survey.html#cb361-21"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-22"><a href="australian-marriage-survey.html#cb361-22"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-23"><a href="australian-marriage-survey.html#cb361-23"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-24"><a href="australian-marriage-survey.html#cb361-24"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb361-25"><a href="australian-marriage-survey.html#cb361-25"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
+<span id="cb361-26"><a href="australian-marriage-survey.html#cb361-26"></a>         unit) <span class="op">%&gt;%</span></span>
+<span id="cb361-27"><a href="australian-marriage-survey.html#cb361-27"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb361-28"><a href="australian-marriage-survey.html#cb361-28"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb361-29"><a href="australian-marriage-survey.html#cb361-29"></a></span>
+<span id="cb361-30"><a href="australian-marriage-survey.html#cb361-30"></a>all_tables &lt;-</span>
+<span id="cb361-31"><a href="australian-marriage-survey.html#cb361-31"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb361-32"><a href="australian-marriage-survey.html#cb361-32"></a><span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)</span>
+<span id="cb361-33"><a href="australian-marriage-survey.html#cb361-33"></a>all_tables</span></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet  state      territory population       response         `%`    no.
-##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Table… New South… &lt;NA&gt;      Eligible Partic… Non-responding  20.5 1.07e6
-##  2 Table… New South… &lt;NA&gt;      Eligible Partic… Response clear  79.2 4.11e6
-##  3 Table… New South… &lt;NA&gt;      Eligible Partic… Response not …   0.2 1.10e4
-##  4 Table… New South… &lt;NA&gt;      Eligible Partic… Total          100   5.19e6
-##  5 Table… New South… &lt;NA&gt;      Response clear   No              42.2 1.74e6
-##  6 Table… New South… &lt;NA&gt;      Response clear   Total          100   4.11e6
-##  7 Table… New South… &lt;NA&gt;      Response clear   Yes             57.8 2.37e6
-##  8 Table… Victoria   &lt;NA&gt;      Eligible Partic… Non-responding  18.3 7.44e5
-##  9 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response clear  81.4 3.31e6
-## 10 Table… Victoria   &lt;NA&gt;      Eligible Partic… Response not …   0.3 1.10e4
+##    sheet   state           territory population            response                `%`     no.
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Non-responding         20.5 1065445
+##  2 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Response clear         79.2 4111200
+##  3 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Response not clear(a)   0.2   11036
+##  4 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Total                 100   5187681
+##  5 Table 1 New South Wales &lt;NA&gt;      Response clear        No                     42.2 1736838
+##  6 Table 1 New South Wales &lt;NA&gt;      Response clear        Total                 100   4111200
+##  7 Table 1 New South Wales &lt;NA&gt;      Response clear        Yes                    57.8 2374362
+##  8 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Non-responding         18.3  743634
+##  9 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Response clear         81.4 3306727
+## 10 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Response not clear(a)   0.3   11028
 ## # … with 1,166 more rows</code></pre>
 </div>
 </div>
@@ -414,11 +435,13 @@ all_tables</code></pre>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -426,12 +449,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": true,
 "linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": true,
 "instapper": false
 },
 "fontsettings": {
@@ -444,6 +467,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

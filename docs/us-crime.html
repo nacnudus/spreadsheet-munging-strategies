@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9.3 US Crime | Spreadsheet Munging Strategies</title>
-  <meta name="description" content="9.3 US Crime | Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="9.3 US Crime | Spreadsheet Munging Strategies" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9.3 US Crime | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -22,17 +21,17 @@
   
   
 
-<meta name="author" content="Duncan Garmonsway">
+<meta name="author" content="Duncan Garmonsway" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="vaccinations.html">
-<link rel="next" href="toronto-transit-commission.html">
+<link rel="prev" href="vaccinations.html"/>
+<link rel="next" href="toronto-transit-commission.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +39,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -58,27 +60,28 @@
 </script>
 
 
+
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -87,9 +90,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -135,14 +138,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
 <li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a><ul>
+<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>2.1</b> Clean &amp; tidy tables</a></li>
-<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a><ul>
+<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>2.2.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
 <li class="chapter" data-level="2.2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>2.2.2</b> Other stuff on the same sheet</a></li>
 </ul></li>
@@ -152,15 +161,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="hierarchies-in-formatting.html"><a href="hierarchies-in-formatting.html"><i class="fa fa-check"></i><b>2.6</b> Hierarchies in formatting</a></li>
 <li class="chapter" data-level="2.7" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>2.7</b> Sentinel values in non-text columns</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a><ul>
-<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a><ul>
+<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
 <li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
+<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>3.2.2</b> Two clear columns of text row headers, top-aligned</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
@@ -172,13 +184,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a><ul>
+<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
 <li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
 <li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
 <li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
+<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
 <li class="chapter" data-level="5.2" data-path="common-formats.html"><a href="common-formats.html"><i class="fa fa-check"></i><b>5.2</b> Common formats</a></li>
 <li class="chapter" data-level="5.3" data-path="in-cell-formatting.html"><a href="in-cell-formatting.html"><i class="fa fa-check"></i><b>5.3</b> In-cell formatting</a></li>
@@ -187,28 +201,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>6</b> Data validation</a></li>
 <li class="chapter" data-level="7" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>7</b> Formulas</a></li>
-<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a><ul>
+<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="non-text-headers-e-g-dates.html"><a href="non-text-headers-e-g-dates.html"><i class="fa fa-check"></i><b>8.1</b> Non-text headers e.g. dates</a></li>
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
-<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
+<ul>
+<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
-<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a><ul>
+<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="us-crime.html"><a href="us-crime.html#us-crime-2"><i class="fa fa-check"></i><b>9.3.1</b> Table 2</a></li>
 <li class="chapter" data-level="9.3.2" data-path="us-crime.html"><a href="us-crime.html#us-crime-3"><i class="fa fa-check"></i><b>9.3.2</b> Table 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a><ul>
+<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#the-full-code-listing-1"><i class="fa fa-check"></i><b>9.4.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.4.2" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#step-by-step-1"><i class="fa fa-check"></i><b>9.4.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="ground-water.html"><a href="ground-water.html"><i class="fa fa-check"></i><b>9.5</b> Ground water</a></li>
 <li class="chapter" data-level="9.6" data-path="cashflows.html"><a href="cashflows.html"><i class="fa fa-check"></i><b>9.6</b> Cashflows</a></li>
-<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a><ul>
+<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="school-performance.html"><a href="school-performance.html#sheet-1"><i class="fa fa-check"></i><b>9.7.1</b> Sheet 1</a></li>
 <li class="chapter" data-level="9.7.2" data-path="school-performance.html"><a href="school-performance.html#sheet-2"><i class="fa fa-check"></i><b>9.7.2</b> Sheet 2</a></li>
 <li class="chapter" data-level="9.7.3" data-path="school-performance.html"><a href="school-performance.html#sheet-3"><i class="fa fa-check"></i><b>9.7.3</b> Sheet 3</a></li>
@@ -254,43 +275,43 @@ formatting.</p>
 <p>The only slight snag is that the header cells in row 5 are blank. There is a
 header for the units “Rate per 100,000”, but no header for the units “Count” –
 the cells in those positions are empty. It would be a problem if the cells
-didn’t exist at all, because <code>behead("N", "unit")</code> wouldn’t be able to associate
+didn’t exist at all, because <code>behead("up", "unit")</code> wouldn’t be able to associate
 data cells with missing header cells. Fortunately they do exist (because they
 have formatting), they are just empty or <code>NA</code>. To make sure they aren’t
 ignored, use <code>drop_na = FALSE</code> in <code>behead()</code>, and then later fill the blanks in
 the <code>units</code> column with <code>"Count"</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
-                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
-         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
-
-cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">unit =</span> <span class="kw">if_else</span>(unit <span class="op">==</span><span class="st"> &quot;&quot;</span>, <span class="st">&quot;Count&quot;</span>, unit)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, unit, area, year, population, crime) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</code></pre>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="us-crime.html#cb367-1"></a>cells &lt;-</span>
+<span id="cb367-2"><a href="us-crime.html#cb367-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-3"><a href="us-crime.html#cb367-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</span>
+<span id="cb367-4"><a href="us-crime.html#cb367-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</span>
+<span id="cb367-5"><a href="us-crime.html#cb367-5"></a>         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</span>
+<span id="cb367-6"><a href="us-crime.html#cb367-6"></a></span>
+<span id="cb367-7"><a href="us-crime.html#cb367-7"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb367-8"><a href="us-crime.html#cb367-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></span>
+<span id="cb367-9"><a href="us-crime.html#cb367-9"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb367-10"><a href="us-crime.html#cb367-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-11"><a href="us-crime.html#cb367-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-12"><a href="us-crime.html#cb367-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-13"><a href="us-crime.html#cb367-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-14"><a href="us-crime.html#cb367-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-15"><a href="us-crime.html#cb367-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb367-16"><a href="us-crime.html#cb367-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">unit =</span> <span class="kw">if_else</span>(unit <span class="op">==</span><span class="st"> &quot;&quot;</span>, <span class="st">&quot;Count&quot;</span>, unit)) <span class="op">%&gt;%</span></span>
+<span id="cb367-17"><a href="us-crime.html#cb367-17"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, unit, area, year, population, crime) <span class="op">%&gt;%</span></span>
+<span id="cb367-18"><a href="us-crime.html#cb367-18"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb367-19"><a href="us-crime.html#cb367-19"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 1,320 x 6
-##    area        year  population crime               Count `Rate per  100,0…
-##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;             &lt;dbl&gt;
-##  1 United Sta… 2015  320896618  Aggravated assault 7.64e5             238. 
-##  2 United Sta… 2015  320896618  Burglary           1.59e6             495. 
-##  3 United Sta… 2015  320896618  Larceny-theft      5.72e6            1784. 
-##  4 United Sta… 2015  320896618  Motor vehicle the… 7.13e5             222. 
-##  5 United Sta… 2015  320896618  Murder and  nonne… 1.59e4               4.9
-##  6 United Sta… 2015  320896618  Property crime     8.02e6            2500. 
-##  7 United Sta… 2015  320896618  Rape (legacy defi… 9.13e4              28.4
-##  8 United Sta… 2015  320896618  Rape (revised def… 1.26e5              39.3
-##  9 United Sta… 2015  320896618  Robbery            3.28e5             102. 
-## 10 United Sta… 2015  320896618  Violent crime      1.23e6             385. 
+##    area             year  population crime                            Count `Rate per  100,00…
+##    &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;                            &lt;dbl&gt;              &lt;dbl&gt;
+##  1 United States T… 2015  320896618  Aggravated assault              7.64e5              238. 
+##  2 United States T… 2015  320896618  Burglary                        1.59e6              495. 
+##  3 United States T… 2015  320896618  Larceny-theft                   5.72e6             1784. 
+##  4 United States T… 2015  320896618  Motor vehicle theft             7.13e5              222. 
+##  5 United States T… 2015  320896618  Murder and  nonnegligent  mans… 1.59e4                4.9
+##  6 United States T… 2015  320896618  Property crime                  8.02e6             2500. 
+##  7 United States T… 2015  320896618  Rape (legacy definition)        9.13e4               28.4
+##  8 United States T… 2015  320896618  Rape (revised definition)       1.26e5               39.3
+##  9 United States T… 2015  320896618  Robbery                         3.28e5              102. 
+## 10 United States T… 2015  320896618  Violent crime                   1.23e6              385. 
 ## # … with 1,310 more rows</code></pre>
 </div>
 <div id="us-crime-2-complex" class="section level4">
@@ -307,34 +328,34 @@ are the categories of crimes, and store them in the <code>categories</code> vari
 <p>In fact the headers <code>unit</code>, <code>year</code>, <code>population</code> can be handled by <code>behead()</code>,
 because they aren’t hierarchichal, so only the variables <code>category</code>, <code>crime</code>,
 <code>region</code>, <code>division</code> and <code>state</code> are handled by <code>enhead()</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
-                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
-         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
-
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>)
-
-categories &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L,
-                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
-                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">category =</span> character)
-categories</code></pre>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="us-crime.html#cb369-1"></a>cells &lt;-</span>
+<span id="cb369-2"><a href="us-crime.html#cb369-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb369-3"><a href="us-crime.html#cb369-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</span>
+<span id="cb369-4"><a href="us-crime.html#cb369-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</span>
+<span id="cb369-5"><a href="us-crime.html#cb369-5"></a>         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</span>
+<span id="cb369-6"><a href="us-crime.html#cb369-6"></a></span>
+<span id="cb369-7"><a href="us-crime.html#cb369-7"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>us_crime_<span class="dv">2</span>)</span>
+<span id="cb369-8"><a href="us-crime.html#cb369-8"></a></span>
+<span id="cb369-9"><a href="us-crime.html#cb369-9"></a>categories &lt;-</span>
+<span id="cb369-10"><a href="us-crime.html#cb369-10"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb369-11"><a href="us-crime.html#cb369-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L,</span>
+<span id="cb369-12"><a href="us-crime.html#cb369-12"></a>                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</span>
+<span id="cb369-13"><a href="us-crime.html#cb369-13"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb369-14"><a href="us-crime.html#cb369-14"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">category =</span> character)</span>
+<span id="cb369-15"><a href="us-crime.html#cb369-15"></a>categories</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row   col category      
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;         
 ## 1     4     4 Violent crime 
 ## 2     4    16 Property crime</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">crimes &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">%in%</span><span class="st"> </span>categories<span class="op">$</span>category,
-                             <span class="st">&quot;Total&quot;</span>,
-                             character)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">crime =</span> character)
-crimes</code></pre>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="us-crime.html#cb371-1"></a>crimes &lt;-</span>
+<span id="cb371-2"><a href="us-crime.html#cb371-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb371-3"><a href="us-crime.html#cb371-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span>4L, data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb371-4"><a href="us-crime.html#cb371-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(character <span class="op">%in%</span><span class="st"> </span>categories<span class="op">$</span>category,</span>
+<span id="cb371-5"><a href="us-crime.html#cb371-5"></a>                             <span class="st">&quot;Total&quot;</span>,</span>
+<span id="cb371-6"><a href="us-crime.html#cb371-6"></a>                             character)) <span class="op">%&gt;%</span></span>
+<span id="cb371-7"><a href="us-crime.html#cb371-7"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">crime =</span> character)</span>
+<span id="cb371-8"><a href="us-crime.html#cb371-8"></a>crimes</span></code></pre></div>
 <pre><code>## # A tibble: 13 x 3
 ##      row   col crime                                 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;                                 
@@ -351,14 +372,14 @@ crimes</code></pre>
 ## 11     4    18 Burglary                              
 ## 12     4    20 Larceny-theft                         
 ## 13     4    22 Motor vehicle theft</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">regions &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
-                col <span class="op">==</span><span class="st"> </span>1L,
-                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
-                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">region =</span> character)
-regions</code></pre>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="us-crime.html#cb373-1"></a>regions &lt;-</span>
+<span id="cb373-2"><a href="us-crime.html#cb373-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb373-3"><a href="us-crime.html#cb373-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</span>
+<span id="cb373-4"><a href="us-crime.html#cb373-4"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb373-5"><a href="us-crime.html#cb373-5"></a>                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</span>
+<span id="cb373-6"><a href="us-crime.html#cb373-6"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb373-7"><a href="us-crime.html#cb373-7"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">region =</span> character)</span>
+<span id="cb373-8"><a href="us-crime.html#cb373-8"></a>regions</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##     row   col region             
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;              
@@ -367,15 +388,15 @@ regions</code></pre>
 ## 3    45     1 Midwest            
 ## 4    90     1 South              
 ## 5   153     1 West</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">divisions &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
-                col <span class="op">==</span><span class="st"> </span>1L,
-                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,
-                <span class="op">!</span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id],
-                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">division =</span> character)
-divisions</code></pre>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="us-crime.html#cb375-1"></a>divisions &lt;-</span>
+<span id="cb375-2"><a href="us-crime.html#cb375-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb375-3"><a href="us-crime.html#cb375-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</span>
+<span id="cb375-4"><a href="us-crime.html#cb375-4"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb375-5"><a href="us-crime.html#cb375-5"></a>                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</span>
+<span id="cb375-6"><a href="us-crime.html#cb375-6"></a>                <span class="op">!</span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id],</span>
+<span id="cb375-7"><a href="us-crime.html#cb375-7"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb375-8"><a href="us-crime.html#cb375-8"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">division =</span> character)</span>
+<span id="cb375-9"><a href="us-crime.html#cb375-9"></a>divisions</span></code></pre></div>
 <pre><code>## # A tibble: 21 x 3
 ##      row   col division          
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;             
@@ -390,16 +411,16 @@ divisions</code></pre>
 ##  9   183     1 Pacific           
 ## 10   201     1 Puerto Rico       
 ## # … with 11 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">states &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,
-                col <span class="op">==</span><span class="st"> </span>1L,
-                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>),
-                             <span class="kw">str_trim</span>(character),
-                             <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)
-states</code></pre>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="us-crime.html#cb377-1"></a>states &lt;-</span>
+<span id="cb377-2"><a href="us-crime.html#cb377-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb377-3"><a href="us-crime.html#cb377-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>6L,</span>
+<span id="cb377-4"><a href="us-crime.html#cb377-4"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb377-5"><a href="us-crime.html#cb377-5"></a>                data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb377-6"><a href="us-crime.html#cb377-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(character, <span class="st">&quot;^ {5}&quot;</span>),</span>
+<span id="cb377-7"><a href="us-crime.html#cb377-7"></a>                             <span class="kw">str_trim</span>(character),</span>
+<span id="cb377-8"><a href="us-crime.html#cb377-8"></a>                             <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb377-9"><a href="us-crime.html#cb377-9"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
+<span id="cb377-10"><a href="us-crime.html#cb377-10"></a>states</span></code></pre></div>
 <pre><code>## # A tibble: 77 x 3
 ##      row   col state        
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;        
@@ -414,32 +435,32 @@ states</code></pre>
 ##  9    30     1 Vermont      
 ## 10    33     1 Total        
 ## # … with 67 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&gt;=</span><span class="st"> </span>2L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(categories, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(crimes, <span class="st">&quot;NNW&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(regions, <span class="st">&quot;WNW&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(divisions, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">enhead</span>(states, <span class="st">&quot;WNW&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">value =</span> numeric, category, crime, region, division, state, year, population)</code></pre>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="us-crime.html#cb379-1"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb379-2"><a href="us-crime.html#cb379-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&gt;=</span><span class="st"> </span>2L) <span class="op">%&gt;%</span></span>
+<span id="cb379-3"><a href="us-crime.html#cb379-3"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb379-4"><a href="us-crime.html#cb379-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-5"><a href="us-crime.html#cb379-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-6"><a href="us-crime.html#cb379-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-7"><a href="us-crime.html#cb379-7"></a><span class="st">  </span><span class="kw">enhead</span>(categories, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-8"><a href="us-crime.html#cb379-8"></a><span class="st">  </span><span class="kw">enhead</span>(crimes, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-9"><a href="us-crime.html#cb379-9"></a><span class="st">  </span><span class="kw">enhead</span>(regions, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-10"><a href="us-crime.html#cb379-10"></a><span class="st">  </span><span class="kw">enhead</span>(divisions, <span class="st">&quot;left-up&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-11"><a href="us-crime.html#cb379-11"></a><span class="st">  </span><span class="kw">enhead</span>(states, <span class="st">&quot;left-up&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-12"><a href="us-crime.html#cb379-12"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(year <span class="op">!=</span><span class="st"> &quot;Percent change&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb379-13"><a href="us-crime.html#cb379-13"></a><span class="st">  </span><span class="kw">select</span>(<span class="dt">value =</span> numeric, category, crime, region, division, state, year, population)</span></code></pre></div>
 <pre><code>## # A tibble: 2,640 x 8
-##      value category   crime          region division state year  population
-##      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
-##  1 42121   Violent c… Total          North… New Eng… Total 2015  14710229  
-##  2   286.  Violent c… Total          North… New Eng… Total 2015  14710229  
-##  3 41598   Violent c… Total          North… New Eng… Total 2016  14735525  
-##  4   282.  Violent c… Total          North… New Eng… Total 2016  14735525  
-##  5   326   Violent c… Murder and  n… North… New Eng… Total 2015  14710229  
-##  6     2.2 Violent c… Murder and  n… North… New Eng… Total 2015  14710229  
-##  7   292   Violent c… Murder and  n… North… New Eng… Total 2016  14735525  
-##  8     2   Violent c… Murder and  n… North… New Eng… Total 2016  14735525  
-##  9  4602   Violent c… Rape (revised… North… New Eng… Total 2015  14710229  
-## 10    31.3 Violent c… Rape (revised… North… New Eng… Total 2015  14710229  
+##      value category     crime                       region   division   state year  population
+##      &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;                       &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     
+##  1 42121   Violent cri… Total                       Northea… New Engla… Total 2015  14710229  
+##  2   286.  Violent cri… Total                       Northea… New Engla… Total 2015  14710229  
+##  3 41598   Violent cri… Total                       Northea… New Engla… Total 2016  14735525  
+##  4   282.  Violent cri… Total                       Northea… New Engla… Total 2016  14735525  
+##  5   326   Violent cri… Murder and  nonnegligent  … Northea… New Engla… Total 2015  14710229  
+##  6     2.2 Violent cri… Murder and  nonnegligent  … Northea… New Engla… Total 2015  14710229  
+##  7   292   Violent cri… Murder and  nonnegligent  … Northea… New Engla… Total 2016  14735525  
+##  8     2   Violent cri… Murder and  nonnegligent  … Northea… New Engla… Total 2016  14735525  
+##  9  4602   Violent cri… Rape (revised definition)   Northea… New Engla… Total 2015  14710229  
+## 10    31.3 Violent cri… Rape (revised definition)   Northea… New Engla… Total 2015  14710229  
 ## # … with 2,630 more rows</code></pre>
 </div>
 </div>
@@ -461,58 +482,58 @@ seems to belong to a different table altogether, so that’s how we’ll treat i
 so these are manually filled in.</p>
 <p>The hierarchy of crime (e.g. ‘robbery’ is within ‘violent crime’) is ignored.
 That would be handled in the same way as for <a href="us-crime.html#us-crime-2">Table 2</a>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">3</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,
-                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),
-         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))
-
-population &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&lt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(<span class="kw">is.na</span>(statistic) <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,
-                               statistic <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,
-                               <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">str_trim</span>(statistic))) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,
-                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),
-                statistic <span class="op">!=</span><span class="st"> &quot;Estimated total&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(statistic)
-
-crime &lt;-
-<span class="st">  </span>cells <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">!=</span><span class="st"> </span>5L) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,
-                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),
-                <span class="op">!</span><span class="kw">is.na</span>(statistic),
-                statistic <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(statistic <span class="op">==</span><span class="st"> &quot;Area actually reporting&quot;</span> <span class="op">~</span><span class="st"> &quot;Actual&quot;</span>,
-                               statistic <span class="op">==</span><span class="st"> &quot;Estimated total&quot;</span> <span class="op">~</span><span class="st"> &quot;Estimated&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic, crime) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spatter</span>(statistic)
-
-<span class="kw">left_join</span>(population, crime)</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="us-crime.html#cb381-1"></a>cells &lt;-</span>
+<span id="cb381-2"><a href="us-crime.html#cb381-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>us_crime_<span class="dv">3</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-3"><a href="us-crime.html#cb381-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</span>
+<span id="cb381-4"><a href="us-crime.html#cb381-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</span>
+<span id="cb381-5"><a href="us-crime.html#cb381-5"></a>         <span class="dt">character =</span> <span class="kw">str_replace_all</span>(character, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="st">&quot; &quot;</span>))</span>
+<span id="cb381-6"><a href="us-crime.html#cb381-6"></a></span>
+<span id="cb381-7"><a href="us-crime.html#cb381-7"></a>population &lt;-</span>
+<span id="cb381-8"><a href="us-crime.html#cb381-8"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb381-9"><a href="us-crime.html#cb381-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span>5L, col <span class="op">&lt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></span>
+<span id="cb381-10"><a href="us-crime.html#cb381-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-11"><a href="us-crime.html#cb381-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-12"><a href="us-crime.html#cb381-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">drop_na =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-13"><a href="us-crime.html#cb381-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(<span class="kw">is.na</span>(statistic) <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,</span>
+<span id="cb381-14"><a href="us-crime.html#cb381-14"></a>                               statistic <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">~</span><span class="st"> &quot;Population&quot;</span>,</span>
+<span id="cb381-15"><a href="us-crime.html#cb381-15"></a>                               <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">str_trim</span>(statistic))) <span class="op">%&gt;%</span></span>
+<span id="cb381-16"><a href="us-crime.html#cb381-16"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,</span>
+<span id="cb381-17"><a href="us-crime.html#cb381-17"></a>                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),</span>
+<span id="cb381-18"><a href="us-crime.html#cb381-18"></a>                statistic <span class="op">!=</span><span class="st"> &quot;Estimated total&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-19"><a href="us-crime.html#cb381-19"></a><span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic) <span class="op">%&gt;%</span></span>
+<span id="cb381-20"><a href="us-crime.html#cb381-20"></a><span class="st">  </span><span class="kw">spatter</span>(statistic)</span>
+<span id="cb381-21"><a href="us-crime.html#cb381-21"></a></span>
+<span id="cb381-22"><a href="us-crime.html#cb381-22"></a>crime &lt;-</span>
+<span id="cb381-23"><a href="us-crime.html#cb381-23"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb381-24"><a href="us-crime.html#cb381-24"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">!=</span><span class="st"> </span>5L) <span class="op">%&gt;%</span></span>
+<span id="cb381-25"><a href="us-crime.html#cb381-25"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-26"><a href="us-crime.html#cb381-26"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;area&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-27"><a href="us-crime.html#cb381-27"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></span>
+<span id="cb381-28"><a href="us-crime.html#cb381-28"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;crime&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-29"><a href="us-crime.html#cb381-29"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>,</span>
+<span id="cb381-30"><a href="us-crime.html#cb381-30"></a>                <span class="op">!</span><span class="kw">str_detect</span>(area, <span class="kw">regex</span>(<span class="st">&quot;total&quot;</span>, <span class="dt">ignore_case =</span> <span class="ot">TRUE</span>)),</span>
+<span id="cb381-31"><a href="us-crime.html#cb381-31"></a>                <span class="op">!</span><span class="kw">is.na</span>(statistic),</span>
+<span id="cb381-32"><a href="us-crime.html#cb381-32"></a>                statistic <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb381-33"><a href="us-crime.html#cb381-33"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">statistic =</span> <span class="kw">case_when</span>(statistic <span class="op">==</span><span class="st"> &quot;Area actually reporting&quot;</span> <span class="op">~</span><span class="st"> &quot;Actual&quot;</span>,</span>
+<span id="cb381-34"><a href="us-crime.html#cb381-34"></a>                               statistic <span class="op">==</span><span class="st"> &quot;Estimated total&quot;</span> <span class="op">~</span><span class="st"> &quot;Estimated&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb381-35"><a href="us-crime.html#cb381-35"></a><span class="st">  </span><span class="kw">select</span>(data_type, numeric, state, area, statistic, crime) <span class="op">%&gt;%</span></span>
+<span id="cb381-36"><a href="us-crime.html#cb381-36"></a><span class="st">  </span><span class="kw">spatter</span>(statistic)</span>
+<span id="cb381-37"><a href="us-crime.html#cb381-37"></a></span>
+<span id="cb381-38"><a href="us-crime.html#cb381-38"></a><span class="kw">left_join</span>(population, crime)</span></code></pre></div>
 <pre><code>## Joining, by = c(&quot;state&quot;, &quot;area&quot;)</code></pre>
 <pre><code>## # A tibble: 1,480 x 7
-##    state  area     `Area actually r… Population crime      Actual Estimated
-##    &lt;chr&gt;  &lt;chr&gt;                &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-##  1 ALABA… Cities …             0.966     520422 Aggravat… 2.84e+3      2914
-##  2 ALABA… Cities …             0.966     520422 Burglary  4.17e+3      4275
-##  3 ALABA… Cities …             0.966     520422 Larceny-… 1.43e+4     14641
-##  4 ALABA… Cities …             0.966     520422 Motor  v… 1.34e+3      1375
-##  5 ALABA… Cities …             0.966     520422 Murder a… 4.10e+1        42
-##  6 ALABA… Cities …             0.966     520422 Populati… 9.66e-1         1
-##  7 ALABA… Cities …             0.966     520422 Property… 1.98e+4     20291
-##  8 ALABA… Cities …             0.966     520422 Rape (le… 1.87e+2       193
-##  9 ALABA… Cities …             0.966     520422 Rape (re… 2.63e+2       269
-## 10 ALABA… Cities …             0.966     520422 Robbery   4.10e+2       421
+##    state  area             `Area actually repo… Population crime              Actual Estimated
+##  * &lt;chr&gt;  &lt;chr&gt;                           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;
+##  1 ALABA… Cities outside …                0.966     520422 Aggravated  assa… 2.84e+3      2914
+##  2 ALABA… Cities outside …                0.966     520422 Burglary          4.17e+3      4275
+##  3 ALABA… Cities outside …                0.966     520422 Larceny- theft    1.43e+4     14641
+##  4 ALABA… Cities outside …                0.966     520422 Motor  vehicle  … 1.34e+3      1375
+##  5 ALABA… Cities outside …                0.966     520422 Murder and  nonn… 4.10e+1        42
+##  6 ALABA… Cities outside …                0.966     520422 Population        9.66e-1         1
+##  7 ALABA… Cities outside …                0.966     520422 Property  crime   1.98e+4     20291
+##  8 ALABA… Cities outside …                0.966     520422 Rape (legacy def… 1.87e+2       193
+##  9 ALABA… Cities outside …                0.966     520422 Rape (revised de… 2.63e+2       269
+## 10 ALABA… Cities outside …                0.966     520422 Robbery           4.10e+2       421
 ## # … with 1,470 more rows</code></pre>
 </div>
 </div>
@@ -527,11 +548,13 @@ crime &lt;-
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -539,12 +562,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": true,
 "linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": true,
 "instapper": false
 },
 "fontsettings": {
@@ -557,6 +580,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
