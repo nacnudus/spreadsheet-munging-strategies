@@ -31,7 +31,7 @@ Here's the full process.
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "clean") %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(row, data_type, header, character, numeric) %>%
   spatter(header) %>%
   select(-row)
@@ -60,7 +60,7 @@ and it only works on tables that have first come through
 ```{r}
 xlsx_cells(path, sheet = "clean") %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("N", header)
+  behead("up", header)
 ```
 
 `unpivotr::spatter()` spreads key-value pairs across multiple columns, like
@@ -73,7 +73,7 @@ can be confused by extraneous data, so it's usually a good idea to drop the
 ```{r}
 xlsx_cells(path, sheet = "clean") %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header) %>%
   select(-row)
@@ -130,12 +130,12 @@ read_excel(path, sheet = "transposed", col_names = FALSE) %>%
 ```
 
 Tidyxl and unpivotr are agnostic to the layout of tables.  Importing the
-transpose is the same is importing the usual layout, merely using the `"W"`
-(west) direction instead of `"N"` (north) when beheading the headers.
+transpose is the same is importing the usual layout, merely using the `"left"`
+direction instead of `"up"` when beheading the headers.
 
 ```{r}
 xlsx_cells(path, sheet = "transposed") %>%
-  behead("W", header) %>%
+  behead("left", header) %>%
   select(col, data_type, header, character, numeric) %>%
   spatter(header) %>%
   select(Name, Age)
@@ -215,7 +215,7 @@ cells %>%
   dplyr::filter(between(row, top_left$row, bottom_right$row),
          between(col, top_left$col, bottom_right$col)) %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header) %>%
   select(-row)
@@ -292,7 +292,7 @@ fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
 xlsx_cells(path, sheet = "highlights") %>%
   mutate(fill_colour = fill_colours[local_format_id]) %>%
   select(row, col, data_type, character, numeric, fill_colour) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col, -character) %>%
   spatter(header) %>%
   select(-row)
@@ -358,14 +358,14 @@ cells
 values <-
   cells %>%
   select(-fill_colour) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header)
 values
 
 fills <-
   cells %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   mutate(header = paste0(header, "_fill")) %>%
   select(row, header, fill_colour) %>%
   spread(header, fill_colour)
@@ -435,8 +435,8 @@ fill_colours <- xlsx_formats(path)$local$fill$patternFill$fgColor$rgb
 xlsx_cells(path, sheet = "annotations") %>%
   mutate(fill_colour = fill_colours[local_format_id]) %>%
   select(row, col, data_type, character, numeric, fill_colour) %>%
-  behead("W", Name) %>%
-  behead("N", variable) %>%
+  behead("left", Name) %>%
+  behead("up", variable) %>%
   select(-data_type, -character, value = numeric)
 ```
 
@@ -491,8 +491,8 @@ cells <-
   mutate(fill_colour = fill_colours[local_format_id],
          font_colour = font_colours[local_format_id]) %>%
   select(row, col, data_type, character, numeric, fill_colour, font_colour) %>%
-  behead("N", header) %>%
-  behead("W", Name) %>%
+  behead("up", header) %>%
+  behead("left", Name) %>%
   select(-col, -character)
 
 values <-
@@ -568,7 +568,7 @@ xlsx_cells(path, sheet = "highlight-hierarchy") %>%
                            italic ~ "satisfactory",
                            TRUE ~ "good")) %>%
   select(row, col, data_type, character, numeric, bold, italic, grade) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header)
 ```
@@ -657,8 +657,8 @@ Here's another version using only tidyxl and unpivotr, which provides
 xlsx_cells(path, sheet = "sentinels") %>%
   select(row, col, data_type, character, numeric) %>%
   isolate_sentinels(character, c("NA", "…", "..C")) %>%
-  behead("W", Name) %>%
-  behead("N", variable) %>%
+  behead("left", Name) %>%
+  behead("up", variable) %>%
   select(Name, variable, character, numeric, sentinel)
 ```
 
