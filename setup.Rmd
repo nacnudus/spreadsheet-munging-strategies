@@ -11,12 +11,7 @@ Here are the packages used by the code in this book.  The last three are my own:
 latest versions from CRAN or GitHub.
 
 ```{r}
-library(tibble)
-library(tidyr)
-library(dplyr)
-library(purrr)
-library(stringr)
-library(readr)
+library(tidyverse)
 library(readxl)
 library(tidyxl)
 library(unpivotr)

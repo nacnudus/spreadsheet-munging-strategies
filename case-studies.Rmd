@@ -51,10 +51,10 @@ table_1  <-
   cells %>%
   dplyr::filter(sheet == "Table 1", row >= 5L, !is_blank) %>%
   mutate(character = str_trim(character)) %>%
-  behead("NNW", "population") %>%
-  behead("NNW", "response") %>%
-  behead("N", "unit") %>%
-  behead("W", "state") %>%
+  behead("up-left", "population") %>%
+  behead("up-left", "response") %>%
+  behead("up", "unit") %>%
+  behead("left", "state") %>%
   arrange(row, col) %>%
   select(row, data_type, numeric, state, population, response, unit) %>%
   spatter(unit) %>%
@@ -75,11 +75,11 @@ table_2 <-
                 row >= 5L,
                 !is_blank) %>%
   mutate(character = str_trim(character)) %>%
-  behead("NNW", "population") %>%
-  behead("NNW", "response") %>%
-  behead("N", "unit") %>%
-  behead("W", "territory") %>%
-  enhead(state, "NNW") %>%
+  behead("up-left", "population") %>%
+  behead("up-left", "response") %>%
+  behead("up", "unit") %>%
+  behead("left", "territory") %>%
+  enhead(state, "up-left") %>%
   arrange(row, col) %>%
   select(row, data_type, numeric, state, territory, population, response,
          unit) %>%
@@ -109,10 +109,10 @@ table_1  <-
   cells %>%
   dplyr::filter(sheet == "Table 1", row >= 5L, !is_blank) %>%
   mutate(character = str_trim(character)) %>%
-  behead("NNW", "population") %>%
-  behead("NNW", "response") %>%
-  behead("N", "unit") %>%
-  behead("W", "state") %>%
+  behead("up-left", "population") %>%
+  behead("up-left", "response") %>%
+  behead("up", "unit") %>%
+  behead("left", "state") %>%
   arrange(row, col) %>%
   select(row, data_type, numeric, state, population, response, unit) %>%
   spatter(unit) %>%
@@ -151,11 +151,11 @@ table_2 <-
                 row >= 5L,
                 !is_blank) %>%
   mutate(character = str_trim(character)) %>%
-  behead("NNW", "population") %>%
-  behead("NNW", "response") %>%
-  behead("N", "unit") %>%
-  behead("W", "territory") %>%
-  enhead(state, "NNW") %>%
+  behead("up-left", "population") %>%
+  behead("up-left", "response") %>%
+  behead("up", "unit") %>%
+  behead("left", "territory") %>%
+  enhead(state, "up-left") %>%
   arrange(row, col) %>%
   select(row, data_type, numeric, state, territory, population, response,
          unit) %>%
@@ -210,15 +210,15 @@ years
 
 cells %>%
   select(row, col, data_type, character) %>%
-  behead("NNW", "series") %>%
-  behead("NNW", "population") %>%
-  behead("W", "state") %>%
-  behead("N", "header") %>%
+  behead("up-left", "series") %>%
+  behead("up-left", "population") %>%
+  behead("left", "state") %>%
+  behead("up", "header") %>%
   mutate(header = if_else(str_detect(header, "20[0-9]{2}-[0-9]{2}"),
                           "percent_vaccinated",
                           header),
          header = str_replace_all(str_to_lower(header), " ", "_")) %>%
-  enhead(years, "NNW") %>%
+  enhead(years, "up-left") %>%
   select(row, series, population, state, year, header, character) %>%
   spatter(header, character) %>%
   select(series, population, state, year, percent_vaccinated, percent_surveyed,
@@ -253,7 +253,7 @@ formatting.
 The only slight snag is that the header cells in row 5 are blank.  There is a
 header for the units "Rate per 100,000", but no header for the units "Count" --
 the cells in those positions are empty.  It would be a problem if the cells
-didn't exist at all, because `behead("N", "unit")` wouldn't be able to associate
+didn't exist at all, because `behead("up", "unit")` wouldn't be able to associate
 data cells with missing header cells.  Fortunately they do exist (because they
 have formatting), they are just empty or `NA`.  To make sure they aren't
 ignored, use `drop_na = FALSE` in `behead()`, and then later fill the blanks in
@@ -269,11 +269,11 @@ cells <-
 cells %>%
   dplyr::filter(row >= 4L) %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("NNW", "crime") %>%
-  behead("N", "unit", drop_na = FALSE) %>%
-  behead("WNW", "area") %>%
-  behead("W", "year") %>%
-  behead("W", "population") %>%
+  behead("up-left", "crime") %>%
+  behead("up", "unit", drop_na = FALSE) %>%
+  behead("left-up", "area") %>%
+  behead("left", "year") %>%
+  behead("left", "population") %>%
   dplyr::filter(year != "Percent change") %>%
   mutate(unit = if_else(unit == "", "Count", unit)) %>%
   select(row, data_type, numeric, unit, area, year, population, crime) %>%
@@ -355,14 +355,14 @@ states
 cells %>%
   dplyr::filter(row >= 5L, col >= 2L) %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("N", "unit") %>%
-  behead("W", "year") %>%
-  behead("W", "population") %>%
-  enhead(categories, "NNW") %>%
-  enhead(crimes, "NNW") %>%
-  enhead(regions, "WNW") %>%
-  enhead(divisions, "WNW", drop = FALSE) %>%
-  enhead(states, "WNW", drop = FALSE) %>%
+  behead("up", "unit") %>%
+  behead("left", "year") %>%
+  behead("left", "population") %>%
+  enhead(categories, "up-left") %>%
+  enhead(crimes, "up-left") %>%
+  enhead(regions, "left-up") %>%
+  enhead(divisions, "left-up", drop = FALSE) %>%
+  enhead(states, "left-up", drop = FALSE) %>%
   dplyr::filter(year != "Percent change") %>%
   select(value = numeric, category, crime, region, division, state, year, population)
 ```
@@ -399,9 +399,9 @@ cells <-
 population <-
   cells %>%
   dplyr::filter(row >= 5L, col <= 4L) %>%
-  behead("WNW", "state") %>%
-  behead("WNW", "area") %>%
-  behead("W", "statistic", drop_na = FALSE) %>%
+  behead("left-up", "state") %>%
+  behead("left-up", "area") %>%
+  behead("left", "statistic", drop_na = FALSE) %>%
   mutate(statistic = case_when(is.na(statistic) ~ "Population",
                                statistic == "" ~ "Population",
                                TRUE ~ str_trim(statistic))) %>%
@@ -414,10 +414,10 @@ population <-
 crime <-
   cells %>%
   dplyr::filter(row >= 4, col != 5L) %>%
-  behead("WNW", "state") %>%
-  behead("WNW", "area") %>%
-  behead("W", "statistic", formatters = list(character = str_trim)) %>%
-  behead("N", "crime") %>%
+  behead("left-up", "state") %>%
+  behead("left-up", "area") %>%
+  behead("left", "statistic", formatters = list(character = str_trim)) %>%
+  behead("up", "crime") %>%
   dplyr::filter(data_type == "numeric",
                 !str_detect(area, regex("total", ignore_case = TRUE)),
                 !is.na(statistic),
@@ -463,10 +463,10 @@ fare <-
   select(row, col, fare = character)
 
 cells %>%
-  behead("N", "year", formatters = list(character = str_trim)) %>%
-  behead("WNW", "context") %>%
-  behead("W", "media", formatters = list(character = str_trim)) %>%
-  enhead(fare, "WNW") %>%
+  behead("up", "year", formatters = list(character = str_trim)) %>%
+  behead("left-up", "context") %>%
+  behead("left", "media", formatters = list(character = str_trim)) %>%
+  enhead(fare, "left-up") %>%
   dplyr::filter(!str_detect(media, "TOTAL")) %>%
   separate(year, c("year", "note"), sep = " ", fill = "right") %>%
   select(year, context, fare, media, count = numeric)
@@ -504,10 +504,10 @@ fare
 
 ttc <-
   cells %>%
-  behead("N", "year") %>%
-  behead("WNW", "context") %>%
-  behead("W", "media") %>%
-  enhead(fare, "WNW") %>%
+  behead("up", "year") %>%
+  behead("left-up", "context") %>%
+  behead("left", "media") %>%
+  enhead(fare, "left-up") %>%
   dplyr::filter(!str_detect(media, "TOTAL")) %>%
   select(year, context, fare, media, count = numeric)
 ttc
@@ -544,10 +544,10 @@ x <-
   xlsx_cells(smungs::groundwater) %>%
   dplyr::filter(!is_blank) %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("NNW", "sample-type") %>%
-  behead("NNW", "site") %>%
-  behead("W", "parameter") %>%
-  behead("W", "unit")
+  behead("up-left", "sample-type") %>%
+  behead("up-left", "site") %>%
+  behead("left", "parameter") %>%
+  behead("left", "unit")
 x
 ```
 
@@ -612,9 +612,9 @@ cashflows <-
   xlsx_cells(smungs::cashflows) %>%
   dplyr::filter(!is_blank, row >= 4L) %>%
   select(row, col, data_type, character, numeric) %>%
-  behead("N", "month") %>%
-  behead("WNW", "main_header") %>%
-  behead("W", "sub_header") %>%
+  behead("up", "month") %>%
+  behead("left-up", "main_header") %>%
+  behead("left", "sub_header") %>%
   dplyr::filter(month != "TOTALS",
                 !str_detect(sub_header, "otal")) %>%
   arrange(col) %>%
@@ -673,9 +673,9 @@ bold_headers <-
   select(row, col, bold_header = character)
 
 cells %>%
-  behead("NNW", "metric") %>%
-  behead("W", "plain-header") %>%
-  enhead(bold_headers, "WNW") %>%
+  behead("up-left", "metric") %>%
+  behead("left", "plain-header") %>%
+  enhead(bold_headers, "left-up") %>%
   select(row, data_type, numeric, metric, `plain-header`) %>%
   spatter(metric) %>%
   select(-row)
@@ -700,10 +700,10 @@ modified from an original source provided to the author.
 xlsx_cells(smungs::school, "Sheet2") %>%
   select(row, col, address, data_type, character, numeric, is_blank) %>%
   mutate(character = str_trim(character)) %>%
-  behead("NNW", "header_1") %>%
-  behead("N", "header_2") %>%
-  behead("N", "header_3") %>%
-  behead("W", "classroom") %>%
+  behead("up-left", "header_1") %>%
+  behead("up", "header_2") %>%
+  behead("up", "header_3") %>%
+  behead("left", "classroom") %>%
   dplyr::filter(!is_blank, !is.na(header_3)) %>%
   arrange(col, row)
 ```
@@ -731,7 +731,7 @@ no way for a machine to tell which cells are whole headers, and which are parts
 of headers.
 
 We can deal with this by first treating every cell as a header in its own right,
-and then concatenating the headers of rows 2 to 5.  Using the `"NNW"` direction,
+and then concatenating the headers of rows 2 to 5.  Using the `"up-left"` direction,
 headers like "Years in MA" in cell D4 will be carried to the right, which is
 good.  Unfortunately so will headers like "# Students" in cell B2, which we'll
 just have to put up with.
@@ -744,13 +744,13 @@ cells <-
 
 x <-
   cells %>%
-  behead("W", "place") %>%
-  behead("NNW", "category") %>%
-  behead("NNW", "metric-cell-1") %>% # Treat every cell in every row as a header
-  behead("NNW", "metric-cell-2") %>%
-  behead("NNW", "metric-cell-3") %>%
-  behead("NNW", "metric-cell-4") %>%
-  behead("NNW", "metric-cell-5")
+  behead("left", "place") %>%
+  behead("up-left", "category") %>%
+  behead("up-left", "metric-cell-1") %>% # Treat every cell in every row as a header
+  behead("up-left", "metric-cell-2") %>%
+  behead("up-left", "metric-cell-3") %>%
+  behead("up-left", "metric-cell-4") %>%
+  behead("up-left", "metric-cell-5")
 glimpse(x)
 ```
 

@@ -238,7 +238,7 @@ strikethrough <-
   select(row, strikethrough)
 
 left_join(cells, strikethrough, by = "row") %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header) %>%
   select(ID, strikethrough, Count)

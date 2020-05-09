@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Simple unpivoting | Spreadsheet Munging Strategies</title>
-  <meta name="description" content="3.1 Simple unpivoting | Spreadsheet Munging Strategies">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="3.1 Simple unpivoting | Spreadsheet Munging Strategies" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Simple unpivoting | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
@@ -22,17 +21,18 @@
   
   
 
-<meta name="author" content="Duncan Garmonsway">
+<meta name="author" content="Duncan Garmonsway" />
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="pivot.html">
-<link rel="next" href="pivot-complex.html">
+<link rel="prev" href="pivot.html"/>
+<link rel="next" href="pivot-complex.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -58,27 +61,28 @@
 </script>
 
 
+
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -87,9 +91,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,13 +140,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
 <li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a><ul>
+<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>2.1</b> Clean &amp; tidy tables</a></li>
-<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a><ul>
+<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>2.2.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
 <li class="chapter" data-level="2.2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>2.2.2</b> Other stuff on the same sheet</a></li>
 </ul></li>
@@ -152,15 +159,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="hierarchies-in-formatting.html"><a href="hierarchies-in-formatting.html"><i class="fa fa-check"></i><b>2.6</b> Hierarchies in formatting</a></li>
 <li class="chapter" data-level="2.7" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>2.7</b> Sentinel values in non-text columns</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a><ul>
-<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a><ul>
+<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
 <li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
+<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>3.2.2</b> Two clear columns of text row headers, top-aligned</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
@@ -172,13 +182,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a><ul>
+<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
 <li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
 <li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
 <li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
+<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
 <li class="chapter" data-level="5.2" data-path="common-formats.html"><a href="common-formats.html"><i class="fa fa-check"></i><b>5.2</b> Common formats</a></li>
 <li class="chapter" data-level="5.3" data-path="in-cell-formatting.html"><a href="in-cell-formatting.html"><i class="fa fa-check"></i><b>5.3</b> In-cell formatting</a></li>
@@ -187,28 +199,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>6</b> Data validation</a></li>
 <li class="chapter" data-level="7" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>7</b> Formulas</a></li>
-<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a><ul>
+<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="non-text-headers-e-g-dates.html"><a href="non-text-headers-e-g-dates.html"><i class="fa fa-check"></i><b>8.1</b> Non-text headers e.g. dates</a></li>
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
-<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
-<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a><ul>
+<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="us-crime.html"><a href="us-crime.html#us-crime-2"><i class="fa fa-check"></i><b>9.3.1</b> Table 2</a></li>
 <li class="chapter" data-level="9.3.2" data-path="us-crime.html"><a href="us-crime.html#us-crime-3"><i class="fa fa-check"></i><b>9.3.2</b> Table 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a><ul>
+<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#the-full-code-listing-1"><i class="fa fa-check"></i><b>9.4.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.4.2" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#step-by-step-1"><i class="fa fa-check"></i><b>9.4.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="ground-water.html"><a href="ground-water.html"><i class="fa fa-check"></i><b>9.5</b> Ground water</a></li>
 <li class="chapter" data-level="9.6" data-path="cashflows.html"><a href="cashflows.html"><i class="fa fa-check"></i><b>9.6</b> Cashflows</a></li>
-<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a><ul>
+<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="school-performance.html"><a href="school-performance.html#sheet-1"><i class="fa fa-check"></i><b>9.7.1</b> Sheet 1</a></li>
 <li class="chapter" data-level="9.7.2" data-path="school-performance.html"><a href="school-performance.html#sheet-2"><i class="fa fa-check"></i><b>9.7.2</b> Sheet 2</a></li>
 <li class="chapter" data-level="9.7.3" data-path="school-performance.html"><a href="school-performance.html#sheet-3"><i class="fa fa-check"></i><b>9.7.3</b> Sheet 3</a></li>
@@ -231,26 +249,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivot-simple" class="section level2">
+<div id="pivot-simple" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Simple unpivoting</h2>
 <p>The <code>behead()</code> function takes one level of headers from a pivot table and makes
 it part of the data. Think of it like <code>tidyr::gather()</code>, except that it works
 when there is more than one row of headers (or more than one column of
 row-headers), and it only works on tables that have first come through
 <code>as_cells()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
-<div id="two-clear-rows-of-text-column-headers-left-aligned" class="section level3">
+<div id="two-clear-rows-of-text-column-headers-left-aligned" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Two clear rows of text column headers, left-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>Here we have a pivot table with two rows of column headers. The first row of
 headers is left-aligned, so <code>"Female"</code> applies to the first two columns of data,
 and <code>"Male"</code> applies to the next two. The second row of headers has a header in
 every column.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)
-all_cells</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="pivot-simple.html#cb103-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb103-2"><a href="pivot-simple.html#cb103-2"></a>all_cells &lt;-</span>
+<span id="cb103-3"><a href="pivot-simple.html#cb103-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb103-4"><a href="pivot-simple.html#cb103-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Ignore the row headers in this example</span></span>
+<span id="cb103-5"><a href="pivot-simple.html#cb103-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span>
+<span id="cb103-6"><a href="pivot-simple.html#cb103-6"></a>all_cells</span></code></pre></div>
 <pre><code>## # A tibble: 22 x 5
 ##      row   col data_type character numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -269,12 +287,12 @@ all_cells</code></pre>
 <code>tidyxl::xlsx_cells()</code>, or a previous <code>behead()</code>, and three more arguments to
 specify how the header cells relate to the data cells.</p>
 <p>The outermost header is the top row, <code>"Female" NA "Male" NA</code>. The <code>"Female"</code>
-and <code>"Male"</code> headers are above and to-the-left-of the data cells. We express
-this as a compass direction, north-north-west, or <code>"NNW"</code>. We also give the
-headers a name, <code>sex</code>, and say which column of <code>all_cells</code> contains the value
-of the header cells – it’s usually the <code>character</code> column.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex)</code></pre>
+and <code>"Male"</code> headers are up-and-to-the-left-of the data cells. We express
+this as <code>"up-left"</code>. We also give the headers a name, <code>sex</code>, and say which
+column of <code>all_cells</code> contains the value of the header cells – it’s usually the
+<code>character</code> column.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="pivot-simple.html#cb105-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb105-2"><a href="pivot-simple.html#cb105-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, sex)</span></code></pre></div>
 <pre><code>## # A tibble: 20 x 6
 ##      row   col data_type character numeric sex   
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
@@ -301,12 +319,12 @@ of the header cells – it’s usually the <code>character</code> column.</p>
 <p>That did half the job. The value 2 in row 4 column 5 is indeed a score of a
 female. But the value <code>"matilda"</code> in row 3 column 4 isn’t a population – it’s
 another header. The next step is to strip that second level of column headers.
-This time, the compass direction is <code>"N"</code>, because the headers are directly
-above the associated data cells, and we call it <code>name</code>, because it represents
+This time, the direction is <code>"up"</code>, because the headers are directly
+up from the associated data cells, and we call it <code>name</code>, because it represents
 names of people.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="pivot-simple.html#cb107-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb107-2"><a href="pivot-simple.html#cb107-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, sex) <span class="op">%&gt;%</span></span>
+<span id="cb107-3"><a href="pivot-simple.html#cb107-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 7
 ##      row   col data_type character numeric sex    name    
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
@@ -329,10 +347,10 @@ names of people.</p>
 <p>A final step is a normal clean-up. We drop the <code>row</code>, <code>col</code> and <code>character</code>
 columns, and we rename the <code>numeric</code> column to <code>score</code>, which is what it
 represents.</p>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="dt">score =</span> numeric, sex, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="pivot-simple.html#cb109-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb109-2"><a href="pivot-simple.html#cb109-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, sex) <span class="op">%&gt;%</span></span>
+<span id="cb109-3"><a href="pivot-simple.html#cb109-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb109-4"><a href="pivot-simple.html#cb109-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="dt">score =</span> numeric, sex, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##    score sex    name    
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
@@ -353,18 +371,18 @@ represents.</p>
 ## 15    12 Male   Nicholas
 ## 16     3 Male   Paul</code></pre>
 </div>
-<div id="two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned" class="section level3">
+<div id="two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Two clear rows and columns of text headers, top-aligned and left-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
-<p>There are no new techniques are used, just more compass directions: <code>"W"</code> for
-headers directly to the left of the data cells, and <code>"WNW"</code> for headers
-left-and-above the data cells.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>()</code></pre>
+<p>There are no new techniques are used, just more directions: <code>"left"</code> for headers
+directly to the left of the data cells, and <code>"left-up"</code> for headers left-then-up
+from the data cells.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="pivot-simple.html#cb111-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb111-2"><a href="pivot-simple.html#cb111-2"></a>all_cells &lt;-</span>
+<span id="cb111-3"><a href="pivot-simple.html#cb111-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb111-4"><a href="pivot-simple.html#cb111-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb111-5"><a href="pivot-simple.html#cb111-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb111-6"><a href="pivot-simple.html#cb111-6"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
 ##      row   col data_type character  numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
@@ -379,13 +397,13 @@ all_cells &lt;-
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
 ## # … with 18 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col, <span class="op">-</span>character)</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="pivot-simple.html#cb113-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb113-2"><a href="pivot-simple.html#cb113-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></span>
+<span id="cb113-3"><a href="pivot-simple.html#cb113-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">     </span><span class="co"># As before</span></span>
+<span id="cb113-4"><a href="pivot-simple.html#cb113-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></span>
+<span id="cb113-5"><a href="pivot-simple.html#cb113-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Directly left</span></span>
+<span id="cb113-6"><a href="pivot-simple.html#cb113-6"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></span>
+<span id="cb113-7"><a href="pivot-simple.html#cb113-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col, <span class="op">-</span>character)</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##    data_type score sex    name     field       subject 
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
@@ -406,7 +424,7 @@ all_cells &lt;-
 ## 15 numeric      12 Male   Nicholas Performance Drama   
 ## 16 numeric       3 Male   Paul     Performance Drama</code></pre>
 </div>
-<div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting" class="section level3">
+<div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Multiple rows or columns of headers, with meaningful formatting</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This is a combination of the previous section with <a href="tidy-formatted-rows">meaningfully formatted
@@ -420,12 +438,12 @@ and <code>col</code> of each data cell.</li>
 <li>Collect the <code>row</code>, <code>col</code> and formatting of each data cell.</li>
 <li>Join the data to the formatting by the <code>row</code> and <code>col</code>.</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-all_cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>()</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="pivot-simple.html#cb115-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb115-2"><a href="pivot-simple.html#cb115-2"></a>all_cells &lt;-</span>
+<span id="cb115-3"><a href="pivot-simple.html#cb115-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb115-4"><a href="pivot-simple.html#cb115-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb115-5"><a href="pivot-simple.html#cb115-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb115-6"><a href="pivot-simple.html#cb115-6"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 28 x 5
 ##      row   col data_type character  numeric
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;
@@ -440,15 +458,15 @@ all_cells &lt;-
 ##  9     4     4 numeric   &lt;NA&gt;             1
 ## 10     4     5 numeric   &lt;NA&gt;             2
 ## # … with 18 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">unpivoted &lt;-
-<span class="st">  </span>all_cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;NNW&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># As before</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;WNW&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Directly left</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>character)                <span class="co"># Retain the row and col for now</span>
-unpivoted</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="pivot-simple.html#cb117-1"></a>unpivoted &lt;-</span>
+<span id="cb117-2"><a href="pivot-simple.html#cb117-2"></a><span class="st">  </span>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb117-3"><a href="pivot-simple.html#cb117-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, sex) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># As before</span></span>
+<span id="cb117-4"><a href="pivot-simple.html#cb117-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">name</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st">     </span><span class="co"># As before</span></span>
+<span id="cb117-5"><a href="pivot-simple.html#cb117-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, field) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Left-and-above</span></span>
+<span id="cb117-6"><a href="pivot-simple.html#cb117-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Directly left</span></span>
+<span id="cb117-7"><a href="pivot-simple.html#cb117-7"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">score =</span> numeric) <span class="op">%&gt;%</span></span>
+<span id="cb117-8"><a href="pivot-simple.html#cb117-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>character)                <span class="co"># Retain the row and col for now</span></span>
+<span id="cb117-9"><a href="pivot-simple.html#cb117-9"></a>unpivoted</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 8
 ##      row   col data_type score sex    name     field       subject 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
@@ -468,29 +486,27 @@ unpivoted</code></pre>
 ## 14     6     7 numeric       2 Male   Paul     Performance Music   
 ## 15     7     6 numeric      12 Male   Nicholas Performance Drama   
 ## 16     7     7 numeric       3 Male   Paul     Performance Drama</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span>
-<span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span>
-fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb
-fill_colours</code></pre>
-<pre><code>##  [1] NA         NA         NA         NA         NA         NA        
-##  [7] NA         NA         &quot;FFFFFF00&quot; &quot;FF92D050&quot; &quot;FFFFFF00&quot; NA        
-## [13] NA         &quot;FFFFFF00&quot; NA         NA         NA         NA        
-## [19] NA         NA         NA         &quot;FFFFFF00&quot; &quot;FFFFFF00&quot; NA        
-## [25] NA         &quot;FFFFFF00&quot; NA         NA         NA         NA        
-## [31] NA         NA         NA         NA         NA         NA        
-## [37] NA         NA         NA         NA         NA         NA        
-## [43] NA         NA         NA         NA         NA         NA        
-## [49] NA         NA         NA         NA         NA         NA        
-## [55] NA         NA         &quot;FFFFC7CE&quot; NA         NA</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span>
-<span class="co"># and create a new column `approximate` based on the fill colours, by looking up</span>
-<span class="co"># the local_format_id of each cell in the `formats` pallette.</span>
-annotations &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)
-annotations</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="pivot-simple.html#cb119-1"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
+<span id="cb119-2"><a href="pivot-simple.html#cb119-2"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
+<span id="cb119-3"><a href="pivot-simple.html#cb119-3"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb119-4"><a href="pivot-simple.html#cb119-4"></a>fill_colours</span></code></pre></div>
+<pre><code>##  [1] NA         NA         NA         NA         NA         NA         NA         NA        
+##  [9] &quot;FFFFFF00&quot; &quot;FF92D050&quot; &quot;FFFFFF00&quot; NA         NA         &quot;FFFFFF00&quot; NA         NA        
+## [17] NA         NA         NA         NA         NA         &quot;FFFFFF00&quot; &quot;FFFFFF00&quot; NA        
+## [25] NA         &quot;FFFFFF00&quot; NA         NA         NA         NA         NA         NA        
+## [33] NA         NA         NA         NA         NA         NA         NA         NA        
+## [41] NA         NA         NA         NA         NA         NA         NA         NA        
+## [49] NA         NA         NA         NA         NA         NA         NA         NA        
+## [57] &quot;FFFFC7CE&quot; NA         NA</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="pivot-simple.html#cb121-1"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
+<span id="cb121-2"><a href="pivot-simple.html#cb121-2"></a><span class="co"># and create a new column `approximate` based on the fill colours, by looking up</span></span>
+<span id="cb121-3"><a href="pivot-simple.html#cb121-3"></a><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></span>
+<span id="cb121-4"><a href="pivot-simple.html#cb121-4"></a>annotations &lt;-</span>
+<span id="cb121-5"><a href="pivot-simple.html#cb121-5"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb121-6"><a href="pivot-simple.html#cb121-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the headers</span></span>
+<span id="cb121-7"><a href="pivot-simple.html#cb121-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb121-8"><a href="pivot-simple.html#cb121-8"></a><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</span>
+<span id="cb121-9"><a href="pivot-simple.html#cb121-9"></a>annotations</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##      row   col fill_colour
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      
@@ -510,8 +526,8 @@ annotations</code></pre>
 ## 14     7     5 &lt;NA&gt;       
 ## 15     7     6 FFFFFF00   
 ## 16     7     7 &lt;NA&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">left_join</span>(unpivoted, annotations, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col)</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pivot-simple.html#cb123-1"></a><span class="kw">left_join</span>(unpivoted, annotations, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb123-2"><a href="pivot-simple.html#cb123-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row, <span class="op">-</span>col)</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 7
 ##    data_type score sex    name     field       subject  fill_colour
 ##    &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;      
@@ -532,7 +548,7 @@ annotations</code></pre>
 ## 15 numeric      12 Male   Nicholas Performance Drama    FFFFFF00   
 ## 16 numeric       3 Male   Paul     Performance Drama    &lt;NA&gt;</code></pre>
 </div>
-<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3">
+<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3" number="3.1.4">
 <h3><span class="header-section-number">3.1.4</span> Mixed headers and notes in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-notes.png" /></p>
 <p>This needs two passes over each row/column that contains a mixture. The first
@@ -540,13 +556,13 @@ pass, with <code>behead_if()</code> is to deal with the cells that are headers, 
 second pass, with <code>dplyr::filter()</code> removes the remaining cells that are notes.</p>
 <p>The <code>behead_if()</code> function takes predicate functions to choose which cells are
 headers.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># only treat bold cells beginning &quot;Country: &quot; as a header</span>
-cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id], <span class="co"># true for bold cells</span>
-            <span class="kw">str_detect</span>(character, <span class="st">&quot;^Country: &quot;</span>),      <span class="co"># true for &quot;Country: ...&quot;</span>
-            <span class="dt">direction =</span> <span class="st">&quot;WNW&quot;</span>,                        <span class="co"># argument must be named</span>
-            <span class="dt">name =</span> <span class="st">&quot;country_name&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">!=</span><span class="st"> </span>1L)                            <span class="co"># discard remaining cells</span></code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="pivot-simple.html#cb125-1"></a><span class="co"># only treat bold cells beginning &quot;Country: &quot; as a header</span></span>
+<span id="cb125-2"><a href="pivot-simple.html#cb125-2"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb125-3"><a href="pivot-simple.html#cb125-3"></a><span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id], <span class="co"># true for bold cells</span></span>
+<span id="cb125-4"><a href="pivot-simple.html#cb125-4"></a>            <span class="kw">str_detect</span>(character, <span class="st">&quot;^Country: &quot;</span>),      <span class="co"># true for &quot;Country: ...&quot;</span></span>
+<span id="cb125-5"><a href="pivot-simple.html#cb125-5"></a>            <span class="dt">direction =</span> <span class="st">&quot;left-up&quot;</span>,                    <span class="co"># argument must be named</span></span>
+<span id="cb125-6"><a href="pivot-simple.html#cb125-6"></a>            <span class="dt">name =</span> <span class="st">&quot;country_name&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb125-7"><a href="pivot-simple.html#cb125-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">!=</span><span class="st"> </span>1L)                            <span class="co"># discard remaining cells</span></span></code></pre></div>
 <p>Note that the <code>direction</code> and <code>name</code> arguments must now be named, because they
 follow the <code>...</code>.</p>
 <p>After <code>behead_if()</code>, any cells that haven’t been treated as headers will still
@@ -555,32 +571,32 @@ or row number.</p>
 <p>In the screenshot above, cells with italic or red text aren’t headers, even
 though they are in amongst header cells.</p>
 <p>First, identify the IDs of formats that have italic or red text.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-
-italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic
-
-<span class="co"># For &#39;red&#39; we can either look for the RGB code for red &quot;FFFF0000&quot;</span>
-red &lt;-<span class="st"> &quot;FFFF0000&quot;</span>
-
-<span class="co"># Or we can find out what that code is by starting from a cell that we know is</span>
-<span class="co"># red.</span>
-red_cell_format_id &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">5</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">pull</span>(local_format_id)
-red_cell_format_id</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="pivot-simple.html#cb126-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb126-2"><a href="pivot-simple.html#cb126-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb126-3"><a href="pivot-simple.html#cb126-3"></a></span>
+<span id="cb126-4"><a href="pivot-simple.html#cb126-4"></a>italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
+<span id="cb126-5"><a href="pivot-simple.html#cb126-5"></a></span>
+<span id="cb126-6"><a href="pivot-simple.html#cb126-6"></a><span class="co"># For &#39;red&#39; we can either look for the RGB code for red &quot;FFFF0000&quot;</span></span>
+<span id="cb126-7"><a href="pivot-simple.html#cb126-7"></a>red &lt;-<span class="st"> &quot;FFFF0000&quot;</span></span>
+<span id="cb126-8"><a href="pivot-simple.html#cb126-8"></a></span>
+<span id="cb126-9"><a href="pivot-simple.html#cb126-9"></a><span class="co"># Or we can find out what that code is by starting from a cell that we know is</span></span>
+<span id="cb126-10"><a href="pivot-simple.html#cb126-10"></a><span class="co"># red.</span></span>
+<span id="cb126-11"><a href="pivot-simple.html#cb126-11"></a>red_cell_format_id &lt;-</span>
+<span id="cb126-12"><a href="pivot-simple.html#cb126-12"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb126-13"><a href="pivot-simple.html#cb126-13"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">5</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb126-14"><a href="pivot-simple.html#cb126-14"></a><span class="st">  </span><span class="kw">pull</span>(local_format_id)</span>
+<span id="cb126-15"><a href="pivot-simple.html#cb126-15"></a>red_cell_format_id</span></code></pre></div>
 <pre><code>## [1] 40</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">red &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb[red_cell_format_id]
-red</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="pivot-simple.html#cb128-1"></a>red &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb[red_cell_format_id]</span>
+<span id="cb128-2"><a href="pivot-simple.html#cb128-2"></a>red</span></code></pre></div>
 <pre><code>## [1] &quot;FFFF0000&quot;</code></pre>
 <p>Now we use <code>behead_if()</code>, filtering out cells with the format IDs of red or
 italic cells.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>()</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="pivot-simple.html#cb130-1"></a>cells &lt;-</span>
+<span id="cb130-2"><a href="pivot-simple.html#cb130-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-notes&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb130-3"><a href="pivot-simple.html#cb130-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb130-4"><a href="pivot-simple.html#cb130-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb130-5"><a href="pivot-simple.html#cb130-5"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 31 x 6
 ##      row   col data_type character  numeric local_format_id
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;        &lt;dbl&gt;           &lt;int&gt;
@@ -595,18 +611,18 @@ italic cells.</p>
 ##  9     4     3 character Classics        NA              19
 ## 10     4     4 numeric   &lt;NA&gt;             1              33
 ## # … with 21 more rows</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead_if</span>(<span class="op">!</span>italic[local_format_id],                             <span class="co"># not italic</span>
-            <span class="dt">direction =</span> <span class="st">&quot;NNW&quot;</span>,
-            <span class="dt">name =</span> <span class="st">&quot;sex&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">!=</span><span class="st"> </span><span class="kw">min</span>(row)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># discard non-header cells</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb[local_format_id] <span class="op">!=</span><span class="st"> </span>red, <span class="co"># not red</span>
-            <span class="dt">direction =</span> <span class="st">&quot;WNW&quot;</span>,
-            <span class="dt">name =</span> <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">!=</span><span class="st"> </span><span class="kw">min</span>(col)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># discard non-headere cells</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;subject&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(sex, name, field, subject, <span class="dt">score =</span> numeric)</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="pivot-simple.html#cb132-1"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb132-2"><a href="pivot-simple.html#cb132-2"></a><span class="st">  </span><span class="kw">behead_if</span>(<span class="op">!</span>italic[local_format_id],                             <span class="co"># not italic</span></span>
+<span id="cb132-3"><a href="pivot-simple.html#cb132-3"></a>            <span class="dt">direction =</span> <span class="st">&quot;up-left&quot;</span>,</span>
+<span id="cb132-4"><a href="pivot-simple.html#cb132-4"></a>            <span class="dt">name =</span> <span class="st">&quot;sex&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb132-5"><a href="pivot-simple.html#cb132-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">!=</span><span class="st"> </span><span class="kw">min</span>(row)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># discard non-header cells</span></span>
+<span id="cb132-6"><a href="pivot-simple.html#cb132-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb132-7"><a href="pivot-simple.html#cb132-7"></a><span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb[local_format_id] <span class="op">!=</span><span class="st"> </span>red, <span class="co"># not red</span></span>
+<span id="cb132-8"><a href="pivot-simple.html#cb132-8"></a>            <span class="dt">direction =</span> <span class="st">&quot;left-up&quot;</span>,</span>
+<span id="cb132-9"><a href="pivot-simple.html#cb132-9"></a>            <span class="dt">name =</span> <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb132-10"><a href="pivot-simple.html#cb132-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">!=</span><span class="st"> </span><span class="kw">min</span>(col)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># discard non-headere cells</span></span>
+<span id="cb132-11"><a href="pivot-simple.html#cb132-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;subject&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb132-12"><a href="pivot-simple.html#cb132-12"></a><span class="st">  </span><span class="kw">select</span>(sex, name, field, subject, <span class="dt">score =</span> numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 5
 ##    sex    name     field       subject  score
 ##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;
@@ -627,7 +643,7 @@ italic cells.</p>
 ## 15 Female Matilda  Performance Drama        7
 ## 16 Female Olivia   Performance Drama        8</code></pre>
 </div>
-<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3">
+<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting" class="section level3" number="3.1.5">
 <h3><span class="header-section-number">3.1.5</span> Mixed levels of headers in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-hierarchy.png" /></p>
 <p>Normally different levels of headers are in different rows, or different
@@ -638,19 +654,19 @@ level, and plain for the lowest level.</p>
 <p>In this example, there is a single column of row headers, where the levels are
 shown by different amounts of indentation. The indentation is done by
 formatting, rather than by leading spaces or tabs.</p>
-<pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)
-formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)
-
-formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent</code></pre>
-<pre><code>##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-## [36] 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="pivot-simple.html#cb134-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb134-2"><a href="pivot-simple.html#cb134-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb134-3"><a href="pivot-simple.html#cb134-3"></a></span>
+<span id="cb134-4"><a href="pivot-simple.html#cb134-4"></a>formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+## [46] 1 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
 <p>We can use the indentation with <code>behead_if()</code> to make two passes over the column
 of row headers, first for the unindented headers, then for the indented headers.</p>
-<pre class="sourceCode r"><code class="sourceCode r">cells &lt;-
-<span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-hierarchy&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">print</span>()</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="pivot-simple.html#cb136-1"></a>cells &lt;-</span>
+<span id="cb136-2"><a href="pivot-simple.html#cb136-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;pivot-hierarchy&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb136-3"><a href="pivot-simple.html#cb136-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb136-4"><a href="pivot-simple.html#cb136-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb136-5"><a href="pivot-simple.html#cb136-5"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##      row   col data_type character   numeric local_format_id
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;           &lt;int&gt;
@@ -670,13 +686,13 @@ of row headers, first for the unindented headers, then for the indented headers.
 ## 14     8     2 character Drama            NA              46
 ## 15     8     3 numeric   &lt;NA&gt;              7              24
 ## 16     8     4 numeric   &lt;NA&gt;             12              47</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cells <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent[local_format_id] <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,
-            <span class="dt">direction =</span> <span class="st">&quot;WNW&quot;</span>,
-            <span class="dt">name =</span> <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;W&quot;</span>, <span class="st">&quot;subject&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(field, subject, name, <span class="dt">score =</span> numeric)</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="pivot-simple.html#cb138-1"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb138-2"><a href="pivot-simple.html#cb138-2"></a><span class="st">  </span><span class="kw">behead_if</span>(formats<span class="op">$</span>local<span class="op">$</span>alignment<span class="op">$</span>indent[local_format_id] <span class="op">==</span><span class="st"> </span><span class="dv">0</span>,</span>
+<span id="cb138-3"><a href="pivot-simple.html#cb138-3"></a>            <span class="dt">direction =</span> <span class="st">&quot;left-up&quot;</span>,</span>
+<span id="cb138-4"><a href="pivot-simple.html#cb138-4"></a>            <span class="dt">name =</span> <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb138-5"><a href="pivot-simple.html#cb138-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;subject&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb138-6"><a href="pivot-simple.html#cb138-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb138-7"><a href="pivot-simple.html#cb138-7"></a><span class="st">  </span><span class="kw">select</span>(field, subject, name, <span class="dt">score =</span> numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ##   field       subject  name     score
 ##   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -701,11 +717,13 @@ of row headers, first for the unindented headers, then for the indented headers.
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -713,12 +731,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": true,
 "linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": true,
 "instapper": false
 },
 "fontsettings": {
@@ -731,6 +749,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

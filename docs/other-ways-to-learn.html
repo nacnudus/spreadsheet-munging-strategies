@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.5 Layered meaningful formatting | Spreadsheet Munging Strategies</title>
-  <meta name="description" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>0.1 Other ways to learn | Spreadsheet Munging Strategies</title>
+  <meta name="description" content="0.1 Other ways to learn | Spreadsheet Munging Strategies">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies" />
+  <meta property="og:title" content="0.1 Other ways to learn | Spreadsheet Munging Strategies" />
   <meta property="og:type" content="book" />
   
   
@@ -16,23 +17,22 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.5 Layered meaningful formatting | Spreadsheet Munging Strategies" />
+  <meta name="twitter:title" content="0.1 Other ways to learn | Spreadsheet Munging Strategies" />
   
   
   
 
-<meta name="author" content="Duncan Garmonsway" />
+<meta name="author" content="Duncan Garmonsway">
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-formatted-cells.html"/>
-<link rel="next" href="hierarchies-in-formatting.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<link rel="prev" href="index.html">
+<link rel="next" href="setup.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,9 +40,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -61,28 +58,27 @@
 </script>
 
 
-
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -91,9 +87,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -139,17 +135,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
-<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a><ul>
+<li class="chapter" data-level="0.1" data-path="other-ways-to-learn.html"><a href="other-ways-to-learn.html"><i class="fa fa-check"></i><b>0.1</b> Other ways to learn</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a><ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
 <li class="chapter" data-level="1.2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a>
-<ul>
+<li class="chapter" data-level="2" data-path="tidyish.html"><a href="tidyish.html"><i class="fa fa-check"></i><b>2</b> Tidy-ish tables</a><ul>
 <li class="chapter" data-level="2.1" data-path="tidy-clean.html"><a href="tidy-clean.html"><i class="fa fa-check"></i><b>2.1</b> Clean &amp; tidy tables</a></li>
-<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html"><i class="fa fa-check"></i><b>2.2</b> Almost-tidy tables</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#transposed-headers-in-the-first-row-data-extends-to-the-right"><i class="fa fa-check"></i><b>2.2.1</b> Transposed (headers in the first row, data extends to the right)</a></li>
 <li class="chapter" data-level="2.2.2" data-path="almost-tidy-tables.html"><a href="almost-tidy-tables.html#other-stuff-on-the-same-sheet"><i class="fa fa-check"></i><b>2.2.2</b> Other stuff on the same sheet</a></li>
 </ul></li>
@@ -159,18 +154,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6" data-path="hierarchies-in-formatting.html"><a href="hierarchies-in-formatting.html"><i class="fa fa-check"></i><b>2.6</b> Hierarchies in formatting</a></li>
 <li class="chapter" data-level="2.7" data-path="tidy-sentinel.html"><a href="tidy-sentinel.html"><i class="fa fa-check"></i><b>2.7</b> Sentinel values in non-text columns</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a>
-<ul>
+<li class="chapter" data-level="3" data-path="pivot.html"><a href="pivot.html"><i class="fa fa-check"></i><b>3</b> Pivot tables</a><ul>
+<li class="chapter" data-level="3.1" data-path="pivot-simple.html"><a href="pivot-simple.html"><i class="fa fa-check"></i><b>3.1</b> Simple unpivoting</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-of-text-column-headers-left-aligned"><i class="fa fa-check"></i><b>3.1.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.1.2" data-path="pivot-simple.html"><a href="pivot-simple.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned"><i class="fa fa-check"></i><b>3.1.2</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
 <li class="chapter" data-level="3.1.3" data-path="pivot-simple.html"><a href="pivot-simple.html#multiple-rows-or-columns-of-headers-with-meaningful-formatting"><i class="fa fa-check"></i><b>3.1.3</b> Multiple rows or columns of headers, with meaningful formatting</a></li>
 <li class="chapter" data-level="3.1.4" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.4</b> Mixed headers and notes in the same row/column, distinguished by formatting</a></li>
 <li class="chapter" data-level="3.1.5" data-path="pivot-simple.html"><a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting"><i class="fa fa-check"></i><b>3.1.5</b> Mixed levels of headers in the same row/column, distinguished by formatting</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="pivot-complex.html"><a href="pivot-complex.html"><i class="fa fa-check"></i><b>3.2</b> Complex unpivoting</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1"><i class="fa fa-check"></i><b>3.2.1</b> Two clear rows of text column headers, left-aligned</a></li>
 <li class="chapter" data-level="3.2.2" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-columns-of-text-row-headers-top-aligned"><i class="fa fa-check"></i><b>3.2.2</b> Two clear columns of text row headers, top-aligned</a></li>
 <li class="chapter" data-level="3.2.3" data-path="pivot-complex.html"><a href="pivot-complex.html#two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1"><i class="fa fa-check"></i><b>3.2.3</b> Two clear rows and columns of text headers, top-aligned and left-aligned</a></li>
@@ -182,15 +174,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.9" data-path="pivot-complex.html"><a href="pivot-complex.html#headers-amongst-the-data"><i class="fa fa-check"></i><b>3.2.9</b> Headers amongst the data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a>
-<ul>
+<li class="chapter" data-level="4" data-path="small-multiples.html"><a href="small-multiples.html"><i class="fa fa-check"></i><b>4</b> Small multiples</a><ul>
 <li class="chapter" data-level="4.1" data-path="small-multiples-with-all-headers-present-for-each-multiple.html"><a href="small-multiples-with-all-headers-present-for-each-multiple.html"><i class="fa fa-check"></i><b>4.1</b> Small multiples with all headers present for each multiple</a></li>
 <li class="chapter" data-level="4.2" data-path="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html"><i class="fa fa-check"></i><b>4.2</b> Same table in several worksheets/files (using the sheet/file name)</a></li>
 <li class="chapter" data-level="4.3" data-path="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html"><i class="fa fa-check"></i><b>4.3</b> Same table in several worksheets/files but in different positions</a></li>
 <li class="chapter" data-level="4.4" data-path="implied-multiples.html"><a href="implied-multiples.html"><i class="fa fa-check"></i><b>4.4</b> Implied multiples</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a>
-<ul>
+<li class="chapter" data-level="5" data-path="formatting.html"><a href="formatting.html"><i class="fa fa-check"></i><b>5</b> Formatting</a><ul>
 <li class="chapter" data-level="5.1" data-path="an-example-formatting-lookup.html"><a href="an-example-formatting-lookup.html"><i class="fa fa-check"></i><b>5.1</b> An example formatting lookup</a></li>
 <li class="chapter" data-level="5.2" data-path="common-formats.html"><a href="common-formats.html"><i class="fa fa-check"></i><b>5.2</b> Common formats</a></li>
 <li class="chapter" data-level="5.3" data-path="in-cell-formatting.html"><a href="in-cell-formatting.html"><i class="fa fa-check"></i><b>5.3</b> In-cell formatting</a></li>
@@ -199,34 +189,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="data-validation.html"><a href="data-validation.html"><i class="fa fa-check"></i><b>6</b> Data validation</a></li>
 <li class="chapter" data-level="7" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>7</b> Formulas</a></li>
-<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a>
-<ul>
+<li class="chapter" data-level="8" data-path="other-gotchas.html"><a href="other-gotchas.html"><i class="fa fa-check"></i><b>8</b> Other gotchas</a><ul>
 <li class="chapter" data-level="8.1" data-path="non-text-headers-e-g-dates.html"><a href="non-text-headers-e-g-dates.html"><i class="fa fa-check"></i><b>8.1</b> Non-text headers e.g. dates</a></li>
 <li class="chapter" data-level="8.2" data-path="data-embedded-in-comments.html"><a href="data-embedded-in-comments.html"><i class="fa fa-check"></i><b>8.2</b> Data embedded in comments</a></li>
 <li class="chapter" data-level="8.3" data-path="named-ranges.html"><a href="named-ranges.html"><i class="fa fa-check"></i><b>8.3</b> Named ranges</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
-<ul>
+<li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a><ul>
+<li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a><ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.1.2" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#step-by-step"><i class="fa fa-check"></i><b>9.1.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="vaccinations.html"><a href="vaccinations.html"><i class="fa fa-check"></i><b>9.2</b> Vaccinations</a></li>
-<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a>
-<ul>
+<li class="chapter" data-level="9.3" data-path="us-crime.html"><a href="us-crime.html"><i class="fa fa-check"></i><b>9.3</b> US Crime</a><ul>
 <li class="chapter" data-level="9.3.1" data-path="us-crime.html"><a href="us-crime.html#us-crime-2"><i class="fa fa-check"></i><b>9.3.1</b> Table 2</a></li>
 <li class="chapter" data-level="9.3.2" data-path="us-crime.html"><a href="us-crime.html#us-crime-3"><i class="fa fa-check"></i><b>9.3.2</b> Table 3</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a>
-<ul>
+<li class="chapter" data-level="9.4" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html"><i class="fa fa-check"></i><b>9.4</b> Toronto Transit Commission</a><ul>
 <li class="chapter" data-level="9.4.1" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#the-full-code-listing-1"><i class="fa fa-check"></i><b>9.4.1</b> The full code listing</a></li>
 <li class="chapter" data-level="9.4.2" data-path="toronto-transit-commission.html"><a href="toronto-transit-commission.html#step-by-step-1"><i class="fa fa-check"></i><b>9.4.2</b> Step by step</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="ground-water.html"><a href="ground-water.html"><i class="fa fa-check"></i><b>9.5</b> Ground water</a></li>
 <li class="chapter" data-level="9.6" data-path="cashflows.html"><a href="cashflows.html"><i class="fa fa-check"></i><b>9.6</b> Cashflows</a></li>
-<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a>
-<ul>
+<li class="chapter" data-level="9.7" data-path="school-performance.html"><a href="school-performance.html"><i class="fa fa-check"></i><b>9.7</b> School performance</a><ul>
 <li class="chapter" data-level="9.7.1" data-path="school-performance.html"><a href="school-performance.html#sheet-1"><i class="fa fa-check"></i><b>9.7.1</b> Sheet 1</a></li>
 <li class="chapter" data-level="9.7.2" data-path="school-performance.html"><a href="school-performance.html#sheet-2"><i class="fa fa-check"></i><b>9.7.2</b> Sheet 2</a></li>
 <li class="chapter" data-level="9.7.3" data-path="school-performance.html"><a href="school-performance.html#sheet-3"><i class="fa fa-check"></i><b>9.7.3</b> Sheet 3</a></li>
@@ -249,95 +233,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="layered-formatting" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Layered meaningful formatting</h2>
-<p><img src="images/combined-highlights.png" /></p>
-<p>Sometimes different kinds of formatting relate to clearly different aspects of
-an observation, e.g. yellow highlight for “uncertain data” and red text for
-“product no longer available”. Both yellow highlighting and red text in the
-same row would indicate uncertain data and unavailability of the product at the
-same time.</p>
-<p>Deal with it by reading each kind of formatting into a separate column, e.g.
-fill colour into one column, font colour into another, bold/not-bold into a
-another, etc.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="layered-formatting.html#cb63-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
-<span id="cb63-2"><a href="layered-formatting.html#cb63-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb63-3"><a href="layered-formatting.html#cb63-3"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>)</span>
-<span id="cb63-4"><a href="layered-formatting.html#cb63-4"></a></span>
-<span id="cb63-5"><a href="layered-formatting.html#cb63-5"></a><span class="co"># Step 2: import one kind of formatting of one column of the table</span></span>
-<span id="cb63-6"><a href="layered-formatting.html#cb63-6"></a></span>
-<span id="cb63-7"><a href="layered-formatting.html#cb63-7"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
-<span id="cb63-8"><a href="layered-formatting.html#cb63-8"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
-<span id="cb63-9"><a href="layered-formatting.html#cb63-9"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb63-10"><a href="layered-formatting.html#cb63-10"></a>font_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</span>
-<span id="cb63-11"><a href="layered-formatting.html#cb63-11"></a></span>
-<span id="cb63-12"><a href="layered-formatting.html#cb63-12"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
-<span id="cb63-13"><a href="layered-formatting.html#cb63-13"></a><span class="co"># and create a new column `fill` of the fill colours, by looking up the</span></span>
-<span id="cb63-14"><a href="layered-formatting.html#cb63-14"></a><span class="co"># local_format_id of each cell in the `formats` pallette.</span></span>
-<span id="cb63-15"><a href="layered-formatting.html#cb63-15"></a>formats &lt;-</span>
-<span id="cb63-16"><a href="layered-formatting.html#cb63-16"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb63-17"><a href="layered-formatting.html#cb63-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></span>
-<span id="cb63-18"><a href="layered-formatting.html#cb63-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id],</span>
-<span id="cb63-19"><a href="layered-formatting.html#cb63-19"></a>         <span class="dt">font_colour =</span> font_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb63-20"><a href="layered-formatting.html#cb63-20"></a><span class="st">  </span><span class="kw">select</span>(fill_colour, font_colour)</span>
-<span id="cb63-21"><a href="layered-formatting.html#cb63-21"></a></span>
-<span id="cb63-22"><a href="layered-formatting.html#cb63-22"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
-<span id="cb63-23"><a href="layered-formatting.html#cb63-23"></a><span class="kw">bind_cols</span>(x, formats)</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 5
-##   Name     Weight Price fill_colour font_colour
-##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
-## 1 Knife         7     8 &lt;NA&gt;        FF000000   
-## 2 Fork          5     6 FFFFFF00    FF000000   
-## 3 Spoon         3     4 &lt;NA&gt;        FFFF0000   
-## 4 Teaspoon      1     2 FFFFFF00    FFFF0000</code></pre>
-<p>Here’s the same thing, but using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="layered-formatting.html#cb65-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb65-2"><a href="layered-formatting.html#cb65-2"></a>font_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</span>
-<span id="cb65-3"><a href="layered-formatting.html#cb65-3"></a></span>
-<span id="cb65-4"><a href="layered-formatting.html#cb65-4"></a>cells &lt;-</span>
-<span id="cb65-5"><a href="layered-formatting.html#cb65-5"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;combined-highlights&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb65-6"><a href="layered-formatting.html#cb65-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id],</span>
-<span id="cb65-7"><a href="layered-formatting.html#cb65-7"></a>         <span class="dt">font_colour =</span> font_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb65-8"><a href="layered-formatting.html#cb65-8"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour, font_colour) <span class="op">%&gt;%</span></span>
-<span id="cb65-9"><a href="layered-formatting.html#cb65-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb65-10"><a href="layered-formatting.html#cb65-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, Name) <span class="op">%&gt;%</span></span>
-<span id="cb65-11"><a href="layered-formatting.html#cb65-11"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character)</span>
-<span id="cb65-12"><a href="layered-formatting.html#cb65-12"></a></span>
-<span id="cb65-13"><a href="layered-formatting.html#cb65-13"></a>values &lt;-</span>
-<span id="cb65-14"><a href="layered-formatting.html#cb65-14"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb65-15"><a href="layered-formatting.html#cb65-15"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour, <span class="op">-</span>font_colour) <span class="op">%&gt;%</span></span>
-<span id="cb65-16"><a href="layered-formatting.html#cb65-16"></a><span class="st">  </span><span class="kw">spread</span>(header, numeric)</span>
-<span id="cb65-17"><a href="layered-formatting.html#cb65-17"></a></span>
-<span id="cb65-18"><a href="layered-formatting.html#cb65-18"></a>formats &lt;-<span class="st"> </span><span class="kw">distinct</span>(cells, row, fill_colour, font_colour)</span>
-<span id="cb65-19"><a href="layered-formatting.html#cb65-19"></a></span>
-<span id="cb65-20"><a href="layered-formatting.html#cb65-20"></a><span class="kw">left_join</span>(values, formats, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb65-21"><a href="layered-formatting.html#cb65-21"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 6
-##   data_type Name     Price Weight fill_colour font_colour
-##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;      
-## 1 numeric   Knife        8      7 &lt;NA&gt;        FF000000   
-## 2 numeric   Fork         6      5 FFFFFF00    &lt;NA&gt;       
-## 3 numeric   Spoon        4      3 &lt;NA&gt;        FFFF0000   
-## 4 numeric   Teaspoon     2      1 FFFFFF00    FFFF0000</code></pre>
+<div id="other-ways-to-learn" class="section level2">
+<h2><span class="header-section-number">0.1</span> Other ways to learn</h2>
+<ul>
+<li><a href="https://www.youtube.com/channel/UCrw0ScBCFSbk_lgkjyg4ucw">YouTube videos</a></li>
+<li><a href="https://github.com/nacnudus/ukfarm">Worked example code</a></li>
+<li><a href="https://nacnudus.github.io/duncangarmonsway/posts/2018-12-29-meltcsv/">Blog post on <code>readr::melt_csv()</code></a></li>
+</ul>
+<hr />
+<div class="figure">
+<img src="images/by-nc-sa.png" alt="Creative Commons License" />
+<p class="caption">Creative Commons License</p>
 </div>
+<p>The online version of this book is licensed under the <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidy-formatted-cells.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hierarchies-in-formatting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -345,12 +272,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
+"google": true,
 "linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
-"google": true,
 "instapper": false
 },
 "fontsettings": {
@@ -359,14 +286,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/tidyish.Rmd",
+"link": "https://github.com/nacnudus/spreadsheet-munging-strategies/edit/master/index.Rmd",
 "text": "Edit"
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

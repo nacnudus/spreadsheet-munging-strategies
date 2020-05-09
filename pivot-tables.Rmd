@@ -134,27 +134,27 @@ The `behead()` function takes the 'melted' output of `as_cells()`,
 specify how the header cells relate to the data cells.
 
 The outermost header is the top row, `"Female" NA "Male" NA`.  The `"Female"`
-and `"Male"` headers are above and to-the-left-of the data cells.  We express
-this as a compass direction, north-north-west, or `"NNW"`.  We also give the
-headers a name, `sex`, and say which column of `all_cells` contains the value
-of the header cells -- it's usually the `character` column.
+and `"Male"` headers are up-and-to-the-left-of the data cells.  We express
+this as `"up-left"`.  We also give the headers a name, `sex`, and say which
+column of `all_cells` contains the value of the header cells -- it's usually the
+`character` column.
 
 ```{r}
 all_cells %>%
-  behead("NNW", sex)
+  behead("up-left", sex)
 ```
 
 That did half the job.  The value 2 in row 4 column 5 is indeed a score of a
 female. But the value `"matilda"` in row 3 column 4 isn't a population -- it's
 another header.  The next step is to strip that second level of column headers.
-This time, the compass direction is `"N"`, because the headers are directly
-above the associated data cells, and we call it `name`, because it represents
+This time, the direction is `"up"`, because the headers are directly
+up from the associated data cells, and we call it `name`, because it represents
 names of people.
 
 ```{r}
 all_cells %>%
-  behead("NNW", sex) %>%
-  behead("N", `name`)
+  behead("up-left", sex) %>%
+  behead("up", `name`)
 ```
 
 A final step is a normal clean-up.  We drop the `row`, `col` and `character`
@@ -163,8 +163,8 @@ represents.
 
 ```{r}
 all_cells %>%
-  behead("NNW", sex) %>%
-  behead("N", `name`) %>%
+  behead("up-left", sex) %>%
+  behead("up", `name`) %>%
   select(score = numeric, sex, `name`)
 ```
 
@@ -172,9 +172,9 @@ all_cells %>%
 
 ![](images/pivot-annotations.png)
 
-There are no new techniques are used, just more compass directions: `"W"` for
-headers directly to the left of the data cells, and `"WNW"` for headers
-left-and-above the data cells.
+There are no new techniques are used, just more directions: `"left"` for headers
+directly to the left of the data cells, and `"left-up"` for headers left-then-up
+from the data cells.
 
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
@@ -185,10 +185,10 @@ all_cells <-
   print()
 
 all_cells %>%
-  behead("NNW", sex) %>%   # As before
-  behead("N", `name`) %>%  # As before
-  behead("WNW", field) %>% # Left-and-above
-  behead("W", subject) %>% # Directly left
+  behead("up-left", sex) %>%   # As before
+  behead("up", `name`) %>%     # As before
+  behead("left-up", field) %>% # Left-and-above
+  behead("left", subject) %>%  # Directly left
   rename(score = numeric) %>%
   select(-row, -col, -character)
 ```
@@ -218,10 +218,10 @@ all_cells <-
 
 unpivoted <-
   all_cells %>%
-  behead("NNW", sex) %>%   # As before
-  behead("N", `name`) %>%  # As before
-  behead("WNW", field) %>% # Left-and-above
-  behead("W", subject) %>% # Directly left
+  behead("up-left", sex) %>%   # As before
+  behead("up", `name`) %>%     # As before
+  behead("left-up", field) %>% # Left-and-above
+  behead("left", subject) %>%  # Directly left
   rename(score = numeric) %>%
   select(-character)                # Retain the row and col for now
 unpivoted
@@ -261,7 +261,7 @@ headers.
 cells %>%
   behead_if(formats$local$font$bold[local_format_id], # true for bold cells
             str_detect(character, "^Country: "),      # true for "Country: ..."
-            direction = "WNW",                        # argument must be named
+            direction = "left-up",                    # argument must be named
             name = "country_name") %>%
   dplyr::filter(col != 1L)                            # discard remaining cells
 ```
@@ -310,15 +310,15 @@ cells <-
 
 cells %>%
   behead_if(!italic[local_format_id],                             # not italic
-            direction = "NNW",
+            direction = "up-left",
             name = "sex") %>%
   dplyr::filter(row != min(row)) %>% # discard non-header cells
-  behead("N", "name") %>%
+  behead("up", "name") %>%
   behead_if(formats$local$font$color$rgb[local_format_id] != red, # not red
-            direction = "WNW",
+            direction = "left-up",
             name = "field") %>%
   dplyr::filter(col != min(col)) %>% # discard non-headere cells
-  behead("W", "subject") %>%
+  behead("left", "subject") %>%
   select(sex, name, field, subject, score = numeric)
 ```
 
@@ -355,10 +355,10 @@ cells <-
 
 cells %>%
   behead_if(formats$local$alignment$indent[local_format_id] == 0,
-            direction = "WNW",
+            direction = "left-up",
             name = "field") %>%
-  behead("W", "subject") %>%
-  behead("N", "name") %>%
+  behead("left", "subject") %>%
+  behead("up", "name") %>%
   select(field, subject, name, score = numeric)
 ```
 
@@ -416,21 +416,20 @@ data_cells <-
 ```
 
 The second stage is to declare how the data cells relate to each row of column
-headers.  Unpivotr provides a set of functions for this, derived from the points
-of the compass.
+headers.
 
 Starting from the point of view of a data cell, the relevant column header from
-the second row of headers is the one directly north (up), or `"N"`.
+the second row of headers is the one directly `"up"`.
 
 ```{r}
-enhead(data_cells, second_header_row, "N")
+enhead(data_cells, second_header_row, "up")
 ```
 
 The first row of headers, from the point of view of a data cell, is either
-directly north (up), or north and west (up and left), or `"NNW"`.
+directly up, or up-then-left.
 
 ```{r}
-enhead(data_cells, first_header_row, "NNW")
+enhead(data_cells, first_header_row, "up-left")
 ```
 
 Piping everything together, we get a complete, tidy dataset, and can finally
@@ -438,8 +437,8 @@ drop the `row` and `col` columns.
 
 ```{r}
 data_cells %>%
-  enhead(first_header_row, "NNW") %>%
-  enhead(second_header_row, "N") %>%
+  enhead(first_header_row, "up-left") %>%
+  enhead(second_header_row, "up") %>%
   select(-row, -col)
 ```
 
@@ -448,10 +447,10 @@ data_cells %>%
 ![](images/pivot-annotations.png)
 
 This is almost the same as [Two clear rows of text column headers,
-left-aligned](2RL), but with different compass directions: `"W"` for directly
-west (left), and `"WNW"` for west and north (left and up).
+left-aligned](2RL), but with different directions: `"left"` for directly
+left, and `"left-up"` for left-then-up.
 
-(`"NNW"` and `"WNW"` look like synonyms.  They happen to be synonyms in
+(`"up-left"` and `"left-up"` look like synonyms.  They happen to be synonyms in
 `enhead()`, but they aren't in `behead()`.
 
 In this example, the table has no column headers, only row headers.  This is
@@ -495,8 +494,8 @@ data_cells <-
   # columns as well as `numeric`
 
 data_cells %>%
-  enhead(first_header_col, "WNW") %>%
-  enhead(second_header_col, "W") %>%
+  enhead(first_header_col, "left-up") %>%
+  enhead(second_header_col, "left") %>%
   select(-row, -col)
 ```
 
@@ -560,10 +559,10 @@ data_cells <-
   # columns as well as `numeric`
 
 data_cells %>%
-  enhead(first_header_row, "NNW") %>%
-  enhead(second_header_row, "N") %>%
-  enhead(first_header_col, "WNW") %>%
-  enhead(second_header_col, "W") %>%
+  enhead(first_header_row, "up-left") %>%
+  enhead(second_header_row, "up") %>%
+  enhead(first_header_col, "left-up") %>%
+  enhead(second_header_col, "left") %>%
   select(-row, -col)
 ```
 
@@ -582,8 +581,8 @@ rectify(all_cells)
 Looking at that table, it's not immediately obvious where the boundary between
 `Female` and `Male` falls, or between `Humanities` and `Performance`.  A naive
 approach would be to match the inner headers to the outer ones by proximity, and
-there are four directions to do so: `"ABOVE"`, `"LEFT"`, `"BELOW"`, and
-`"RIGHT"`.
+there are four directions to do so: `"up-ish"`, `"left-ish"`, `"down-ish"`, and
+`"right-ish"`.
 
 But in this case, those directions are too naive.
 
@@ -591,7 +590,7 @@ But in this case, those directions are too naive.
 * `Lenny` is the same distance from `Female` as from `Male`.
 
 You can fix this by justifying the header cells towards one side of the data
-cells that they describe, and then use a direction like `"NNW"` as usual.  Do
+cells that they describe, and then use a direction like `"up-left"` as usual.  Do
 this with `justify()`, providing the header cells with a second set of cells
 at the positions you want the header cells to move to.
 
@@ -681,10 +680,10 @@ data_cells <-
   # columns as well as `numeric`
 
 data_cells %>%
-  enhead(first_header_row, "NNW") %>%
-  enhead(second_header_row, "N") %>%
-  enhead(first_header_col, "WNW") %>%
-  enhead(second_header_col, "W") %>%
+  enhead(first_header_row, "up-left") %>%
+  enhead(second_header_row, "up") %>%
+  enhead(first_header_col, "left-up") %>%
+  enhead(second_header_col, "left") %>%
   select(-row, -col)
 ```
 
@@ -755,10 +754,10 @@ data_cells <-
 
 unpivoted <-
   data_cells %>%
-  enhead(first_header_row, "NNW") %>%
-  enhead(second_header_row, "N") %>%
-  enhead(first_header_col, "WNW") %>%
-  enhead(second_header_col, "W")
+  enhead(first_header_row, "up-left") %>%
+  enhead(second_header_row, "up") %>%
+  enhead(first_header_col, "left-up") %>%
+  enhead(second_header_col, "left")
   # Don't delet the `row` and `col` columns yet, because we need them to join on
   # the formatting
 
@@ -847,8 +846,8 @@ second_header_col <-
   # '`character` column.
 
 data_cells %>%
-  enhead(first_header_row, "NNW") %>%
-  enhead(first_header_col, "WNW") %>%
+  enhead(first_header_row, "up-left") %>%
+  enhead(first_header_col, "left-up") %>%
   select(-row, -col)
 ```
 
@@ -922,9 +921,9 @@ data_cells <-
   # columns as well as `numeric`
 
 data_cells %>%
-  enhead(field, "WNW") %>%
-  enhead(subject, "W") %>%
-  enhead(name, "N") %>%
+  enhead(field, "left-up") %>%
+  enhead(subject, "left") %>%
+  enhead(name, "up") %>%
   select(-row, -col)
 ```
 
@@ -984,9 +983,9 @@ data_cells <-
 data_cells
 
 data_cells %>%
-  enhead(term, "N") %>%
-  enhead(subject, "NNW") %>%
-  enhead(name, "W") %>%
+  enhead(term, "up") %>%
+  enhead(subject, "up-left") %>%
+  enhead(name, "left") %>%
   select(-row, -col)
 ```
 
@@ -1000,7 +999,7 @@ actually a column header, instead of being presented above the data, is
 presented to the side.)
 
 The way to handle it is to *pretend* that it is a row header, and use the
-`"WNW"` direction as normal.
+`"left-up"` direction as normal.
 
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
@@ -1056,9 +1055,9 @@ data_cells <-
 data_cells
 
 data_cells %>%
-  enhead(subject, "WNW") %>%
-  enhead(term, "N") %>%
-  enhead(name, "W") %>%
+  enhead(subject, "left-up") %>%
+  enhead(term, "up") %>%
+  enhead(name, "left") %>%
   select(-row, -col)
 ```
 

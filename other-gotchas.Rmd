@@ -17,8 +17,8 @@ the header of a data frame.  Another way to format headers as part of the
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "non-text headers") %>%
-  behead("W", name) %>%
-  behead("N", `academic-year`) %>%
+  behead("left", name) %>%
+  behead("up", `academic-year`) %>%
   mutate(`academic-year` = strftime(`academic-year`, "%Y")) %>%
   select(row, data_type, `academic-year`, name, numeric) %>%
   spatter(`academic-year`) %>%
@@ -32,7 +32,7 @@ before converting them all to text via `format()`.
 ```{r}
 xlsx_cells(path, sheet = "non-text headers") %>%
   select(row, col, data_type, character, numeric, date) %>%
-  behead("N", header)
+  behead("up", header)
 ```
 
 To format a header when a single set of headers are of mixed data types, you
@@ -41,7 +41,7 @@ can specify a function for each data type in the call to `behead()`.
 ```{r}
 xlsx_cells(path, sheet = "non-text headers") %>%
   select(row, col, data_type, character, numeric, date) %>%
-  behead("N", header, formatters = list(date = ~ strftime(.x, "%Y"),
+  behead("up", header, formatters = list(date = ~ strftime(.x, "%Y"),
                                         character = toupper))
 ```
 
@@ -59,7 +59,7 @@ imported into a `comment_formatted` column, similarly to `character_formatted`.
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 xlsx_cells(path, sheet = "comments") %>%
   select(row, col, data_type, character, numeric, comment) %>%
-  behead("N", "header")
+  behead("up", "header")
 ```
 
 Comments apply to single cells, so follow the same procedure as "Already a tidy
@@ -74,14 +74,14 @@ cells
 values <-
   cells %>%
   select(-comment) %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   select(-col) %>%
   spatter(header)
 values
 
 comments <-
   cells %>%
-  behead("N", header) %>%
+  behead("up", header) %>%
   mutate(header = paste0(header, "_comment")) %>%
   select(row, header, comment) %>%
   spread(header, comment)
