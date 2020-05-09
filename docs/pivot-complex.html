@@ -32,6 +32,7 @@
   
 <link rel="prev" href="pivot-simple.html"/>
 <link rel="next" href="small-multiples.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivot-complex" class="section level2">
+<div id="pivot-complex" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Complex unpivoting</h2>
 <p>When <code>behead()</code> isn’t powerful enough (it makes certain assumptions, and it
 doesn’t understand formatting), then you can get much more control by using
@@ -263,7 +260,7 @@ header cells.</p>
 <li>Identify which cells are headers, and which are data</li>
 <li>State how the data cells relate to the header cells.</li>
 </ol>
-<div id="two-clear-rows-of-text-column-headers-left-aligned-1" class="section level3">
+<div id="two-clear-rows-of-text-column-headers-left-aligned-1" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Two clear rows of text column headers, left-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>The first stage, identifying header vs data cells, is simply filtering.</p>
@@ -402,7 +399,7 @@ drop the <code>row</code> and <code>col</code> columns.</p>
 ## 15    12 Male   Nicholas
 ## 16     3 Male   Paul</code></pre>
 </div>
-<div id="two-clear-columns-of-text-row-headers-top-aligned" class="section level3">
+<div id="two-clear-columns-of-text-row-headers-top-aligned" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Two clear columns of text row headers, top-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This is almost the same as <a href="2RL">Two clear rows of text column headers,
@@ -502,7 +499,7 @@ from left to right instead of from top to bottom.</p>
 ## 15    12 Performance Drama   
 ## 16     3 Performance Drama</code></pre>
 </div>
-<div id="two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1" class="section level3">
+<div id="two-clear-rows-and-columns-of-text-headers-top-aligned-and-left-aligned-1" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Two clear rows and columns of text headers, top-aligned and left-aligned</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This is a combination of the previous two sections. No new techniques are used.</p>
@@ -626,7 +623,7 @@ from left to right instead of from top to bottom.</p>
 ## 15    12 Male   Nicholas Performance Drama   
 ## 16     3 Male   Paul     Performance Drama</code></pre>
 </div>
-<div id="centre-aligned-headers" class="section level3">
+<div id="centre-aligned-headers" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Centre-aligned headers</h3>
 <p><img src="images/pivot-centre-aligned.png" /></p>
 <p>Headers aren’t always aligned to one side of the data cells that they describe.</p>
@@ -800,7 +797,7 @@ headers, top-aligned and left-aligned”.</p>
 ## 10     5 Female Leah    Humanities Philosophy
 ## # … with 46 more rows</code></pre>
 </div>
-<div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting-1" class="section level3">
+<div id="multiple-rows-or-columns-of-headers-with-meaningful-formatting-1" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> Multiple rows or columns of headers, with meaningful formatting</h3>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This is a combination of the previous section with <a href="tidy-formatted-cells">Meaningfully formatted
@@ -967,7 +964,7 @@ and <code>col</code> of each data cell.</li>
 ## 15    12 Male   Nicholas Performance Drama    FFFFFF00   
 ## 16     3 Male   Paul     Performance Drama    &lt;NA&gt;</code></pre>
 </div>
-<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3">
+<div id="mixed-headers-and-notes-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> Mixed headers and notes in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-notes.png" /></p>
 <p>This doesn’t use any new techniques. The trick is, when selecting a row or
@@ -1072,7 +1069,7 @@ italic cells.</p>
 ## 15    12 Male   Performance  
 ## 16     3 Male   Performance</code></pre>
 </div>
-<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3">
+<div id="mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting-1" class="section level3" number="3.2.7">
 <h3><span class="header-section-number">3.2.7</span> Mixed levels of headers in the same row/column, distinguished by formatting</h3>
 <p><img src="images/pivot-hierarchy.png" /></p>
 <p>Normally different levels of headers are in different rows, or different
@@ -1184,7 +1181,7 @@ first column.</p>
 ## 7     7 Performance Drama    Matilda 
 ## 8    12 Performance Drama    Nicholas</code></pre>
 </div>
-<div id="repeated-rowscolumns-of-headers-within-the-table" class="section level3">
+<div id="repeated-rowscolumns-of-headers-within-the-table" class="section level3" number="3.2.8">
 <h3><span class="header-section-number">3.2.8</span> Repeated rows/columns of headers within the table</h3>
 <p><img src="images/pivot-repeated-headers.png" /></p>
 <p>Repetitions can simply be ignored. Select one of the sets of headers, and use
@@ -1333,7 +1330,7 @@ from the headers mixed in among them, because only the data cells have the
 ## 10     2 Term 1 Classics Paul    
 ## # … with 38 more rows</code></pre>
 </div>
-<div id="headers-amongst-the-data" class="section level3">
+<div id="headers-amongst-the-data" class="section level3" number="3.2.9">
 <h3><span class="header-section-number">3.2.9</span> Headers amongst the data</h3>
 <p><img src="images/pivot-header-within-data.png" /></p>
 <p>This happens when what is actually a row-header, instead of being presented to

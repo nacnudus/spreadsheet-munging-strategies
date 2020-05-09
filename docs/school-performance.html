@@ -32,6 +32,7 @@
   
 <link rel="prev" href="cashflows.html"/>
 
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,13 +249,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="school-performance" class="section level2">
+<div id="school-performance" class="section level2" number="9.7">
 <h2><span class="header-section-number">9.7</span> School performance</h2>
 <p>A certain United States state education department provides its schools with
 spreadsheets of statistics. I bet the children in that state get a great
 education, because there’s at least one R enthusiast on the staff whose
 curiosity has never left them.</p>
-<div id="sheet-1" class="section level3">
+<div id="sheet-1" class="section level3" number="9.7.1">
 <h3><span class="header-section-number">9.7.1</span> Sheet 1</h3>
 <p>The first sheet is an example of <a href="pivot-simple.html#mixed-levels-of-headers-in-the-same-rowcolumn-distinguished-by-formatting">mixed headers in column 1 being distinguished
 by bold
@@ -269,24 +266,24 @@ Filter for the bold cells in column 1 and assign them to a variable. Then
 <p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true">Download the
 file</a>,
 modified from an original source provided to the author.</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="school-performance.html#cb404-1"></a>cells &lt;-</span>
-<span id="cb404-2"><a href="school-performance.html#cb404-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet1&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb404-3"><a href="school-performance.html#cb404-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank)</span>
-<span id="cb404-4"><a href="school-performance.html#cb404-4"></a></span>
-<span id="cb404-5"><a href="school-performance.html#cb404-5"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>school)</span>
-<span id="cb404-6"><a href="school-performance.html#cb404-6"></a></span>
-<span id="cb404-7"><a href="school-performance.html#cb404-7"></a>bold_headers &lt;-</span>
-<span id="cb404-8"><a href="school-performance.html#cb404-8"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb404-9"><a href="school-performance.html#cb404-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span>1L, formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb404-10"><a href="school-performance.html#cb404-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">bold_header =</span> character)</span>
-<span id="cb404-11"><a href="school-performance.html#cb404-11"></a></span>
-<span id="cb404-12"><a href="school-performance.html#cb404-12"></a>cells <span class="op">%&gt;%</span></span>
-<span id="cb404-13"><a href="school-performance.html#cb404-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb404-14"><a href="school-performance.html#cb404-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;plain-header&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb404-15"><a href="school-performance.html#cb404-15"></a><span class="st">  </span><span class="kw">enhead</span>(bold_headers, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb404-16"><a href="school-performance.html#cb404-16"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, metric, <span class="st">`</span><span class="dt">plain-header</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb404-17"><a href="school-performance.html#cb404-17"></a><span class="st">  </span><span class="kw">spatter</span>(metric) <span class="op">%&gt;%</span></span>
-<span id="cb404-18"><a href="school-performance.html#cb404-18"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="school-performance.html#cb406-1"></a>cells &lt;-</span>
+<span id="cb406-2"><a href="school-performance.html#cb406-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet1&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb406-3"><a href="school-performance.html#cb406-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank)</span>
+<span id="cb406-4"><a href="school-performance.html#cb406-4"></a></span>
+<span id="cb406-5"><a href="school-performance.html#cb406-5"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>school)</span>
+<span id="cb406-6"><a href="school-performance.html#cb406-6"></a></span>
+<span id="cb406-7"><a href="school-performance.html#cb406-7"></a>bold_headers &lt;-</span>
+<span id="cb406-8"><a href="school-performance.html#cb406-8"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb406-9"><a href="school-performance.html#cb406-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span>1L, formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb406-10"><a href="school-performance.html#cb406-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">bold_header =</span> character)</span>
+<span id="cb406-11"><a href="school-performance.html#cb406-11"></a></span>
+<span id="cb406-12"><a href="school-performance.html#cb406-12"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb406-13"><a href="school-performance.html#cb406-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb406-14"><a href="school-performance.html#cb406-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;plain-header&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb406-15"><a href="school-performance.html#cb406-15"></a><span class="st">  </span><span class="kw">enhead</span>(bold_headers, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb406-16"><a href="school-performance.html#cb406-16"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, metric, <span class="st">`</span><span class="dt">plain-header</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb406-17"><a href="school-performance.html#cb406-17"></a><span class="st">  </span><span class="kw">spatter</span>(metric) <span class="op">%&gt;%</span></span>
+<span id="cb406-18"><a href="school-performance.html#cb406-18"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 21 x 10
 ##    `plain-header` `% Advanced` `% Needs Improv… `% Proficient` `% Proficient o…
 ##    &lt;chr&gt;                 &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;
@@ -303,7 +300,7 @@ modified from an original source provided to the author.</p>
 ## # … with 11 more rows, and 5 more variables: `% Warning/ Failing` &lt;dbl&gt;, CPI &lt;dbl&gt;, `Median
 ## #   SGP` &lt;dbl&gt;, `N Included` &lt;dbl&gt;, `N Included in SGP` &lt;dbl&gt;</code></pre>
 </div>
-<div id="sheet-2" class="section level3">
+<div id="sheet-2" class="section level3" number="9.7.2">
 <h3><span class="header-section-number">9.7.2</span> Sheet 2</h3>
 <p>The second sheet is variation on <a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1">two clear rows of text column headers, left
 aligned</a>. Here, there
@@ -315,15 +312,15 @@ will be <code>NA</code> for data from those columns.</p>
 <p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/school.xlsx?raw=true">Download the
 file</a>,
 modified from an original source provided to the author.</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="school-performance.html#cb406-1"></a><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet2&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb406-2"><a href="school-performance.html#cb406-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, address, data_type, character, numeric, is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb406-3"><a href="school-performance.html#cb406-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
-<span id="cb406-4"><a href="school-performance.html#cb406-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;header_1&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb406-5"><a href="school-performance.html#cb406-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header_2&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb406-6"><a href="school-performance.html#cb406-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header_3&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb406-7"><a href="school-performance.html#cb406-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;classroom&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb406-8"><a href="school-performance.html#cb406-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, <span class="op">!</span><span class="kw">is.na</span>(header_<span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb406-9"><a href="school-performance.html#cb406-9"></a><span class="st">  </span><span class="kw">arrange</span>(col, row)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="school-performance.html#cb408-1"></a><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet2&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb408-2"><a href="school-performance.html#cb408-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, address, data_type, character, numeric, is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb408-3"><a href="school-performance.html#cb408-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb408-4"><a href="school-performance.html#cb408-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;header_1&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb408-5"><a href="school-performance.html#cb408-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header_2&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb408-6"><a href="school-performance.html#cb408-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header_3&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb408-7"><a href="school-performance.html#cb408-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;classroom&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb408-8"><a href="school-performance.html#cb408-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, <span class="op">!</span><span class="kw">is.na</span>(header_<span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb408-9"><a href="school-performance.html#cb408-9"></a><span class="st">  </span><span class="kw">arrange</span>(col, row)</span></code></pre></div>
 <pre><code>## # A tibble: 32 x 11
 ##      row   col address data_type character numeric is_blank header_1 header_2 header_3
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
@@ -339,7 +336,7 @@ modified from an original source provided to the author.</p>
 ## 10     6     6 F6      numeric   &lt;NA&gt;        0.319 FALSE    Possibl… Total P… %       
 ## # … with 22 more rows, and 1 more variable: classroom &lt;chr&gt;</code></pre>
 </div>
-<div id="sheet-3" class="section level3">
+<div id="sheet-3" class="section level3" number="9.7.3">
 <h3><span class="header-section-number">9.7.3</span> Sheet 3</h3>
 <p>The third sheet is variation on <a href="pivot-complex.html#two-clear-rows-of-text-column-headers-left-aligned-1">two clear rows of text column headers, left
 aligned</a>, with a nasty
@@ -362,23 +359,23 @@ and then concatenating the headers of rows 2 to 5. Using the <code>"up-left"</co
 headers like “Years in MA” in cell D4 will be carried to the right, which is
 good. Unfortunately so will headers like “# Students” in cell B2, which we’ll
 just have to put up with.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="school-performance.html#cb408-1"></a>cells &lt;-</span>
-<span id="cb408-2"><a href="school-performance.html#cb408-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet3&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-3"><a href="school-performance.html#cb408-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb408-4"><a href="school-performance.html#cb408-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span>
-<span id="cb408-5"><a href="school-performance.html#cb408-5"></a></span>
-<span id="cb408-6"><a href="school-performance.html#cb408-6"></a>x &lt;-</span>
-<span id="cb408-7"><a href="school-performance.html#cb408-7"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb408-8"><a href="school-performance.html#cb408-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;place&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-9"><a href="school-performance.html#cb408-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;category&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-10"><a href="school-performance.html#cb408-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Treat every cell in every row as a header</span></span>
-<span id="cb408-11"><a href="school-performance.html#cb408-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-2&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-12"><a href="school-performance.html#cb408-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-3&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-13"><a href="school-performance.html#cb408-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-4&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb408-14"><a href="school-performance.html#cb408-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-5&quot;</span>)</span>
-<span id="cb408-15"><a href="school-performance.html#cb408-15"></a><span class="kw">glimpse</span>(x)</span></code></pre></div>
-<pre><code>## Observations: 36
-## Variables: 12
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="school-performance.html#cb410-1"></a>cells &lt;-</span>
+<span id="cb410-2"><a href="school-performance.html#cb410-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>school, <span class="st">&quot;Sheet3&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-3"><a href="school-performance.html#cb410-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb410-4"><a href="school-performance.html#cb410-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span>
+<span id="cb410-5"><a href="school-performance.html#cb410-5"></a></span>
+<span id="cb410-6"><a href="school-performance.html#cb410-6"></a>x &lt;-</span>
+<span id="cb410-7"><a href="school-performance.html#cb410-7"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb410-8"><a href="school-performance.html#cb410-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;place&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-9"><a href="school-performance.html#cb410-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;category&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-10"><a href="school-performance.html#cb410-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Treat every cell in every row as a header</span></span>
+<span id="cb410-11"><a href="school-performance.html#cb410-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-2&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-12"><a href="school-performance.html#cb410-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-3&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-13"><a href="school-performance.html#cb410-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-4&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb410-14"><a href="school-performance.html#cb410-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;metric-cell-5&quot;</span>)</span>
+<span id="cb410-15"><a href="school-performance.html#cb410-15"></a><span class="kw">glimpse</span>(x)</span></code></pre></div>
+<pre><code>## Rows: 36
+## Columns: 12
 ## $ row             &lt;int&gt; 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8…
 ## $ col             &lt;int&gt; 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, …
 ## $ data_type       &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;…
@@ -394,17 +391,17 @@ just have to put up with.</p>
 <p>Above you can see that every cell in every header row has been treated as a
 header in its own right, e.g. <code>"Avg"</code> is a level-2 header, and <code>"Years w/"</code> is a
 level-3 header. The next step is to paste them together into a single header.</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="school-performance.html#cb410-1"></a>x &lt;-</span>
-<span id="cb410-2"><a href="school-performance.html#cb410-2"></a><span class="st">  </span>x <span class="op">%&gt;%</span></span>
-<span id="cb410-3"><a href="school-performance.html#cb410-3"></a><span class="st">  </span><span class="co"># Replace NA with &quot;&quot; otherwise unite() will spell it as &quot;NA&quot;.</span></span>
-<span id="cb410-4"><a href="school-performance.html#cb410-4"></a><span class="st">  </span><span class="co"># This is a common irritation.</span></span>
-<span id="cb410-5"><a href="school-performance.html#cb410-5"></a><span class="st">  </span><span class="co"># https://stackoverflow.com/questions/13673894/suppress-nas-in-paste</span></span>
-<span id="cb410-6"><a href="school-performance.html#cb410-6"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>)), replace_na, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb410-7"><a href="school-performance.html#cb410-7"></a><span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;metric&quot;</span>, <span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb410-8"><a href="school-performance.html#cb410-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">metric =</span> <span class="kw">str_trim</span>(metric))</span>
-<span id="cb410-9"><a href="school-performance.html#cb410-9"></a><span class="kw">glimpse</span>(x)</span></code></pre></div>
-<pre><code>## Observations: 36
-## Variables: 8
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="school-performance.html#cb412-1"></a>x &lt;-</span>
+<span id="cb412-2"><a href="school-performance.html#cb412-2"></a><span class="st">  </span>x <span class="op">%&gt;%</span></span>
+<span id="cb412-3"><a href="school-performance.html#cb412-3"></a><span class="st">  </span><span class="co"># Replace NA with &quot;&quot; otherwise unite() will spell it as &quot;NA&quot;.</span></span>
+<span id="cb412-4"><a href="school-performance.html#cb412-4"></a><span class="st">  </span><span class="co"># This is a common irritation.</span></span>
+<span id="cb412-5"><a href="school-performance.html#cb412-5"></a><span class="st">  </span><span class="co"># https://stackoverflow.com/questions/13673894/suppress-nas-in-paste</span></span>
+<span id="cb412-6"><a href="school-performance.html#cb412-6"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>)), replace_na, <span class="st">&quot;&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb412-7"><a href="school-performance.html#cb412-7"></a><span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;metric&quot;</span>, <span class="kw">starts_with</span>(<span class="st">&quot;metric-cell-&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb412-8"><a href="school-performance.html#cb412-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">metric =</span> <span class="kw">str_trim</span>(metric))</span>
+<span id="cb412-9"><a href="school-performance.html#cb412-9"></a><span class="kw">glimpse</span>(x)</span></code></pre></div>
+<pre><code>## Rows: 36
+## Columns: 8
 ## $ row       &lt;int&gt; 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7, 8, 9, 7…
 ## $ col       &lt;int&gt; 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10…
 ## $ data_type &lt;chr&gt; &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeric&quot;, &quot;numeri…
@@ -418,10 +415,10 @@ header has leaked into <code>"# Students Avg Years w/ Class Data"</code>, but th
 cleaned up manually later. At least <code>"# Students Avg Years w/ Class Data"</code> is
 within the <code>"STUDENTS"</code> category, which is the hard part.</p>
 <p>Spreading this data is the final step to make it easy to work with.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="school-performance.html#cb412-1"></a>x <span class="op">%&gt;%</span></span>
-<span id="cb412-2"><a href="school-performance.html#cb412-2"></a><span class="st">  </span><span class="kw">select</span>(place, category, metric, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb412-3"><a href="school-performance.html#cb412-3"></a><span class="st">  </span><span class="kw">spread</span>(place, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb412-4"><a href="school-performance.html#cb412-4"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="ot">Inf</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="school-performance.html#cb414-1"></a>x <span class="op">%&gt;%</span></span>
+<span id="cb414-2"><a href="school-performance.html#cb414-2"></a><span class="st">  </span><span class="kw">select</span>(place, category, metric, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb414-3"><a href="school-performance.html#cb414-3"></a><span class="st">  </span><span class="kw">spread</span>(place, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb414-4"><a href="school-performance.html#cb414-4"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="ot">Inf</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    category              metric                           Region   School `State (All Student…
 ##    &lt;chr&gt;                 &lt;chr&gt;                             &lt;dbl&gt;    &lt;dbl&gt;                &lt;dbl&gt;

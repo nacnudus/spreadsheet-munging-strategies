@@ -32,6 +32,7 @@
   
 <link rel="prev" href="case-studies.html"/>
 <link rel="next" href="vaccinations.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="australian-marriage-survey" class="section level2">
+<div id="australian-marriage-survey" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Australian Marriage Survey</h2>
 <p><a href="https://twitter.com/MilesMcBain/status/932257990253645829"><img src="images/ozmarriage_tweet.png" alt="Tweet by Miles McBain about tidying the Australian Marriage Survey results with R" /></a></p>
 <p>These are the results of a survey in 2017 by the Australian Bureau of Statistics
@@ -263,7 +260,7 @@ file</a>.
 <a href="http://www.abs.gov.au/ausstats/abs@.nsf/mf/1800.0">Original source</a>.</p>
 <p><img src="images/ozmarriage1.png" /></p>
 <p><img src="images/ozmarriage2.png" /></p>
-<div id="the-full-code-listing" class="section level3">
+<div id="the-full-code-listing" class="section level3" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> The full code listing</h3>
 <div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="australian-marriage-survey.html#cb357-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
 <span id="cb357-2"><a href="australian-marriage-survey.html#cb357-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
@@ -311,7 +308,7 @@ file</a>.
 <span id="cb357-44"><a href="australian-marriage-survey.html#cb357-44"></a>all_tables</span></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
 ##    sheet   state           population            response                `%`     no. territory
-##  * &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
+##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
 ##  1 Table 1 New South Wales Eligible Participants Non-responding         20.5 1065445 &lt;NA&gt;     
 ##  2 Table 1 New South Wales Eligible Participants Response clear         79.2 4111200 &lt;NA&gt;     
 ##  3 Table 1 New South Wales Eligible Participants Response not clear(a)   0.2   11036 &lt;NA&gt;     
@@ -324,9 +321,9 @@ file</a>.
 ## 10 Table 1 Victoria        Eligible Participants Response not clear(a)   0.3   11028 &lt;NA&gt;     
 ## # … with 1,166 more rows</code></pre>
 </div>
-<div id="step-by-step" class="section level3">
+<div id="step-by-step" class="section level3" number="9.1.2">
 <h3><span class="header-section-number">9.1.2</span> Step by step</h3>
-<div id="table-1" class="section level4">
+<div id="table-1" class="section level4" number="9.1.2.1">
 <h4><span class="header-section-number">9.1.2.1</span> Table 1</h4>
 <p>The first rows, up to the column-headers, must be filtered out. The trailing
 rows below the table will be treated us row-headers, but because there is no
@@ -365,7 +362,7 @@ is likely to change with later editions of the same data.</p>
 ## 10 Victoria        Eligible Participants Response not clear(a)   0.3   11028
 ## # … with 53 more rows</code></pre>
 </div>
-<div id="table-2" class="section level4">
+<div id="table-2" class="section level4" number="9.1.2.2">
 <h4><span class="header-section-number">9.1.2.2</span> Table 2</h4>
 <p>This is like Table 1, broken down by division rather than by state. The snag is
 that the states are named in the same column as their divisions. Because the

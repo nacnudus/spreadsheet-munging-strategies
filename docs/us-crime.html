@@ -32,6 +32,7 @@
   
 <link rel="prev" href="vaccinations.html"/>
 <link rel="next" href="toronto-transit-commission.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,20 +249,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="us-crime" class="section level2">
+<div id="us-crime" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> US Crime</h2>
 <p><a href="https://twitter.com/albertocairo/status/963133927530483712"><img src="images/us-crime-tweet.jpg" alt="Tweet by Alberto Cairo about a spreadsheet that violates Hadley Wickham’s principles of tidy data" /></a></p>
 <p>These are two tables of numbers of crimes in the USA, by state and category of
 crime. Confusingly, they’re numbered Table 2 and Table 3. Table 1 exists but
 isn’t included in this case study because it is so straightforward.</p>
-<div id="us-crime-2" class="section level3">
+<div id="us-crime-2" class="section level3" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> Table 2</h3>
 <p><img src="images/us-crime-2.jpg" /></p>
 <p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/us-crime-2.xlsx?raw=true">Download the
 file</a>.
 <a href="https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/tables/table-2">Original
 source</a>.</p>
-<div id="us-crime-2-simple" class="section level4">
+<div id="us-crime-2-simple" class="section level4" number="9.3.1.1">
 <h4><span class="header-section-number">9.3.1.1</span> Simple version</h4>
 <p>This is straightforward to import as long as you don’t care to organise the
 hierarchies of crimes and areas. For example, Conneticut is within the division
@@ -314,7 +311,7 @@ the <code>units</code> column with <code>"Count"</code>.</p>
 ## 10 United States T… 2015  320896618  Violent crime                   1.23e6              385. 
 ## # … with 1,310 more rows</code></pre>
 </div>
-<div id="us-crime-2-complex" class="section level4">
+<div id="us-crime-2-complex" class="section level4" number="9.3.1.2">
 <h4><span class="header-section-number">9.3.1.2</span> Complex version</h4>
 <p>If you do mind about grouping states within divisions within regions, and
 crimes within categories, then you have more work to do using <code>enhead()</code> rather
@@ -464,7 +461,7 @@ because they aren’t hierarchichal, so only the variables <code>category</code>
 ## # … with 2,630 more rows</code></pre>
 </div>
 </div>
-<div id="us-crime-3" class="section level3">
+<div id="us-crime-3" class="section level3" number="9.3.2">
 <h3><span class="header-section-number">9.3.2</span> Table 3</h3>
 <p><img src="images/us-crime-3.jpg" /></p>
 <p><a href="https://github.com/nacnudus/smungs/blob/master/inst/extdata/us-crime-3.xlsx?raw=true">Download the
@@ -523,7 +520,7 @@ That would be handled in the same way as for <a href="us-crime.html#us-crime-2">
 <pre><code>## Joining, by = c(&quot;state&quot;, &quot;area&quot;)</code></pre>
 <pre><code>## # A tibble: 1,480 x 7
 ##    state  area             `Area actually repo… Population crime              Actual Estimated
-##  * &lt;chr&gt;  &lt;chr&gt;                           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;
+##    &lt;chr&gt;  &lt;chr&gt;                           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;
 ##  1 ALABA… Cities outside …                0.966     520422 Aggravated  assa… 2.84e+3      2914
 ##  2 ALABA… Cities outside …                0.966     520422 Burglary          4.17e+3      4275
 ##  3 ALABA… Cities outside …                0.966     520422 Larceny- theft    1.43e+4     14641

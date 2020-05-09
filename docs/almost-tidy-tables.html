@@ -32,6 +32,7 @@
   
 <link rel="prev" href="tidy-clean.html"/>
 <link rel="next" href="tidy-formatted-rows.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,13 +249,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="almost-tidy-tables" class="section level2">
+<div id="almost-tidy-tables" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Almost-tidy tables</h2>
 <p>For tables that are already ‘tidy’ (a single row of column headers), use
 packages like <a href="http://readxl.tidyverse.org">readxl</a> that specialise in importing
 tidy data.</p>
 <p>For everything else, read on.</p>
-<div id="transposed-headers-in-the-first-row-data-extends-to-the-right" class="section level3">
+<div id="transposed-headers-in-the-first-row-data-extends-to-the-right" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Transposed (headers in the first row, data extends to the right)</h3>
 <p><img src="images/transposed.png" /></p>
 <p>Most packages for importing data assume that the headers are in the first row,
@@ -301,7 +298,7 @@ direction instead of <code>"up"</code> when beheading the headers.</p>
 ## 2 Nicholas     3
 ## 3 Olivia       5</code></pre>
 </div>
-<div id="other-stuff-on-the-same-sheet" class="section level3">
+<div id="other-stuff-on-the-same-sheet" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Other stuff on the same sheet</h3>
 <p><img src="images/notes.png" /></p>
 <p>It will be more complicated when the table doesn’t begin in cell A1, or if there

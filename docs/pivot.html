@@ -32,6 +32,7 @@
   
 <link rel="prev" href="tidy-sentinel.html"/>
 <link rel="next" href="pivot-simple.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,10 +139,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
-<ul>
-<li class="chapter" data-level="0.0.0.1" data-path="index.html"><a href="index.html#other-ways-to-learn"><i class="fa fa-check"></i><b>0.0.0.1</b> Other ways to learn</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.1</b> Packages</a></li>
@@ -209,7 +207,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="case-studies.html"><a href="case-studies.html"><i class="fa fa-check"></i><b>9</b> Case studies</a>
 <ul>
-<li class="chapter" data-level="9.0.0.1" data-path="case-studies.html"><a href="case-studies.html#other-case-studies-elsewhere"><i class="fa fa-check"></i><b>9.0.0.1</b> Other case studies elsewhere</a></li>
 <li class="chapter" data-level="9.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html"><i class="fa fa-check"></i><b>9.1</b> Australian Marriage Survey</a>
 <ul>
 <li class="chapter" data-level="9.1.1" data-path="australian-marriage-survey.html"><a href="australian-marriage-survey.html#the-full-code-listing"><i class="fa fa-check"></i><b>9.1.1</b> The full code listing</a></li>
@@ -252,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivot" class="section level1">
+<div id="pivot" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Pivot tables</h1>
 <p><img src="images/pivot-annotations.png" /></p>
 <p>This part introduces pivot tables. <a href="https://nacnudus.github.io/tidyxl">Tidyxl</a>
@@ -299,7 +296,7 @@ cells are laid out in the source file by importing it with readxl.</p>
 ## * `` -&gt; ...3
 ## * `` -&gt; ...4
 ## * `` -&gt; ...5
-## * … and 1 more problem</code></pre>
+## * ...</code></pre>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pivot.html#cb91-1"></a><span class="kw">print</span>(original, <span class="dt">n =</span> <span class="ot">Inf</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   ...1        ...2     ...3    ...4   ...5     ...6 
@@ -347,7 +344,7 @@ a few properties of each cell are shown, to make it easier to read).</p>
 ## * `` -&gt; ...3
 ## * `` -&gt; ...4
 ## * `` -&gt; ...5
-## * … and 1 more problem</code></pre>
+## * ...</code></pre>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pivot.html#cb97-1"></a><span class="kw">as_cells</span>(original) <span class="op">%&gt;%</span></span>
 <span id="cb97-2"><a href="pivot.html#cb97-2"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
 <span id="cb97-3"><a href="pivot.html#cb97-3"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">20</span>)</span></code></pre></div>
