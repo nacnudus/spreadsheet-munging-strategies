@@ -273,15 +273,15 @@ row of headers, so we will pretend that that was in fact the case.</p>
 <code>percentage_vaccinated</code>.</li>
 <li><code>enhead()</code> the year cells.</li>
 </ol>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="vaccinations.html#cb370-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>vaccinations, <span class="st">&quot;SVV Coverage Trend Data&quot;</span>)</span>
-<span id="cb370-2"><a href="vaccinations.html#cb370-2"></a></span>
-<span id="cb370-3"><a href="vaccinations.html#cb370-3"></a>years &lt;-</span>
-<span id="cb370-4"><a href="vaccinations.html#cb370-4"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb370-5"><a href="vaccinations.html#cb370-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</span>
-<span id="cb370-6"><a href="vaccinations.html#cb370-6"></a>                col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb370-7"><a href="vaccinations.html#cb370-7"></a>                <span class="kw">str_detect</span>(character, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb370-8"><a href="vaccinations.html#cb370-8"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">year =</span> character)</span>
-<span id="cb370-9"><a href="vaccinations.html#cb370-9"></a>years</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="vaccinations.html#cb363-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>vaccinations, <span class="st">&quot;SVV Coverage Trend Data&quot;</span>)</span>
+<span id="cb363-2"><a href="vaccinations.html#cb363-2"></a></span>
+<span id="cb363-3"><a href="vaccinations.html#cb363-3"></a>years &lt;-</span>
+<span id="cb363-4"><a href="vaccinations.html#cb363-4"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb363-5"><a href="vaccinations.html#cb363-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb363-6"><a href="vaccinations.html#cb363-6"></a>                col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb363-7"><a href="vaccinations.html#cb363-7"></a>                <span class="kw">str_detect</span>(character, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb363-8"><a href="vaccinations.html#cb363-8"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">year =</span> character)</span>
+<span id="cb363-9"><a href="vaccinations.html#cb363-9"></a>years</span></code></pre></div>
 <pre><code>## # A tibble: 42 x 3
 ##      row   col year   
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;  
@@ -296,36 +296,36 @@ row of headers, so we will pretend that that was in fact the case.</p>
 ##  9     3    50 2010-11
 ## 10     3    56 2011-12
 ## # … with 32 more rows</code></pre>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="vaccinations.html#cb372-1"></a>cells <span class="op">%&gt;%</span></span>
-<span id="cb372-2"><a href="vaccinations.html#cb372-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character) <span class="op">%&gt;%</span></span>
-<span id="cb372-3"><a href="vaccinations.html#cb372-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;series&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb372-4"><a href="vaccinations.html#cb372-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb372-5"><a href="vaccinations.html#cb372-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb372-6"><a href="vaccinations.html#cb372-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb372-7"><a href="vaccinations.html#cb372-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(header, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>),</span>
-<span id="cb372-8"><a href="vaccinations.html#cb372-8"></a>                          <span class="st">&quot;percent_vaccinated&quot;</span>,</span>
-<span id="cb372-9"><a href="vaccinations.html#cb372-9"></a>                          header),</span>
-<span id="cb372-10"><a href="vaccinations.html#cb372-10"></a>         <span class="dt">header =</span> <span class="kw">str_replace_all</span>(<span class="kw">str_to_lower</span>(header), <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb372-11"><a href="vaccinations.html#cb372-11"></a><span class="st">  </span><span class="kw">enhead</span>(years, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb372-12"><a href="vaccinations.html#cb372-12"></a><span class="st">  </span><span class="kw">select</span>(row, series, population, state, year, header, character) <span class="op">%&gt;%</span></span>
-<span id="cb372-13"><a href="vaccinations.html#cb372-13"></a><span class="st">  </span><span class="kw">spatter</span>(header, character) <span class="op">%&gt;%</span></span>
-<span id="cb372-14"><a href="vaccinations.html#cb372-14"></a><span class="st">  </span><span class="kw">select</span>(series, population, state, year, percent_vaccinated, percent_surveyed,</span>
-<span id="cb372-15"><a href="vaccinations.html#cb372-15"></a>         <span class="kw">everything</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="vaccinations.html#cb365-1"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb365-2"><a href="vaccinations.html#cb365-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character) <span class="op">%&gt;%</span></span>
+<span id="cb365-3"><a href="vaccinations.html#cb365-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;series&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb365-4"><a href="vaccinations.html#cb365-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb365-5"><a href="vaccinations.html#cb365-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb365-6"><a href="vaccinations.html#cb365-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb365-7"><a href="vaccinations.html#cb365-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(header, <span class="st">&quot;20[0-9]{2}-[0-9]{2}&quot;</span>),</span>
+<span id="cb365-8"><a href="vaccinations.html#cb365-8"></a>                          <span class="st">&quot;percent_vaccinated&quot;</span>,</span>
+<span id="cb365-9"><a href="vaccinations.html#cb365-9"></a>                          header),</span>
+<span id="cb365-10"><a href="vaccinations.html#cb365-10"></a>         <span class="dt">header =</span> <span class="kw">str_replace_all</span>(<span class="kw">str_to_lower</span>(header), <span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb365-11"><a href="vaccinations.html#cb365-11"></a><span class="st">  </span><span class="kw">enhead</span>(years, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb365-12"><a href="vaccinations.html#cb365-12"></a><span class="st">  </span><span class="kw">select</span>(row, series, population, state, year, header, character) <span class="op">%&gt;%</span></span>
+<span id="cb365-13"><a href="vaccinations.html#cb365-13"></a><span class="st">  </span><span class="kw">spatter</span>(header, character) <span class="op">%&gt;%</span></span>
+<span id="cb365-14"><a href="vaccinations.html#cb365-14"></a><span class="st">  </span><span class="kw">select</span>(series, population, state, year, percent_vaccinated, percent_surveyed,</span>
+<span id="cb365-15"><a href="vaccinations.html#cb365-15"></a>         <span class="kw">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2,226 x 11
-##    series population state year  percent_vaccina… percent_surveyed   row
-##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;            &lt;int&gt;
-##  1 Schoo… All kinde… Alab… 2009… 94.0             100.0                4
-##  2 Schoo… All kinde… Alab… 2010… NA               NA                   4
-##  3 Schoo… All kinde… Alab… 2011… 93.6             100.0                4
-##  4 Schoo… All kinde… Alab… 2012… 92.8             100.0                4
-##  5 Schoo… All kinde… Alab… 2013… 92.0             100.0                4
-##  6 Schoo… All kinde… Alab… 2014… 93.5             100.0                4
-##  7 Schoo… All kinde… Alab… 2015… 93.1             100.0                4
-##  8 Schoo… All kinde… Alab… 2009… NReq             100.0                4
-##  9 Schoo… All kinde… Alab… 2010… NA               NA                   4
-## 10 Schoo… All kinde… Alab… 2011… NReq             100.0                4
-## # … with 2,216 more rows, and 4 more variables: footnotes &lt;chr&gt;,
-## #   survey_type &lt;chr&gt;, target &lt;chr&gt;, total_kindergarten_population &lt;chr&gt;</code></pre>
+##    series population state year  percent_vaccina… percent_surveyed   row footnotes survey_type
+##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;      
+##  1 Schoo… All kinde… Alab… 2009… 94.0             100.0                4 ≥. *. **  Census     
+##  2 Schoo… All kinde… Alab… 2010… NA               NA                   4 NA        NA         
+##  3 Schoo… All kinde… Alab… 2011… 93.6             100.0                4 ≥. * .**  Census     
+##  4 Schoo… All kinde… Alab… 2012… 92.8             100.0                4 ≥. * . ‡… Census     
+##  5 Schoo… All kinde… Alab… 2013… 92.0             100.0                4 ≥. *. **  Census     
+##  6 Schoo… All kinde… Alab… 2014… 93.5             100.0                4 ≥. *      Census     
+##  7 Schoo… All kinde… Alab… 2015… 93.1             100.0                4 ≥.*       Census     
+##  8 Schoo… All kinde… Alab… 2009… NReq             100.0                4 *. **     Census     
+##  9 Schoo… All kinde… Alab… 2010… NA               NA                   4 NA        NA         
+## 10 Schoo… All kinde… Alab… 2011… NReq             100.0                4 * .**     Census     
+## # … with 2,216 more rows, and 2 more variables: target &lt;chr&gt;,
+## #   total_kindergarten_population &lt;chr&gt;</code></pre>
 </div>
             </section>
 

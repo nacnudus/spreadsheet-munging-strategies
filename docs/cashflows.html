@@ -268,20 +268,20 @@ source</a>.</p>
 March. This is done using the fact that the months appear in column-order as
 well as year-order, so we can sort on <code>col</code>.</li>
 </ol>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="cashflows.html#cb407-1"></a>cashflows &lt;-</span>
-<span id="cb407-2"><a href="cashflows.html#cb407-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>cashflows) <span class="op">%&gt;%</span></span>
-<span id="cb407-3"><a href="cashflows.html#cb407-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></span>
-<span id="cb407-4"><a href="cashflows.html#cb407-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb407-5"><a href="cashflows.html#cb407-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;month&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb407-6"><a href="cashflows.html#cb407-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;main_header&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb407-7"><a href="cashflows.html#cb407-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;sub_header&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb407-8"><a href="cashflows.html#cb407-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(month <span class="op">!=</span><span class="st"> &quot;TOTALS&quot;</span>,</span>
-<span id="cb407-9"><a href="cashflows.html#cb407-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(sub_header, <span class="st">&quot;otal&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb407-10"><a href="cashflows.html#cb407-10"></a><span class="st">  </span><span class="kw">arrange</span>(col) <span class="op">%&gt;%</span></span>
-<span id="cb407-11"><a href="cashflows.html#cb407-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">factor</span>(month, <span class="dt">levels =</span> <span class="kw">unique</span>(month), <span class="dt">ordered =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb407-12"><a href="cashflows.html#cb407-12"></a>         <span class="dt">sub_header =</span> <span class="kw">str_trim</span>(sub_header)) <span class="op">%&gt;%</span></span>
-<span id="cb407-13"><a href="cashflows.html#cb407-13"></a><span class="st">  </span><span class="kw">select</span>(main_header, sub_header, month, <span class="dt">value =</span> numeric)</span>
-<span id="cb407-14"><a href="cashflows.html#cb407-14"></a>cashflows</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="cashflows.html#cb400-1"></a>cashflows &lt;-</span>
+<span id="cb400-2"><a href="cashflows.html#cb400-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>cashflows) <span class="op">%&gt;%</span></span>
+<span id="cb400-3"><a href="cashflows.html#cb400-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span>4L) <span class="op">%&gt;%</span></span>
+<span id="cb400-4"><a href="cashflows.html#cb400-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb400-5"><a href="cashflows.html#cb400-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;month&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb400-6"><a href="cashflows.html#cb400-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;main_header&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb400-7"><a href="cashflows.html#cb400-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;sub_header&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb400-8"><a href="cashflows.html#cb400-8"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(month <span class="op">!=</span><span class="st"> &quot;TOTALS&quot;</span>,</span>
+<span id="cb400-9"><a href="cashflows.html#cb400-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(sub_header, <span class="st">&quot;otal&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb400-10"><a href="cashflows.html#cb400-10"></a><span class="st">  </span><span class="kw">arrange</span>(col) <span class="op">%&gt;%</span></span>
+<span id="cb400-11"><a href="cashflows.html#cb400-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">factor</span>(month, <span class="dt">levels =</span> <span class="kw">unique</span>(month), <span class="dt">ordered =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb400-12"><a href="cashflows.html#cb400-12"></a>         <span class="dt">sub_header =</span> <span class="kw">str_trim</span>(sub_header)) <span class="op">%&gt;%</span></span>
+<span id="cb400-13"><a href="cashflows.html#cb400-13"></a><span class="st">  </span><span class="kw">select</span>(main_header, sub_header, month, <span class="dt">value =</span> numeric)</span>
+<span id="cb400-14"><a href="cashflows.html#cb400-14"></a>cashflows</span></code></pre></div>
 <pre><code>## # A tibble: 336 x 4
 ##    main_header               sub_header            month value
 ##    &lt;chr&gt;                     &lt;chr&gt;                 &lt;ord&gt; &lt;dbl&gt;
@@ -298,15 +298,15 @@ well as year-order, so we can sort on <code>col</code>.</li>
 ## # … with 326 more rows</code></pre>
 <p>To prove that the data is correct, we can reproduce the total row at the bottom
 (‘Ending Cash Balance’).</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="cashflows.html#cb409-1"></a>cashflows <span class="op">%&gt;%</span></span>
-<span id="cb409-2"><a href="cashflows.html#cb409-2"></a><span class="st">  </span><span class="kw">group_by</span>(main_header, month) <span class="op">%&gt;%</span></span>
-<span id="cb409-3"><a href="cashflows.html#cb409-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span></span>
-<span id="cb409-4"><a href="cashflows.html#cb409-4"></a><span class="st">  </span><span class="kw">arrange</span>(month, main_header) <span class="op">%&gt;%</span></span>
-<span id="cb409-5"><a href="cashflows.html#cb409-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;ows&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb409-6"><a href="cashflows.html#cb409-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;Income&quot;</span>), value, <span class="op">-</span>value)) <span class="op">%&gt;%</span></span>
-<span id="cb409-7"><a href="cashflows.html#cb409-7"></a><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span></span>
-<span id="cb409-8"><a href="cashflows.html#cb409-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span></span>
-<span id="cb409-9"><a href="cashflows.html#cb409-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">cumsum</span>(value))</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="cashflows.html#cb402-1"></a>cashflows <span class="op">%&gt;%</span></span>
+<span id="cb402-2"><a href="cashflows.html#cb402-2"></a><span class="st">  </span><span class="kw">group_by</span>(main_header, month) <span class="op">%&gt;%</span></span>
+<span id="cb402-3"><a href="cashflows.html#cb402-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span></span>
+<span id="cb402-4"><a href="cashflows.html#cb402-4"></a><span class="st">  </span><span class="kw">arrange</span>(month, main_header) <span class="op">%&gt;%</span></span>
+<span id="cb402-5"><a href="cashflows.html#cb402-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;ows&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb402-6"><a href="cashflows.html#cb402-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">if_else</span>(<span class="kw">str_detect</span>(main_header, <span class="st">&quot;Income&quot;</span>), value, <span class="op">-</span>value)) <span class="op">%&gt;%</span></span>
+<span id="cb402-7"><a href="cashflows.html#cb402-7"></a><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span></span>
+<span id="cb402-8"><a href="cashflows.html#cb402-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">value =</span> <span class="kw">sum</span>(value)) <span class="op">%&gt;%</span></span>
+<span id="cb402-9"><a href="cashflows.html#cb402-9"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> <span class="kw">cumsum</span>(value))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping by &#39;main_header&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `summarise()` ungrouping (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 12 x 2

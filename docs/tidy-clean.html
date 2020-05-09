@@ -267,12 +267,12 @@ clean tables can be handled using these techniques.</p>
 <li>No need to refer to named ranges</li>
 </ul>
 <p>Here’s the full process.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="tidy-clean.html#cb10-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb10-2"><a href="tidy-clean.html#cb10-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb10-3"><a href="tidy-clean.html#cb10-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb10-4"><a href="tidy-clean.html#cb10-4"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, header, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb10-5"><a href="tidy-clean.html#cb10-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb10-6"><a href="tidy-clean.html#cb10-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tidy-clean.html#cb3-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb3-2"><a href="tidy-clean.html#cb3-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-3"><a href="tidy-clean.html#cb3-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb3-4"><a href="tidy-clean.html#cb3-4"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, header, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb3-5"><a href="tidy-clean.html#cb3-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb3-6"><a href="tidy-clean.html#cb3-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   
@@ -286,9 +286,9 @@ cell is in one of the columns <code>error</code>, <code>logical</code>, <code>nu
 <code>character</code>, depending on the type of data in the cell. The column <code>data_type</code>
 says which column the value is in. Other columns describe formatting and
 formulas.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tidy-clean.html#cb12-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb12-2"><a href="tidy-clean.html#cb12-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb12-3"><a href="tidy-clean.html#cb12-3"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tidy-clean.html#cb5-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb5-2"><a href="tidy-clean.html#cb5-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="tidy-clean.html#cb5-3"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##     row   col data_type character numeric
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -305,9 +305,9 @@ part of the data. Think of it like <code>tidyr::gather()</code>, except that it 
 there is more than one row of headers (or more than one column of row-headers),
 and it only works on tables that have first come through
 <code>unpivotr::as_cells()</code> or <code>tidyxl::xlsx_cells()</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tidy-clean.html#cb14-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb14-2"><a href="tidy-clean.html#cb14-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb14-3"><a href="tidy-clean.html#cb14-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tidy-clean.html#cb7-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb7-2"><a href="tidy-clean.html#cb7-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb7-3"><a href="tidy-clean.html#cb7-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col data_type character numeric header
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt; 
@@ -323,12 +323,12 @@ column contains the cell value (i.e. the <code>character</code> column or the <
 column), by checking the <code>data_type</code> column. Just like <code>tidyr::spread()</code>, it
 can be confused by extraneous data, so it’s usually a good idea to drop the
 <code>col</code> column first, and to keep the <code>row</code> column.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tidy-clean.html#cb16-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb16-2"><a href="tidy-clean.html#cb16-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb16-3"><a href="tidy-clean.html#cb16-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb16-4"><a href="tidy-clean.html#cb16-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb16-5"><a href="tidy-clean.html#cb16-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb16-6"><a href="tidy-clean.html#cb16-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="tidy-clean.html#cb9-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb9-2"><a href="tidy-clean.html#cb9-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb9-3"><a href="tidy-clean.html#cb9-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb9-4"><a href="tidy-clean.html#cb9-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="tidy-clean.html#cb9-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb9-6"><a href="tidy-clean.html#cb9-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   
@@ -337,11 +337,11 @@ can be confused by extraneous data, so it’s usually a good idea to drop the
 ## 3     5 Olivia</code></pre>
 <p>In case the table has no column headers, you can spatter the <code>col</code> column
 instead of a nonexistent <code>header</code> column.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tidy-clean.html#cb18-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb18-2"><a href="tidy-clean.html#cb18-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
-<span id="cb18-3"><a href="tidy-clean.html#cb18-3"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb18-4"><a href="tidy-clean.html#cb18-4"></a><span class="st">  </span><span class="kw">spatter</span>(col) <span class="op">%&gt;%</span></span>
-<span id="cb18-5"><a href="tidy-clean.html#cb18-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tidy-clean.html#cb11-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb11-2"><a href="tidy-clean.html#cb11-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="tidy-clean.html#cb11-3"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb11-4"><a href="tidy-clean.html#cb11-4"></a><span class="st">  </span><span class="kw">spatter</span>(col) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="tidy-clean.html#cb11-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   `1`        `2`
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -350,14 +350,14 @@ instead of a nonexistent <code>header</code> column.</p>
 ## 3 Olivia       5</code></pre>
 <p>Tidyxl and unpivotr are much more complicated than readxl, and that’s the point:
 tidyxl and unpivotr give you more power and complexity when you need it.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tidy-clean.html#cb20-1"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tidy-clean.html#cb13-1"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
 ## 1 Matilda      1
 ## 2 Nicholas     3
 ## 3 Olivia       5</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="tidy-clean.html#cb22-1"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tidy-clean.html#cb15-1"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;clean&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...1
 ## * `` -&gt; ...2</code></pre>

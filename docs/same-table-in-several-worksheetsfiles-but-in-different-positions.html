@@ -261,12 +261,12 @@ robust to differences in the placement and context of the table on each sheet.</
 of notes above one of the tables. There are a few ways to tackle this problem.
 Here, we filter for the <code>Subject</code> cell, which is either <code>A3</code> or <code>A4</code>, and then
 extend the selection to include the whole table.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb301-2"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-2"></a>all_cells &lt;-</span>
-<span id="cb301-3"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb301-4"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb301-5"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-5"></a><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</span>
-<span id="cb301-6"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb301-6"></a>all_cells</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb294-2"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-2"></a>all_cells &lt;-</span>
+<span id="cb294-3"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb294-4"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb294-5"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-5"></a><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</span>
+<span id="cb294-6"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb294-6"></a>all_cells</span></code></pre></div>
 <pre><code>## # A tibble: 21 x 6
 ##    sheet    row   col data_type character       numeric
 ##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;
@@ -281,20 +281,20 @@ extend the selection to include the whole table.</p>
 ##  9 female     5     2 numeric   &lt;NA&gt;                  3
 ## 10 female     5     3 numeric   &lt;NA&gt;                  4
 ## # … with 11 more rows</code></pre>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
-<span id="cb303-2"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-2"></a>  cells <span class="op">%&gt;%</span></span>
-<span id="cb303-3"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-3"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb303-4"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-4"></a><span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span></span>
-<span id="cb303-5"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-5"></a><span class="st">    </span>{dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></span>
-<span id="cb303-6"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-6"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, name) <span class="op">%&gt;%</span></span>
-<span id="cb303-7"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-7"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject)</span>
-<span id="cb303-8"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-8"></a>}</span>
-<span id="cb303-9"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-9"></a></span>
-<span id="cb303-10"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-10"></a>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb303-11"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-11"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
-<span id="cb303-12"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
-<span id="cb303-13"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-13"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
-<span id="cb303-14"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb303-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
+<span id="cb296-2"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-2"></a>  cells <span class="op">%&gt;%</span></span>
+<span id="cb296-3"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-3"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(character <span class="op">==</span><span class="st"> &quot;Subject&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb296-4"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-4"></a><span class="st">    </span><span class="kw">pull</span>(row) <span class="op">%&gt;%</span></span>
+<span id="cb296-5"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-5"></a><span class="st">    </span>{dplyr<span class="op">::</span><span class="kw">filter</span>(cells, row <span class="op">&gt;=</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></span>
+<span id="cb296-6"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-6"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, name) <span class="op">%&gt;%</span></span>
+<span id="cb296-7"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-7"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject)</span>
+<span id="cb296-8"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-8"></a>}</span>
+<span id="cb296-9"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-9"></a></span>
+<span id="cb296-10"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-10"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb296-11"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-11"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
+<span id="cb296-12"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
+<span id="cb296-13"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-13"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
+<span id="cb296-14"><a href="same-table-in-several-worksheetsfiles-but-in-different-positions.html#cb296-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="dt">sex =</span> sheet, name, subject, <span class="dt">score =</span> numeric)</span></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `data = c(row, col, data_type, character, numeric)`?</code></pre>
 <pre><code>## Warning: `cols` is now required.

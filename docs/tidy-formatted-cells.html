@@ -263,37 +263,37 @@ and <code>height</code> columns are highlighted, then you could create two new c
 <code>uncertain_age</code>, and <code>uncertain_height</code>, by following the procedure of
 <a href="tidy-formatted-rows">meaningfully formatted rows</a> for each column <code>age</code> and
 <code>height</code>.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tidy-formatted-cells.html#cb46-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
-<span id="cb46-2"><a href="tidy-formatted-cells.html#cb46-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb46-3"><a href="tidy-formatted-cells.html#cb46-3"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)</span>
-<span id="cb46-4"><a href="tidy-formatted-cells.html#cb46-4"></a></span>
-<span id="cb46-5"><a href="tidy-formatted-cells.html#cb46-5"></a><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></span>
-<span id="cb46-6"><a href="tidy-formatted-cells.html#cb46-6"></a><span class="co"># cell values</span></span>
-<span id="cb46-7"><a href="tidy-formatted-cells.html#cb46-7"></a></span>
-<span id="cb46-8"><a href="tidy-formatted-cells.html#cb46-8"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
-<span id="cb46-9"><a href="tidy-formatted-cells.html#cb46-9"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
-<span id="cb46-10"><a href="tidy-formatted-cells.html#cb46-10"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb46-11"><a href="tidy-formatted-cells.html#cb46-11"></a></span>
-<span id="cb46-12"><a href="tidy-formatted-cells.html#cb46-12"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
-<span id="cb46-13"><a href="tidy-formatted-cells.html#cb46-13"></a><span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span></span>
-<span id="cb46-14"><a href="tidy-formatted-cells.html#cb46-14"></a><span class="co"># local_format_id of each cell in the `formats` pallette.</span></span>
-<span id="cb46-15"><a href="tidy-formatted-cells.html#cb46-15"></a>fills &lt;-</span>
-<span id="cb46-16"><a href="tidy-formatted-cells.html#cb46-16"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb46-17"><a href="tidy-formatted-cells.html#cb46-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></span>
-<span id="cb46-18"><a href="tidy-formatted-cells.html#cb46-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb46-19"><a href="tidy-formatted-cells.html#cb46-19"></a><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb46-20"><a href="tidy-formatted-cells.html#cb46-20"></a><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb46-21"><a href="tidy-formatted-cells.html#cb46-21"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span></span>
-<span id="cb46-22"><a href="tidy-formatted-cells.html#cb46-22"></a><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))</span>
-<span id="cb46-23"><a href="tidy-formatted-cells.html#cb46-23"></a>fills</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tidy-formatted-cells.html#cb39-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
+<span id="cb39-2"><a href="tidy-formatted-cells.html#cb39-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb39-3"><a href="tidy-formatted-cells.html#cb39-3"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>)</span>
+<span id="cb39-4"><a href="tidy-formatted-cells.html#cb39-4"></a></span>
+<span id="cb39-5"><a href="tidy-formatted-cells.html#cb39-5"></a><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></span>
+<span id="cb39-6"><a href="tidy-formatted-cells.html#cb39-6"></a><span class="co"># cell values</span></span>
+<span id="cb39-7"><a href="tidy-formatted-cells.html#cb39-7"></a></span>
+<span id="cb39-8"><a href="tidy-formatted-cells.html#cb39-8"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
+<span id="cb39-9"><a href="tidy-formatted-cells.html#cb39-9"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
+<span id="cb39-10"><a href="tidy-formatted-cells.html#cb39-10"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb39-11"><a href="tidy-formatted-cells.html#cb39-11"></a></span>
+<span id="cb39-12"><a href="tidy-formatted-cells.html#cb39-12"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
+<span id="cb39-13"><a href="tidy-formatted-cells.html#cb39-13"></a><span class="co"># and create new columns `something_fill` of the fill colours, by looking up the</span></span>
+<span id="cb39-14"><a href="tidy-formatted-cells.html#cb39-14"></a><span class="co"># local_format_id of each cell in the `formats` pallette.</span></span>
+<span id="cb39-15"><a href="tidy-formatted-cells.html#cb39-15"></a>fills &lt;-</span>
+<span id="cb39-16"><a href="tidy-formatted-cells.html#cb39-16"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb39-17"><a href="tidy-formatted-cells.html#cb39-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></span>
+<span id="cb39-18"><a href="tidy-formatted-cells.html#cb39-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb39-19"><a href="tidy-formatted-cells.html#cb39-19"></a><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb39-20"><a href="tidy-formatted-cells.html#cb39-20"></a><span class="st">  </span><span class="kw">spread</span>(col, fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb39-21"><a href="tidy-formatted-cells.html#cb39-21"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row) <span class="op">%&gt;%</span></span>
+<span id="cb39-22"><a href="tidy-formatted-cells.html#cb39-22"></a><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">paste0</span>(<span class="kw">colnames</span>(x)[<span class="op">-</span><span class="dv">1</span>], <span class="st">&quot;_fill&quot;</span>))</span>
+<span id="cb39-23"><a href="tidy-formatted-cells.html#cb39-23"></a>fills</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;chr&gt;      
 ## 1 &lt;NA&gt;     &lt;NA&gt;       
 ## 2 FFFFFF00 &lt;NA&gt;       
 ## 3 &lt;NA&gt;     FF92D050</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tidy-formatted-cells.html#cb48-1"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
-<span id="cb48-2"><a href="tidy-formatted-cells.html#cb48-2"></a><span class="kw">bind_cols</span>(x, fills)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tidy-formatted-cells.html#cb41-1"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
+<span id="cb41-2"><a href="tidy-formatted-cells.html#cb41-2"></a><span class="kw">bind_cols</span>(x, fills)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Name       Age Height Age_fill Height_fill
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      
@@ -301,13 +301,13 @@ and <code>height</code> columns are highlighted, then you could create two new c
 ## 2 Nicholas     3      4 FFFFFF00 &lt;NA&gt;       
 ## 3 Olivia       5      6 &lt;NA&gt;     FF92D050</code></pre>
 <p>Here’s the same thing, but using only tidyxl and unpivotr</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="tidy-formatted-cells.html#cb50-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb50-2"><a href="tidy-formatted-cells.html#cb50-2"></a></span>
-<span id="cb50-3"><a href="tidy-formatted-cells.html#cb50-3"></a>cells &lt;-</span>
-<span id="cb50-4"><a href="tidy-formatted-cells.html#cb50-4"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb50-5"><a href="tidy-formatted-cells.html#cb50-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb50-6"><a href="tidy-formatted-cells.html#cb50-6"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)</span>
-<span id="cb50-7"><a href="tidy-formatted-cells.html#cb50-7"></a>cells</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="tidy-formatted-cells.html#cb43-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb43-2"><a href="tidy-formatted-cells.html#cb43-2"></a></span>
+<span id="cb43-3"><a href="tidy-formatted-cells.html#cb43-3"></a>cells &lt;-</span>
+<span id="cb43-4"><a href="tidy-formatted-cells.html#cb43-4"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb43-5"><a href="tidy-formatted-cells.html#cb43-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb43-6"><a href="tidy-formatted-cells.html#cb43-6"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour)</span>
+<span id="cb43-7"><a href="tidy-formatted-cells.html#cb43-7"></a>cells</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 6
 ##      row   col data_type character numeric fill_colour
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      
@@ -323,34 +323,34 @@ and <code>height</code> columns are highlighted, then you could create two new c
 ## 10     4     1 character Olivia         NA &lt;NA&gt;       
 ## 11     4     2 numeric   &lt;NA&gt;            5 &lt;NA&gt;       
 ## 12     4     3 numeric   &lt;NA&gt;            6 FF92D050</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="tidy-formatted-cells.html#cb52-1"></a>values &lt;-</span>
-<span id="cb52-2"><a href="tidy-formatted-cells.html#cb52-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb52-3"><a href="tidy-formatted-cells.html#cb52-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb52-4"><a href="tidy-formatted-cells.html#cb52-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb52-5"><a href="tidy-formatted-cells.html#cb52-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb52-6"><a href="tidy-formatted-cells.html#cb52-6"></a><span class="st">  </span><span class="kw">spatter</span>(header)</span>
-<span id="cb52-7"><a href="tidy-formatted-cells.html#cb52-7"></a>values</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tidy-formatted-cells.html#cb45-1"></a>values &lt;-</span>
+<span id="cb45-2"><a href="tidy-formatted-cells.html#cb45-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb45-3"><a href="tidy-formatted-cells.html#cb45-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb45-4"><a href="tidy-formatted-cells.html#cb45-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb45-5"><a href="tidy-formatted-cells.html#cb45-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb45-6"><a href="tidy-formatted-cells.html#cb45-6"></a><span class="st">  </span><span class="kw">spatter</span>(header)</span>
+<span id="cb45-7"><a href="tidy-formatted-cells.html#cb45-7"></a>values</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row   Age Height Name    
 ##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;   
 ## 1     2     1      2 Matilda 
 ## 2     3     3      4 Nicholas
 ## 3     4     5      6 Olivia</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tidy-formatted-cells.html#cb54-1"></a>fills &lt;-</span>
-<span id="cb54-2"><a href="tidy-formatted-cells.html#cb54-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb54-3"><a href="tidy-formatted-cells.html#cb54-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb54-4"><a href="tidy-formatted-cells.html#cb54-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb54-5"><a href="tidy-formatted-cells.html#cb54-5"></a><span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb54-6"><a href="tidy-formatted-cells.html#cb54-6"></a><span class="st">  </span><span class="kw">spread</span>(header, fill_colour)</span>
-<span id="cb54-7"><a href="tidy-formatted-cells.html#cb54-7"></a>fills</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tidy-formatted-cells.html#cb47-1"></a>fills &lt;-</span>
+<span id="cb47-2"><a href="tidy-formatted-cells.html#cb47-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb47-3"><a href="tidy-formatted-cells.html#cb47-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb47-4"><a href="tidy-formatted-cells.html#cb47-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">paste0</span>(header, <span class="st">&quot;_fill&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb47-5"><a href="tidy-formatted-cells.html#cb47-5"></a><span class="st">  </span><span class="kw">select</span>(row, header, fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb47-6"><a href="tidy-formatted-cells.html#cb47-6"></a><span class="st">  </span><span class="kw">spread</span>(header, fill_colour)</span>
+<span id="cb47-7"><a href="tidy-formatted-cells.html#cb47-7"></a>fills</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##     row Age_fill Height_fill Name_fill
 ##   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
 ## 1     2 &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;     
 ## 2     3 FFFFFF00 &lt;NA&gt;        &lt;NA&gt;     
 ## 3     4 &lt;NA&gt;     FF92D050    &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="tidy-formatted-cells.html#cb56-1"></a><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb56-2"><a href="tidy-formatted-cells.html#cb56-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tidy-formatted-cells.html#cb49-1"></a><span class="kw">left_join</span>(values, fills, <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb49-2"><a href="tidy-formatted-cells.html#cb49-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##     Age Height Name     Age_fill Height_fill Name_fill
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;    
@@ -362,20 +362,20 @@ then each row is an observation, and each column is a variable. To make it
 “extra-tidy”, you <code>gather()</code> the variables so that each row is <em>one observation
 of one variable</em>. This works best when every variable has the same data type,
 otherwise the values will be coerced, probably to a character.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="tidy-formatted-cells.html#cb58-1"></a><span class="co"># Tidy</span></span>
-<span id="cb58-2"><a href="tidy-formatted-cells.html#cb58-2"></a>(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tidy-formatted-cells.html#cb51-1"></a><span class="co"># Tidy</span></span>
+<span id="cb51-2"><a href="tidy-formatted-cells.html#cb51-2"></a>(x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   Name       Age Height
 ##   &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Matilda      1      2
 ## 2 Nicholas     3      4
 ## 3 Olivia       5      6</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="tidy-formatted-cells.html#cb60-1"></a><span class="co"># Extra-tidy</span></span>
-<span id="cb60-2"><a href="tidy-formatted-cells.html#cb60-2"></a>extra_tidy &lt;-</span>
-<span id="cb60-3"><a href="tidy-formatted-cells.html#cb60-3"></a><span class="st">  </span>x <span class="op">%&gt;%</span></span>
-<span id="cb60-4"><a href="tidy-formatted-cells.html#cb60-4"></a><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></span>
-<span id="cb60-5"><a href="tidy-formatted-cells.html#cb60-5"></a><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</span>
-<span id="cb60-6"><a href="tidy-formatted-cells.html#cb60-6"></a>extra_tidy</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="tidy-formatted-cells.html#cb53-1"></a><span class="co"># Extra-tidy</span></span>
+<span id="cb53-2"><a href="tidy-formatted-cells.html#cb53-2"></a>extra_tidy &lt;-</span>
+<span id="cb53-3"><a href="tidy-formatted-cells.html#cb53-3"></a><span class="st">  </span>x <span class="op">%&gt;%</span></span>
+<span id="cb53-4"><a href="tidy-formatted-cells.html#cb53-4"></a><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>Name) <span class="op">%&gt;%</span></span>
+<span id="cb53-5"><a href="tidy-formatted-cells.html#cb53-5"></a><span class="st">  </span><span class="kw">arrange</span>(Name, variable)</span>
+<span id="cb53-6"><a href="tidy-formatted-cells.html#cb53-6"></a>extra_tidy</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   Name     variable value
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -387,17 +387,17 @@ otherwise the values will be coerced, probably to a character.</p>
 ## 6 Olivia   Height       6</code></pre>
 <p>With an extra-tidy dataset, the formatting can now be appended to the values of
 individual variables, rather than to whole observations.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="tidy-formatted-cells.html#cb62-1"></a><span class="co"># Extra-tidy, with row and column numbers of the original variables</span></span>
-<span id="cb62-2"><a href="tidy-formatted-cells.html#cb62-2"></a>extra_tidy &lt;-</span>
-<span id="cb62-3"><a href="tidy-formatted-cells.html#cb62-3"></a><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb62-4"><a href="tidy-formatted-cells.html#cb62-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></span>
-<span id="cb62-5"><a href="tidy-formatted-cells.html#cb62-5"></a><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></span>
-<span id="cb62-6"><a href="tidy-formatted-cells.html#cb62-6"></a><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></span>
-<span id="cb62-7"><a href="tidy-formatted-cells.html#cb62-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></span>
-<span id="cb62-8"><a href="tidy-formatted-cells.html#cb62-8"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb62-9"><a href="tidy-formatted-cells.html#cb62-9"></a><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></span>
-<span id="cb62-10"><a href="tidy-formatted-cells.html#cb62-10"></a><span class="st">  </span><span class="kw">arrange</span>(row, col)</span>
-<span id="cb62-11"><a href="tidy-formatted-cells.html#cb62-11"></a>extra_tidy</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="tidy-formatted-cells.html#cb55-1"></a><span class="co"># Extra-tidy, with row and column numbers of the original variables</span></span>
+<span id="cb55-2"><a href="tidy-formatted-cells.html#cb55-2"></a>extra_tidy &lt;-</span>
+<span id="cb55-3"><a href="tidy-formatted-cells.html#cb55-3"></a><span class="st">  </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb55-4"><a href="tidy-formatted-cells.html#cb55-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">row =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></span>
+<span id="cb55-5"><a href="tidy-formatted-cells.html#cb55-5"></a><span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>row, <span class="op">-</span>Name) <span class="op">%&gt;%</span></span>
+<span id="cb55-6"><a href="tidy-formatted-cells.html#cb55-6"></a><span class="st">  </span><span class="kw">group_by</span>(row) <span class="op">%&gt;%</span></span>
+<span id="cb55-7"><a href="tidy-formatted-cells.html#cb55-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">col =</span> <span class="kw">row_number</span>() <span class="op">+</span><span class="st"> </span>1L) <span class="op">%&gt;%</span></span>
+<span id="cb55-8"><a href="tidy-formatted-cells.html#cb55-8"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb55-9"><a href="tidy-formatted-cells.html#cb55-9"></a><span class="st">  </span><span class="kw">select</span>(row, col, Name, variable, value) <span class="op">%&gt;%</span></span>
+<span id="cb55-10"><a href="tidy-formatted-cells.html#cb55-10"></a><span class="st">  </span><span class="kw">arrange</span>(row, col)</span>
+<span id="cb55-11"><a href="tidy-formatted-cells.html#cb55-11"></a>extra_tidy</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##     row   col Name     variable value
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
@@ -407,19 +407,19 @@ individual variables, rather than to whole observations.</p>
 ## 4     3     3 Nicholas Height       4
 ## 5     4     2 Olivia   Age          5
 ## 6     4     3 Olivia   Height       6</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tidy-formatted-cells.html#cb64-1"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
-<span id="cb64-2"><a href="tidy-formatted-cells.html#cb64-2"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
-<span id="cb64-3"><a href="tidy-formatted-cells.html#cb64-3"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb64-4"><a href="tidy-formatted-cells.html#cb64-4"></a></span>
-<span id="cb64-5"><a href="tidy-formatted-cells.html#cb64-5"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
-<span id="cb64-6"><a href="tidy-formatted-cells.html#cb64-6"></a><span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span></span>
-<span id="cb64-7"><a href="tidy-formatted-cells.html#cb64-7"></a><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></span>
-<span id="cb64-8"><a href="tidy-formatted-cells.html#cb64-8"></a>fills &lt;-</span>
-<span id="cb64-9"><a href="tidy-formatted-cells.html#cb64-9"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb64-10"><a href="tidy-formatted-cells.html#cb64-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></span>
-<span id="cb64-11"><a href="tidy-formatted-cells.html#cb64-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb64-12"><a href="tidy-formatted-cells.html#cb64-12"></a><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</span>
-<span id="cb64-13"><a href="tidy-formatted-cells.html#cb64-13"></a>fills</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="tidy-formatted-cells.html#cb57-1"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
+<span id="cb57-2"><a href="tidy-formatted-cells.html#cb57-2"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
+<span id="cb57-3"><a href="tidy-formatted-cells.html#cb57-3"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb57-4"><a href="tidy-formatted-cells.html#cb57-4"></a></span>
+<span id="cb57-5"><a href="tidy-formatted-cells.html#cb57-5"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
+<span id="cb57-6"><a href="tidy-formatted-cells.html#cb57-6"></a><span class="co"># and create a new column `uncertain` based on the fill colours, by looking up</span></span>
+<span id="cb57-7"><a href="tidy-formatted-cells.html#cb57-7"></a><span class="co"># the local_format_id of each cell in the `formats` pallette.</span></span>
+<span id="cb57-8"><a href="tidy-formatted-cells.html#cb57-8"></a>fills &lt;-</span>
+<span id="cb57-9"><a href="tidy-formatted-cells.html#cb57-9"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb57-10"><a href="tidy-formatted-cells.html#cb57-10"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row and name column</span></span>
+<span id="cb57-11"><a href="tidy-formatted-cells.html#cb57-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb57-12"><a href="tidy-formatted-cells.html#cb57-12"></a><span class="st">  </span><span class="kw">select</span>(row, col, fill_colour)</span>
+<span id="cb57-13"><a href="tidy-formatted-cells.html#cb57-13"></a>fills</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##     row   col fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      
@@ -429,8 +429,8 @@ individual variables, rather than to whole observations.</p>
 ## 4     3     3 &lt;NA&gt;       
 ## 5     4     2 &lt;NA&gt;       
 ## 6     4     3 FF92D050</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="tidy-formatted-cells.html#cb66-1"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
-<span id="cb66-2"><a href="tidy-formatted-cells.html#cb66-2"></a><span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="tidy-formatted-cells.html#cb59-1"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
+<span id="cb59-2"><a href="tidy-formatted-cells.html#cb59-2"></a><span class="kw">left_join</span>(extra_tidy, fills, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col Name     variable value fill_colour
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      
@@ -441,14 +441,14 @@ individual variables, rather than to whole observations.</p>
 ## 5     4     2 Olivia   Age          5 &lt;NA&gt;       
 ## 6     4     3 Olivia   Height       6 FF92D050</code></pre>
 <p>Here’s the same extra-tidy version, but using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="tidy-formatted-cells.html#cb68-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb68-2"><a href="tidy-formatted-cells.html#cb68-2"></a></span>
-<span id="cb68-3"><a href="tidy-formatted-cells.html#cb68-3"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb68-4"><a href="tidy-formatted-cells.html#cb68-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb68-5"><a href="tidy-formatted-cells.html#cb68-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb68-6"><a href="tidy-formatted-cells.html#cb68-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, Name) <span class="op">%&gt;%</span></span>
-<span id="cb68-7"><a href="tidy-formatted-cells.html#cb68-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, variable) <span class="op">%&gt;%</span></span>
-<span id="cb68-8"><a href="tidy-formatted-cells.html#cb68-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="tidy-formatted-cells.html#cb61-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb61-2"><a href="tidy-formatted-cells.html#cb61-2"></a></span>
+<span id="cb61-3"><a href="tidy-formatted-cells.html#cb61-3"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;annotations&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb61-4"><a href="tidy-formatted-cells.html#cb61-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb61-5"><a href="tidy-formatted-cells.html#cb61-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb61-6"><a href="tidy-formatted-cells.html#cb61-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, Name) <span class="op">%&gt;%</span></span>
+<span id="cb61-7"><a href="tidy-formatted-cells.html#cb61-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, variable) <span class="op">%&gt;%</span></span>
+<span id="cb61-8"><a href="tidy-formatted-cells.html#cb61-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>data_type, <span class="op">-</span>character, <span class="dt">value =</span> numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##     row   col value fill_colour Name     variable
 ##   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   

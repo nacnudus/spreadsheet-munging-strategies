@@ -260,35 +260,35 @@ each header.</p>
 file</a>.
 Synthesised from the <a href="https://twitter.com/beckfrydenborg/status/974787652573646849">original
 tweet</a>.</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="ground-water.html#cb399-1"></a>x &lt;-</span>
-<span id="cb399-2"><a href="ground-water.html#cb399-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span></span>
-<span id="cb399-3"><a href="ground-water.html#cb399-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb399-4"><a href="ground-water.html#cb399-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb399-5"><a href="ground-water.html#cb399-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;sample-type&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb399-6"><a href="ground-water.html#cb399-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;site&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb399-7"><a href="ground-water.html#cb399-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb399-8"><a href="ground-water.html#cb399-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;unit&quot;</span>)</span>
-<span id="cb399-9"><a href="ground-water.html#cb399-9"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="ground-water.html#cb392-1"></a>x &lt;-</span>
+<span id="cb392-2"><a href="ground-water.html#cb392-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>groundwater) <span class="op">%&gt;%</span></span>
+<span id="cb392-3"><a href="ground-water.html#cb392-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb392-4"><a href="ground-water.html#cb392-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb392-5"><a href="ground-water.html#cb392-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;sample-type&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb392-6"><a href="ground-water.html#cb392-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;site&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb392-7"><a href="ground-water.html#cb392-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb392-8"><a href="ground-water.html#cb392-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;unit&quot;</span>)</span>
+<span id="cb392-9"><a href="ground-water.html#cb392-9"></a>x</span></code></pre></div>
 <pre><code>## # A tibble: 17 x 9
-##      row   col data_type character numeric `sample-type` site  parameter   unit 
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;
-##  1     4     3 numeric   &lt;NA&gt;        3.2   ground water  A     Nitrogen, … mn/L 
-##  2     6     3 numeric   &lt;NA&gt;        0.025 ground water  A     Nitrate Ni… mg/L 
-##  3     6     4 character U          NA     ground water  A     Nitrate Ni… mg/L 
-##  4     8     3 numeric   &lt;NA&gt;        0.04  ground water  A     Phosphorus… mg/L 
-##  5     4     5 numeric   &lt;NA&gt;        1.2   ground water  B     Nitrogen, … mn/L 
-##  6     6     5 numeric   &lt;NA&gt;        0.025 ground water  B     Nitrate Ni… mg/L 
-##  7     6     6 character U          NA     ground water  B     Nitrate Ni… mg/L 
-##  8     8     5 numeric   &lt;NA&gt;        0.17  ground water  B     Phosphorus… mg/L 
-##  9     4     7 numeric   &lt;NA&gt;        0.5   ground water  C     Nitrogen, … mn/L 
-## 10     6     7 numeric   &lt;NA&gt;        0.025 ground water  C     Nitrate Ni… mg/L 
-## 11     6     8 character U          NA     ground water  C     Nitrate Ni… mg/L 
-## 12     8     7 numeric   &lt;NA&gt;        0.062 ground water  C     Phosphorus… mg/L 
-## 13     4     9 numeric   &lt;NA&gt;        0.4   ground water  D     Nitrogen, … mn/L 
-## 14     6     9 numeric   &lt;NA&gt;        0.025 ground water  D     Nitrate Ni… mg/L 
-## 15     6    10 character U          NA     ground water  D     Nitrate Ni… mg/L 
-## 16     8     9 numeric   &lt;NA&gt;        0.04  ground water  D     Phosphorus… mg/L 
-## 17     8    10 character J3         NA     ground water  D     Phosphorus… mg/L</code></pre>
+##      row   col data_type character numeric `sample-type` site  parameter            unit 
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;
+##  1     4     3 numeric   &lt;NA&gt;        3.2   ground water  A     Nitrogen, Kjeldahl   mn/L 
+##  2     6     3 numeric   &lt;NA&gt;        0.025 ground water  A     Nitrate Nitrite as N mg/L 
+##  3     6     4 character U          NA     ground water  A     Nitrate Nitrite as N mg/L 
+##  4     8     3 numeric   &lt;NA&gt;        0.04  ground water  A     Phosphorus as P      mg/L 
+##  5     4     5 numeric   &lt;NA&gt;        1.2   ground water  B     Nitrogen, Kjeldahl   mn/L 
+##  6     6     5 numeric   &lt;NA&gt;        0.025 ground water  B     Nitrate Nitrite as N mg/L 
+##  7     6     6 character U          NA     ground water  B     Nitrate Nitrite as N mg/L 
+##  8     8     5 numeric   &lt;NA&gt;        0.17  ground water  B     Phosphorus as P      mg/L 
+##  9     4     7 numeric   &lt;NA&gt;        0.5   ground water  C     Nitrogen, Kjeldahl   mn/L 
+## 10     6     7 numeric   &lt;NA&gt;        0.025 ground water  C     Nitrate Nitrite as N mg/L 
+## 11     6     8 character U          NA     ground water  C     Nitrate Nitrite as N mg/L 
+## 12     8     7 numeric   &lt;NA&gt;        0.062 ground water  C     Phosphorus as P      mg/L 
+## 13     4     9 numeric   &lt;NA&gt;        0.4   ground water  D     Nitrogen, Kjeldahl   mn/L 
+## 14     6     9 numeric   &lt;NA&gt;        0.025 ground water  D     Nitrate Nitrite as N mg/L 
+## 15     6    10 character U          NA     ground water  D     Nitrate Nitrite as N mg/L 
+## 16     8     9 numeric   &lt;NA&gt;        0.04  ground water  D     Phosphorus as P      mg/L 
+## 17     8    10 character J3         NA     ground water  D     Phosphorus as P      mg/L</code></pre>
 <p>So what to do about the <code>U</code> cells? We don’t know what they mean, but perhaps
 they are some kind of flag, to inform the interpretation of the numbers. If
 that’s the case, then they should appear in the same row of the final data frame
@@ -297,10 +297,10 @@ as the numbers.</p>
 instead of spreading the values in just one column, we need to spread the values
 in both the <code>character</code> and <code>numeric</code> columns, depending on the value in the
 <code>data_type</code> column. This is what <code>spatter()</code> is for.</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="ground-water.html#cb401-1"></a>x <span class="op">%&gt;%</span></span>
-<span id="cb401-2"><a href="ground-water.html#cb401-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb401-3"><a href="ground-water.html#cb401-3"></a><span class="st">  </span><span class="kw">spatter</span>(data_type) <span class="op">%&gt;%</span></span>
-<span id="cb401-4"><a href="ground-water.html#cb401-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="ground-water.html#cb394-1"></a>x <span class="op">%&gt;%</span></span>
+<span id="cb394-2"><a href="ground-water.html#cb394-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb394-3"><a href="ground-water.html#cb394-3"></a><span class="st">  </span><span class="kw">spatter</span>(data_type) <span class="op">%&gt;%</span></span>
+<span id="cb394-4"><a href="ground-water.html#cb394-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 6
 ##    `sample-type` site  parameter            unit  character numeric
 ##    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
@@ -318,9 +318,9 @@ in both the <code>character</code> and <code>numeric</code> columns, depending o
 ## 12 ground water  D     Phosphorus as P      mg/L  J3          0.04</code></pre>
 <p>Compare that with the results of <code>spread()</code>, which can only spread one value
 column at a time.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="ground-water.html#cb403-1"></a>x <span class="op">%&gt;%</span></span>
-<span id="cb403-2"><a href="ground-water.html#cb403-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb403-3"><a href="ground-water.html#cb403-3"></a><span class="st">  </span><span class="kw">spread</span>(data_type, character)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="ground-water.html#cb396-1"></a>x <span class="op">%&gt;%</span></span>
+<span id="cb396-2"><a href="ground-water.html#cb396-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb396-3"><a href="ground-water.html#cb396-3"></a><span class="st">  </span><span class="kw">spread</span>(data_type, character)</span></code></pre></div>
 <pre><code>## # A tibble: 17 x 7
 ##      row `sample-type` site  parameter            unit  character numeric
 ##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  
@@ -341,9 +341,9 @@ column at a time.</p>
 ## 15     8 ground water  C     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
 ## 16     8 ground water  B     Phosphorus as P      mg/L  &lt;NA&gt;      &lt;NA&gt;   
 ## 17     8 ground water  D     Phosphorus as P      mg/L  J3        &lt;NA&gt;</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="ground-water.html#cb405-1"></a>x <span class="op">%&gt;%</span></span>
-<span id="cb405-2"><a href="ground-water.html#cb405-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb405-3"><a href="ground-water.html#cb405-3"></a><span class="st">  </span><span class="kw">spread</span>(data_type, numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="ground-water.html#cb398-1"></a>x <span class="op">%&gt;%</span></span>
+<span id="cb398-2"><a href="ground-water.html#cb398-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb398-3"><a href="ground-water.html#cb398-3"></a><span class="st">  </span><span class="kw">spread</span>(data_type, numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 17 x 7
 ##      row `sample-type` site  parameter            unit  character numeric
 ##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;

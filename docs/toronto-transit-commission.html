@@ -264,25 +264,25 @@ file</a>.
 source</a>.</p>
 <div id="the-full-code-listing-1" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> The full code listing</h3>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="toronto-transit-commission.html#cb391-1"></a>cells &lt;-</span>
-<span id="cb391-2"><a href="toronto-transit-commission.html#cb391-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></span>
-<span id="cb391-3"><a href="toronto-transit-commission.html#cb391-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</span>
-<span id="cb391-4"><a href="toronto-transit-commission.html#cb391-4"></a></span>
-<span id="cb391-5"><a href="toronto-transit-commission.html#cb391-5"></a>fare &lt;-</span>
-<span id="cb391-6"><a href="toronto-transit-commission.html#cb391-6"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb391-7"><a href="toronto-transit-commission.html#cb391-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</span>
-<span id="cb391-8"><a href="toronto-transit-commission.html#cb391-8"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>),</span>
-<span id="cb391-9"><a href="toronto-transit-commission.html#cb391-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb391-10"><a href="toronto-transit-commission.html#cb391-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</span>
-<span id="cb391-11"><a href="toronto-transit-commission.html#cb391-11"></a></span>
-<span id="cb391-12"><a href="toronto-transit-commission.html#cb391-12"></a>cells <span class="op">%&gt;%</span></span>
-<span id="cb391-13"><a href="toronto-transit-commission.html#cb391-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></span>
-<span id="cb391-14"><a href="toronto-transit-commission.html#cb391-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb391-15"><a href="toronto-transit-commission.html#cb391-15"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;media&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></span>
-<span id="cb391-16"><a href="toronto-transit-commission.html#cb391-16"></a><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb391-17"><a href="toronto-transit-commission.html#cb391-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb391-18"><a href="toronto-transit-commission.html#cb391-18"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb391-19"><a href="toronto-transit-commission.html#cb391-19"></a><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="toronto-transit-commission.html#cb384-1"></a>cells &lt;-</span>
+<span id="cb384-2"><a href="toronto-transit-commission.html#cb384-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></span>
+<span id="cb384-3"><a href="toronto-transit-commission.html#cb384-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</span>
+<span id="cb384-4"><a href="toronto-transit-commission.html#cb384-4"></a></span>
+<span id="cb384-5"><a href="toronto-transit-commission.html#cb384-5"></a>fare &lt;-</span>
+<span id="cb384-6"><a href="toronto-transit-commission.html#cb384-6"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb384-7"><a href="toronto-transit-commission.html#cb384-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</span>
+<span id="cb384-8"><a href="toronto-transit-commission.html#cb384-8"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>),</span>
+<span id="cb384-9"><a href="toronto-transit-commission.html#cb384-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb384-10"><a href="toronto-transit-commission.html#cb384-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</span>
+<span id="cb384-11"><a href="toronto-transit-commission.html#cb384-11"></a></span>
+<span id="cb384-12"><a href="toronto-transit-commission.html#cb384-12"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb384-13"><a href="toronto-transit-commission.html#cb384-13"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></span>
+<span id="cb384-14"><a href="toronto-transit-commission.html#cb384-14"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb384-15"><a href="toronto-transit-commission.html#cb384-15"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;media&quot;</span>, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">character =</span> str_trim)) <span class="op">%&gt;%</span></span>
+<span id="cb384-16"><a href="toronto-transit-commission.html#cb384-16"></a><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb384-17"><a href="toronto-transit-commission.html#cb384-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb384-18"><a href="toronto-transit-commission.html#cb384-18"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb384-19"><a href="toronto-transit-commission.html#cb384-19"></a><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</span></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year  context fare  media   count
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -311,17 +311,17 @@ their own, and <code>enhead()</code> them back onto the rest of the table later.
 <p>Unfortunately the fare headers in the “WHEN” context aren’t bold, so rather than
 filter for bold headers, instead we filter for headers that aren’t indented by
 spaces. We also filter out any “TOTAL” headers.</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="toronto-transit-commission.html#cb393-1"></a>cells &lt;-</span>
-<span id="cb393-2"><a href="toronto-transit-commission.html#cb393-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></span>
-<span id="cb393-3"><a href="toronto-transit-commission.html#cb393-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</span>
-<span id="cb393-4"><a href="toronto-transit-commission.html#cb393-4"></a></span>
-<span id="cb393-5"><a href="toronto-transit-commission.html#cb393-5"></a>fare &lt;-</span>
-<span id="cb393-6"><a href="toronto-transit-commission.html#cb393-6"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb393-7"><a href="toronto-transit-commission.html#cb393-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</span>
-<span id="cb393-8"><a href="toronto-transit-commission.html#cb393-8"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>), <span class="co"># Filter out indented headers</span></span>
-<span id="cb393-9"><a href="toronto-transit-commission.html#cb393-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Filteroout totals</span></span>
-<span id="cb393-10"><a href="toronto-transit-commission.html#cb393-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</span>
-<span id="cb393-11"><a href="toronto-transit-commission.html#cb393-11"></a>fare</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="toronto-transit-commission.html#cb386-1"></a>cells &lt;-</span>
+<span id="cb386-2"><a href="toronto-transit-commission.html#cb386-2"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>toronto_transit) <span class="op">%&gt;%</span></span>
+<span id="cb386-3"><a href="toronto-transit-commission.html#cb386-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank, row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">6</span>)</span>
+<span id="cb386-4"><a href="toronto-transit-commission.html#cb386-4"></a></span>
+<span id="cb386-5"><a href="toronto-transit-commission.html#cb386-5"></a>fare &lt;-</span>
+<span id="cb386-6"><a href="toronto-transit-commission.html#cb386-6"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb386-7"><a href="toronto-transit-commission.html#cb386-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,</span>
+<span id="cb386-8"><a href="toronto-transit-commission.html#cb386-8"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;^ &quot;</span>), <span class="co"># Filter out indented headers</span></span>
+<span id="cb386-9"><a href="toronto-transit-commission.html#cb386-9"></a>                <span class="op">!</span><span class="kw">str_detect</span>(character, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Filteroout totals</span></span>
+<span id="cb386-10"><a href="toronto-transit-commission.html#cb386-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">fare =</span> character)</span>
+<span id="cb386-11"><a href="toronto-transit-commission.html#cb386-11"></a>fare</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 3
 ##     row   col fare           
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;          
@@ -332,15 +332,15 @@ spaces. We also filter out any “TOTAL” headers.</p>
 ## 5    46     2 RAIL           
 ## 6    53     2 WEEKDAY        
 ## 7    54     2 WEEKEND/HOLIDAY</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="toronto-transit-commission.html#cb395-1"></a>ttc &lt;-</span>
-<span id="cb395-2"><a href="toronto-transit-commission.html#cb395-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb395-3"><a href="toronto-transit-commission.html#cb395-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb395-4"><a href="toronto-transit-commission.html#cb395-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb395-5"><a href="toronto-transit-commission.html#cb395-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;media&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb395-6"><a href="toronto-transit-commission.html#cb395-6"></a><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb395-7"><a href="toronto-transit-commission.html#cb395-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb395-8"><a href="toronto-transit-commission.html#cb395-8"></a><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</span>
-<span id="cb395-9"><a href="toronto-transit-commission.html#cb395-9"></a>ttc</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="toronto-transit-commission.html#cb388-1"></a>ttc &lt;-</span>
+<span id="cb388-2"><a href="toronto-transit-commission.html#cb388-2"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb388-3"><a href="toronto-transit-commission.html#cb388-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;year&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb388-4"><a href="toronto-transit-commission.html#cb388-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left-up&quot;</span>, <span class="st">&quot;context&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb388-5"><a href="toronto-transit-commission.html#cb388-5"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;media&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb388-6"><a href="toronto-transit-commission.html#cb388-6"></a><span class="st">  </span><span class="kw">enhead</span>(fare, <span class="st">&quot;left-up&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb388-7"><a href="toronto-transit-commission.html#cb388-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">str_detect</span>(media, <span class="st">&quot;TOTAL&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb388-8"><a href="toronto-transit-commission.html#cb388-8"></a><span class="st">  </span><span class="kw">select</span>(year, context, fare, media, <span class="dt">count =</span> numeric)</span>
+<span id="cb388-9"><a href="toronto-transit-commission.html#cb388-9"></a>ttc</span></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year      context fare  media          count
 ##    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;
@@ -357,10 +357,10 @@ spaces. We also filter out any “TOTAL” headers.</p>
 ## # … with 1,178 more rows</code></pre>
 <p>There’s a bit more cosmetic cleaning to do. The indentation can be trimmed from
 the <code>media</code> and the <code>year</code> headers, and the asterisk removed from the year <code>2015 *</code>.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="toronto-transit-commission.html#cb397-1"></a>ttc <span class="op">%&gt;%</span></span>
-<span id="cb397-2"><a href="toronto-transit-commission.html#cb397-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">str_trim</span>(year), <span class="dt">media =</span> <span class="kw">str_trim</span>(media)) <span class="op">%&gt;%</span></span>
-<span id="cb397-3"><a href="toronto-transit-commission.html#cb397-3"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb397-4"><a href="toronto-transit-commission.html#cb397-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>note)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="toronto-transit-commission.html#cb390-1"></a>ttc <span class="op">%&gt;%</span></span>
+<span id="cb390-2"><a href="toronto-transit-commission.html#cb390-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">str_trim</span>(year), <span class="dt">media =</span> <span class="kw">str_trim</span>(media)) <span class="op">%&gt;%</span></span>
+<span id="cb390-3"><a href="toronto-transit-commission.html#cb390-3"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;note&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;right&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb390-4"><a href="toronto-transit-commission.html#cb390-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>note)</span></code></pre></div>
 <pre><code>## # A tibble: 1,188 x 5
 ##    year  context fare  media   count
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;

@@ -283,9 +283,9 @@ hierarchy, e.g.</p>
 <p>When each kind of formatting relates to a different level of one hierarchy,
 import the different kinds of formatting into different columns, and then
 combine them into a third column, perhaps using <code>paste()</code>, or <code>case_when()</code>.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="hierarchies-in-formatting.html#cb74-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
-<span id="cb74-2"><a href="hierarchies-in-formatting.html#cb74-2"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>)</span>
-<span id="cb74-3"><a href="hierarchies-in-formatting.html#cb74-3"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="hierarchies-in-formatting.html#cb67-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
+<span id="cb67-2"><a href="hierarchies-in-formatting.html#cb67-2"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>)</span>
+<span id="cb67-3"><a href="hierarchies-in-formatting.html#cb67-3"></a>x</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   Name     Score
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -293,29 +293,29 @@ combine them into a third column, perhaps using <code>paste()</code>, or <code>c
 ## 2 Nicholas     5
 ## 3 Olivia       3
 ## 4 Paul         1</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="hierarchies-in-formatting.html#cb76-1"></a><span class="co"># Step 2: import one kind of formatting of one column of the table</span></span>
-<span id="cb76-2"><a href="hierarchies-in-formatting.html#cb76-2"></a></span>
-<span id="cb76-3"><a href="hierarchies-in-formatting.html#cb76-3"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
-<span id="cb76-4"><a href="hierarchies-in-formatting.html#cb76-4"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
-<span id="cb76-5"><a href="hierarchies-in-formatting.html#cb76-5"></a>bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
-<span id="cb76-6"><a href="hierarchies-in-formatting.html#cb76-6"></a>italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
-<span id="cb76-7"><a href="hierarchies-in-formatting.html#cb76-7"></a></span>
-<span id="cb76-8"><a href="hierarchies-in-formatting.html#cb76-8"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
-<span id="cb76-9"><a href="hierarchies-in-formatting.html#cb76-9"></a><span class="co"># and create a new column `fill` of the fill colours, by looking up the</span></span>
-<span id="cb76-10"><a href="hierarchies-in-formatting.html#cb76-10"></a><span class="co"># local_format_id of each cell in the `formats` pallette.</span></span>
-<span id="cb76-11"><a href="hierarchies-in-formatting.html#cb76-11"></a>formats &lt;-</span>
-<span id="cb76-12"><a href="hierarchies-in-formatting.html#cb76-12"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb76-13"><a href="hierarchies-in-formatting.html#cb76-13"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></span>
-<span id="cb76-14"><a href="hierarchies-in-formatting.html#cb76-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</span>
-<span id="cb76-15"><a href="hierarchies-in-formatting.html#cb76-15"></a>         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb76-16"><a href="hierarchies-in-formatting.html#cb76-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</span>
-<span id="cb76-17"><a href="hierarchies-in-formatting.html#cb76-17"></a>                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</span>
-<span id="cb76-18"><a href="hierarchies-in-formatting.html#cb76-18"></a>                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</span>
-<span id="cb76-19"><a href="hierarchies-in-formatting.html#cb76-19"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb76-20"><a href="hierarchies-in-formatting.html#cb76-20"></a><span class="st">  </span><span class="kw">select</span>(bold, italic, grade)</span>
-<span id="cb76-21"><a href="hierarchies-in-formatting.html#cb76-21"></a></span>
-<span id="cb76-22"><a href="hierarchies-in-formatting.html#cb76-22"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
-<span id="cb76-23"><a href="hierarchies-in-formatting.html#cb76-23"></a><span class="kw">bind_cols</span>(x, formats)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="hierarchies-in-formatting.html#cb69-1"></a><span class="co"># Step 2: import one kind of formatting of one column of the table</span></span>
+<span id="cb69-2"><a href="hierarchies-in-formatting.html#cb69-2"></a></span>
+<span id="cb69-3"><a href="hierarchies-in-formatting.html#cb69-3"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
+<span id="cb69-4"><a href="hierarchies-in-formatting.html#cb69-4"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
+<span id="cb69-5"><a href="hierarchies-in-formatting.html#cb69-5"></a>bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
+<span id="cb69-6"><a href="hierarchies-in-formatting.html#cb69-6"></a>italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
+<span id="cb69-7"><a href="hierarchies-in-formatting.html#cb69-7"></a></span>
+<span id="cb69-8"><a href="hierarchies-in-formatting.html#cb69-8"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
+<span id="cb69-9"><a href="hierarchies-in-formatting.html#cb69-9"></a><span class="co"># and create a new column `fill` of the fill colours, by looking up the</span></span>
+<span id="cb69-10"><a href="hierarchies-in-formatting.html#cb69-10"></a><span class="co"># local_format_id of each cell in the `formats` pallette.</span></span>
+<span id="cb69-11"><a href="hierarchies-in-formatting.html#cb69-11"></a>formats &lt;-</span>
+<span id="cb69-12"><a href="hierarchies-in-formatting.html#cb69-12"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb69-13"><a href="hierarchies-in-formatting.html#cb69-13"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></span>
+<span id="cb69-14"><a href="hierarchies-in-formatting.html#cb69-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</span>
+<span id="cb69-15"><a href="hierarchies-in-formatting.html#cb69-15"></a>         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb69-16"><a href="hierarchies-in-formatting.html#cb69-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</span>
+<span id="cb69-17"><a href="hierarchies-in-formatting.html#cb69-17"></a>                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</span>
+<span id="cb69-18"><a href="hierarchies-in-formatting.html#cb69-18"></a>                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</span>
+<span id="cb69-19"><a href="hierarchies-in-formatting.html#cb69-19"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb69-20"><a href="hierarchies-in-formatting.html#cb69-20"></a><span class="st">  </span><span class="kw">select</span>(bold, italic, grade)</span>
+<span id="cb69-21"><a href="hierarchies-in-formatting.html#cb69-21"></a></span>
+<span id="cb69-22"><a href="hierarchies-in-formatting.html#cb69-22"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
+<span id="cb69-23"><a href="hierarchies-in-formatting.html#cb69-23"></a><span class="kw">bind_cols</span>(x, formats)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ##   Name     Score bold  italic grade       
 ##   &lt;chr&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;       
@@ -324,20 +324,20 @@ combine them into a third column, perhaps using <code>paste()</code>, or <code>c
 ## 3 Olivia       3 TRUE  FALSE  poor        
 ## 4 Paul         1 TRUE  TRUE   fail</code></pre>
 <p>Here it is again, using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="hierarchies-in-formatting.html#cb78-1"></a>bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
-<span id="cb78-2"><a href="hierarchies-in-formatting.html#cb78-2"></a>italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
-<span id="cb78-3"><a href="hierarchies-in-formatting.html#cb78-3"></a></span>
-<span id="cb78-4"><a href="hierarchies-in-formatting.html#cb78-4"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb78-5"><a href="hierarchies-in-formatting.html#cb78-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</span>
-<span id="cb78-6"><a href="hierarchies-in-formatting.html#cb78-6"></a>         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb78-7"><a href="hierarchies-in-formatting.html#cb78-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</span>
-<span id="cb78-8"><a href="hierarchies-in-formatting.html#cb78-8"></a>                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</span>
-<span id="cb78-9"><a href="hierarchies-in-formatting.html#cb78-9"></a>                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</span>
-<span id="cb78-10"><a href="hierarchies-in-formatting.html#cb78-10"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb78-11"><a href="hierarchies-in-formatting.html#cb78-11"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, bold, italic, grade) <span class="op">%&gt;%</span></span>
-<span id="cb78-12"><a href="hierarchies-in-formatting.html#cb78-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb78-13"><a href="hierarchies-in-formatting.html#cb78-13"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb78-14"><a href="hierarchies-in-formatting.html#cb78-14"></a><span class="st">  </span><span class="kw">spatter</span>(header)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="hierarchies-in-formatting.html#cb71-1"></a>bold &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
+<span id="cb71-2"><a href="hierarchies-in-formatting.html#cb71-2"></a>italic &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
+<span id="cb71-3"><a href="hierarchies-in-formatting.html#cb71-3"></a></span>
+<span id="cb71-4"><a href="hierarchies-in-formatting.html#cb71-4"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlight-hierarchy&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb71-5"><a href="hierarchies-in-formatting.html#cb71-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bold =</span> bold[local_format_id],</span>
+<span id="cb71-6"><a href="hierarchies-in-formatting.html#cb71-6"></a>         <span class="dt">italic =</span> italic[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb71-7"><a href="hierarchies-in-formatting.html#cb71-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">case_when</span>(bold <span class="op">&amp;</span><span class="st"> </span>italic <span class="op">~</span><span class="st"> &quot;fail&quot;</span>,</span>
+<span id="cb71-8"><a href="hierarchies-in-formatting.html#cb71-8"></a>                           bold <span class="op">~</span><span class="st"> &quot;poor&quot;</span>,</span>
+<span id="cb71-9"><a href="hierarchies-in-formatting.html#cb71-9"></a>                           italic <span class="op">~</span><span class="st"> &quot;satisfactory&quot;</span>,</span>
+<span id="cb71-10"><a href="hierarchies-in-formatting.html#cb71-10"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;good&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb71-11"><a href="hierarchies-in-formatting.html#cb71-11"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, bold, italic, grade) <span class="op">%&gt;%</span></span>
+<span id="cb71-12"><a href="hierarchies-in-formatting.html#cb71-12"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb71-13"><a href="hierarchies-in-formatting.html#cb71-13"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb71-14"><a href="hierarchies-in-formatting.html#cb71-14"></a><span class="st">  </span><span class="kw">spatter</span>(header)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 6
 ##     row bold  italic grade        Name     Score
 ##   &lt;int&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;

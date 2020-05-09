@@ -253,54 +253,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.1</span> Small multiples with all headers present for each multiple</h2>
 <p><img src="images/small-multiples.png" /></p>
 <p>The code to import one of these multiples will be simple.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-1"></a>cells <span class="op">%&gt;%</span></span>
-<span id="cb278-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
-<span id="cb278-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb278-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
-<span id="cb278-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb278-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb278-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-1"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb271-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
+<span id="cb271-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb271-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb271-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-5"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb271-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb271-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <p>The first table is in rows 1 to 4, columns 1 to 3, so we start by writing the
 code to import only that table.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb279-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-2"></a>all_cells &lt;-</span>
-<span id="cb279-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb279-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb279-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)</span>
-<span id="cb279-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-6"></a></span>
-<span id="cb279-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-7"></a>table1 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span>
-<span id="cb279-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-8"></a></span>
-<span id="cb279-9"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-9"></a>table1 <span class="op">%&gt;%</span></span>
-<span id="cb279-10"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
-<span id="cb279-11"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb279-12"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-12"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
-<span id="cb279-13"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-13"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb279-14"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb279-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb272-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-2"></a>all_cells &lt;-</span>
+<span id="cb272-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;small-multiples&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb272-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb272-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, local_format_id)</span>
+<span id="cb272-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-6"></a></span>
+<span id="cb272-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-7"></a>table1 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(all_cells, row <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, col <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span>
+<span id="cb272-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-8"></a></span>
+<span id="cb272-9"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-9"></a>table1 <span class="op">%&gt;%</span></span>
+<span id="cb272-10"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
+<span id="cb272-11"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb272-12"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-12"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb272-13"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-13"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb272-14"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb272-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
 ##   subject  Grade Name    Score
 ##   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
 ## 1 Classics F     Matilda     1
 ## 2 Classics D     Olivia      2</code></pre>
 <p>We wrap that code in a function, to be applied to each separate table.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
-<span id="cb281-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-2"></a>  cells <span class="op">%&gt;%</span></span>
-<span id="cb281-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-3"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
-<span id="cb281-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-4"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb281-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-5"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
-<span id="cb281-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-6"></a><span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb281-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-7"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
-<span id="cb281-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb281-8"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
+<span id="cb274-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-2"></a>  cells <span class="op">%&gt;%</span></span>
+<span id="cb274-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-3"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, subject) <span class="op">%&gt;%</span></span>
+<span id="cb274-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-4"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb274-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-5"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb274-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-6"></a><span class="st">    </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb274-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-7"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb274-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb274-8"></a>}</span></code></pre></div>
 <p>Now we partition the spreadsheet into the separate tables. This is done by
 identifying a corner cell in each table.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
-<span id="cb282-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-2"></a>italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)</span>
-<span id="cb282-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-3"></a></span>
-<span id="cb282-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-4"></a>corners &lt;-</span>
-<span id="cb282-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-5"></a><span class="st">  </span>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb282-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(local_format_id <span class="op">%in%</span><span class="st"> </span>italic) <span class="op">%&gt;%</span></span>
-<span id="cb282-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-7"></a><span class="st">  </span><span class="kw">select</span>(row, col)</span>
-<span id="cb282-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-8"></a></span>
-<span id="cb282-9"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-9"></a>partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)</span>
-<span id="cb282-10"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb282-10"></a>partitions</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb275-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-2"></a>italic &lt;-<span class="st"> </span><span class="kw">which</span>(formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic)</span>
+<span id="cb275-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-3"></a></span>
+<span id="cb275-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-4"></a>corners &lt;-</span>
+<span id="cb275-5"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-5"></a><span class="st">  </span>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb275-6"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(local_format_id <span class="op">%in%</span><span class="st"> </span>italic) <span class="op">%&gt;%</span></span>
+<span id="cb275-7"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-7"></a><span class="st">  </span><span class="kw">select</span>(row, col)</span>
+<span id="cb275-8"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-8"></a></span>
+<span id="cb275-9"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-9"></a>partitions &lt;-<span class="st"> </span><span class="kw">partition</span>(all_cells, corners)</span>
+<span id="cb275-10"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb275-10"></a>partitions</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   corner_row corner_col cells            
 ##        &lt;dbl&gt;      &lt;dbl&gt; &lt;list&gt;           
@@ -310,10 +310,10 @@ identifying a corner cell in each table.</p>
 ## 4          6          5 &lt;tibble [10 × 6]&gt;</code></pre>
 <p>Finally, map the unpivoting function over the partitions, and combine the
 results.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb284-1"></a>partitions <span class="op">%&gt;%</span></span>
-<span id="cb284-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb284-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cells =</span> <span class="kw">map</span>(cells, unpivot)) <span class="op">%&gt;%</span></span>
-<span id="cb284-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb284-3"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
-<span id="cb284-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb284-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, <span class="op">-</span>corner_col)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb277-1"></a>partitions <span class="op">%&gt;%</span></span>
+<span id="cb277-2"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb277-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cells =</span> <span class="kw">map</span>(cells, unpivot)) <span class="op">%&gt;%</span></span>
+<span id="cb277-3"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb277-3"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
+<span id="cb277-4"><a href="small-multiples-with-all-headers-present-for-each-multiple.html#cb277-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>corner_row, <span class="op">-</span>corner_col)</span></code></pre></div>
 <pre><code>## Warning: `cols` is now required.
 ## Please use `cols = c(cells)`</code></pre>
 <pre><code>## # A tibble: 8 x 4

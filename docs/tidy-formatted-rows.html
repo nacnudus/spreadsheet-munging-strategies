@@ -277,29 +277,29 @@ cells</a>. Here <code>dplyr::bind_cols()</code> can be used as a
 shortcut, because we are joining exactly <code>n</code> rows of formatting to <code>n</code> rows of
 data. The following sections is a more general case that can be used instead of
 this procedure.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tidy-formatted-rows.html#cb42-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
-<span id="cb42-2"><a href="tidy-formatted-rows.html#cb42-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb42-3"><a href="tidy-formatted-rows.html#cb42-3"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</span>
-<span id="cb42-4"><a href="tidy-formatted-rows.html#cb42-4"></a></span>
-<span id="cb42-5"><a href="tidy-formatted-rows.html#cb42-5"></a><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></span>
-<span id="cb42-6"><a href="tidy-formatted-rows.html#cb42-6"></a><span class="co"># cell values</span></span>
-<span id="cb42-7"><a href="tidy-formatted-rows.html#cb42-7"></a></span>
-<span id="cb42-8"><a href="tidy-formatted-rows.html#cb42-8"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
-<span id="cb42-9"><a href="tidy-formatted-rows.html#cb42-9"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
-<span id="cb42-10"><a href="tidy-formatted-rows.html#cb42-10"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb42-11"><a href="tidy-formatted-rows.html#cb42-11"></a></span>
-<span id="cb42-12"><a href="tidy-formatted-rows.html#cb42-12"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
-<span id="cb42-13"><a href="tidy-formatted-rows.html#cb42-13"></a><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></span>
-<span id="cb42-14"><a href="tidy-formatted-rows.html#cb42-14"></a><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></span>
-<span id="cb42-15"><a href="tidy-formatted-rows.html#cb42-15"></a>fills &lt;-</span>
-<span id="cb42-16"><a href="tidy-formatted-rows.html#cb42-16"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb42-17"><a href="tidy-formatted-rows.html#cb42-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></span>
-<span id="cb42-18"><a href="tidy-formatted-rows.html#cb42-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb42-19"><a href="tidy-formatted-rows.html#cb42-19"></a><span class="st">  </span><span class="kw">select</span>(fill_colour)</span>
-<span id="cb42-20"><a href="tidy-formatted-rows.html#cb42-20"></a></span>
-<span id="cb42-21"><a href="tidy-formatted-rows.html#cb42-21"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
-<span id="cb42-22"><a href="tidy-formatted-rows.html#cb42-22"></a><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></span>
-<span id="cb42-23"><a href="tidy-formatted-rows.html#cb42-23"></a><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tidy-formatted-rows.html#cb35-1"></a><span class="co"># Step 1: import the table taking only cell values and ignoring the formatting</span></span>
+<span id="cb35-2"><a href="tidy-formatted-rows.html#cb35-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb35-3"><a href="tidy-formatted-rows.html#cb35-3"></a>x &lt;-<span class="st"> </span><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>)</span>
+<span id="cb35-4"><a href="tidy-formatted-rows.html#cb35-4"></a></span>
+<span id="cb35-5"><a href="tidy-formatted-rows.html#cb35-5"></a><span class="co"># Step 2: import one column of the table, taking only the formatting and not the</span></span>
+<span id="cb35-6"><a href="tidy-formatted-rows.html#cb35-6"></a><span class="co"># cell values</span></span>
+<span id="cb35-7"><a href="tidy-formatted-rows.html#cb35-7"></a></span>
+<span id="cb35-8"><a href="tidy-formatted-rows.html#cb35-8"></a><span class="co"># `formats` is a pallette of fill colours that can be indexed by the</span></span>
+<span id="cb35-9"><a href="tidy-formatted-rows.html#cb35-9"></a><span class="co"># `local_format_id` of a given cell to get the fill colour of that cell</span></span>
+<span id="cb35-10"><a href="tidy-formatted-rows.html#cb35-10"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb35-11"><a href="tidy-formatted-rows.html#cb35-11"></a></span>
+<span id="cb35-12"><a href="tidy-formatted-rows.html#cb35-12"></a><span class="co"># Import all the cells, filter out the header row, filter for the first column,</span></span>
+<span id="cb35-13"><a href="tidy-formatted-rows.html#cb35-13"></a><span class="co"># and create a new column `fill_colour` of the fill colours, by looking up the</span></span>
+<span id="cb35-14"><a href="tidy-formatted-rows.html#cb35-14"></a><span class="co"># local_format_id of each cell in the `fill_colours` pallette.</span></span>
+<span id="cb35-15"><a href="tidy-formatted-rows.html#cb35-15"></a>fills &lt;-</span>
+<span id="cb35-16"><a href="tidy-formatted-rows.html#cb35-16"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb35-17"><a href="tidy-formatted-rows.html#cb35-17"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Omit the header row</span></span>
+<span id="cb35-18"><a href="tidy-formatted-rows.html#cb35-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb35-19"><a href="tidy-formatted-rows.html#cb35-19"></a><span class="st">  </span><span class="kw">select</span>(fill_colour)</span>
+<span id="cb35-20"><a href="tidy-formatted-rows.html#cb35-20"></a></span>
+<span id="cb35-21"><a href="tidy-formatted-rows.html#cb35-21"></a><span class="co"># Step 3: append the `fill` column to the rest of the data</span></span>
+<span id="cb35-22"><a href="tidy-formatted-rows.html#cb35-22"></a><span class="kw">bind_cols</span>(x, fills) <span class="op">%&gt;%</span></span>
+<span id="cb35-23"><a href="tidy-formatted-rows.html#cb35-23"></a><span class="st">  </span><span class="kw">select</span>(Age, Height, fill_colour)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##     Age Height fill_colour
 ##   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      
@@ -309,15 +309,15 @@ this procedure.</p>
 <p>Note that the fill colour is expressed as an RGB value with transparency in the
 first two letters, e.g. <code>FFFFFF00</code> is <code>FF</code> (opaque), with <code>FFFF00</code> (yellow).</p>
 <p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tidy-formatted-rows.html#cb44-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb44-2"><a href="tidy-formatted-rows.html#cb44-2"></a></span>
-<span id="cb44-3"><a href="tidy-formatted-rows.html#cb44-3"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb44-4"><a href="tidy-formatted-rows.html#cb44-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb44-5"><a href="tidy-formatted-rows.html#cb44-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></span>
-<span id="cb44-6"><a href="tidy-formatted-rows.html#cb44-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb44-7"><a href="tidy-formatted-rows.html#cb44-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></span>
-<span id="cb44-8"><a href="tidy-formatted-rows.html#cb44-8"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb44-9"><a href="tidy-formatted-rows.html#cb44-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tidy-formatted-rows.html#cb37-1"></a>fill_colours &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb37-2"><a href="tidy-formatted-rows.html#cb37-2"></a></span>
+<span id="cb37-3"><a href="tidy-formatted-rows.html#cb37-3"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;highlights&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb37-4"><a href="tidy-formatted-rows.html#cb37-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fill_colour =</span> fill_colours[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb37-5"><a href="tidy-formatted-rows.html#cb37-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, fill_colour) <span class="op">%&gt;%</span></span>
+<span id="cb37-6"><a href="tidy-formatted-rows.html#cb37-6"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb37-7"><a href="tidy-formatted-rows.html#cb37-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col, <span class="op">-</span>character) <span class="op">%&gt;%</span></span>
+<span id="cb37-8"><a href="tidy-formatted-rows.html#cb37-8"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb37-9"><a href="tidy-formatted-rows.html#cb37-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   fill_colour   Age Height
 ##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;

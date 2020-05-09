@@ -266,12 +266,12 @@ observation.</p>
 transposing with <code>t()</code> (which outputs a matrix), placing the headers as names,
 and converting back to a data frame, but this almost always results in all the
 data types being converted.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="almost-tidy-tables.html#cb25-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb25-2"><a href="almost-tidy-tables.html#cb25-2"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb25-3"><a href="almost-tidy-tables.html#cb25-3"></a><span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span></span>
-<span id="cb25-4"><a href="almost-tidy-tables.html#cb25-4"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(.[<span class="dv">1</span>, ]) <span class="op">%&gt;%</span></span>
-<span id="cb25-5"><a href="almost-tidy-tables.html#cb25-5"></a><span class="st">  </span>.[<span class="op">-</span><span class="dv">1</span>, ] <span class="op">%&gt;%</span></span>
-<span id="cb25-6"><a href="almost-tidy-tables.html#cb25-6"></a><span class="st">  </span><span class="kw">as_tibble</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="almost-tidy-tables.html#cb18-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb18-2"><a href="almost-tidy-tables.html#cb18-2"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb18-3"><a href="almost-tidy-tables.html#cb18-3"></a><span class="st">  </span><span class="kw">t</span>() <span class="op">%&gt;%</span></span>
+<span id="cb18-4"><a href="almost-tidy-tables.html#cb18-4"></a><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(.[<span class="dv">1</span>, ]) <span class="op">%&gt;%</span></span>
+<span id="cb18-5"><a href="almost-tidy-tables.html#cb18-5"></a><span class="st">  </span>.[<span class="op">-</span><span class="dv">1</span>, ] <span class="op">%&gt;%</span></span>
+<span id="cb18-6"><a href="almost-tidy-tables.html#cb18-6"></a><span class="st">  </span><span class="kw">as_tibble</span>()</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...1
 ## * `` -&gt; ...2
@@ -286,11 +286,11 @@ data types being converted.</p>
 <p>Tidyxl and unpivotr are agnostic to the layout of tables. Importing the
 transpose is the same is importing the usual layout, merely using the <code>"left"</code>
 direction instead of <code>"up"</code> when beheading the headers.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="almost-tidy-tables.html#cb28-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb28-2"><a href="almost-tidy-tables.html#cb28-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb28-3"><a href="almost-tidy-tables.html#cb28-3"></a><span class="st">  </span><span class="kw">select</span>(col, data_type, header, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb28-4"><a href="almost-tidy-tables.html#cb28-4"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb28-5"><a href="almost-tidy-tables.html#cb28-5"></a><span class="st">  </span><span class="kw">select</span>(Name, Age)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="almost-tidy-tables.html#cb21-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;transposed&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="almost-tidy-tables.html#cb21-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb21-3"><a href="almost-tidy-tables.html#cb21-3"></a><span class="st">  </span><span class="kw">select</span>(col, data_type, header, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb21-4"><a href="almost-tidy-tables.html#cb21-4"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb21-5"><a href="almost-tidy-tables.html#cb21-5"></a><span class="st">  </span><span class="kw">select</span>(Name, Age)</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -313,13 +313,13 @@ argument of <code>readxl::read_excel()</code> to ignore those columns.</li>
 <li>Blank or non-blank cells below the table: use <code>n_max</code>
 argument of <code>readxl::read_excel()</code> to ignore those rows.</li>
 </ul>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="almost-tidy-tables.html#cb30-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb30-2"><a href="almost-tidy-tables.html#cb30-2"></a>readxl<span class="op">::</span><span class="kw">read_excel</span>(path,</span>
-<span id="cb30-3"><a href="almost-tidy-tables.html#cb30-3"></a>                   <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>,</span>
-<span id="cb30-4"><a href="almost-tidy-tables.html#cb30-4"></a>                   <span class="dt">skip =</span> <span class="dv">2</span>,</span>
-<span id="cb30-5"><a href="almost-tidy-tables.html#cb30-5"></a>                   <span class="dt">n_max =</span> <span class="dv">33</span>,</span>
-<span id="cb30-6"><a href="almost-tidy-tables.html#cb30-6"></a>                   <span class="dt">col_types =</span> <span class="kw">c</span>(<span class="st">&quot;guess&quot;</span>, <span class="st">&quot;guess&quot;</span>, <span class="st">&quot;skip&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb30-7"><a href="almost-tidy-tables.html#cb30-7"></a><span class="st">  </span><span class="kw">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="almost-tidy-tables.html#cb23-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb23-2"><a href="almost-tidy-tables.html#cb23-2"></a>readxl<span class="op">::</span><span class="kw">read_excel</span>(path,</span>
+<span id="cb23-3"><a href="almost-tidy-tables.html#cb23-3"></a>                   <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>,</span>
+<span id="cb23-4"><a href="almost-tidy-tables.html#cb23-4"></a>                   <span class="dt">skip =</span> <span class="dv">2</span>,</span>
+<span id="cb23-5"><a href="almost-tidy-tables.html#cb23-5"></a>                   <span class="dt">n_max =</span> <span class="dv">33</span>,</span>
+<span id="cb23-6"><a href="almost-tidy-tables.html#cb23-6"></a>                   <span class="dt">col_types =</span> <span class="kw">c</span>(<span class="st">&quot;guess&quot;</span>, <span class="st">&quot;guess&quot;</span>, <span class="st">&quot;skip&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb23-7"><a href="almost-tidy-tables.html#cb23-7"></a><span class="st">  </span><span class="kw">drop_na</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
@@ -338,10 +338,10 @@ headers, and a cell in the final row of data.</li>
 <li>Construct the arguments <code>skip</code>, <code>n_max</code> and <code>col_types</code> so that
 <code>readxl::read_excel()</code> gets the exact dimensions of the table.</li>
 </ol>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="almost-tidy-tables.html#cb32-1"></a><span class="co"># Step 1: read the spreadsheet and filter for sentinel values to detect the</span></span>
-<span id="cb32-2"><a href="almost-tidy-tables.html#cb32-2"></a><span class="co"># top-left and bottom-right cells</span></span>
-<span id="cb32-3"><a href="almost-tidy-tables.html#cb32-3"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>)</span>
-<span id="cb32-4"><a href="almost-tidy-tables.html#cb32-4"></a><span class="kw">rectify</span>(cells)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="almost-tidy-tables.html#cb25-1"></a><span class="co"># Step 1: read the spreadsheet and filter for sentinel values to detect the</span></span>
+<span id="cb25-2"><a href="almost-tidy-tables.html#cb25-2"></a><span class="co"># top-left and bottom-right cells</span></span>
+<span id="cb25-3"><a href="almost-tidy-tables.html#cb25-3"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>)</span>
+<span id="cb25-4"><a href="almost-tidy-tables.html#cb25-4"></a><span class="kw">rectify</span>(cells)</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   `row/col` `1(A)`     `2(B)`   `3(C)` `4(D)`  
 ##       &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
@@ -352,45 +352,45 @@ headers, and a cell in the final row of data.</li>
 ## 5         5 &lt;NA&gt;       Nicholas 3      &lt;NA&gt;    
 ## 6         6 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   &lt;NA&gt;    
 ## 7         7 &lt;NA&gt;       &lt;NA&gt;     &lt;NA&gt;   Footnote</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="almost-tidy-tables.html#cb34-1"></a>top_left &lt;-</span>
-<span id="cb34-2"><a href="almost-tidy-tables.html#cb34-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb34-3"><a href="almost-tidy-tables.html#cb34-3"></a><span class="st">  </span><span class="kw">select</span>(row, col)</span>
-<span id="cb34-4"><a href="almost-tidy-tables.html#cb34-4"></a>top_left</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="almost-tidy-tables.html#cb27-1"></a>top_left &lt;-</span>
+<span id="cb27-2"><a href="almost-tidy-tables.html#cb27-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, character <span class="op">==</span><span class="st"> &quot;Name&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb27-3"><a href="almost-tidy-tables.html#cb27-3"></a><span class="st">  </span><span class="kw">select</span>(row, col)</span>
+<span id="cb27-4"><a href="almost-tidy-tables.html#cb27-4"></a>top_left</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##     row   col
 ##   &lt;int&gt; &lt;int&gt;
 ## 1     3     2</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="almost-tidy-tables.html#cb36-1"></a><span class="co"># It can be tricky to find the bottom-right cell because you have to make some</span></span>
-<span id="cb36-2"><a href="almost-tidy-tables.html#cb36-2"></a><span class="co"># assumptions.  Here we assume that only cells within the table are numeric.</span></span>
-<span id="cb36-3"><a href="almost-tidy-tables.html#cb36-3"></a>bottom_right &lt;-</span>
-<span id="cb36-4"><a href="almost-tidy-tables.html#cb36-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb36-5"><a href="almost-tidy-tables.html#cb36-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">row =</span> <span class="kw">max</span>(row), <span class="dt">col =</span> <span class="kw">max</span>(col))</span>
-<span id="cb36-6"><a href="almost-tidy-tables.html#cb36-6"></a>bottom_right</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="almost-tidy-tables.html#cb29-1"></a><span class="co"># It can be tricky to find the bottom-right cell because you have to make some</span></span>
+<span id="cb29-2"><a href="almost-tidy-tables.html#cb29-2"></a><span class="co"># assumptions.  Here we assume that only cells within the table are numeric.</span></span>
+<span id="cb29-3"><a href="almost-tidy-tables.html#cb29-3"></a>bottom_right &lt;-</span>
+<span id="cb29-4"><a href="almost-tidy-tables.html#cb29-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(cells, data_type <span class="op">==</span><span class="st"> &quot;numeric&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb29-5"><a href="almost-tidy-tables.html#cb29-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">row =</span> <span class="kw">max</span>(row), <span class="dt">col =</span> <span class="kw">max</span>(col))</span>
+<span id="cb29-6"><a href="almost-tidy-tables.html#cb29-6"></a>bottom_right</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##     row   col
 ##   &lt;int&gt; &lt;int&gt;
 ## 1     5     3</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="almost-tidy-tables.html#cb38-1"></a><span class="co"># Step 2: construct the arguments `skip` and `n_max` for read_excel()</span></span>
-<span id="cb38-2"><a href="almost-tidy-tables.html#cb38-2"></a>skip &lt;-<span class="st"> </span>top_left<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>1L</span>
-<span id="cb38-3"><a href="almost-tidy-tables.html#cb38-3"></a>n_rows &lt;-<span class="st"> </span>bottom_right<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>skip</span>
-<span id="cb38-4"><a href="almost-tidy-tables.html#cb38-4"></a></span>
-<span id="cb38-5"><a href="almost-tidy-tables.html#cb38-5"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>, <span class="dt">skip =</span> skip, <span class="dt">n_max =</span> n_rows)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="almost-tidy-tables.html#cb31-1"></a><span class="co"># Step 2: construct the arguments `skip` and `n_max` for read_excel()</span></span>
+<span id="cb31-2"><a href="almost-tidy-tables.html#cb31-2"></a>skip &lt;-<span class="st"> </span>top_left<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>1L</span>
+<span id="cb31-3"><a href="almost-tidy-tables.html#cb31-3"></a>n_rows &lt;-<span class="st"> </span>bottom_right<span class="op">$</span>row <span class="op">-</span><span class="st"> </span>skip</span>
+<span id="cb31-4"><a href="almost-tidy-tables.html#cb31-4"></a></span>
+<span id="cb31-5"><a href="almost-tidy-tables.html#cb31-5"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;notes&quot;</span>, <span class="dt">skip =</span> skip, <span class="dt">n_max =</span> n_rows)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name       Age
 ##   &lt;chr&gt;    &lt;dbl&gt;
 ## 1 Matilda      1
 ## 2 Nicholas     3</code></pre>
 <p>Here’s another way using only tidyxl and unpivotr.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="almost-tidy-tables.html#cb40-1"></a><span class="co"># Step 2: filter for cells between the top-left and bottom-right, and spatter</span></span>
-<span id="cb40-2"><a href="almost-tidy-tables.html#cb40-2"></a><span class="co"># into a table</span></span>
-<span id="cb40-3"><a href="almost-tidy-tables.html#cb40-3"></a>cells <span class="op">%&gt;%</span></span>
-<span id="cb40-4"><a href="almost-tidy-tables.html#cb40-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</span>
-<span id="cb40-5"><a href="almost-tidy-tables.html#cb40-5"></a>         <span class="kw">between</span>(col, top_left<span class="op">$</span>col, bottom_right<span class="op">$</span>col)) <span class="op">%&gt;%</span></span>
-<span id="cb40-6"><a href="almost-tidy-tables.html#cb40-6"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb40-7"><a href="almost-tidy-tables.html#cb40-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
-<span id="cb40-8"><a href="almost-tidy-tables.html#cb40-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb40-9"><a href="almost-tidy-tables.html#cb40-9"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb40-10"><a href="almost-tidy-tables.html#cb40-10"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="almost-tidy-tables.html#cb33-1"></a><span class="co"># Step 2: filter for cells between the top-left and bottom-right, and spatter</span></span>
+<span id="cb33-2"><a href="almost-tidy-tables.html#cb33-2"></a><span class="co"># into a table</span></span>
+<span id="cb33-3"><a href="almost-tidy-tables.html#cb33-3"></a>cells <span class="op">%&gt;%</span></span>
+<span id="cb33-4"><a href="almost-tidy-tables.html#cb33-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">between</span>(row, top_left<span class="op">$</span>row, bottom_right<span class="op">$</span>row),</span>
+<span id="cb33-5"><a href="almost-tidy-tables.html#cb33-5"></a>         <span class="kw">between</span>(col, top_left<span class="op">$</span>col, bottom_right<span class="op">$</span>col)) <span class="op">%&gt;%</span></span>
+<span id="cb33-6"><a href="almost-tidy-tables.html#cb33-6"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb33-7"><a href="almost-tidy-tables.html#cb33-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header) <span class="op">%&gt;%</span></span>
+<span id="cb33-8"><a href="almost-tidy-tables.html#cb33-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb33-9"><a href="almost-tidy-tables.html#cb33-9"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb33-10"><a href="almost-tidy-tables.html#cb33-10"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##     Age Name    
 ##   &lt;dbl&gt; &lt;chr&gt;   

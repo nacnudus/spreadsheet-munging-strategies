@@ -253,8 +253,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.5</span> Superscript symbols</h2>
 <p><img src="images/superscript-symbols.png" /></p>
 <p>This is pernicious. What was Paula’s score, in the table below?</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="superscript-symbols.html#cb340-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb340-2"><a href="superscript-symbols.html#cb340-2"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="superscript-symbols.html#cb333-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb333-2"><a href="superscript-symbols.html#cb333-2"></a><span class="kw">read_excel</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Name    Score
 ##   &lt;chr&gt;   &lt;chr&gt;
@@ -269,10 +269,10 @@ would be easy to interpret that as an accident of translation, and simply coerce
 back to numeric with <code>as.integer()</code>.</p>
 <p>With tidyxl, you can count the rows of each element of the <code>character_formatted</code>
 column to identify cells that have in-cell formatting.</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="superscript-symbols.html#cb342-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb342-2"><a href="superscript-symbols.html#cb342-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb342-3"><a href="superscript-symbols.html#cb342-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb342-4"><a href="superscript-symbols.html#cb342-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="superscript-symbols.html#cb335-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb335-2"><a href="superscript-symbols.html#cb335-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb335-3"><a href="superscript-symbols.html#cb335-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="kw">map_int</span>(character_formatted, nrow) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb335-4"><a href="superscript-symbols.html#cb335-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##     row   col character
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    
@@ -280,18 +280,18 @@ column to identify cells that have in-cell formatting.</p>
 ## 2     2     2 91</code></pre>
 <p>The values and symbols can then be separated by assuming the value is the first
 string, and the symbol is the second.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="superscript-symbols.html#cb344-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb344-2"><a href="superscript-symbols.html#cb344-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</span>
-<span id="cb344-3"><a href="superscript-symbols.html#cb344-3"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</span>
-<span id="cb344-4"><a href="superscript-symbols.html#cb344-4"></a>         <span class="dt">symbol =</span> <span class="kw">map_chr</span>(character_formatted,</span>
-<span id="cb344-5"><a href="superscript-symbols.html#cb344-5"></a>                          <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), <span class="ot">NA</span>, .x<span class="op">$</span>character[<span class="dv">2</span>])),</span>
-<span id="cb344-6"><a href="superscript-symbols.html#cb344-6"></a>         <span class="dt">numeric =</span> <span class="kw">if_else</span>(row <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>col <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</span>
-<span id="cb344-7"><a href="superscript-symbols.html#cb344-7"></a>                           <span class="kw">as.numeric</span>(character),</span>
-<span id="cb344-8"><a href="superscript-symbols.html#cb344-8"></a>                           numeric),</span>
-<span id="cb344-9"><a href="superscript-symbols.html#cb344-9"></a>         <span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(numeric), character, <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb344-10"><a href="superscript-symbols.html#cb344-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, numeric, character, symbol)</span></code></pre></div>
-<pre><code>## Warning in if_else(row &gt; 1 &amp; col == 2 &amp; data_type == &quot;character&quot;,
-## as.numeric(character), : NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="superscript-symbols.html#cb337-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;superscript symbols&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb337-2"><a href="superscript-symbols.html#cb337-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">map_chr</span>(character_formatted,</span>
+<span id="cb337-3"><a href="superscript-symbols.html#cb337-3"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), character, .x<span class="op">$</span>character[<span class="dv">1</span>])),</span>
+<span id="cb337-4"><a href="superscript-symbols.html#cb337-4"></a>         <span class="dt">symbol =</span> <span class="kw">map_chr</span>(character_formatted,</span>
+<span id="cb337-5"><a href="superscript-symbols.html#cb337-5"></a>                          <span class="op">~</span><span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.null</span>(.x), <span class="ot">NA</span>, .x<span class="op">$</span>character[<span class="dv">2</span>])),</span>
+<span id="cb337-6"><a href="superscript-symbols.html#cb337-6"></a>         <span class="dt">numeric =</span> <span class="kw">if_else</span>(row <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>col <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>data_type <span class="op">==</span><span class="st"> &quot;character&quot;</span>,</span>
+<span id="cb337-7"><a href="superscript-symbols.html#cb337-7"></a>                           <span class="kw">as.numeric</span>(character),</span>
+<span id="cb337-8"><a href="superscript-symbols.html#cb337-8"></a>                           numeric),</span>
+<span id="cb337-9"><a href="superscript-symbols.html#cb337-9"></a>         <span class="dt">character =</span> <span class="kw">if_else</span>(<span class="kw">is.na</span>(numeric), character, <span class="ot">NA_character_</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb337-10"><a href="superscript-symbols.html#cb337-10"></a><span class="st">  </span><span class="kw">select</span>(row, col, numeric, character, symbol)</span></code></pre></div>
+<pre><code>## Warning in if_else(row &gt; 1 &amp; col == 2 &amp; data_type == &quot;character&quot;, as.numeric(character), : NAs
+## introduced by coercion</code></pre>
 <pre><code>## # A tibble: 6 x 5
 ##     row   col numeric character symbol
 ##   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; 
