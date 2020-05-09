@@ -262,63 +262,63 @@ file</a>.
 <p><img src="images/ozmarriage2.png" /></p>
 <div id="the-full-code-listing" class="section level3" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> The full code listing</h3>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="australian-marriage-survey.html#cb357-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
-<span id="cb357-2"><a href="australian-marriage-survey.html#cb357-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
-<span id="cb357-3"><a href="australian-marriage-survey.html#cb357-3"></a></span>
-<span id="cb357-4"><a href="australian-marriage-survey.html#cb357-4"></a>table_<span class="dv">1</span>  &lt;-</span>
-<span id="cb357-5"><a href="australian-marriage-survey.html#cb357-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb357-6"><a href="australian-marriage-survey.html#cb357-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb357-7"><a href="australian-marriage-survey.html#cb357-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
-<span id="cb357-8"><a href="australian-marriage-survey.html#cb357-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-9"><a href="australian-marriage-survey.html#cb357-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-10"><a href="australian-marriage-survey.html#cb357-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-11"><a href="australian-marriage-survey.html#cb357-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-12"><a href="australian-marriage-survey.html#cb357-12"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
-<span id="cb357-13"><a href="australian-marriage-survey.html#cb357-13"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
-<span id="cb357-14"><a href="australian-marriage-survey.html#cb357-14"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
-<span id="cb357-15"><a href="australian-marriage-survey.html#cb357-15"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
-<span id="cb357-16"><a href="australian-marriage-survey.html#cb357-16"></a></span>
-<span id="cb357-17"><a href="australian-marriage-survey.html#cb357-17"></a>state &lt;-</span>
-<span id="cb357-18"><a href="australian-marriage-survey.html#cb357-18"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb357-19"><a href="australian-marriage-survey.html#cb357-19"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
-<span id="cb357-20"><a href="australian-marriage-survey.html#cb357-20"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
-<span id="cb357-21"><a href="australian-marriage-survey.html#cb357-21"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
-<span id="cb357-22"><a href="australian-marriage-survey.html#cb357-22"></a>                <span class="op">!</span>is_blank,</span>
-<span id="cb357-23"><a href="australian-marriage-survey.html#cb357-23"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb357-24"><a href="australian-marriage-survey.html#cb357-24"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
-<span id="cb357-25"><a href="australian-marriage-survey.html#cb357-25"></a></span>
-<span id="cb357-26"><a href="australian-marriage-survey.html#cb357-26"></a>table_<span class="dv">2</span> &lt;-</span>
-<span id="cb357-27"><a href="australian-marriage-survey.html#cb357-27"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb357-28"><a href="australian-marriage-survey.html#cb357-28"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
-<span id="cb357-29"><a href="australian-marriage-survey.html#cb357-29"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
-<span id="cb357-30"><a href="australian-marriage-survey.html#cb357-30"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb357-31"><a href="australian-marriage-survey.html#cb357-31"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
-<span id="cb357-32"><a href="australian-marriage-survey.html#cb357-32"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-33"><a href="australian-marriage-survey.html#cb357-33"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-34"><a href="australian-marriage-survey.html#cb357-34"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-35"><a href="australian-marriage-survey.html#cb357-35"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-36"><a href="australian-marriage-survey.html#cb357-36"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb357-37"><a href="australian-marriage-survey.html#cb357-37"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
-<span id="cb357-38"><a href="australian-marriage-survey.html#cb357-38"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
-<span id="cb357-39"><a href="australian-marriage-survey.html#cb357-39"></a>         unit) <span class="op">%&gt;%</span></span>
-<span id="cb357-40"><a href="australian-marriage-survey.html#cb357-40"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
-<span id="cb357-41"><a href="australian-marriage-survey.html#cb357-41"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
-<span id="cb357-42"><a href="australian-marriage-survey.html#cb357-42"></a></span>
-<span id="cb357-43"><a href="australian-marriage-survey.html#cb357-43"></a>all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)</span>
-<span id="cb357-44"><a href="australian-marriage-survey.html#cb357-44"></a>all_tables</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="australian-marriage-survey.html#cb364-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb364-2"><a href="australian-marriage-survey.html#cb364-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb364-3"><a href="australian-marriage-survey.html#cb364-3"></a></span>
+<span id="cb364-4"><a href="australian-marriage-survey.html#cb364-4"></a>table_<span class="dv">1</span>  &lt;-</span>
+<span id="cb364-5"><a href="australian-marriage-survey.html#cb364-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb364-6"><a href="australian-marriage-survey.html#cb364-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb364-7"><a href="australian-marriage-survey.html#cb364-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb364-8"><a href="australian-marriage-survey.html#cb364-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-9"><a href="australian-marriage-survey.html#cb364-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-10"><a href="australian-marriage-survey.html#cb364-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-11"><a href="australian-marriage-survey.html#cb364-11"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-12"><a href="australian-marriage-survey.html#cb364-12"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb364-13"><a href="australian-marriage-survey.html#cb364-13"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
+<span id="cb364-14"><a href="australian-marriage-survey.html#cb364-14"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb364-15"><a href="australian-marriage-survey.html#cb364-15"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb364-16"><a href="australian-marriage-survey.html#cb364-16"></a></span>
+<span id="cb364-17"><a href="australian-marriage-survey.html#cb364-17"></a>state &lt;-</span>
+<span id="cb364-18"><a href="australian-marriage-survey.html#cb364-18"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb364-19"><a href="australian-marriage-survey.html#cb364-19"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb364-20"><a href="australian-marriage-survey.html#cb364-20"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb364-21"><a href="australian-marriage-survey.html#cb364-21"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb364-22"><a href="australian-marriage-survey.html#cb364-22"></a>                <span class="op">!</span>is_blank,</span>
+<span id="cb364-23"><a href="australian-marriage-survey.html#cb364-23"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb364-24"><a href="australian-marriage-survey.html#cb364-24"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
+<span id="cb364-25"><a href="australian-marriage-survey.html#cb364-25"></a></span>
+<span id="cb364-26"><a href="australian-marriage-survey.html#cb364-26"></a>table_<span class="dv">2</span> &lt;-</span>
+<span id="cb364-27"><a href="australian-marriage-survey.html#cb364-27"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb364-28"><a href="australian-marriage-survey.html#cb364-28"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb364-29"><a href="australian-marriage-survey.html#cb364-29"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb364-30"><a href="australian-marriage-survey.html#cb364-30"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb364-31"><a href="australian-marriage-survey.html#cb364-31"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb364-32"><a href="australian-marriage-survey.html#cb364-32"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-33"><a href="australian-marriage-survey.html#cb364-33"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-34"><a href="australian-marriage-survey.html#cb364-34"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-35"><a href="australian-marriage-survey.html#cb364-35"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-36"><a href="australian-marriage-survey.html#cb364-36"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb364-37"><a href="australian-marriage-survey.html#cb364-37"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb364-38"><a href="australian-marriage-survey.html#cb364-38"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
+<span id="cb364-39"><a href="australian-marriage-survey.html#cb364-39"></a>         unit) <span class="op">%&gt;%</span></span>
+<span id="cb364-40"><a href="australian-marriage-survey.html#cb364-40"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb364-41"><a href="australian-marriage-survey.html#cb364-41"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb364-42"><a href="australian-marriage-survey.html#cb364-42"></a></span>
+<span id="cb364-43"><a href="australian-marriage-survey.html#cb364-43"></a>all_tables &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>)</span>
+<span id="cb364-44"><a href="australian-marriage-survey.html#cb364-44"></a>all_tables</span></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet   state           population            response                `%`     no. territory
-##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
-##  1 Table 1 New South Wales Eligible Participants Non-responding         20.5 1065445 &lt;NA&gt;     
-##  2 Table 1 New South Wales Eligible Participants Response clear         79.2 4111200 &lt;NA&gt;     
-##  3 Table 1 New South Wales Eligible Participants Response not clear(a)   0.2   11036 &lt;NA&gt;     
-##  4 Table 1 New South Wales Eligible Participants Total                 100   5187681 &lt;NA&gt;     
-##  5 Table 1 New South Wales Response clear        No                     42.2 1736838 &lt;NA&gt;     
-##  6 Table 1 New South Wales Response clear        Total                 100   4111200 &lt;NA&gt;     
-##  7 Table 1 New South Wales Response clear        Yes                    57.8 2374362 &lt;NA&gt;     
-##  8 Table 1 Victoria        Eligible Participants Non-responding         18.3  743634 &lt;NA&gt;     
-##  9 Table 1 Victoria        Eligible Participants Response clear         81.4 3306727 &lt;NA&gt;     
-## 10 Table 1 Victoria        Eligible Participants Response not clear(a)   0.3   11028 &lt;NA&gt;     
+##    sheet   state        population       response           `%`    no. territory
+##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    
+##  1 Table 1 New South W… Eligible Partic… Non-responding    20.5 1.07e6 &lt;NA&gt;     
+##  2 Table 1 New South W… Eligible Partic… Response clear    79.2 4.11e6 &lt;NA&gt;     
+##  3 Table 1 New South W… Eligible Partic… Response not cl…   0.2 1.10e4 &lt;NA&gt;     
+##  4 Table 1 New South W… Eligible Partic… Total            100   5.19e6 &lt;NA&gt;     
+##  5 Table 1 New South W… Response clear   No                42.2 1.74e6 &lt;NA&gt;     
+##  6 Table 1 New South W… Response clear   Total            100   4.11e6 &lt;NA&gt;     
+##  7 Table 1 New South W… Response clear   Yes               57.8 2.37e6 &lt;NA&gt;     
+##  8 Table 1 Victoria     Eligible Partic… Non-responding    18.3 7.44e5 &lt;NA&gt;     
+##  9 Table 1 Victoria     Eligible Partic… Response clear    81.4 3.31e6 &lt;NA&gt;     
+## 10 Table 1 Victoria     Eligible Partic… Response not cl…   0.3 1.10e4 &lt;NA&gt;     
 ## # … with 1,166 more rows</code></pre>
 </div>
 <div id="step-by-step" class="section level3" number="9.1.2">
@@ -331,22 +331,22 @@ data to join them to, they will be dropped automatically. That is handy,
 because otherwise we would have to know where the bottom of the table is, which
 is likely to change with later editions of the same data.</p>
 <p>Apart from filtering the first rows, the rest of this example is ‘textbook’.</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="australian-marriage-survey.html#cb359-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
-<span id="cb359-2"><a href="australian-marriage-survey.html#cb359-2"></a></span>
-<span id="cb359-3"><a href="australian-marriage-survey.html#cb359-3"></a>table_<span class="dv">1</span>  &lt;-</span>
-<span id="cb359-4"><a href="australian-marriage-survey.html#cb359-4"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb359-5"><a href="australian-marriage-survey.html#cb359-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb359-6"><a href="australian-marriage-survey.html#cb359-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
-<span id="cb359-7"><a href="australian-marriage-survey.html#cb359-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb359-8"><a href="australian-marriage-survey.html#cb359-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb359-9"><a href="australian-marriage-survey.html#cb359-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb359-10"><a href="australian-marriage-survey.html#cb359-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb359-11"><a href="australian-marriage-survey.html#cb359-11"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
-<span id="cb359-12"><a href="australian-marriage-survey.html#cb359-12"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
-<span id="cb359-13"><a href="australian-marriage-survey.html#cb359-13"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
-<span id="cb359-14"><a href="australian-marriage-survey.html#cb359-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
-<span id="cb359-15"><a href="australian-marriage-survey.html#cb359-15"></a></span>
-<span id="cb359-16"><a href="australian-marriage-survey.html#cb359-16"></a>table_<span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="australian-marriage-survey.html#cb366-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb366-2"><a href="australian-marriage-survey.html#cb366-2"></a></span>
+<span id="cb366-3"><a href="australian-marriage-survey.html#cb366-3"></a>table_<span class="dv">1</span>  &lt;-</span>
+<span id="cb366-4"><a href="australian-marriage-survey.html#cb366-4"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb366-5"><a href="australian-marriage-survey.html#cb366-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 1&quot;</span>, row <span class="op">&gt;=</span><span class="st"> </span>5L, <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb366-6"><a href="australian-marriage-survey.html#cb366-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb366-7"><a href="australian-marriage-survey.html#cb366-7"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb366-8"><a href="australian-marriage-survey.html#cb366-8"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb366-9"><a href="australian-marriage-survey.html#cb366-9"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb366-10"><a href="australian-marriage-survey.html#cb366-10"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;state&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb366-11"><a href="australian-marriage-survey.html#cb366-11"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb366-12"><a href="australian-marriage-survey.html#cb366-12"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, population, response, unit) <span class="op">%&gt;%</span></span>
+<span id="cb366-13"><a href="australian-marriage-survey.html#cb366-13"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb366-14"><a href="australian-marriage-survey.html#cb366-14"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb366-15"><a href="australian-marriage-survey.html#cb366-15"></a></span>
+<span id="cb366-16"><a href="australian-marriage-survey.html#cb366-16"></a>table_<span class="dv">1</span></span></code></pre></div>
 <pre><code>## # A tibble: 63 x 5
 ##    state           population            response                `%`     no.
 ##    &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
@@ -371,52 +371,52 @@ With them out of the way, unpivot the rest of the table as normal, and then use
 <code>enhead()</code> at the end to join the state names back on.</p>
 <p>Since tables 1 and 2 are so similar structurally, they might as well be joined
 into one.</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="australian-marriage-survey.html#cb361-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
-<span id="cb361-2"><a href="australian-marriage-survey.html#cb361-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
-<span id="cb361-3"><a href="australian-marriage-survey.html#cb361-3"></a></span>
-<span id="cb361-4"><a href="australian-marriage-survey.html#cb361-4"></a>state &lt;-</span>
-<span id="cb361-5"><a href="australian-marriage-survey.html#cb361-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb361-6"><a href="australian-marriage-survey.html#cb361-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
-<span id="cb361-7"><a href="australian-marriage-survey.html#cb361-7"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
-<span id="cb361-8"><a href="australian-marriage-survey.html#cb361-8"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
-<span id="cb361-9"><a href="australian-marriage-survey.html#cb361-9"></a>                <span class="op">!</span>is_blank,</span>
-<span id="cb361-10"><a href="australian-marriage-survey.html#cb361-10"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
-<span id="cb361-11"><a href="australian-marriage-survey.html#cb361-11"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
-<span id="cb361-12"><a href="australian-marriage-survey.html#cb361-12"></a></span>
-<span id="cb361-13"><a href="australian-marriage-survey.html#cb361-13"></a>table_<span class="dv">2</span> &lt;-</span>
-<span id="cb361-14"><a href="australian-marriage-survey.html#cb361-14"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
-<span id="cb361-15"><a href="australian-marriage-survey.html#cb361-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
-<span id="cb361-16"><a href="australian-marriage-survey.html#cb361-16"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
-<span id="cb361-17"><a href="australian-marriage-survey.html#cb361-17"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb361-18"><a href="australian-marriage-survey.html#cb361-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
-<span id="cb361-19"><a href="australian-marriage-survey.html#cb361-19"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-20"><a href="australian-marriage-survey.html#cb361-20"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-21"><a href="australian-marriage-survey.html#cb361-21"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-22"><a href="australian-marriage-survey.html#cb361-22"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-23"><a href="australian-marriage-survey.html#cb361-23"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-24"><a href="australian-marriage-survey.html#cb361-24"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
-<span id="cb361-25"><a href="australian-marriage-survey.html#cb361-25"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
-<span id="cb361-26"><a href="australian-marriage-survey.html#cb361-26"></a>         unit) <span class="op">%&gt;%</span></span>
-<span id="cb361-27"><a href="australian-marriage-survey.html#cb361-27"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
-<span id="cb361-28"><a href="australian-marriage-survey.html#cb361-28"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
-<span id="cb361-29"><a href="australian-marriage-survey.html#cb361-29"></a></span>
-<span id="cb361-30"><a href="australian-marriage-survey.html#cb361-30"></a>all_tables &lt;-</span>
-<span id="cb361-31"><a href="australian-marriage-survey.html#cb361-31"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb361-32"><a href="australian-marriage-survey.html#cb361-32"></a><span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)</span>
-<span id="cb361-33"><a href="australian-marriage-survey.html#cb361-33"></a>all_tables</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="australian-marriage-survey.html#cb368-1"></a>cells &lt;-<span class="st"> </span><span class="kw">xlsx_cells</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb368-2"><a href="australian-marriage-survey.html#cb368-2"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(smungs<span class="op">::</span>ozmarriage)</span>
+<span id="cb368-3"><a href="australian-marriage-survey.html#cb368-3"></a></span>
+<span id="cb368-4"><a href="australian-marriage-survey.html#cb368-4"></a>state &lt;-</span>
+<span id="cb368-5"><a href="australian-marriage-survey.html#cb368-5"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb368-6"><a href="australian-marriage-survey.html#cb368-6"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb368-7"><a href="australian-marriage-survey.html#cb368-7"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb368-8"><a href="australian-marriage-survey.html#cb368-8"></a>                col <span class="op">==</span><span class="st"> </span>1L,</span>
+<span id="cb368-9"><a href="australian-marriage-survey.html#cb368-9"></a>                <span class="op">!</span>is_blank,</span>
+<span id="cb368-10"><a href="australian-marriage-survey.html#cb368-10"></a>                formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold[local_format_id]) <span class="op">%&gt;%</span></span>
+<span id="cb368-11"><a href="australian-marriage-survey.html#cb368-11"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">state =</span> character)</span>
+<span id="cb368-12"><a href="australian-marriage-survey.html#cb368-12"></a></span>
+<span id="cb368-13"><a href="australian-marriage-survey.html#cb368-13"></a>table_<span class="dv">2</span> &lt;-</span>
+<span id="cb368-14"><a href="australian-marriage-survey.html#cb368-14"></a><span class="st">  </span>cells <span class="op">%&gt;%</span></span>
+<span id="cb368-15"><a href="australian-marriage-survey.html#cb368-15"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(sheet <span class="op">==</span><span class="st"> &quot;Table 2&quot;</span>,</span>
+<span id="cb368-16"><a href="australian-marriage-survey.html#cb368-16"></a>                row <span class="op">&gt;=</span><span class="st"> </span>5L,</span>
+<span id="cb368-17"><a href="australian-marriage-survey.html#cb368-17"></a>                <span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb368-18"><a href="australian-marriage-survey.html#cb368-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">character =</span> <span class="kw">str_trim</span>(character)) <span class="op">%&gt;%</span></span>
+<span id="cb368-19"><a href="australian-marriage-survey.html#cb368-19"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;population&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-20"><a href="australian-marriage-survey.html#cb368-20"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;response&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-21"><a href="australian-marriage-survey.html#cb368-21"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;unit&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-22"><a href="australian-marriage-survey.html#cb368-22"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;territory&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-23"><a href="australian-marriage-survey.html#cb368-23"></a><span class="st">  </span><span class="kw">enhead</span>(state, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-24"><a href="australian-marriage-survey.html#cb368-24"></a><span class="st">  </span><span class="kw">arrange</span>(row, col) <span class="op">%&gt;%</span></span>
+<span id="cb368-25"><a href="australian-marriage-survey.html#cb368-25"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, numeric, state, territory, population, response,</span>
+<span id="cb368-26"><a href="australian-marriage-survey.html#cb368-26"></a>         unit) <span class="op">%&gt;%</span></span>
+<span id="cb368-27"><a href="australian-marriage-survey.html#cb368-27"></a><span class="st">  </span><span class="kw">spatter</span>(unit) <span class="op">%&gt;%</span></span>
+<span id="cb368-28"><a href="australian-marriage-survey.html#cb368-28"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span>
+<span id="cb368-29"><a href="australian-marriage-survey.html#cb368-29"></a></span>
+<span id="cb368-30"><a href="australian-marriage-survey.html#cb368-30"></a>all_tables &lt;-</span>
+<span id="cb368-31"><a href="australian-marriage-survey.html#cb368-31"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="st">&quot;Table 1&quot;</span> =<span class="st"> </span>table_<span class="dv">1</span>, <span class="st">&quot;Table 2&quot;</span> =<span class="st"> </span>table_<span class="dv">2</span>, <span class="dt">.id =</span> <span class="st">&quot;sheet&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb368-32"><a href="australian-marriage-survey.html#cb368-32"></a><span class="st">  </span><span class="kw">select</span>(sheet, state, territory, population, response, <span class="st">`</span><span class="dt">%</span><span class="st">`</span>, no.)</span>
+<span id="cb368-33"><a href="australian-marriage-survey.html#cb368-33"></a>all_tables</span></code></pre></div>
 <pre><code>## # A tibble: 1,176 x 7
-##    sheet   state           territory population            response                `%`     no.
-##    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;                 &lt;chr&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
-##  1 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Non-responding         20.5 1065445
-##  2 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Response clear         79.2 4111200
-##  3 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Response not clear(a)   0.2   11036
-##  4 Table 1 New South Wales &lt;NA&gt;      Eligible Participants Total                 100   5187681
-##  5 Table 1 New South Wales &lt;NA&gt;      Response clear        No                     42.2 1736838
-##  6 Table 1 New South Wales &lt;NA&gt;      Response clear        Total                 100   4111200
-##  7 Table 1 New South Wales &lt;NA&gt;      Response clear        Yes                    57.8 2374362
-##  8 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Non-responding         18.3  743634
-##  9 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Response clear         81.4 3306727
-## 10 Table 1 Victoria        &lt;NA&gt;      Eligible Participants Response not clear(a)   0.3   11028
+##    sheet   state        territory population       response           `%`    no.
+##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Table 1 New South W… &lt;NA&gt;      Eligible Partic… Non-responding    20.5 1.07e6
+##  2 Table 1 New South W… &lt;NA&gt;      Eligible Partic… Response clear    79.2 4.11e6
+##  3 Table 1 New South W… &lt;NA&gt;      Eligible Partic… Response not cl…   0.2 1.10e4
+##  4 Table 1 New South W… &lt;NA&gt;      Eligible Partic… Total            100   5.19e6
+##  5 Table 1 New South W… &lt;NA&gt;      Response clear   No                42.2 1.74e6
+##  6 Table 1 New South W… &lt;NA&gt;      Response clear   Total            100   4.11e6
+##  7 Table 1 New South W… &lt;NA&gt;      Response clear   Yes               57.8 2.37e6
+##  8 Table 1 Victoria     &lt;NA&gt;      Eligible Partic… Non-responding    18.3 7.44e5
+##  9 Table 1 Victoria     &lt;NA&gt;      Eligible Partic… Response clear    81.4 3.31e6
+## 10 Table 1 Victoria     &lt;NA&gt;      Eligible Partic… Response not cl…   0.3 1.10e4
 ## # … with 1,166 more rows</code></pre>
 </div>
 </div>

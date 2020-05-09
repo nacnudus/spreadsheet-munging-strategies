@@ -258,14 +258,14 @@ are in the header row.</p>
 tidy ‘header’, and you can reformat it as text before <code>spatter()</code> turns it into
 the header of a data frame. Another way to format headers as part of the
 <code>behead()</code> will be shown later.</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="non-text-headers-e-g-dates.html#cb340-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb340-2"><a href="non-text-headers-e-g-dates.html#cb340-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb340-3"><a href="non-text-headers-e-g-dates.html#cb340-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, name) <span class="op">%&gt;%</span></span>
-<span id="cb340-4"><a href="non-text-headers-e-g-dates.html#cb340-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb340-5"><a href="non-text-headers-e-g-dates.html#cb340-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb340-6"><a href="non-text-headers-e-g-dates.html#cb340-6"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, name, numeric) <span class="op">%&gt;%</span></span>
-<span id="cb340-7"><a href="non-text-headers-e-g-dates.html#cb340-7"></a><span class="st">  </span><span class="kw">spatter</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
-<span id="cb340-8"><a href="non-text-headers-e-g-dates.html#cb340-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="non-text-headers-e-g-dates.html#cb347-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb347-2"><a href="non-text-headers-e-g-dates.html#cb347-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb347-3"><a href="non-text-headers-e-g-dates.html#cb347-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, name) <span class="op">%&gt;%</span></span>
+<span id="cb347-4"><a href="non-text-headers-e-g-dates.html#cb347-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb347-5"><a href="non-text-headers-e-g-dates.html#cb347-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span> =<span class="st"> </span><span class="kw">strftime</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, <span class="st">&quot;%Y&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb347-6"><a href="non-text-headers-e-g-dates.html#cb347-6"></a><span class="st">  </span><span class="kw">select</span>(row, data_type, <span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>, name, numeric) <span class="op">%&gt;%</span></span>
+<span id="cb347-7"><a href="non-text-headers-e-g-dates.html#cb347-7"></a><span class="st">  </span><span class="kw">spatter</span>(<span class="st">`</span><span class="dt">academic-year</span><span class="st">`</span>) <span class="op">%&gt;%</span></span>
+<span id="cb347-8"><a href="non-text-headers-e-g-dates.html#cb347-8"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   name     `2017` `2018`
 ##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
@@ -274,9 +274,9 @@ the header of a data frame. Another way to format headers as part of the
 <p>When a single set of headers is of mixed data types, e.g. some character and
 some date, <code>behead()</code> chooses the correct ones using the <code>data_type</code> column,
 before converting them all to text via <code>format()</code>.</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="non-text-headers-e-g-dates.html#cb342-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb342-2"><a href="non-text-headers-e-g-dates.html#cb342-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></span>
-<span id="cb342-3"><a href="non-text-headers-e-g-dates.html#cb342-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="non-text-headers-e-g-dates.html#cb349-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb349-2"><a href="non-text-headers-e-g-dates.html#cb349-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></span>
+<span id="cb349-3"><a href="non-text-headers-e-g-dates.html#cb349-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##     row   col data_type character numeric date                header    
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;     
@@ -288,10 +288,10 @@ before converting them all to text via <code>format()</code>.</p>
 ## 6     3     3 numeric   &lt;NA&gt;            3 NA                  2017-01-01</code></pre>
 <p>To format a header when a single set of headers are of mixed data types, you
 can specify a function for each data type in the call to <code>behead()</code>.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="non-text-headers-e-g-dates.html#cb344-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb344-2"><a href="non-text-headers-e-g-dates.html#cb344-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></span>
-<span id="cb344-3"><a href="non-text-headers-e-g-dates.html#cb344-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">date =</span> <span class="op">~</span><span class="st"> </span><span class="kw">strftime</span>(.x, <span class="st">&quot;%Y&quot;</span>),</span>
-<span id="cb344-4"><a href="non-text-headers-e-g-dates.html#cb344-4"></a>                                        <span class="dt">character =</span> toupper))</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="non-text-headers-e-g-dates.html#cb351-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;non-text headers&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb351-2"><a href="non-text-headers-e-g-dates.html#cb351-2"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric, date) <span class="op">%&gt;%</span></span>
+<span id="cb351-3"><a href="non-text-headers-e-g-dates.html#cb351-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, header, <span class="dt">formatters =</span> <span class="kw">list</span>(<span class="dt">date =</span> <span class="op">~</span><span class="st"> </span><span class="kw">strftime</span>(.x, <span class="st">&quot;%Y&quot;</span>),</span>
+<span id="cb351-4"><a href="non-text-headers-e-g-dates.html#cb351-4"></a>                                        <span class="dt">character =</span> toupper))</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##     row   col data_type character numeric date                header
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt; 

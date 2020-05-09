@@ -253,54 +253,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.2</span> Common formats</h2>
 <p><img src="images/formatting.png" /></p>
 <p>This example shows how to look up the most common formats.</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="common-formats.html#cb321-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb321-2"><a href="common-formats.html#cb321-2"></a>cells &lt;-</span>
-<span id="cb321-3"><a href="common-formats.html#cb321-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb321-4"><a href="common-formats.html#cb321-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)</span>
-<span id="cb321-5"><a href="common-formats.html#cb321-5"></a></span>
-<span id="cb321-6"><a href="common-formats.html#cb321-6"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
-<span id="cb321-7"><a href="common-formats.html#cb321-7"></a></span>
-<span id="cb321-8"><a href="common-formats.html#cb321-8"></a>bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
-<span id="cb321-9"><a href="common-formats.html#cb321-9"></a>italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
-<span id="cb321-10"><a href="common-formats.html#cb321-10"></a>underline &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>underline</span>
-<span id="cb321-11"><a href="common-formats.html#cb321-11"></a>strikethrough &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>strike</span>
-<span id="cb321-12"><a href="common-formats.html#cb321-12"></a>font_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</span>
-<span id="cb321-13"><a href="common-formats.html#cb321-13"></a>fill_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
-<span id="cb321-14"><a href="common-formats.html#cb321-14"></a>font_size &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>size</span>
-<span id="cb321-15"><a href="common-formats.html#cb321-15"></a>font_name &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>name</span>
-<span id="cb321-16"><a href="common-formats.html#cb321-16"></a>border_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>color<span class="op">$</span>rgb</span>
-<span id="cb321-17"><a href="common-formats.html#cb321-17"></a>border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>style</span>
-<span id="cb321-18"><a href="common-formats.html#cb321-18"></a></span>
-<span id="cb321-19"><a href="common-formats.html#cb321-19"></a><span class="kw">mutate</span>(cells,</span>
-<span id="cb321-20"><a href="common-formats.html#cb321-20"></a>       <span class="dt">bold =</span> bold[local_format_id],</span>
-<span id="cb321-21"><a href="common-formats.html#cb321-21"></a>       <span class="dt">italic =</span> italic[local_format_id],</span>
-<span id="cb321-22"><a href="common-formats.html#cb321-22"></a>       <span class="dt">underline =</span> underline[local_format_id],</span>
-<span id="cb321-23"><a href="common-formats.html#cb321-23"></a>       <span class="dt">strikethrough =</span> strikethrough[local_format_id],</span>
-<span id="cb321-24"><a href="common-formats.html#cb321-24"></a>       <span class="dt">font_colour =</span> font_colour[local_format_id],</span>
-<span id="cb321-25"><a href="common-formats.html#cb321-25"></a>       <span class="dt">font_size =</span> font_size[local_format_id],</span>
-<span id="cb321-26"><a href="common-formats.html#cb321-26"></a>       <span class="dt">font_name =</span> font_name[local_format_id],</span>
-<span id="cb321-27"><a href="common-formats.html#cb321-27"></a>       <span class="dt">fill_colour =</span> fill_colour[local_format_id],</span>
-<span id="cb321-28"><a href="common-formats.html#cb321-28"></a>       <span class="dt">border_colour =</span> border_colour[local_format_id],</span>
-<span id="cb321-29"><a href="common-formats.html#cb321-29"></a>       <span class="dt">border_linetype =</span> border_linetype[local_format_id])</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="common-formats.html#cb328-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb328-2"><a href="common-formats.html#cb328-2"></a>cells &lt;-</span>
+<span id="cb328-3"><a href="common-formats.html#cb328-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb328-4"><a href="common-formats.html#cb328-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id, height, width)</span>
+<span id="cb328-5"><a href="common-formats.html#cb328-5"></a></span>
+<span id="cb328-6"><a href="common-formats.html#cb328-6"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb328-7"><a href="common-formats.html#cb328-7"></a></span>
+<span id="cb328-8"><a href="common-formats.html#cb328-8"></a>bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
+<span id="cb328-9"><a href="common-formats.html#cb328-9"></a>italic &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>italic</span>
+<span id="cb328-10"><a href="common-formats.html#cb328-10"></a>underline &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>underline</span>
+<span id="cb328-11"><a href="common-formats.html#cb328-11"></a>strikethrough &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>strike</span>
+<span id="cb328-12"><a href="common-formats.html#cb328-12"></a>font_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>color<span class="op">$</span>rgb</span>
+<span id="cb328-13"><a href="common-formats.html#cb328-13"></a>fill_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>fill<span class="op">$</span>patternFill<span class="op">$</span>fgColor<span class="op">$</span>rgb</span>
+<span id="cb328-14"><a href="common-formats.html#cb328-14"></a>font_size &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>size</span>
+<span id="cb328-15"><a href="common-formats.html#cb328-15"></a>font_name &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>name</span>
+<span id="cb328-16"><a href="common-formats.html#cb328-16"></a>border_colour &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>color<span class="op">$</span>rgb</span>
+<span id="cb328-17"><a href="common-formats.html#cb328-17"></a>border_linetype &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>border<span class="op">$</span>right<span class="op">$</span>style</span>
+<span id="cb328-18"><a href="common-formats.html#cb328-18"></a></span>
+<span id="cb328-19"><a href="common-formats.html#cb328-19"></a><span class="kw">mutate</span>(cells,</span>
+<span id="cb328-20"><a href="common-formats.html#cb328-20"></a>       <span class="dt">bold =</span> bold[local_format_id],</span>
+<span id="cb328-21"><a href="common-formats.html#cb328-21"></a>       <span class="dt">italic =</span> italic[local_format_id],</span>
+<span id="cb328-22"><a href="common-formats.html#cb328-22"></a>       <span class="dt">underline =</span> underline[local_format_id],</span>
+<span id="cb328-23"><a href="common-formats.html#cb328-23"></a>       <span class="dt">strikethrough =</span> strikethrough[local_format_id],</span>
+<span id="cb328-24"><a href="common-formats.html#cb328-24"></a>       <span class="dt">font_colour =</span> font_colour[local_format_id],</span>
+<span id="cb328-25"><a href="common-formats.html#cb328-25"></a>       <span class="dt">font_size =</span> font_size[local_format_id],</span>
+<span id="cb328-26"><a href="common-formats.html#cb328-26"></a>       <span class="dt">font_name =</span> font_name[local_format_id],</span>
+<span id="cb328-27"><a href="common-formats.html#cb328-27"></a>       <span class="dt">fill_colour =</span> fill_colour[local_format_id],</span>
+<span id="cb328-28"><a href="common-formats.html#cb328-28"></a>       <span class="dt">border_colour =</span> border_colour[local_format_id],</span>
+<span id="cb328-29"><a href="common-formats.html#cb328-29"></a>       <span class="dt">border_linetype =</span> border_linetype[local_format_id])</span></code></pre></div>
 <pre><code>## # A tibble: 14 x 17
-##      row   col character style_format local_format_id height width bold  italic underline
-##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;    
-##  1     1     1 bold      Normal                     6   15    8.71 TRUE  FALSE  &lt;NA&gt;     
-##  2     2     1 italic    Normal                     8   15    8.71 FALSE TRUE   &lt;NA&gt;     
-##  3     3     1 underline Normal                    51   15    8.71 FALSE FALSE  single   
-##  4     4     1 striketh… Normal                    52   15    8.71 FALSE FALSE  &lt;NA&gt;     
-##  5     5     1 red text  Normal                    12   15    8.71 FALSE FALSE  &lt;NA&gt;     
-##  6     6     1 font siz… Normal                    53   18.8  8.71 FALSE FALSE  &lt;NA&gt;     
-##  7     7     1 font ari… Normal                    54   15    8.71 FALSE FALSE  &lt;NA&gt;     
-##  8     8     1 yellow f… Normal                    11   15    8.71 FALSE FALSE  &lt;NA&gt;     
-##  9     9     1 black bo… Normal                    43   15    8.71 FALSE FALSE  &lt;NA&gt;     
-## 10    10     1 thick bo… Normal                    55   15    8.71 FALSE FALSE  &lt;NA&gt;     
-## 11    11     1 dashed b… Normal                    56   15    8.71 FALSE FALSE  &lt;NA&gt;     
-## 12    12     1 row heig… Normal                     1   30    8.71 FALSE FALSE  &lt;NA&gt;     
-## 13    13     2 column w… Normal                     1   15   17.4  FALSE FALSE  &lt;NA&gt;     
-## 14    14     1 Bad&#39; sty… Explanatory…              57   15    8.71 FALSE FALSE  &lt;NA&gt;     
-## # … with 7 more variables: strikethrough &lt;lgl&gt;, font_colour &lt;chr&gt;, font_size &lt;dbl&gt;,
-## #   font_name &lt;chr&gt;, fill_colour &lt;chr&gt;, border_colour &lt;chr&gt;, border_linetype &lt;chr&gt;</code></pre>
+##      row   col character style_format local_format_id height width bold  italic
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt; 
+##  1     1     1 bold      Normal                     6   15    8.71 TRUE  FALSE 
+##  2     2     1 italic    Normal                     8   15    8.71 FALSE TRUE  
+##  3     3     1 underline Normal                    51   15    8.71 FALSE FALSE 
+##  4     4     1 striketh… Normal                    52   15    8.71 FALSE FALSE 
+##  5     5     1 red text  Normal                    12   15    8.71 FALSE FALSE 
+##  6     6     1 font siz… Normal                    53   18.8  8.71 FALSE FALSE 
+##  7     7     1 font ari… Normal                    54   15    8.71 FALSE FALSE 
+##  8     8     1 yellow f… Normal                    11   15    8.71 FALSE FALSE 
+##  9     9     1 black bo… Normal                    43   15    8.71 FALSE FALSE 
+## 10    10     1 thick bo… Normal                    55   15    8.71 FALSE FALSE 
+## 11    11     1 dashed b… Normal                    56   15    8.71 FALSE FALSE 
+## 12    12     1 row heig… Normal                     1   30    8.71 FALSE FALSE 
+## 13    13     2 column w… Normal                     1   15   17.4  FALSE FALSE 
+## 14    14     1 Bad&#39; sty… Explanatory…              57   15    8.71 FALSE FALSE 
+## # … with 8 more variables: underline &lt;chr&gt;, strikethrough &lt;lgl&gt;,
+## #   font_colour &lt;chr&gt;, font_size &lt;dbl&gt;, font_name &lt;chr&gt;, fill_colour &lt;chr&gt;,
+## #   border_colour &lt;chr&gt;, border_linetype &lt;chr&gt;</code></pre>
 </div>
             </section>
 

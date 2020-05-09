@@ -268,18 +268,18 @@ faking a set of headers that doesn’t exist, but is implied.</li>
 <li>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and
 then overwrite them with “Score”.</li>
 </ol>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="implied-multiples.html#cb300-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb300-2"><a href="implied-multiples.html#cb300-2"></a>all_cells &lt;-</span>
-<span id="cb300-3"><a href="implied-multiples.html#cb300-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb300-4"><a href="implied-multiples.html#cb300-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb300-5"><a href="implied-multiples.html#cb300-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="implied-multiples.html#cb307-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb307-2"><a href="implied-multiples.html#cb307-2"></a>all_cells &lt;-</span>
+<span id="cb307-3"><a href="implied-multiples.html#cb307-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="st">&quot;implied-multiples&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb307-4"><a href="implied-multiples.html#cb307-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb307-5"><a href="implied-multiples.html#cb307-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, data_type, character, numeric)</span></code></pre></div>
 <p>Filter for the “Classics”, “History”, “Music” and “Drama” headers, and assign
 them to a variable to be <code>enhead()</code>ed later.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="implied-multiples.html#cb301-1"></a>subjects &lt;-</span>
-<span id="cb301-2"><a href="implied-multiples.html#cb301-2"></a><span class="st">  </span>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb301-3"><a href="implied-multiples.html#cb301-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb301-4"><a href="implied-multiples.html#cb301-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</span>
-<span id="cb301-5"><a href="implied-multiples.html#cb301-5"></a>subjects</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="implied-multiples.html#cb308-1"></a>subjects &lt;-</span>
+<span id="cb308-2"><a href="implied-multiples.html#cb308-2"></a><span class="st">  </span>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb308-3"><a href="implied-multiples.html#cb308-3"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(col <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>, row <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, character <span class="op">!=</span><span class="st"> &quot;Grade&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb308-4"><a href="implied-multiples.html#cb308-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, <span class="dt">subject =</span> character)</span>
+<span id="cb308-5"><a href="implied-multiples.html#cb308-5"></a>subjects</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##     row   col subject 
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   
@@ -289,15 +289,15 @@ them to a variable to be <code>enhead()</code>ed later.</p>
 ## 4     2     8 Drama</code></pre>
 <p>Meanwhile, <code>behead()</code> the original “Classics”, “History” (etc.) cells and then
 overwrite them with “Score”.</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="implied-multiples.html#cb303-1"></a>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb303-2"><a href="implied-multiples.html#cb303-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb303-3"><a href="implied-multiples.html#cb303-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb303-4"><a href="implied-multiples.html#cb303-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb303-5"><a href="implied-multiples.html#cb303-5"></a><span class="st">  </span><span class="kw">enhead</span>(subjects, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Reattach the filtered subject headers</span></span>
-<span id="cb303-6"><a href="implied-multiples.html#cb303-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(header <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, header, <span class="st">&quot;Score&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb303-7"><a href="implied-multiples.html#cb303-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
-<span id="cb303-8"><a href="implied-multiples.html#cb303-8"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
-<span id="cb303-9"><a href="implied-multiples.html#cb303-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="implied-multiples.html#cb310-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb310-2"><a href="implied-multiples.html#cb310-2"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up-left&quot;</span>, <span class="st">&quot;field&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb310-3"><a href="implied-multiples.html#cb310-3"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, <span class="st">&quot;header&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb310-4"><a href="implied-multiples.html#cb310-4"></a><span class="st">  </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb310-5"><a href="implied-multiples.html#cb310-5"></a><span class="st">  </span><span class="kw">enhead</span>(subjects, <span class="st">&quot;up-left&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Reattach the filtered subject headers</span></span>
+<span id="cb310-6"><a href="implied-multiples.html#cb310-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">header =</span> <span class="kw">if_else</span>(header <span class="op">==</span><span class="st"> &quot;Grade&quot;</span>, header, <span class="st">&quot;Score&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb310-7"><a href="implied-multiples.html#cb310-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>col) <span class="op">%&gt;%</span></span>
+<span id="cb310-8"><a href="implied-multiples.html#cb310-8"></a><span class="st">  </span><span class="kw">spatter</span>(header) <span class="op">%&gt;%</span></span>
+<span id="cb310-9"><a href="implied-multiples.html#cb310-9"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>row)</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 5
 ##   field       name    subject  Grade Score
 ##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;

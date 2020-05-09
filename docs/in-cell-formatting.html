@@ -274,9 +274,9 @@ provided as a data frame with the following columns.</p>
 </ul>
 <p>There is one of these data frames for each cell, and they are kept in a
 list-column called <code>character_formatted</code>.</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="in-cell-formatting.html#cb323-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb323-2"><a href="in-cell-formatting.html#cb323-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb323-3"><a href="in-cell-formatting.html#cb323-3"></a><span class="st">  </span><span class="kw">select</span>(address, character_formatted)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="in-cell-formatting.html#cb330-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb330-2"><a href="in-cell-formatting.html#cb330-2"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb330-3"><a href="in-cell-formatting.html#cb330-3"></a><span class="st">  </span><span class="kw">select</span>(address, character_formatted)</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 2
 ##   address character_formatted
 ##   &lt;chr&gt;   &lt;list&gt;             
@@ -292,26 +292,26 @@ list-column called <code>character_formatted</code>.</p>
 <p>The way to access these data frames is via <code>tidyr::unnest()</code>. In this example,
 a single cell has a long string of words, where each word is formatted
 differently.</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="in-cell-formatting.html#cb325-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb325-2"><a href="in-cell-formatting.html#cb325-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb325-3"><a href="in-cell-formatting.html#cb325-3"></a><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></span>
-<span id="cb325-4"><a href="in-cell-formatting.html#cb325-4"></a><span class="st">  </span><span class="kw">unnest</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="in-cell-formatting.html#cb332-1"></a><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;in-cell formatting&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb332-2"><a href="in-cell-formatting.html#cb332-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(address <span class="op">==</span><span class="st"> &quot;A1&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb332-3"><a href="in-cell-formatting.html#cb332-3"></a><span class="st">  </span><span class="kw">select</span>(address, character_formatted) <span class="op">%&gt;%</span></span>
+<span id="cb332-4"><a href="in-cell-formatting.html#cb332-4"></a><span class="st">  </span><span class="kw">unnest</span>()</span></code></pre></div>
 <pre><code>## Warning: `cols` is now required.
 ## Please use `cols = c(character_formatted)`</code></pre>
 <pre><code>## # A tibble: 9 x 15
-##   address character bold  italic underline strike vertAlign  size color_rgb color_theme
-##   &lt;chr&gt;   &lt;chr&gt;     &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;int&gt;
-## 1 A1      in-cell:  FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000           NA
-## 2 A1      bold,     TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000           NA
-## 3 A1      italic,   FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000           NA
-## 4 A1      underlin… FALSE FALSE  single    FALSE  &lt;NA&gt;          0 FF000000           NA
-## 5 A1      striketh… FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;          0 FF000000           NA
-## 6 A1      superscr… FALSE FALSE  &lt;NA&gt;      FALSE  superscr…     0 FF000000           NA
-## 7 A1      red,      FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FFFF0000           NA
-## 8 A1      arial,    FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;               NA
-## 9 A1      size 14   FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;               NA
-## # … with 5 more variables: color_indexed &lt;int&gt;, color_tint &lt;dbl&gt;, font &lt;chr&gt;, family &lt;int&gt;,
-## #   scheme &lt;chr&gt;</code></pre>
+##   address character bold  italic underline strike vertAlign  size color_rgb
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;lgl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;lgl&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;    
+## 1 A1      in-cell:  FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 2 A1      bold,     TRUE  FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 3 A1      italic,   FALSE TRUE   &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FF000000 
+## 4 A1      underlin… FALSE FALSE  single    FALSE  &lt;NA&gt;          0 FF000000 
+## 5 A1      striketh… FALSE FALSE  &lt;NA&gt;      TRUE   &lt;NA&gt;          0 FF000000 
+## 6 A1      superscr… FALSE FALSE  &lt;NA&gt;      FALSE  superscr…     0 FF000000 
+## 7 A1      red,      FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 FFFF0000 
+## 8 A1      arial,    FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;     
+## 9 A1      size 14   FALSE FALSE  &lt;NA&gt;      FALSE  &lt;NA&gt;          0 &lt;NA&gt;     
+## # … with 6 more variables: color_theme &lt;int&gt;, color_indexed &lt;int&gt;,
+## #   color_tint &lt;dbl&gt;, font &lt;chr&gt;, family &lt;int&gt;, scheme &lt;chr&gt;</code></pre>
 <p>It’s hard to think of a plausible example, so what follows is an implausible one
 that nevertheless occurred in real life.</p>
 </div>

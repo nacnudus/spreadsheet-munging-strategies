@@ -253,12 +253,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.1</span> An example formatting lookup</h2>
 <p><img src="images/formatting.png" /></p>
 <p>This example shows how to look up whether a cell is bold.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="an-example-formatting-lookup.html#cb305-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb305-2"><a href="an-example-formatting-lookup.html#cb305-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb305-3"><a href="an-example-formatting-lookup.html#cb305-3"></a>cells &lt;-</span>
-<span id="cb305-4"><a href="an-example-formatting-lookup.html#cb305-4"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb305-5"><a href="an-example-formatting-lookup.html#cb305-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)</span>
-<span id="cb305-6"><a href="an-example-formatting-lookup.html#cb305-6"></a>cells</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="an-example-formatting-lookup.html#cb312-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb312-2"><a href="an-example-formatting-lookup.html#cb312-2"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb312-3"><a href="an-example-formatting-lookup.html#cb312-3"></a>cells &lt;-</span>
+<span id="cb312-4"><a href="an-example-formatting-lookup.html#cb312-4"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb312-5"><a href="an-example-formatting-lookup.html#cb312-5"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id)</span>
+<span id="cb312-6"><a href="an-example-formatting-lookup.html#cb312-6"></a>cells</span></code></pre></div>
 <pre><code>## # A tibble: 14 x 5
 ##      row   col character          style_format     local_format_id
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                      &lt;int&gt;
@@ -276,14 +276,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 12    12     1 row height 30      Normal                         1
 ## 13    13     2 column width 16.76 Normal                         1
 ## 14    14     1 Bad&#39; style         Explanatory Text              57</code></pre>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="an-example-formatting-lookup.html#cb307-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
-<span id="cb307-2"><a href="an-example-formatting-lookup.html#cb307-2"></a>bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span></span>
-<span id="cb307-3"><a href="an-example-formatting-lookup.html#cb307-3"></a>bold</span></code></pre></div>
-<pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [16] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [31] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [46] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="an-example-formatting-lookup.html#cb309-1"></a><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="an-example-formatting-lookup.html#cb314-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb314-2"><a href="an-example-formatting-lookup.html#cb314-2"></a>bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold <span class="co"># The list of lists of lists of vectors</span></span>
+<span id="cb314-3"><a href="an-example-formatting-lookup.html#cb314-3"></a>bold</span></code></pre></div>
+<pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [13] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="an-example-formatting-lookup.html#cb316-1"></a><span class="kw">mutate</span>(cells, <span class="dt">bold =</span> bold[local_format_id])</span></code></pre></div>
 <pre><code>## # A tibble: 14 x 6
 ##      row   col character          style_format     local_format_id bold 
 ##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;                      &lt;int&gt; &lt;lgl&gt;
@@ -303,8 +304,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 14    14     1 Bad&#39; style         Explanatory Text              57 FALSE</code></pre>
 <p>A quick way to see what formatting definitions exist is to use <code>str()</code>. (Scroll
 past this for now – you don’t need to memorise it).</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="an-example-formatting-lookup.html#cb311-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
-<span id="cb311-2"><a href="an-example-formatting-lookup.html#cb311-2"></a><span class="kw">str</span>(formats)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="an-example-formatting-lookup.html#cb318-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb318-2"><a href="an-example-formatting-lookup.html#cb318-2"></a><span class="kw">str</span>(formats)</span></code></pre></div>
 <pre><code>## List of 2
 ##  $ local:List of 6
 ##   ..$ numFmt    : chr [1:59] &quot;General&quot; &quot;General&quot; &quot;General&quot; &quot;General&quot; ...
@@ -688,31 +689,32 @@ it’s easy to switch from checking a cell’s style-level formatting to its loc
 formatting.</p>
 <p>Here’s an example of looking up both the local bold formatting and the
 style-level bold formatting of a cell.</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="an-example-formatting-lookup.html#cb313-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb313-2"><a href="an-example-formatting-lookup.html#cb313-2"></a>cells &lt;-</span>
-<span id="cb313-3"><a href="an-example-formatting-lookup.html#cb313-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb313-4"><a href="an-example-formatting-lookup.html#cb313-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></span>
-<span id="cb313-5"><a href="an-example-formatting-lookup.html#cb313-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb313-6"><a href="an-example-formatting-lookup.html#cb313-6"></a>cells</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="an-example-formatting-lookup.html#cb320-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb320-2"><a href="an-example-formatting-lookup.html#cb320-2"></a>cells &lt;-</span>
+<span id="cb320-3"><a href="an-example-formatting-lookup.html#cb320-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheet =</span> <span class="st">&quot;formatting&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb320-4"><a href="an-example-formatting-lookup.html#cb320-4"></a><span class="st">  </span><span class="kw">select</span>(row, col, character, style_format, local_format_id) <span class="op">%&gt;%</span></span>
+<span id="cb320-5"><a href="an-example-formatting-lookup.html#cb320-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(row <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, col <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb320-6"><a href="an-example-formatting-lookup.html#cb320-6"></a>cells</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##     row   col character style_format local_format_id
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt;
 ## 1     1     1 bold      Normal                     6</code></pre>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="an-example-formatting-lookup.html#cb315-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
-<span id="cb315-2"><a href="an-example-formatting-lookup.html#cb315-2"></a></span>
-<span id="cb315-3"><a href="an-example-formatting-lookup.html#cb315-3"></a>local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
-<span id="cb315-4"><a href="an-example-formatting-lookup.html#cb315-4"></a>local_bold</span></code></pre></div>
-<pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [16] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [31] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [46] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="an-example-formatting-lookup.html#cb317-1"></a>style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold</span>
-<span id="cb317-2"><a href="an-example-formatting-lookup.html#cb317-2"></a>style_bold</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="an-example-formatting-lookup.html#cb322-1"></a>formats &lt;-<span class="st"> </span><span class="kw">xlsx_formats</span>(path)</span>
+<span id="cb322-2"><a href="an-example-formatting-lookup.html#cb322-2"></a></span>
+<span id="cb322-3"><a href="an-example-formatting-lookup.html#cb322-3"></a>local_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>local<span class="op">$</span>font<span class="op">$</span>bold</span>
+<span id="cb322-4"><a href="an-example-formatting-lookup.html#cb322-4"></a>local_bold</span></code></pre></div>
+<pre><code>##  [1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [13] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="an-example-formatting-lookup.html#cb324-1"></a>style_bold &lt;-<span class="st"> </span>formats<span class="op">$</span>style<span class="op">$</span>font<span class="op">$</span>bold</span>
+<span id="cb324-2"><a href="an-example-formatting-lookup.html#cb324-2"></a>style_bold</span></code></pre></div>
 <pre><code>##           Normal Explanatory Text 
 ##            FALSE            FALSE</code></pre>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="an-example-formatting-lookup.html#cb319-1"></a><span class="kw">mutate</span>(cells,</span>
-<span id="cb319-2"><a href="an-example-formatting-lookup.html#cb319-2"></a>       <span class="dt">style_bold =</span> style_bold[style_format],</span>
-<span id="cb319-3"><a href="an-example-formatting-lookup.html#cb319-3"></a>       <span class="dt">local_bold =</span> local_bold[local_format_id])</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="an-example-formatting-lookup.html#cb326-1"></a><span class="kw">mutate</span>(cells,</span>
+<span id="cb326-2"><a href="an-example-formatting-lookup.html#cb326-2"></a>       <span class="dt">style_bold =</span> style_bold[style_format],</span>
+<span id="cb326-3"><a href="an-example-formatting-lookup.html#cb326-3"></a>       <span class="dt">local_bold =</span> local_bold[local_format_id])</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 7
 ##     row   col character style_format local_format_id style_bold local_bold
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;                  &lt;int&gt; &lt;lgl&gt;      &lt;lgl&gt;     

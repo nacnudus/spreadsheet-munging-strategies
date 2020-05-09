@@ -260,12 +260,12 @@ all.</p>
 <p>As far as <code>tidyxl()</code> is concerned, the particular sheet (aka ‘tab’) that a cell
 is on is another coordinate like <code>row</code> and <code>col</code>, so the full location of a cell
 is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
-<span id="cb280-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-2"></a>all_cells &lt;-</span>
-<span id="cb280-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb280-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
-<span id="cb280-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-5"></a><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</span>
-<span id="cb280-6"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb280-6"></a>all_cells</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-1"></a>path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;worked-examples.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;unpivotr&quot;</span>)</span>
+<span id="cb287-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-2"></a>all_cells &lt;-</span>
+<span id="cb287-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-3"></a><span class="st">  </span><span class="kw">xlsx_cells</span>(path, <span class="dt">sheets =</span> <span class="kw">c</span>(<span class="st">&quot;humanities&quot;</span>, <span class="st">&quot;performance&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb287-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>is_blank) <span class="op">%&gt;%</span></span>
+<span id="cb287-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-5"></a><span class="st">  </span><span class="kw">select</span>(sheet, row, col, data_type, character, numeric)</span>
+<span id="cb287-6"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb287-6"></a>all_cells</span></code></pre></div>
 <pre><code>## # A tibble: 16 x 6
 ##    sheet         row   col data_type character numeric
 ##    &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
@@ -287,8 +287,8 @@ is its <code>row</code>, its <code>col</code>, and its <code>sheet</code>.</p>
 ## 16 performance     3     3 numeric   &lt;NA&gt;           12</code></pre>
 <p>To prepare the sheets to be mapped over, use <code>tidyr::nest()</code>. The <code>data</code> column
 contains the cells of each sheet.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb282-1"></a>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb282-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb282-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb289-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb289-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb289-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet)</span></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `data = c(row, col, data_type, character, numeric)`?</code></pre>
 <pre><code>## # A tibble: 2 x 2
@@ -298,17 +298,17 @@ contains the cells of each sheet.</p>
 ## 2 performance &lt;tibble [8 × 5]&gt;</code></pre>
 <p>The function to unpivot each table in this case will be a couple of <code>behead()</code>
 statements. Further clean-up can be saved until the end.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb285-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
-<span id="cb285-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb285-2"></a>  cells <span class="op">%&gt;%</span></span>
-<span id="cb285-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb285-3"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, name) <span class="op">%&gt;%</span></span>
-<span id="cb285-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb285-4"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject)</span>
-<span id="cb285-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb285-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb292-1"></a>unpivot &lt;-<span class="st"> </span><span class="cf">function</span>(cells) {</span>
+<span id="cb292-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb292-2"></a>  cells <span class="op">%&gt;%</span></span>
+<span id="cb292-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb292-3"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;up&quot;</span>, name) <span class="op">%&gt;%</span></span>
+<span id="cb292-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb292-4"></a><span class="st">    </span><span class="kw">behead</span>(<span class="st">&quot;left&quot;</span>, subject)</span>
+<span id="cb292-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb292-5"></a>}</span></code></pre></div>
 <p>After mapping the unpivot function over each sheet of cells, use
 <code>tidyr::unnest()</code> to show every row of data again.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb286-1"></a>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb286-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb286-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
-<span id="cb286-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb286-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
-<span id="cb286-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb286-4"></a><span class="st">  </span><span class="kw">unnest</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb293-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb293-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb293-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
+<span id="cb293-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb293-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
+<span id="cb293-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb293-4"></a><span class="st">  </span><span class="kw">unnest</span>()</span></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `data = c(row, col, data_type, character, numeric)`?</code></pre>
 <pre><code>## Warning: `cols` is now required.
@@ -325,14 +325,14 @@ statements. Further clean-up can be saved until the end.</p>
 ## 7 performance     3     2 numeric   &lt;NA&gt;            7 Matilda  Drama   
 ## 8 performance     3     3 numeric   &lt;NA&gt;           12 Nicholas Drama</code></pre>
 <p>Finally, do the clean-up operations that were saved until now.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-1"></a>all_cells <span class="op">%&gt;%</span></span>
-<span id="cb290-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
-<span id="cb290-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
-<span id="cb290-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-4"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
-<span id="cb290-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-5"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</span>
-<span id="cb290-6"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-6"></a>            name,</span>
-<span id="cb290-7"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-7"></a>            subject,</span>
-<span id="cb290-8"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb290-8"></a>            <span class="dt">score =</span> numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-1"></a>all_cells <span class="op">%&gt;%</span></span>
+<span id="cb297-2"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-2"></a><span class="st">  </span><span class="kw">nest</span>(<span class="op">-</span>sheet) <span class="op">%&gt;%</span></span>
+<span id="cb297-3"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(data, unpivot)) <span class="op">%&gt;%</span></span>
+<span id="cb297-4"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-4"></a><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span></span>
+<span id="cb297-5"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-5"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">field =</span> sheet,</span>
+<span id="cb297-6"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-6"></a>            name,</span>
+<span id="cb297-7"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-7"></a>            subject,</span>
+<span id="cb297-8"><a href="same-table-in-several-worksheetsfiles-using-the-sheetfile-name.html#cb297-8"></a>            <span class="dt">score =</span> numeric)</span></code></pre></div>
 <pre><code>## Warning: All elements of `...` must be named.
 ## Did you want `data = c(row, col, data_type, character, numeric)`?</code></pre>
 <pre><code>## Warning: `cols` is now required.
