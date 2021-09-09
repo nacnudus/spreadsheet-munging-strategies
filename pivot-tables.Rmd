@@ -56,7 +56,7 @@ a few properties of each cell are shown, to make it easier to read).
 ```{r}
 cells <- xlsx_cells(path, sheets = "pivot-annotations")
 select(cells, row, col, data_type, character, numeric) %>%
-  print(cells, n = 20)
+  print(n = 20)
 ```
 
 A similar result is obtained via `unpivotr::as_cells()`.
@@ -317,7 +317,7 @@ cells %>%
   behead_if(formats$local$font$color$rgb[local_format_id] != red, # not red
             direction = "left-up",
             name = "field") %>%
-  dplyr::filter(col != min(col)) %>% # discard non-headere cells
+  dplyr::filter(col != min(col)) %>% # discard non-header cells
   behead("left", "subject") %>%
   select(sex, name, field, subject, score = numeric)
 ```
