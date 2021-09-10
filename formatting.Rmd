@@ -20,7 +20,6 @@ This example shows how to look up whether a cell is bold.
 
 ```{r}
 path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
-path <- system.file("extdata", "worked-examples.xlsx", package = "unpivotr")
 cells <-
   xlsx_cells(path, sheet = "formatting") %>%
   select(row, col, character, style_format, local_format_id)
@@ -183,7 +182,7 @@ differently.
 xlsx_cells(path, sheet = "in-cell formatting") %>%
   dplyr::filter(address == "A1") %>%
   select(address, character_formatted) %>%
-  unnest()
+  unnest(character_formatted)
 ```
 
 It's hard to think of a plausible example, so what follows is an implausible one
