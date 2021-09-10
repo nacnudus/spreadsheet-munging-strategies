@@ -82,7 +82,7 @@ results.
 ```{r}
 partitions %>%
   mutate(cells = map(cells, unpivot)) %>%
-  unnest() %>%
+  unnest(cols = c(cells)) %>%
   select(-corner_row, -corner_col)
 ```
 
