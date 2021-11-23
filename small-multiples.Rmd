@@ -82,7 +82,7 @@ results.
 ```{r}
 partitions %>%
   mutate(cells = map(cells, unpivot)) %>%
-  unnest() %>%
+  unnest(cols = c(cells)) %>%
   select(-corner_row, -corner_col)
 ```
 
@@ -114,7 +114,7 @@ contains the cells of each sheet.
 
 ```{r}
 all_cells %>%
-  nest(-sheet)
+  nest(data = -sheet)
 ```
 
 The function to unpivot each table in this case will be a couple of `behead()`
@@ -133,18 +133,18 @@ After mapping the unpivot function over each sheet of cells, use
 
 ```{r}
 all_cells %>%
-  nest(-sheet) %>%
+  nest(data = -sheet) %>%
   mutate(data = map(data, unpivot)) %>%
-  unnest()
+  unnest(data)
 ```
 
 Finally, do the clean-up operations that were saved until now.
 
 ```{r}
 all_cells %>%
-  nest(-sheet) %>%
+  nest(data = -sheet) %>%
   mutate(data = map(data, unpivot)) %>%
-  unnest() %>%
+  unnest(data) %>%
   transmute(field = sheet,
             name,
             subject,
@@ -184,9 +184,9 @@ unpivot <- function(cells) {
 }
 
 all_cells %>%
-  nest(-sheet) %>%
+  nest(data = -sheet) %>%
   mutate(data = map(data, unpivot)) %>%
-  unnest() %>%
+  unnest(data) %>%
   select(sex = sheet, name, subject, score = numeric)
 ```
 
